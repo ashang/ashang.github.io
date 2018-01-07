@@ -1,0 +1,14 @@
+---
+author: aaronshang
+comments: true
+date: 2009-04-27 09:19:00+00:00
+layout: post
+link: https://aaronshang.wordpress.com/2009/04/27/tab-grep-2/
+slug: tab-grep-2
+title: TAB grep
+wordpress_id: 860
+---
+
+$ grep  '' your_file<br><br>remember, vim would expand the tab to spaces we input, so the grep will fail us.<br><br>$ grep expandtab ~/.vimrc<br>"set noexpandtab<br><br>in vim, <br> if the character is a tab, the cursor would stop once; <br>if they are spaces, the cursor will stop for a "tabstop" times.<br><br>$ grep tabstop .vimrc <br>"set tabstop=4<br><br>with hexedit, or hexdump, or any hex editor, <br> we can see the TAB is ascii 09, <br>while we know space is ascii 20.<br>
+
+![]()

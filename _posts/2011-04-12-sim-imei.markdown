@@ -1,0 +1,57 @@
+---
+author: aaronshang
+comments: true
+date: 2011-04-12 05:01:00+00:00
+layout: post
+link: https://aaronshang.wordpress.com/2011/04/12/sim-imei/
+slug: sim-imei
+title: SIM IMEI
+wordpress_id: 1010
+---
+
+International Mobile Equipment Identity  
+[http://en.wikipedia.org/wiki/IMEI](http://en.wikipedia.org/wiki/IMEI)
+
+  
+The IMEI can be displayed on most mobile handsets by dialling *#06#.
+
+Otherwise check the compliance plate under the battery.
+
+Information on IMEISV 353030002286XX3XX
+
+Type Allocation Holder HTC  
+Mobile Equipment Type HTC Qtek 9090  
+GSM Implementation Phase 2/2+  
+IMEI Validity Assessment
+
+>|<  
+Very likely
+
+  
+Information on range assignment
+
+Est. Date of Range Issuance Around Q1 2004  
+Reporting Body British Approvals Board of Telecommunications (BABT)  
+Primary Market Europe  
+Legal Basis for Allocation EU R&TTE Directive
+
+Information on number format
+
+Full IMEI Presentation 353030-00-2286XX-3  
+Reporting Body Identifier 35  
+Type Allocation Code 35303000  
+Serial Number 2286XX  
+Check Digit 3  
+Phone Version Number XX
+
+====  
+This would be in large-scale.
+
+Information on phone number range +86 136XXXXXXXX
+
+Number billable as mobile number  
+Country or destination China  
+City or exchange location  
+Original network provider* China Mobile (GSM)
+
+![](https://blogger.googleusercontent.com/tracker/4041220-7743121627467025967?l=ashang.blogspot.com)
