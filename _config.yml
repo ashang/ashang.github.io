@@ -2,14 +2,14 @@ title: In love we trust
 
 baseurl: "" # the subpath of your site, e.g. /blog
 
-url: "http://blog.ashang.org"
+# url: "http://blog.ashang.org"
 
 github_username: ashang
 
 # Build settings
 markdown: kramdown
 
-theme: jekyll-theme-primer
+theme: minima
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
