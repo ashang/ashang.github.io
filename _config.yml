@@ -9,10 +9,7 @@ github_username: ashang
 # Build settings
 markdown: kramdown
 
-theme: jekyll-theme-merlot
-
-plugins:
-  - jekyll-feed
+theme: jekyll-theme-primer
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
