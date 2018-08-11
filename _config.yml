@@ -11,7 +11,7 @@ github_username: ashang
 # Build settings
 markdown: kramdown
 
-theme: jekyll-theme-time-machine
+theme: jekyll-theme-midnight
 
 plugins:
   - jekyll-feed
