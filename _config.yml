@@ -1,17 +1,15 @@
 title: In love we trust
 
-email: aaron@ashang.org
-
 baseurl: "" # the subpath of your site, e.g. /blog
 
-url: "http://blog.ashang.org" # the base hostname & protocol for your site, e.g. http://example.com
+url: "http://blog.ashang.org"
 
 github_username: ashang
 
 # Build settings
 markdown: kramdown
 
-theme: jekyll-theme-midnight
+theme: jekyll-theme-merlot
 
 plugins:
   - jekyll-feed
