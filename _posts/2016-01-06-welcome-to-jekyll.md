@@ -1,8 +1,9 @@
 ---
 layout: post
 title:  Welcome to Jekyll!
+categories: jekyll
 date: 2016-01-06
-categories: jekyll update
+update: Wed Dec 19 22:52:19 CST 2018
 tags: blog
 ---
 
