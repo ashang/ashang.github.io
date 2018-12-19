@@ -14,7 +14,6 @@ tags: blog
     $ bundle install
     $ jekyll server
 
-
 ### Structure
 　
 ```
