@@ -1,0 +1,1269 @@
+---
+title: Xmodmap
+date: 2019-06-26
+---
+
+```
+! Filename:      .Xmodmap
+! Purpose:       config file for keyboard layout @ X
+! activate it with
+! # xmodmap ~/.Xmodmap
+
+! % xmodmap -p
+! xmodmap:  up to 3 keys per modifier, (keycodes in parentheses):
+!
+! shift       Shift_L (0x32),  Shift_R (0x3e)
+! lock        Control_L (0x42)
+! control     Control_L (0x25),  Control_R (0x6d)
+! mod1        Alt_L (0x40),  Alt_L (0x7d),  Meta_L (0x9c)
+! mod2        Num_Lock (0x4d)
+! mod3
+! mod4        Super_L (0x7f),  Hyper_L (0x80),  Multi_key (0x73)
+! mod5        Mode_switch (0x5d),  ISO_Level3_Shift (0x7c)
+
+!! Clear the other modifiers:
+!! clear    Lock
+!! clear    Control
+!! clear    mod1
+!! clear    mod2
+!! clear    mod3
+!! clear    mod4
+!! clear    mod5
+!
+!!! Swap caps lock and escape
+!!remove Lock = Caps_Lock
+!!keysym Escape = Caps_Lock
+!!keysym Caps_Lock = Escape
+!!add Lock = Caps_Lock
+!
+!! Assign `Control' to the Ctrl-Keys
+!! add Control = Control_L
+!! add Control = Control_R
+!
+!! Assign `Compose' to the key labeled `Caps_Lock'
+!! keycode 66 = Multi_key
+!
+!! Assign `Control` to the key labeled `Caps_Lock'
+!! keycode 66 = Control_L
+!
+!! Add `Alt' keys
+!! add mod1 = Alt_L Alt_R
+!
+!! Make sure twindows-key works as modkey
+!! add mod4 = Super_L Hyper_L
+!add mod4 = Super_L
+!add mod4 = Hyper_L
+!add mod4 = Multi_key
+!
+!! Fn+F3 -> mute sound etc. on laptop
+!! keycode 176 = XF86AudioMedia
+!! keycode 160 = XF86AudioMute
+!
+!! Assign Compose to "Menu"-Key (press menu-key and ' followed by letter - e.g. menu ' a => á)
+!! keycode 117 = Multi_key
+!
+!! keysym a = a A adiaeresis Adiaeresis
+!! keysym c = c C ccedilla
+!! keysym e = e E ediaeresis
+!! keysym i = i I idiaeresis
+!! keysym m = m M mu
+!! keysym n = n N ntilde
+!! keysym o = o O odiaeresis Odiaeresis
+!! keysym s = s S ssharp section
+!! keysym u = u U udiaeresis Udiaeresis
+!! keysym y = y Y ydiaeresis NoSymbol
+!! keycode 94 = asciicircum degree
+!
+!! keysym 1 = 1 exclam     exclamdown    onesuperior
+!! keysym 2 = 2 at         onehalf       twosuperior
+!! keysym 3 = 3 numbersign threequarters threesuperior
+!! keysym 4 = 4 dollar     onequarter    section
+!! keysym 0 = 0 parenright degree        NoSymbol
+!
+!! Win keys. I want to map them to escape - vi rulez ;-)
+!! keycode 115 = Escape
+!! keycode 116 = Escape
+!
+!! keycode 115 = XF86AudioStop
+
+
+! Euro-Symbols:
+! keycode 26 = e E EuroSign cent
+! keycode 26 = e E currency cent
+! keycode 54 = c C cent copyright
+! Euro Sign:
+! keycode 26 = e E 0x00a4 0x0080
+! keycode 26 = e E EuroSign
+! keycode 26 = e E currency cent
+
+! keycode 27 = r R registered
+
+! keysym equal  = equal    plus       plusminus      NoSymbol
+! keysym slash  = slash    question   questiondown   NoSymbol
+! keysym comma  = comma    less       guillemotleft  NoSymbol
+! keysym period = period   greater    guillemotright NoSymbol
+
+! Some examples for the compose key (if "keycode 115 = Multi_key"
+! then the left windows key is mapped to the compose key),
+! pressing compose key + $x + $y will generate the following character:
+!
+! Compose  + """  +  "a"  = ä
+! Compose  + """  +  "e"  = ¤
+! Compose  + """  +  "i"  = ï
+! Compose  + """  +  "o"  = ö
+! Compose  + """  +  "u"  = ü
+! Compose  + """  +  "A"  = Ä
+! ...
+! Compose  + "~"  +  "n"  = ñ
+! Compose  + "a"  +  "a" = å
+! Compose  + "a"  +  "e" = æ
+! Compose  + "A"  +  "T" = @
+! Compose  + "!"  +  "!" = ¡
+! Compose  + "l"  +  "-" = £
+! Compose  + "y"  +  "=" = ¥
+! Compose  + "c"  +  "o" = ©
+! Compose  + "a"  +  "_" = ª
+! Compose  + "_"  +  "o" = º
+! Compose  + "<"  +  "<" = «
+! Compose  + "0"  +  "*" = °
+! Compose  + "u"  +  "/" = µ
+! Compose  + "|"  +  "|" =
+! Compose  + " "  +  " " =   ("Geschütztes Leerzeichen")
+! Compose  + "("  +  "r" = ®
+! Compose  + "_"  +  "_" = ¯
+! Compose  + "-"  +  ":" = ÷
+! Compose  + "x"  +  "x" = ×
+! Compose  + """  +  """ =
+
+keycode   8 =
+keycode   9 = Escape
+keycode  10 = 1 exclam exclamdown onesuperior
+keycode  11 = 2 at onehalf twosuperior
+keycode  12 = 3 numbersign threequarters threesuperior
+keycode  13 = 4 dollar onequarter section
+keycode  14 = 5 percent onehalf threeeighths onehalf threeeighths
+keycode  15 = 6 asciicircum notsign fiveeighths notsign fiveeighths
+keycode  16 = 7 ampersand braceleft
+keycode  17 = 8 asterisk bracketleft
+keycode  18 = 9 parenleft bracketright
+keycode  19 = 0 parenright braceright
+keycode  20 =  minus  underscore ssharp
+keycode  21 = equal plus plusminus
+keycode  22 = BackSpace BackSpace BackSpace BackSpace
+keycode  23 = Tab ISO_Left_Tab
+keycode  24 = q Q at
+keycode  25 = w W lstroke Lstroke lstroke Lstroke
+keycode  26 = e E EuroSign cent
+keycode  27 = r R
+keycode  28 = t T
+keycode  29 = y Y ydiaeresis
+keycode  30 = u U udiaeresis Udiaeresis
+keycode  31 = i I idiaeresis
+keycode  32 = o O odiaeresis Odiaeresis
+keycode  33 = p P
+keycode  34 =  bracketleft braceleft udiaeresis      Udiaeresis
+keycode  35 =  bracketright braceright asciitilde
+keycode  36 = Return
+keycode  37 = Control_L
+keycode  38 = a A adiaeresis Adiaeresis
+keycode  39 = s S ssharp section
+keycode  40 = d D eth ETH eth ETH
+keycode  41 = f F
+keycode  42 = g G eng ENG eng ENG
+keycode  43 = h H hstroke Hstroke hstroke Hstroke
+keycode  44 = j J
+keycode  45 = k K
+keycode  46 = l L lstroke Lstroke lstroke Lstroke
+keycode  47 =  semicolon   colon     odiaeresis      Odiaeresis
+keycode  48 =  apostrophe  quotedbl  adiaeresis      Adiaeresis
+keycode  49 =  grave asciitilde degree
+keycode  50 = Shift_L
+keycode  51 = backslash bar dead_grave dead_breve dead_grave dead_breve
+keycode  52 = z Z
+keycode  53 = x X
+keycode  54 = c C cent copyright
+keycode  55 = v V
+keycode  56 = b B
+keycode  57 = n N ntilde
+keycode  58 = m M mu
+keycode  59 = comma less guillemotleft multiply horizconnector multiply
+keycode  60 = period greater guillemotright division periodcentered division
+keycode  61 = slash question questiondown dead_abovedot dead_belowdot dead_abovedot
+keycode  62 = Shift_R
+keycode  63 = KP_Multiply XF86_ClearGrab
+keycode  64 = Alt_L Meta_L
+keycode  65 = space
+keycode  66 = Caps_Lock
+keycode  67 = F1 XF86_Switch_VT_1
+keycode  68 = F2 XF86_Switch_VT_2
+keycode  69 = F3 XF86_Switch_VT_3
+keycode  70 = F4 XF86_Switch_VT_4
+keycode  71 = F5 XF86_Switch_VT_5
+keycode  72 = F6 XF86_Switch_VT_6
+keycode  73 = F7 XF86_Switch_VT_7
+keycode  74 = F8 XF86_Switch_VT_8
+keycode  75 = F9 XF86_Switch_VT_9
+keycode  76 = F10 XF86_Switch_VT_10
+keycode  77 = Num_Lock Pointer_EnableKeys
+keycode  78 = Scroll_Lock
+keycode  79 = KP_Home KP_7
+keycode  80 = KP_Up KP_8
+keycode  81 = KP_Prior KP_9
+keycode  82 = KP_Subtract XF86_Prev_VMode
+keycode  83 = KP_Left KP_4
+keycode  84 = KP_Begin KP_5
+keycode  85 = KP_Right KP_6
+keycode  86 = KP_Add XF86_Next_VMode
+keycode  87 = KP_End KP_1
+keycode  88 = KP_Down KP_2
+keycode  89 = KP_Next KP_3
+keycode  90 = KP_Insert KP_0
+keycode  91 = KP_Delete KP_Separator
+keycode  92 = ISO_Level3_Shift NoSymbol ISO_Level3_Shift
+keycode  93 =
+keycode  94 = less greater less greater bar brokenbar
+keycode  95 = F11 XF86_Switch_VT_11 F11 XF86_Switch_VT_11
+keycode  96 = F12 XF86_Switch_VT_12 F12 XF86_Switch_VT_12
+keycode  97 =
+keycode  98 = Katakana NoSymbol Katakana
+keycode  99 = Hiragana NoSymbol Hiragana
+keycode 100 = Henkan_Mode NoSymbol Henkan_Mode
+keycode 101 = Hiragana_Katakana NoSymbol Hiragana_Katakana
+keycode 102 = Muhenkan NoSymbol Muhenkan
+keycode 103 =
+keycode 104 = KP_Enter NoSymbol KP_Enter
+keycode 105 = Control_R NoSymbol Control_R
+keycode 106 = KP_Divide XF86_Ungrab KP_Divide XF86_Ungrab
+keycode 107 = Print Sys_Req Print Sys_Req
+! AltGr:
+keycode 108 = Mode_switch
+keycode 109 = Linefeed NoSymbol Linefeed
+keycode 110 = Home NoSymbol Home
+keycode 111 = Up NoSymbol Up
+keycode 112 = Prior NoSymbol Prior
+keycode 113 = Left NoSymbol Left
+keycode 114 = Right NoSymbol Right
+keycode 115 = End NoSymbol End
+keycode 116 = Down NoSymbol Down
+keycode 117 = Next NoSymbol Next
+keycode 118 = Insert NoSymbol Insert
+keycode 119 = Delete NoSymbol Delete
+keycode 120 =
+keycode 121 = XF86AudioMute NoSymbol XF86AudioMute
+keycode 122 = XF86AudioLowerVolume NoSymbol XF86AudioLowerVolume
+keycode 123 = XF86AudioRaiseVolume NoSymbol XF86AudioRaiseVolume
+keycode 124 = XF86PowerOff NoSymbol XF86PowerOff
+keycode 125 = KP_Equal NoSymbol KP_Equal
+keycode 126 = plusminus NoSymbol plusminus
+keycode 127 = Pause Break Pause Break
+keycode 128 =
+keycode 129 = KP_Decimal NoSymbol KP_Decimal
+keycode 130 = Hangul NoSymbol Hangul
+keycode 131 = Hangul_Hanja NoSymbol Hangul_Hanja
+keycode 132 =
+keycode 133 = Super_L NoSymbol Super_L
+keycode 134 = Super_R NoSymbol Super_R
+keycode 135 = Menu NoSymbol Menu
+keycode 136 = Cancel NoSymbol Cancel
+keycode 137 = Redo NoSymbol Redo
+keycode 138 = SunProps NoSymbol SunProps
+keycode 139 = Undo NoSymbol Undo
+keycode 140 = SunFront NoSymbol SunFront
+keycode 141 = XF86Copy NoSymbol XF86Copy
+keycode 142 = SunOpen NoSymbol SunOpen
+keycode 143 = XF86Paste NoSymbol XF86Paste
+keycode 144 = Find NoSymbol Find
+keycode 145 = XF86Cut NoSymbol XF86Cut
+keycode 146 = Help NoSymbol Help
+keycode 147 = XF86MenuKB NoSymbol XF86MenuKB
+keycode 148 = XF86Calculator NoSymbol XF86Calculator
+keycode 149 =
+keycode 150 = XF86Sleep NoSymbol XF86Sleep
+keycode 151 = XF86WakeUp NoSymbol XF86WakeUp
+keycode 152 = XF86Explorer NoSymbol XF86Explorer
+keycode 153 = XF86Send NoSymbol XF86Send
+keycode 154 =
+keycode 155 = XF86Xfer NoSymbol XF86Xfer
+keycode 156 = XF86Launch1 NoSymbol XF86Launch1
+keycode 157 = XF86Launch2 NoSymbol XF86Launch2
+keycode 158 = XF86WWW NoSymbol XF86WWW
+keycode 159 = XF86DOS NoSymbol XF86DOS
+keycode 160 = XF86ScreenSaver NoSymbol XF86ScreenSaver
+keycode 161 =
+keycode 162 = XF86RotateWindows NoSymbol XF86RotateWindows
+keycode 163 = XF86Mail NoSymbol XF86Mail
+keycode 164 = XF86Favorites NoSymbol XF86Favorites
+keycode 165 = XF86MyComputer NoSymbol XF86MyComputer
+keycode 166 = XF86Back NoSymbol XF86Back
+keycode 167 = XF86Forward NoSymbol XF86Forward
+keycode 168 =
+keycode 169 = XF86Eject NoSymbol XF86Eject
+keycode 170 = XF86Eject XF86Eject XF86Eject XF86Eject
+keycode 171 = XF86AudioNext NoSymbol XF86AudioNext
+keycode 172 = XF86AudioPlay XF86AudioPause XF86AudioPlay XF86AudioPause
+keycode 173 = XF86AudioPrev NoSymbol XF86AudioPrev
+keycode 174 = XF86AudioStop XF86Eject XF86AudioStop XF86Eject
+keycode 175 = XF86AudioRecord NoSymbol XF86AudioRecord
+keycode 176 = XF86AudioRewind NoSymbol XF86AudioRewind
+keycode 177 = XF86Phone NoSymbol XF86Phone
+keycode 178 =
+keycode 179 = XF86Tools NoSymbol XF86Tools
+keycode 180 = XF86HomePage NoSymbol XF86HomePage
+keycode 181 = XF86Reload NoSymbol XF86Reload
+keycode 182 = XF86Close NoSymbol XF86Close
+keycode 183 =
+keycode 184 =
+keycode 185 = XF86ScrollUp NoSymbol XF86ScrollUp
+keycode 186 = XF86ScrollDown NoSymbol XF86ScrollDown
+keycode 187 = parenleft NoSymbol parenleft
+keycode 188 = parenright NoSymbol parenright
+keycode 189 = XF86New NoSymbol XF86New
+keycode 190 = Redo NoSymbol Redo
+keycode 191 =
+keycode 192 =
+keycode 193 =
+keycode 194 =
+keycode 195 =
+keycode 196 =
+keycode 197 =
+keycode 198 =
+keycode 199 =
+keycode 200 = XF86TouchpadToggle NoSymbol XF86TouchpadToggle
+keycode 201 =
+keycode 202 =
+keycode 203 = Mode_switch NoSymbol Mode_switch
+keycode 204 = NoSymbol Alt_L NoSymbol Alt_L
+keycode 205 = NoSymbol Meta_L NoSymbol Meta_L
+keycode 206 = NoSymbol Super_L NoSymbol Super_L
+keycode 207 = NoSymbol Hyper_L NoSymbol Hyper_L
+keycode 208 = XF86AudioPlay NoSymbol XF86AudioPlay
+keycode 209 = XF86AudioPause NoSymbol XF86AudioPause
+keycode 210 = XF86Launch3 NoSymbol XF86Launch3
+keycode 211 = XF86Launch4 NoSymbol XF86Launch4
+keycode 212 =
+keycode 213 = XF86Suspend NoSymbol XF86Suspend
+keycode 214 = XF86Close NoSymbol XF86Close
+keycode 215 = XF86AudioPlay NoSymbol XF86AudioPlay
+keycode 216 = XF86AudioForward NoSymbol XF86AudioForward
+keycode 217 =
+keycode 218 = Print NoSymbol Print
+keycode 219 =
+keycode 220 = XF86WebCam NoSymbol XF86WebCam
+keycode 221 =
+keycode 222 =
+keycode 223 = XF86Mail NoSymbol XF86Mail
+keycode 224 =
+keycode 225 = XF86Search NoSymbol XF86Search
+keycode 226 =
+keycode 227 = XF86Finance NoSymbol XF86Finance
+keycode 228 =
+keycode 229 = XF86Shop NoSymbol XF86Shop
+keycode 230 =
+keycode 231 = Cancel NoSymbol Cancel
+keycode 232 = XF86MonBrightnessDown NoSymbol XF86MonBrightnessDown
+keycode 233 = XF86MonBrightnessUp NoSymbol XF86MonBrightnessUp
+keycode 234 = XF86AudioMedia NoSymbol XF86AudioMedia
+keycode 235 = XF86Display NoSymbol XF86Display
+keycode 236 = XF86KbdLightOnOff NoSymbol XF86KbdLightOnOff
+keycode 237 = XF86KbdBrightnessDown NoSymbol XF86KbdBrightnessDown
+keycode 238 = XF86KbdBrightnessUp NoSymbol XF86KbdBrightnessUp
+keycode 239 = XF86Send NoSymbol XF86Send
+keycode 240 = XF86Reply NoSymbol XF86Reply
+keycode 241 = XF86MailForward NoSymbol XF86MailForward
+keycode 242 = XF86Save NoSymbol XF86Save
+keycode 243 = XF86Documents NoSymbol XF86Documents
+keycode 244 = XF86Battery NoSymbol XF86Battery
+keycode 245 = XF86Bluetooth NoSymbol XF86Bluetooth
+keycode 246 = XF86WLAN NoSymbol XF86WLAN
+keycode 247 =
+keycode 248 =
+keycode 249 =
+keycode 250 =
+keycode 251 =
+keycode 252 =
+keycode 253 =
+keycode 254 =
+keycode 255 =
+
+!! ISO-Latin1
+!
+!Sign Nr.  Zeichen   Keysym        Compose   PostScript    HTML-Code
+!160 0xa0            nobreakspace  spc spc                 &nbsp;
+!160 0xa0            nobreakspace  spc spc                 &nbsp;
+!161 0xa1  ¡       exclamdown      ! !
+!162 0xa2  ¢       cent            C /
+!163 0xa3  £       sterling        L -
+!164 0xa4  ¤       currency        o x     /currency
+!165 0xa5  ¥       yen             Y -
+!166 0xa6  ¦       brokenbar       | |     /brokenbar
+!167 0xa7  §       section         S O     /section
+!168 0xa8  ¨       diaeresis       " "     /dieresis
+!169 0xa9  ©       copyright       C O     /copyright     &copy;   ©
+!170 0xaa  ª       ordfeminine     - A     /ordfeminine
+!171 0xab  «       guillemotleft   < <     /guillemotleft
+!172 0xac  ¬       notsign         - |     /logicalnot
+!173 0xad         hyphen          - -     /hyphen
+!174 0xae  ®       registered      R O     /registered    &reg;    ®
+!175 0xaf  ¯       macron          ^ -     /macron
+!176 0xb0  °       degree          ^ *     /degree        &deg;    °
+!177 0xb1  ±       plusminus       + -     /plusminus
+!178 0xb2  ²       twosuperior     ^ 2     /twosuperior
+!179 0xb3  ³       threesuperior   ^ 3     /threesuperior
+!180 0xb4  ´       acute           \ \     /acute
+!181 0xb5  µ       mu              / u     /mu
+!182 0xb6  ¶       paragraph       P !     /paragraph
+!183 0xb7  ·       periodcentered  ^ .     /periodcentered
+!184 0xb8  ¸       cedilla         , ,     /cedilla
+!185 0xb9  ¹       onesuperior     ^ 1     /onesuperior
+!186 0xba  º       masculine       _ O     /ordmasculine
+!187 0xbb  »       guillemotright  > >     /guillemotright
+!188 0xbc  ¼       onequarter      1 4     /onequarter
+!189 0xbd  ½       onehalf         1 2     /onehalf
+!190 0xbe  ¾       threequarters   3 4     /threequarters
+!191 0xbf  ¿       questiondown    ? ?     /questiondown
+!192 0xc0  À       Agrave          A `     /Agrave        &Agrave; À
+!193 0xc1  Á       Aacute          A '     /Aacute        &Aacute; Á
+!194 0xc2  Â       Acircumflex     A ^     /Acircumflex   &Acirc;  Â
+!195 0xc3  Ã       Atilde          A ~     /Atilde        &Atilde; Ã
+!196 0xc4  Ä       Adiaeresis      A "     /Adieresis     &Auml;   Ä
+!197 0xc5  Å       Aring           A *     /Aring         &Aring;  Å
+!198 0xc6  Æ       AE              A E     /AE            &AElig;  Æ
+!199 0xc7  Ç       Ccedilla        C ,     /Ccedilla      &Ccedil; Ç
+!200 0xc8  È       Egrave          E `     /Egrave        &Egrave; È
+!201 0xc9  É       Eacute          E '     /Eacute        &Eacute; É
+!202 0xca  Ê       Ecircumflex     E ^     /Ecircumflex   &Ecirc;  Ê
+!203 0xcb  Ë       Ediaeresis      E "     /Edieresis     &Euml;   Ë
+!204 0xcc  Ì       Igrave          I `     /Igrave        &Igrave; Ì
+!205 0xcd  Í       Iacute          I '     /Iacute        &Iacute; Í
+!206 0xce  Î       Icircumflex     I ^     /Icircumflex   &Icirc;  Î
+!207 0xcf  Ï       Idiaeresis      I "     /Idieresis     &Iuml;   Ï
+!208 0xd0  Ð       ETH             D -     /Eth
+!209 0xd1  Ñ       Ntilde          N ~     /Ntilde        &Ntilde; Ñ
+!210 0xd2  Ò       Ograve          O `     /Ograve        &Ograve; Ò
+!211 0xd3  Ó       Oacute          O '     /Oacute        &Oacute; Ó
+!212 0xd4  Ô       Ocircumflex     O ^     /Ocircumflex   &Ocirc;  Ô
+!213 0xd5  Õ       Otilde          O ~     /Otilde        &Otilde; Õ
+!214 0xd6  Ö       Odiaeresis      O "     /Odieresis     &Ouml;   Ö
+!215 0xd7  ×       multiply        x x     /multiply
+!216 0xd8  Ø       Ooblique        O /     /Oslash        &Oslash; Ø
+!217 0xd9  Ù       Ugrave          U `     /Ugrave        &Ugrave; Ù
+!218 0xda  Ú       Uacute          U '     /Uacute        &Uacute; Ú
+!219 0xdb  Û       Ucircumflex     U ^     /Ucircumflex   &Ucirc;  Û
+!220 0xdc  Ü       Udiaeresis      U "     /Udieresis     &Uuml;   Ü
+!221 0xdd  Ý       Yacute          Y '     /Yacute        &Yacute; Ý
+!222 0xde  Þ       THORN           P |     /Thorn
+!223 0xdf  ß       ssharp          s s     /germandbls    &szlig;  ß
+!224 0xe0  à       agrave          a `     /agrave        &agrave; à
+!225 0xe1  á       aacute          a '     /aacute        &aacute; á
+!226 0xe2  â       acircumflex     a ^     /acircumflex   &acirc;  â
+!227 0xe3  ã       atilde          a ~     /atilde        &atilde; ã
+!228 0xe4  ä       adiaeresis      a "     /adieresis     &auml;   ä
+!229 0xe5  å       aring           a *     /aring         &aring;  å
+!230 0xe6  æ       ae              a e     /ae            &aelig;  æ
+!231 0xe7  ç       ccedilla        c ,     /ccedilla      &ccedil; ç
+!232 0xe8  è       egrave          e `     /egrave        &egrave; è
+!233 0xe9  é       eacute          e '     /eacute        &eacute; é
+!234 0xea  ê       ecircumflex     e ^     /ecircumflex   &ecirc;  ê
+!235 0xeb  ë       ediaeresis      e "     /edieresis     &euml;   ë
+!236 0xec  ì       igrave          i `     /igrave        &igrave; ì
+!237 0xed  í       iacute          i '     /iacute        &iacute; í
+!238 0xee  î       icircumflex     i ^     /icircumflex   &icirc;  î
+!239 0xef  ï       idiaeresis      i "     /idieresis     &iuml;   ï
+!240 0xf0  ð       eth             d -     /eth
+!241 0xf1  ñ       ntilde          n ~     /ntilde        &ntilde; ñ
+!242 0xf2  ò       ograve          o `     /ograve        &ograve; ò
+!243 0xf3  ó       oacute          o '     /oacute        &oacute; ó
+!244 0xf4  ô       ocircumflex     o ^     /ocircumflex   &ocirc;  ô
+!245 0xf5  õ       otilde          o ~     /otilde        &otilde; õ
+!246 0xf6  ö       odiaeresis      o "     /odieresis     &ouml;   ö
+!247 0xf7  ÷       division        - :     /divide
+!248 0xf8  ø       oslash          o /     /oslash        &oslash; ø
+!249 0xf9  ù       ugrave          u `     /ugrave        &ugrave; ù
+!250 0xfa  ú       uacute          u '     /uacute        &uacute; ú
+!251 0xfb  û       ucircumflex     u ^     /ucircumflex   &ucirc;  û
+!252 0xfc  ü       udiaeresis      u "     /udieresis     &uuml;   ü
+!253 0xfd  ý       yacute          y '     /yacute        &yacute; ý
+!254 0xfe  þ       thorn           p |     /thorn
+!255 0xff  ÿ       ydiaeresis      y "     /ydieresis     &yuml;   ÿ
+
+! remove both keycodes (to which Control_L & Super_L is attached)
+!     from previous modifier map
+remove control   = Control_L
+remove mod4      = Super_L Hyper_L
+
+! swap keysyms
+keysym Control_L = Super_L Hyper_L
+keysym Super_L   = Control_L
+
+! re-add both keycodes to respective modifier maps
+add    control   = Control_L
+add    mod4      = Super_L Hyper_L
+
+
+!remove control = Control_L Control_R
+!remove mod4 = Super_L Super_R Super_L Hyper_L
+!add control = Super_L Super_R Super_L Hyper_L
+!add mod4 = Control_L Control_R
+
+!! Swap caps lock and escape
+!remove Lock = Caps_Lock
+!keysym Escape = Caps_Lock
+!keysym Caps_Lock = Escape
+!add Lock = Caps_Lock
+
+
+!!! Reverse Command and control
+!!! remove Mod4 = Super_L Super_R
+!!! remove Control = Control_L Control_R
+!!! keysym Control_L = Super_L
+!!! keysym Control_R = Super_R
+!!! keysym Super_L = Control_L
+!!! keysym Super_R = Control_R
+!!! add Mod4 = Super_L Super_R
+!!! add Control = Control_L Control_R
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Ebenen
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Ebene 1: normal
+! Ebene 2: Shift
+! Ebene 3: Mod3
+! Ebene 4: Mod4 (zum Markieren Shift+Mod4)
+! Ebene 5: Shift+Mod3
+! Ebene 6: Mod3+Mod4 (in dieser Reihenfolge!)
+! Ebene 7: wird (bis auf technisch bedingte Ausnahmen) nicht belegt
+! Multi_key=Compose (keine eigene Ebene): Mod3+Tab or right window key
+! Feststellen/Shift_Lock: Shift+Shift
+! Mod4_Lock: Mod4(rechts)+Mod4(links)
+
+! Reihenfolge der Ebenen in der Xmodmap:
+!            Ebene1  Ebene2  Ebene3  Ebene5  Ebene4  Ebene4+Sh  Ebene6 Ebene7
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Modifier definition
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+clear Lock
+clear Mod2
+! Mod2 war NumLock !
+clear Mod3
+clear Mod5
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Shift
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! 50=left 62=right
+! Shift+Shift ergibt ein ShiftLock (wie Caps, wirkt aber auf alle Zeichen, nicht nur auf Großbuchstaben)
+! Der Lock lässt sich durch ein weiteres Shift lösen.
+! Eigentlich (siehe Referenz) sollte hier ein CapsLock stehen.
+keycode 50 =  Shift_L Shift_Lock
+keycode 62 =  Shift_R Shift_Lock
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Mod3
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! 66=left 51=right
+! Make CapsLock an modifier called Mod3 (similar to AltGr) (Mode_switch or ISO_Group_Shift is for 3rd and 4th level)
+! Make former CapsLock and qwertz-# to Mode_switch or ISO_Group_Shift
+! Mod3(links) (=Qwertz-Caps) erlaubt nur 4 Ebenen
+! Ohne einen Eintrag in der zweiten Gruppe (=Ebene 3) ergäbe Mod3+Mod3=Group_Shift+Group_Shift=Gruppe 3=Ebene 6. Das ist nicht gewünscht.
+keycode 66 =  ISO_Group_Shift ISO_Group_Shift ISO_First_Group  NoSymbol
+keycode 51 =  ISO_Group_Shift ISO_Group_Shift ISO_First_Group  NoSymbol
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Mod4
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! 94=left 113=right
+! Make the former AltGr and qwertz-< to Mod4 (ISO_Level3_Shift)
+! Mod4(rechts)+Mod4(links) lässt Mod4 einrasten (Mod4Lock)
+! das funktioniert nur in dieser Reihenfolge, da Mod4(rechts) (=Qwertz-AltGr) nur 4 Ebenen hat
+! Der Lock lässt sich durch ein weiteres Mod4 lösen.
+keysym less = ISO_Level3_Shift  ISO_Level3_Shift  ISO_Group_Shift   ISO_Group_Shift  ISO_Level3_Lock  NoSymbol
+keysym ISO_Level3_Shift = ISO_Level3_Shift  ISO_Level3_Shift  ISO_Group_Shift   ISO_Group_Shift  ISO_Level3_Lock  NoSymbol
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! window keys
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! keysym Super_L = Super_L
+! keycode 116 = Super_R
+! keysym Super_R = Multi_key Multi_key
+! add Mod4 = Super_L
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! general Lock
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Einrasten über linke Win-Taste+Modifier, Lösen über nochmaliges Betätigen des Modifiers
+! Shift_Lock und Mo4_Lock funktionieren, Mod3_Lock lässt sich aber nicht mehr lösen!!!!
+! keycode 115 = ISO_Lock  NoSymbol
+! add Lock = ISO_Lock
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! main keyboard
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Tab key
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+keycode 23 = Tab  ISO_Left_Tab  Multi_key  ISO_Level3_Lock
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Space and Return key
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+keycode 65 = space		space		space		nobreakspace	KP_0		KP_0		U202F		NoSymbol
+keycode 36 = Return		Return		Return		Return		KP_Enter	KP_Enter	Return		Return
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! dead keys
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!            Ebene1		Ebene2		Ebene3		Ebene5		Ebene4		Ebene4+Sh	Ebene6		Ebene7
+
+keycode 49 = dead_circumflex	dead_caron	U21BB		U02DE		dead_abovedot Pointer_EnableKeys dead_belowdot	NoSymbol
+! called T1	ˆ		ˇ		↻		˞		˙	     (keypad-mouse mode) .
+keycode 21 = dead_grave		dead_cedilla	dead_abovering	dead_dasia	dead_diaeresis	NoSymbol	dead_macron	NoSymbol
+! called T2	`		¸		˚		῾ dasia (asper)	¨				¯
+keycode 35 = dead_acute		dead_tilde	dead_stroke	dead_psili      dead_doubleacute	NoSymbol	dead_breve	NoSymbol
+! called T3	´		˜		/		᾿ psili (lenis)	˝				˘
+
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! The first row (number Row)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!            Ebene1		Ebene2		Ebene3		Ebene5		Ebene4		Ebene4+Sh	Ebene6		Ebene7
+
+keycode 10 = 	1		degree		onesuperior	onesubscript	ordfeminine	NoSymbol	notsign		NoSymbol
+!				°		¹	  	₁		ª	  			¬
+keycode 11 = 	2		section		twosuperior	twosubscript	masculine	NoSymbol	logicalor	NoSymbol
+!				§		²	  	₂		º				∨
+keycode 12 = 	3		U2113		threesuperior	threesubscript	numerosign	NoSymbol	logicaland	NoSymbol
+!				ℓ liter		³	  	₃		№				∧
+keycode 13 = 	4		guillemotright	U203A		femalesymbol	NoSymbol	NoSymbol	U22A5		NoSymbol
+!				»		›		♀						⊥ perpendicular
+keycode 14 = 	5		guillemotleft	U2039		malesymbol	periodcentered	NoSymbol	U2221		NoSymbol
+!				«		‹		♂		·				∡ angle sign
+keycode 15 = 	6		dollar		cent		U26A5		sterling	NoSymbol	U2225		NoSymbol
+!				$		¢		⚥		£				∥ parallel
+
+keycode 16 = 	7		EuroSign	yen		U03F0		currency	NoSymbol	rightarrow	NoSymbol
+!				€		¥		ϰ Greek_kappa	¤				→
+keycode 17 = 	8   doublelowquotemark    singlelowquotemark  leftanglebracket	Tab		ISO_Left_Tab	infinity	NoSymbol
+!				„		‚		⟨ (bra)						∞
+keycode 18 = 	9   leftdoublequotemark   leftsinglequotemark rightanglebracket KP_Divide	KP_Divide	variation	NoSymbol
+!				“		‘		⟩ (ket)		/		/		∝ proportional to
+keycode 19 = 	0   rightdoublequotemark  rightsinglequotemark  zerosubscript	KP_Multiply	KP_Multiply	emptyset	NoSymbol
+!			”			’		₀		*		*		∅
+keycode 20 = minus		emdash		NoSymbol	U2011		KP_Subtract	KP_Subtract	hyphen		NoSymbol
+!		-		—				‑ non-breaking	-		-		­ soft hyphen
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! The upper row
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!            Ebene1		Ebene2		Ebene3		Ebene5		Ebene4		Ebene4+Sh	Ebene6		Ebene7
+
+keycode 24 = 	x		X		ellipsis	Greek_xi	Prior		Prior		Greek_XI	Greek_XI
+!						…		ξ						Ξ		Ξ
+keycode 25 = 	v		V		underscore	NoSymbol	BackSpace	BackSpace	radical		NoSymbol
+!						_								√
+keycode 26 = 	l		L		bracketleft	Greek_lambda	Up		Up		Greek_LAMBDA	Greek_LAMBDA
+!						[		λ						Λ		Λ
+keycode 27 = 	c		C		bracketright	Greek_chi	Delete		Delete		U2102		NoSymbol
+!						]		χ						ℂ komplex
+keycode 28 = 	w		W		asciicircum	Greek_omega	Next		Next		Greek_OMEGA	Greek_OMEGA
+!						^		ω						Ω		Ω
+
+keycode 29 = 	k		K		exclam		Greek_kappa	exclamdown	NoSymbol	multiply	NoSymbol
+!						!		κ		¡				× times
+keycode 30 = 	h		H		less		Greek_psi	KP_7		KP_7		Greek_PSI	Greek_PSI
+!						<		η						Ψ		Ψ
+keycode 31 = 	g		G		greater		Greek_gamma	KP_8		KP_8		Greek_GAMMA	Greek_GAMMA
+!						>		γ						Γ		Γ
+keycode 32 = 	f		F		equal		Greek_phi	KP_9		KP_9		Greek_PHI	Greek_PHI
+!						=		φ 						Φ		Φ
+keycode 33 = 	q		Q		ampersand	U03D5		KP_Add		KP_Add		U211A		NoSymbol
+!						&		ϕ Greek_phi	+		+		ℚ rational
+keycode 34 = ssharp		U1E9E		U017F	 Greek_finalsmallsigma  U2212		NoSymbol	jot		NoSymbol
+!	     	ß		ẞ Capital ß	ſ long s	ς		− real minus			∘ ring operator
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! The home row (middle row)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!            Ebene1		Ebene2		Ebene3		Ebene5		Ebene4		Ebene4+Sh	Ebene6		Ebene7
+
+keycode 38 = 	u		U		backslash	NoSymbol	Home		Home		includedin	NoSymbol
+!						\								⊂
+keycode 39 = 	i		I		slash		Greek_iota	Left		Left		integral	NoSymbol
+!						/		ι						∫
+keycode 40 = 	a		A		braceleft	Greek_alpha	Down		Down		U2200		NoSymbol
+!						{		α						∀ for all
+keycode 41 = 	e		E		braceright	Greek_epsilon	Right		Right		U2203		NoSymbol
+!						}		ε						∃ there exists
+keycode 42 = 	o		O		asterisk	Greek_omicron	End		End		elementof	NoSymbol
+!						*		ο						∈
+
+keycode 43 = 	s		S		question	Greek_sigma	questiondown	NoSymbol	Greek_SIGMA	Greek_SIGMA
+!						?		σ		¿				Σ		Σ
+keycode 44 = 	n		N		parenleft	Greek_nu	KP_4		KP_4		U2115		NoSymbol
+!						(		ν						ℕ natural
+keycode 45 = 	r		R		parenright	Greek_rho	KP_5		KP_5		U211D		NoSymbol
+!						)		ρ						ℝ real
+keycode 46 = 	t		T		minus		Greek_tau	KP_6		KP_6		partialderivative
+!						-		τ						∂
+keycode 47 = 	d		D		colon		Greek_delta	KP_Separator	comma		Greek_DELTA	Greek_DELTA
+!						:		δ		,		,		Δ		Δ
+keycode 48 = 	y		Y		at		Greek_upsilon	period		KP_Decimal	nabla		NoSymbol
+!						@		υ		.		.		∇
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! The lower row
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!            Ebene1		Ebene2		Ebene3		Ebene5		Ebene4		Ebene4+Sh	Ebene6		Ebene7
+
+keycode 52 = udiaeresis		Udiaeresis	numbersign	NoSymbol	Escape		Escape		union		NoSymbol
+!		ü		Ü		#								∪
+keycode 53 = odiaeresis		Odiaeresis	dollar		U03F5		Tab		ISO_Left_Tab	intersection	NoSymbol
+!		ö		Ö		$		ϵ						∩
+keycode 54 = adiaeresis		Adiaeresis	bar		Greek_eta	Insert		Insert		U2135		NoSymbol
+!		ä		Ä		|		η						ℵ
+keycode 55 = 	p		P		asciitilde	Greek_pi	Return		Return		Greek_PI	Greek_PI
+!						~		π						Π		Π
+keycode 56 = 	z		Z		grave		Greek_zeta	Undo		Redo		U2124		NoSymbol
+!						`		ζ						ℤ integers
+
+keycode 57 = 	b		B		plus		Greek_beta	colon		NoSymbol	U21D0		NoSymbol
+!						+		β		:				⇐
+keycode 58 = 	m		M		percent		Greek_mu	KP_1		KP_1		ifonlyif	NoSymbol
+!						%		μ						⇔
+keycode 59 = comma		endash		quotedbl	U03F1		KP_2		KP_2		U21D2		NoSymbol
+!		,		–		"		ϱ Greek_rho					⇒ implies
+keycode 60 = period	   enfilledcircbullet	apostrophe	U03D1		KP_3		KP_3		U21A6		NoSymbol
+!		.		•		'		ϑ Greek_theta					↦
+keycode 61 = 	j		J		semicolon	Greek_theta	semicolon	NoSymbol	Greek_THETA	Greek_THETA
+!						;		θ		;				Θ
+
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! Keypad
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! The uppest row
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!            Ebene1		Ebene2		Ebene3		Ebene5		Ebene6		Ebene7		Ebene4		Ebene4+Sh
+
+keycode 77  = Tab		ISO_Left_Tab	equal		approxeq	identical	NoSymbol	notequal	Pointer_EnableKeys
+!						=		≈ almost equal	≡ identical to			≠		(keypad-mouse mode)
+keysym KP_Divide = KP_Divide	KP_Divide	division	U2300		U2223		NoSymbol	U2044		NoSymbol
+!		/		/		÷		⌀ diameter	∣ divides			(for ⁶⁄₅₉)
+keycode 63  = KP_Multiply	KP_Multiply	U22C5		U2299		U2297		NoSymbol	multiply	NoSymbol
+!		*		*		⋅ dot		⊙ cirled dot	⊗ circled times			× times
+keycode 82  = KP_Subtract	KP_Subtract	U2212		U2296		U2238		NoSymbol	U2216		NoSymbol
+!		-		-		− real minus	⊖ cirled minus	∸ dot minus			∖ set minus
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! The upper row
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!            Ebene1		Ebene2		Ebene3		Ebene5		Ebene6		Ebene7		Ebene4		Ebene4+Sh
+
+keycode 79 =  KP_7		U2714		U2195		U226A		upstile		NoSymbol	KP_Home		KP_Home
+!				✔ check mark	↕ arrow		≪ much less	⌈
+keycode 80 =  KP_8		U2718		uparrow		intersection	U22C2		NoSymbol	KP_Up		KP_Up
+!				✘ ballot x	↑		∩		⋂ n-ary intersection
+keycode 81 =  KP_9		dagger		U20D7		U226B		U2309		NoSymbol	KP_Prior	KP_Prior
+!				†		vector		≫ much greater	⌉
+keycode 86 =  KP_Add		KP_Add		plusminus	U2295		U2214		NoSymbol	U2213		NoSymbol
+!		+		+		±		circled plus	dot plus			∓ minus-plus
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! The middle row
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!            Ebene1		Ebene2		Ebene3		Ebene5		Ebene6		Ebene7		Ebene4		Ebene4+Sh
+
+keycode 83 =  KP_4		club		leftarrow	includedin	U2286		NoSymbol	KP_Left		KP_Left
+!				♣		←		⊂		⊆
+keycode 84 =  KP_5		EuroSign	colon		U22B6 		U22B7		NoSymbol	KP_Begin	KP_Begin
+!				€		:		⊶ original of	⊷ image of
+keycode 85 =  KP_6		U2023		rightarrow	includes	U2287		NoSymbol	KP_Right	KP_Right
+!				‣		→		⊃		⊇
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! The lower row
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!            Ebene1		Ebene2		Ebene3		Ebene5		Ebene6		Ebene7		Ebene4		Ebene4+Sh
+
+keycode 87 =  KP_1		diamond		U2194		lessthanequal	downstile	NoSymbol	KP_End		KP_End
+!				♦		↔ arrow		≤		⌊
+keycode 88 =  KP_2		heart		downarrow	union		U22C3		NoSymbol	KP_Down		KP_Down
+!				♥		↓		∪		⋃ n-ary union
+keycode 89 =  KP_3		U2660		U21CC	      greaterthanequal	U230B		NoSymbol	KP_Next		KP_Next
+!				♠		⇌		≥		⌋
+! keycode 108 = KP_Enter	KP_Enter	KP_Enter	KP_Enter	KP_Enter	KP_Enter	KP_Enter	KP_Enter
+!
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! The lowest row
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!            Ebene1		Ebene2		Ebene3		Ebene5		Ebene6		Ebene7		Ebene4		Ebene4+Sh
+
+keycode 90 = KP_0		U2423		percent		U2030		U25A1		NoSymbol	KP_Insert	KP_Insert
+!				␣ space sign	%		‰ per mille	□ white square
+keycode 91 = KP_Separator	period		comma		minutes		seconds		NoSymbol	KP_Delete	KP_Delete
+!		,		.		,		′ min,feets	″ sec,inches
+
+
+add Mod3 = ISO_First_Group
+add Mod5 = ISO_Level3_Shift
+```
+
+## Another one
+
+```
+! Assign `Control' to the Ctrl-Keys
+! add Control = Control_L
+! add Control = Control_R
+
+! Assign `Compose' to the key labeled `Caps_Lock'
+! keycode 66 = Multi_key
+
+! Assign `Control` to the key labeled `Caps_Lock'
+! keycode 66 = Control_L
+
+! Add `Alt' keys, used by Emacs:
+! add     mod1    = Alt_L Alt_R
+
+! Make sure twindows-key works as modkey
+add mod4 = Super_L
+add mod4 = Hyper_L
+add mod4 = Multi_key
+
+! Fn+F3 -> mute sound etc. on laptop
+! keycode 176 = XF86AudioMedia
+! keycode 160 = XF86AudioMute
+
+! Assign Compose to "Menu"-Key (press menu-key and ' followed by letter - e.g. menu ' a => á)
+! keycode 117 = Multi_key
+
+! keysym a = a A adiaeresis Adiaeresis
+! keysym c = c C ccedilla
+! keysym e = e E ediaeresis
+! keysym i = i I idiaeresis
+! keysym m = m M mu
+! keysym n = n N ntilde
+! keysym o = o O odiaeresis Odiaeresis
+! keysym s = s S ssharp section
+! keysym u = u U udiaeresis Udiaeresis
+! keysym y = y Y ydiaeresis NoSymbol
+! keycode 94 = asciicircum degree
+
+! keysym 1 = 1 exclam     exclamdown    onesuperior
+! keysym 2 = 2 at         onehalf       twosuperior
+! keysym 3 = 3 numbersign threequarters threesuperior
+! keysym 4 = 4 dollar     onequarter    section
+! keysym 0 = 0 parenright degree        NoSymbol
+
+! Win keys. I want to map them to escape - vi rulez ;-)
+! keycode 115 = Escape
+! keycode 116 = Escape
+
+! keycode 115 = XF86AudioStop
+
+! Euro-Symbols:
+! keycode 26 = e E EuroSign cent
+! keycode 26 = e E currency cent
+! keycode 54 = c C cent copyright
+! Euro Sign:
+! keycode 26 = e E 0x00a4 0x0080
+! keycode 26 = e E EuroSign
+! keycode 26 = e E currency cent
+
+! keycode 27 = r R registered
+
+! keysym equal  = equal    plus       plusminus      NoSymbol
+! keysym slash  = slash    question   questiondown   NoSymbol
+! keysym comma  = comma    less       guillemotleft  NoSymbol
+! keysym period = period   greater    guillemotright NoSymbol
+
+! Some examples for the compose key (if "keycode 115 = Multi_key"
+! then the left windows key is mapped to the compose key),
+! pressing compose key + $x + $y will generate the following character:
+!
+! Compose  + """  +  "a"  = ä
+! Compose  + """  +  "e"  = ¤
+! Compose  + """  +  "i"  = ï
+! Compose  + """  +  "o"  = ö
+! Compose  + """  +  "u"  = ü
+! Compose  + """  +  "A"  = Ä
+! ...
+! Compose  + "~"  +  "n"  = ñ
+! Compose  + "a"  +  "a" = å
+! Compose  + "a"  +  "e" = æ
+! Compose  + "A"  +  "T" = @
+! Compose  + "!"  +  "!" = ¡
+! Compose  + "l"  +  "-" = £
+! Compose  + "y"  +  "=" = ¥
+! Compose  + "c"  +  "o" = ©
+! Compose  + "a"  +  "_" = ª
+! Compose  + "_"  +  "o" = º
+! Compose  + "<"  +  "<" = «
+! Compose  + "0"  +  "*" = °
+! Compose  + "u"  +  "/" = µ
+! Compose  + "|"  +  "|" =
+! Compose  + " "  +  " " =   ("Geschütztes Leerzeichen")
+! Compose  + "("  +  "r" = ®
+! Compose  + "_"  +  "_" = ¯
+! Compose  + "-"  +  ":" = ÷
+! Compose  + "x"  +  "x" = ×
+! Compose  + """  +  """ =
+
+keycode   8 =
+keycode   9 = Escape
+keycode  10 = 1 exclam exclamdown onesuperior
+keycode  11 = 2 at onehalf twosuperior
+keycode  12 = 3 numbersign threequarters threesuperior
+keycode  13 = 4 dollar onequarter section
+keycode  14 = 5 percent onehalf threeeighths onehalf threeeighths
+keycode  15 = 6 asciicircum notsign fiveeighths notsign fiveeighths
+keycode  16 = 7 ampersand braceleft
+keycode  17 = 8 asterisk bracketleft
+keycode  18 = 9 parenleft bracketright
+keycode  19 = 0 parenright braceright
+keycode  20 =  minus  underscore ssharp
+keycode  21 = equal plus plusminus
+keycode  22 = BackSpace BackSpace BackSpace BackSpace
+keycode  23 = Tab ISO_Left_Tab
+keycode  24 = q Q at
+keycode  25 = w W lstroke Lstroke lstroke Lstroke
+keycode  26 = e E EuroSign cent
+keycode  27 = r R
+keycode  28 = t T
+keycode  29 = y Y ydiaeresis
+keycode  30 = u U udiaeresis Udiaeresis
+keycode  31 = i I idiaeresis
+keycode  32 = o O odiaeresis Odiaeresis
+keycode  33 = p P
+keycode  34 =  bracketleft braceleft udiaeresis      Udiaeresis
+keycode  35 =  bracketright braceright asciitilde
+keycode  36 = Return
+keycode  37 = Control_L
+keycode  38 = a A adiaeresis Adiaeresis
+keycode  39 = s S ssharp section
+keycode  40 = d D eth ETH eth ETH
+keycode  41 = f F
+keycode  42 = g G eng ENG eng ENG
+keycode  43 = h H hstroke Hstroke hstroke Hstroke
+keycode  44 = j J
+keycode  45 = k K
+keycode  46 = l L lstroke Lstroke lstroke Lstroke
+keycode  47 =  semicolon   colon     odiaeresis      Odiaeresis
+keycode  48 =  apostrophe  quotedbl  adiaeresis      Adiaeresis
+keycode  49 =  grave asciitilde degree
+keycode  50 = Shift_L
+keycode  51 = backslash bar dead_grave dead_breve dead_grave dead_breve
+keycode  52 = z Z
+keycode  53 = x X
+keycode  54 = c C cent copyright
+keycode  55 = v V
+keycode  56 = b B
+keycode  57 = n N ntilde
+keycode  58 = m M mu
+keycode  59 = comma less guillemotleft multiply horizconnector multiply
+keycode  60 = period greater guillemotright division periodcentered division
+keycode  61 = slash question questiondown dead_abovedot dead_belowdot dead_abovedot
+keycode  62 = Shift_R
+keycode  63 = KP_Multiply XF86_ClearGrab
+keycode  64 = Alt_L Meta_L
+keycode  65 = space
+keycode  66 = Caps_Lock
+keycode  67 = F1 XF86_Switch_VT_1
+keycode  68 = F2 XF86_Switch_VT_2
+keycode  69 = F3 XF86_Switch_VT_3
+keycode  70 = F4 XF86_Switch_VT_4
+keycode  71 = F5 XF86_Switch_VT_5
+keycode  72 = F6 XF86_Switch_VT_6
+keycode  73 = F7 XF86_Switch_VT_7
+keycode  74 = F8 XF86_Switch_VT_8
+keycode  75 = F9 XF86_Switch_VT_9
+keycode  76 = F10 XF86_Switch_VT_10
+keycode  77 = Num_Lock Pointer_EnableKeys
+keycode  78 = Scroll_Lock
+keycode  79 = KP_Home KP_7
+keycode  80 = KP_Up KP_8
+keycode  81 = KP_Prior KP_9
+keycode  82 = KP_Subtract XF86_Prev_VMode
+keycode  83 = KP_Left KP_4
+keycode  84 = KP_Begin KP_5
+keycode  85 = KP_Right KP_6
+keycode  86 = KP_Add XF86_Next_VMode
+keycode  87 = KP_End KP_1
+keycode  88 = KP_Down KP_2
+keycode  89 = KP_Next KP_3
+keycode  90 = KP_Insert KP_0
+keycode  91 = KP_Delete KP_Separator
+keycode  92 = ISO_Level3_Shift NoSymbol ISO_Level3_Shift
+keycode  93 =
+keycode  94 = less greater less greater bar brokenbar
+keycode  95 = F11 XF86_Switch_VT_11 F11 XF86_Switch_VT_11
+keycode  96 = F12 XF86_Switch_VT_12 F12 XF86_Switch_VT_12
+keycode  97 =
+keycode  98 = Katakana NoSymbol Katakana
+keycode  99 = Hiragana NoSymbol Hiragana
+keycode 100 = Henkan_Mode NoSymbol Henkan_Mode
+keycode 101 = Hiragana_Katakana NoSymbol Hiragana_Katakana
+keycode 102 = Muhenkan NoSymbol Muhenkan
+keycode 103 =
+keycode 104 = KP_Enter NoSymbol KP_Enter
+keycode 105 = Control_R NoSymbol Control_R
+keycode 106 = KP_Divide XF86_Ungrab KP_Divide XF86_Ungrab
+keycode 107 = Print Sys_Req Print Sys_Req
+! AltGr:
+keycode 108 = Mode_switch
+keycode 109 = Linefeed NoSymbol Linefeed
+keycode 110 = Home NoSymbol Home
+keycode 111 = Up NoSymbol Up
+keycode 112 = Prior NoSymbol Prior
+keycode 113 = Left NoSymbol Left
+keycode 114 = Right NoSymbol Right
+keycode 115 = End NoSymbol End
+keycode 116 = Down NoSymbol Down
+keycode 117 = Next NoSymbol Next
+keycode 118 = Insert NoSymbol Insert
+keycode 119 = Delete NoSymbol Delete
+keycode 120 =
+keycode 121 = XF86AudioMute NoSymbol XF86AudioMute
+keycode 122 = XF86AudioLowerVolume NoSymbol XF86AudioLowerVolume
+keycode 123 = XF86AudioRaiseVolume NoSymbol XF86AudioRaiseVolume
+keycode 124 = XF86PowerOff NoSymbol XF86PowerOff
+keycode 125 = KP_Equal NoSymbol KP_Equal
+keycode 126 = plusminus NoSymbol plusminus
+keycode 127 = Pause Break Pause Break
+keycode 128 =
+keycode 129 = KP_Decimal NoSymbol KP_Decimal
+keycode 130 = Hangul NoSymbol Hangul
+keycode 131 = Hangul_Hanja NoSymbol Hangul_Hanja
+keycode 132 =
+keycode 133 = Super_L NoSymbol Super_L
+keycode 134 = Super_R NoSymbol Super_R
+keycode 135 = Menu NoSymbol Menu
+keycode 136 = Cancel NoSymbol Cancel
+keycode 137 = Redo NoSymbol Redo
+keycode 138 = SunProps NoSymbol SunProps
+keycode 139 = Undo NoSymbol Undo
+keycode 140 = SunFront NoSymbol SunFront
+keycode 141 = XF86Copy NoSymbol XF86Copy
+keycode 142 = SunOpen NoSymbol SunOpen
+keycode 143 = XF86Paste NoSymbol XF86Paste
+keycode 144 = Find NoSymbol Find
+keycode 145 = XF86Cut NoSymbol XF86Cut
+keycode 146 = Help NoSymbol Help
+keycode 147 = XF86MenuKB NoSymbol XF86MenuKB
+keycode 148 = XF86Calculator NoSymbol XF86Calculator
+keycode 149 =
+keycode 150 = XF86Sleep NoSymbol XF86Sleep
+keycode 151 = XF86WakeUp NoSymbol XF86WakeUp
+keycode 152 = XF86Explorer NoSymbol XF86Explorer
+keycode 153 = XF86Send NoSymbol XF86Send
+keycode 154 =
+keycode 155 = XF86Xfer NoSymbol XF86Xfer
+keycode 156 = XF86Launch1 NoSymbol XF86Launch1
+keycode 157 = XF86Launch2 NoSymbol XF86Launch2
+keycode 158 = XF86WWW NoSymbol XF86WWW
+keycode 159 = XF86DOS NoSymbol XF86DOS
+keycode 160 = XF86ScreenSaver NoSymbol XF86ScreenSaver
+keycode 161 =
+keycode 162 = XF86RotateWindows NoSymbol XF86RotateWindows
+keycode 163 = XF86Mail NoSymbol XF86Mail
+keycode 164 = XF86Favorites NoSymbol XF86Favorites
+keycode 165 = XF86MyComputer NoSymbol XF86MyComputer
+keycode 166 = XF86Back NoSymbol XF86Back
+keycode 167 = XF86Forward NoSymbol XF86Forward
+keycode 168 =
+keycode 169 = XF86Eject NoSymbol XF86Eject
+keycode 170 = XF86Eject XF86Eject XF86Eject XF86Eject
+keycode 171 = XF86AudioNext NoSymbol XF86AudioNext
+keycode 172 = XF86AudioPlay XF86AudioPause XF86AudioPlay XF86AudioPause
+keycode 173 = XF86AudioPrev NoSymbol XF86AudioPrev
+keycode 174 = XF86AudioStop XF86Eject XF86AudioStop XF86Eject
+keycode 175 = XF86AudioRecord NoSymbol XF86AudioRecord
+keycode 176 = XF86AudioRewind NoSymbol XF86AudioRewind
+keycode 177 = XF86Phone NoSymbol XF86Phone
+keycode 178 =
+keycode 179 = XF86Tools NoSymbol XF86Tools
+keycode 180 = XF86HomePage NoSymbol XF86HomePage
+keycode 181 = XF86Reload NoSymbol XF86Reload
+keycode 182 = XF86Close NoSymbol XF86Close
+keycode 183 =
+keycode 184 =
+keycode 185 = XF86ScrollUp NoSymbol XF86ScrollUp
+keycode 186 = XF86ScrollDown NoSymbol XF86ScrollDown
+keycode 187 = parenleft NoSymbol parenleft
+keycode 188 = parenright NoSymbol parenright
+keycode 189 = XF86New NoSymbol XF86New
+keycode 190 = Redo NoSymbol Redo
+keycode 191 =
+keycode 192 =
+keycode 193 =
+keycode 194 =
+keycode 195 =
+keycode 196 =
+keycode 197 =
+keycode 198 =
+keycode 199 =
+keycode 200 = XF86TouchpadToggle NoSymbol XF86TouchpadToggle
+keycode 201 =
+keycode 202 =
+keycode 203 = Mode_switch NoSymbol Mode_switch
+keycode 204 = NoSymbol Alt_L NoSymbol Alt_L
+keycode 205 = NoSymbol Meta_L NoSymbol Meta_L
+keycode 206 = NoSymbol Super_L NoSymbol Super_L
+keycode 207 = NoSymbol Hyper_L NoSymbol Hyper_L
+keycode 208 = XF86AudioPlay NoSymbol XF86AudioPlay
+keycode 209 = XF86AudioPause NoSymbol XF86AudioPause
+keycode 210 = XF86Launch3 NoSymbol XF86Launch3
+keycode 211 = XF86Launch4 NoSymbol XF86Launch4
+keycode 212 =
+keycode 213 = XF86Suspend NoSymbol XF86Suspend
+keycode 214 = XF86Close NoSymbol XF86Close
+keycode 215 = XF86AudioPlay NoSymbol XF86AudioPlay
+keycode 216 = XF86AudioForward NoSymbol XF86AudioForward
+keycode 217 =
+keycode 218 = Print NoSymbol Print
+keycode 219 =
+keycode 220 = XF86WebCam NoSymbol XF86WebCam
+keycode 221 =
+keycode 222 =
+keycode 223 = XF86Mail NoSymbol XF86Mail
+keycode 224 =
+keycode 225 = XF86Search NoSymbol XF86Search
+keycode 226 =
+keycode 227 = XF86Finance NoSymbol XF86Finance
+keycode 228 =
+keycode 229 = XF86Shop NoSymbol XF86Shop
+keycode 230 =
+keycode 231 = Cancel NoSymbol Cancel
+keycode 232 = XF86MonBrightnessDown NoSymbol XF86MonBrightnessDown
+keycode 233 = XF86MonBrightnessUp NoSymbol XF86MonBrightnessUp
+keycode 234 = XF86AudioMedia NoSymbol XF86AudioMedia
+keycode 235 = XF86Display NoSymbol XF86Display
+keycode 236 = XF86KbdLightOnOff NoSymbol XF86KbdLightOnOff
+keycode 237 = XF86KbdBrightnessDown NoSymbol XF86KbdBrightnessDown
+keycode 238 = XF86KbdBrightnessUp NoSymbol XF86KbdBrightnessUp
+keycode 239 = XF86Send NoSymbol XF86Send
+keycode 240 = XF86Reply NoSymbol XF86Reply
+keycode 241 = XF86MailForward NoSymbol XF86MailForward
+keycode 242 = XF86Save NoSymbol XF86Save
+keycode 243 = XF86Documents NoSymbol XF86Documents
+keycode 244 = XF86Battery NoSymbol XF86Battery
+keycode 245 = XF86Bluetooth NoSymbol XF86Bluetooth
+keycode 246 = XF86WLAN NoSymbol XF86WLAN
+keycode 247 =
+keycode 248 =
+keycode 249 =
+keycode 250 =
+keycode 251 =
+keycode 252 =
+keycode 253 =
+keycode 254 =
+keycode 255 =
+!
+!! ISO-Latin1
+!
+!Sign Nr.      Zeichen   Keysym        Compose   PostScript    HTML-Code
+!160 0xa0                nobreakspace  spc spc                 &nbsp;
+!160 0xa0                nobreakspace  spc spc                 &nbsp;
+!161 0xa1        ¡       exclamdown      ! !
+!162 0xa2        ¢       cent            C /
+!163 0xa3        £       sterling        L -
+!164 0xa4        ¤       currency        o x     /currency
+!165 0xa5        ¥       yen             Y -
+!166 0xa6        ¦       brokenbar       | |     /brokenbar
+!167 0xa7        §       section         S O     /section
+!168 0xa8        ¨       diaeresis       " "     /dieresis
+!169 0xa9        ©       copyright       C O     /copyright     &copy;   ©
+!170 0xaa        ª       ordfeminine     - A     /ordfeminine
+!171 0xab        «       guillemotleft   < <     /guillemotleft
+!172 0xac        ¬       notsign         - |     /logicalnot
+!173 0xad               hyphen          - -     /hyphen
+!174 0xae        ®       registered      R O     /registered    &reg;    ®
+!175 0xaf        ¯       macron          ^ -     /macron
+!176 0xb0        °       degree          ^ *     /degree        &deg;    °
+!177 0xb1        ±       plusminus       + -     /plusminus
+!178 0xb2        ²       twosuperior     ^ 2     /twosuperior
+!179 0xb3        ³       threesuperior   ^ 3     /threesuperior
+!180 0xb4        ´       acute           \ \     /acute
+!181 0xb5        µ       mu              / u     /mu
+!182 0xb6        ¶       paragraph       P !     /paragraph
+!183 0xb7        ·       periodcentered  ^ .     /periodcentered
+!184 0xb8        ¸       cedilla         , ,     /cedilla
+!185 0xb9        ¹       onesuperior     ^ 1     /onesuperior
+!186 0xba        º       masculine       _ O     /ordmasculine
+!187 0xbb        »       guillemotright  > >     /guillemotright
+!188 0xbc        ¼       onequarter      1 4     /onequarter
+!189 0xbd        ½       onehalf         1 2     /onehalf
+!190 0xbe        ¾       threequarters   3 4     /threequarters
+!191 0xbf        ¿       questiondown    ? ?     /questiondown
+!192 0xc0        À       Agrave          A `     /Agrave        &Agrave; À
+!193 0xc1        Á       Aacute          A '     /Aacute        &Aacute; Á
+!194 0xc2        Â       Acircumflex     A ^     /Acircumflex   &Acirc;  Â
+!195 0xc3        Ã       Atilde          A ~     /Atilde        &Atilde; Ã
+!196 0xc4        Ä       Adiaeresis      A "     /Adieresis     &Auml;   Ä
+!197 0xc5        Å       Aring           A *     /Aring         &Aring;  Å
+!198 0xc6        Æ       AE              A E     /AE            &AElig;  Æ
+!199 0xc7        Ç       Ccedilla        C ,     /Ccedilla      &Ccedil; Ç
+!200 0xc8        È       Egrave          E `     /Egrave        &Egrave; È
+!201 0xc9        É       Eacute          E '     /Eacute        &Eacute; É
+!202 0xca        Ê       Ecircumflex     E ^     /Ecircumflex   &Ecirc;  Ê
+!203 0xcb        Ë       Ediaeresis      E "     /Edieresis     &Euml;   Ë
+!204 0xcc        Ì       Igrave          I `     /Igrave        &Igrave; Ì
+!205 0xcd        Í       Iacute          I '     /Iacute        &Iacute; Í
+!206 0xce        Î       Icircumflex     I ^     /Icircumflex   &Icirc;  Î
+!207 0xcf        Ï       Idiaeresis      I "     /Idieresis     &Iuml;   Ï
+!208 0xd0        Ð       ETH             D -     /Eth
+!209 0xd1        Ñ       Ntilde          N ~     /Ntilde        &Ntilde; Ñ
+!210 0xd2        Ò       Ograve          O `     /Ograve        &Ograve; Ò
+!211 0xd3        Ó       Oacute          O '     /Oacute        &Oacute; Ó
+!212 0xd4        Ô       Ocircumflex     O ^     /Ocircumflex   &Ocirc;  Ô
+!213 0xd5        Õ       Otilde          O ~     /Otilde        &Otilde; Õ
+!214 0xd6        Ö       Odiaeresis      O "     /Odieresis     &Ouml;   Ö
+!215 0xd7        ×       multiply        x x     /multiply
+!216 0xd8        Ø       Ooblique        O /     /Oslash        &Oslash; Ø
+!217 0xd9        Ù       Ugrave          U `     /Ugrave        &Ugrave; Ù
+!218 0xda        Ú       Uacute          U '     /Uacute        &Uacute; Ú
+!219 0xdb        Û       Ucircumflex     U ^     /Ucircumflex   &Ucirc;  Û
+!220 0xdc        Ü       Udiaeresis      U "     /Udieresis     &Uuml;   Ü
+!221 0xdd        Ý       Yacute          Y '     /Yacute        &Yacute; Ý
+!222 0xde        Þ       THORN           P |     /Thorn
+!223 0xdf        ß       ssharp          s s     /germandbls    &szlig;  ß
+!224 0xe0        à       agrave          a `     /agrave        &agrave; à
+!225 0xe1        á       aacute          a '     /aacute        &aacute; á
+!226 0xe2        â       acircumflex     a ^     /acircumflex   &acirc;  â
+!227 0xe3        ã       atilde          a ~     /atilde        &atilde; ã
+!228 0xe4        ä       adiaeresis      a "     /adieresis     &auml;   ä
+!229 0xe5        å       aring           a *     /aring         &aring;  å
+!230 0xe6        æ       ae              a e     /ae            &aelig;  æ
+!231 0xe7        ç       ccedilla        c ,     /ccedilla      &ccedil; ç
+!232 0xe8        è       egrave          e `     /egrave        &egrave; è
+!233 0xe9        é       eacute          e '     /eacute        &eacute; é
+!234 0xea        ê       ecircumflex     e ^     /ecircumflex   &ecirc;  ê
+!235 0xeb        ë       ediaeresis      e "     /edieresis     &euml;   ë
+!236 0xec        ì       igrave          i `     /igrave        &igrave; ì
+!237 0xed        í       iacute          i '     /iacute        &iacute; í
+!238 0xee        î       icircumflex     i ^     /icircumflex   &icirc;  î
+!239 0xef        ï       idiaeresis      i "     /idieresis     &iuml;   ï
+!240 0xf0        ð       eth             d -     /eth
+!241 0xf1        ñ       ntilde          n ~     /ntilde        &ntilde; ñ
+!242 0xf2        ò       ograve          o `     /ograve        &ograve; ò
+!243 0xf3        ó       oacute          o '     /oacute        &oacute; ó
+!244 0xf4        ô       ocircumflex     o ^     /ocircumflex   &ocirc;  ô
+!245 0xf5        õ       otilde          o ~     /otilde        &otilde; õ
+!246 0xf6        ö       odiaeresis      o "     /odieresis     &ouml;   ö
+!247 0xf7        ÷       division        - :     /divide
+!248 0xf8        ø       oslash          o /     /oslash        &oslash; ø
+!249 0xf9        ù       ugrave          u `     /ugrave        &ugrave; ù
+!250 0xfa        ú       uacute          u '     /uacute        &uacute; ú
+!251 0xfb        û       ucircumflex     u ^     /ucircumflex   &ucirc;  û
+!252 0xfc        ü       udiaeresis      u "     /udieresis     &uuml;   ü
+!253 0xfd        ý       yacute          y '     /yacute        &yacute; ý
+!254 0xfe        þ       thorn           p |     /thorn
+!255 0xff        ÿ       ydiaeresis      y "     /ydieresis     &yuml;   ÿ
+```

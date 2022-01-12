@@ -1,0 +1,31 @@
+---
+title: php-fpm vs. spawn-fcgi
+date: 2018-11-14
+tags:
+- php-fpm
+---
+
+# php-fpm
+
+PHP-FPM (FastCGI Process Manager) is an alternative PHP FastCGI implementation with some additional features useful for sites of any size, especially busier sites.
+
+These features include:
+
+    * Adaptive process spawning (NEW!)
+    * Basic statistics (ala Apache's mod_status) (NEW!)
+    * Advanced process management with graceful stop/start
+    * Ability to start workers with different uid/gid/chroot/environment and different php.ini (replaces safe_mode)
+    * Stdout & stderr logging
+    * Emergency restart in case of accidental opcode cache destruction
+    * Accelerated upload support
+    * Support for a "slowlog"
+    * Enhancements to FastCGI, such as fastcgi_finish_request() - a special function to finish request & flush all data while continuing to do something time-consuming (video converting, stats processing, etc.)
+
+... and much more.
+
+It was not designed with virtual hosting in mind (large amounts of pools) however it can be adapted for any usage model.
+
+# Links
+
+- <http://php-fpm.org/about/>
+- <http://wiki.nginx.org/NinX%2BPHP%2BFPM%2Bremote>

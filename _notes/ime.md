@@ -1,0 +1,8 @@
+---
+date: 2018-07-16
+title: IME
+---
+
+```
+sudo bash -c "echo ko_KR.UTF-8 UTF-8 >> /etc/locale.gen"
+```
