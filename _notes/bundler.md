@@ -1,9 +1,9 @@
 ---
 title: bundler
 date: 2019-06-06
---- 
+---
 
-# bundler install
+## bundler install
 
 ```
 $ bundle install
@@ -71,5 +71,5 @@ Installing ri documentation for bundler-2.2.33
 Done installing documentation for bundler after 1 seconds
 1 gem installed
 
-$ bundle-2.7 config set --local path ~/.gem 
+$ bundle-2.7 config set --local path ~/.gem
 ```

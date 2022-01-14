@@ -1,27 +1,30 @@
+---
+title: apm
+date: 2017-09-21
+---
+
+## Elastic APM
 
 Elastic APM ships with support for Java, Go, Node.js, Python, Ruby, .NET, and Real User Monitoring (JavaScript) for multiple-page and single-page applications — with more languages on the way. Plus, with support for open standards like Jaeger and OpenTelemetry, sending data from existing instrumented apps to Elastic APM is a breeze.
 
-Deploy Metricbeat on all your Linux, Windows, and Mac hosts, connect it to Elasticsearch and voila: you get system-level CPU usage, memory, file system, disk IO, and network IO statistics, as well as top-like statistics for every process running on your systems. From CPU to memory, Redis to NGINX, and much more, Metricbeat is a lightweight way to send system and service statistics.
+Deploy Metricbeat on all your hosts, connect it to Elasticsearch and voila: you get system-level CPU usage, memory, file system, disk IO, and network IO statistics, as well as top-like statistics for every process running on your systems. From CPU to memory, Redis to NGINX, and much more, Metricbeat is a lightweight way to send system and service statistics.
 
 Metricbeat comes with internal modules that collect metrics from services like Apache, Jolokia, NGINX, MongoDB, MySQL, PostgreSQL, Prometheus, and more. Installation is easy, requiring absolutely zero dependencies. Just enable the modules you want in the configuration file.
 
-
 Filebeat comes with internal modules (Apache, Cisco ASA, Microsoft Azure, NGINX, MySQL, and more) that simplify the collection, parsing, and visualization of common log formats down to a single command. They achieve this by combining automatic default paths based on your operating system, Elasticsearch Ingest Node pipeline definitions, and Kibana dashboards. Plus, a few Filebeat modules ship with pre-configured machine learning jobs.
 
-
-# The Blockbridge Container Storage Interface (CSI) driver delivers persistent, secure, multi-tenant, cluster-accessible storage for Kubernetes. Deploy the Blockbridge CSI driver in your Kubernetes cluster using standard kubectl commands.
-
+The Blockbridge Container Storage Interface (CSI) driver delivers persistent, secure, multi-tenant, cluster-accessible storage for Kubernetes. Deploy the Blockbridge CSI driver in your Kubernetes cluster using standard kubectl commands.
 
 Supported K8s Environments
 
-    Rancher 2.4+
-        Mirantis Kubernetes Engine 3.1+ (formerly Docker EE)
-
+- Rancher 2.4+
+- Mirantis Kubernetes Engine 3.1+ (formerly Docker EE)
 
 https://www.blockridge.com/
 
+## Traefik
 
-# Traefik is a modern HTTP reverse proxy and load balancer that makes deploying microservices easy.
+Traefik is a modern HTTP reverse proxy and load balancer that makes deploying microservices easy.
 
 Traefik integrates with your existing infrastructure components (Docker, Swarm mode, Kubernetes, Marathon, Consul, Etcd, Rancher, Amazon ECS, ...) and configures itself automatically and dynamically.
 
@@ -31,6 +34,7 @@ Traefik v2 - Example usage
 
 Enable docker provider and web UI:
 
+```
 ## traefik.yml
 
 # Docker configuration backend
@@ -39,22 +43,29 @@ providers:
     defaultRule: "Host(`{{ trimPrefix `/` .Name }}.docker.localhost`)"
 
 # API and dashboard configuration
+
 api:
   insecure: true
+```
 
 Start Traefik:
 
+```
 docker run -d -p 8080:8080 -p 80:80 \
 -v $PWD/traefik.yml:/etc/traefik/traefik.yml \
 -v /var/run/docker.sock:/var/run/docker.sock \
 traefik:v2.5
+```
 
 Start a backend server, named test:
 
+```
 docker run -d --name test traefik/whoami
+```
 
 And finally, you can access to your whoami server throught Traefik, on the domain name test.docker.localhost:
 
+```
 # $ curl --header 'Host:test.docker.localhost' 'http://localhost:80/'
 $ curl test.docker.localhost
 Hostname: 390a880bdfab
@@ -71,21 +82,17 @@ X-Forwarded-Port: 80
 X-Forwarded-Proto: http
 X-Forwarded-Server: 7e073cb54211
 X-Real-Ip: 172.17.0.1
+```
 
 The web UI http://localhost:8080 will give you an overview of the routers, services, and middlewares.
 
-
-
-#
-
-
+## Blackfire Code Performance Observability Solution.
 
 53% of users abandon a website that takes more than 3 seconds to load.
 
 
 Blackfire is a full continuous observability solution (monitoring, profiling, and automated performance testing tool). It can be used on Integration, Staging, and Production environments. Blackfire supports PHP and Python.
 
-Welcome to Blackfire, your Code Performance Observability Solution.
 
 Blackfire helps to improve web applications’ performance at each step of its
 lifecycle: from development to test, staging and production.
@@ -147,6 +154,7 @@ You will to tell Consul what its cluster address is when starting so that it bin
 The entry point also includes a small utility to look up a client or bind address by interface name. To use this, set the CONSUL_CLIENT_INTERFACE and/or CONSUL_BIND_INTERFACE environment variables to the name of the interface you'd like Consul to use and a -client=<interface ip> and/or -bind=<interface ip> argument will be computed and passed to Consul at startup.
 Running Consul for Development
 
+```
 $ docker run -d --name=dev-consul -e CONSUL_BIND_INTERFACE=eth0 consul
 
 This runs a completely in-memory Consul server agent with default bridge networking and no services exposed on the host, which is useful for development but should not be used in production. For example, if that server is running at internal address 172.17.0.2, you can run a three node cluster for development by starting up two more instances and telling them to join the first node.
@@ -163,12 +171,14 @@ Node          Address          Status  Type    Build  Protocol  DC
 579db72c1ae1  172.17.0.3:8301  alive   server  0.6.3  2         dc1
 93fe2309ef19  172.17.0.4:8301  alive   server  0.6.3  2         dc1
 c9caabfd4c2a  172.17.0.2:8301  alive   server  0.6.3  2         dc1
+```
 
 Remember that Consul doesn't use the data volume in this mode - once the container stops all of your state will be wiped out, so please don't use this mode for production. Running completely on the bridge network with the development server is useful for testing multiple instances of Consul on a single machine, which is normally difficult to do because of port conflicts.
 
 Development mode also starts a version of Consul's web UI on port 8500. This can be added to the other Consul configurations by supplying the -ui option to Consul on the command line. The web assets are bundled inside the Consul binary in the container.
 Running Consul Agent in Client Mode
 
+```
 $  docker run -d --net=host -e 'CONSUL_LOCAL_CONFIG={"leave_on_terminate": true}' consul agent -bind=<external ip> -retry-join=<root agent ip>
 ==> Starting Consul agent...
 ==> Starting Consul agent RPC...
@@ -181,6 +191,7 @@ $  docker run -d --net=host -e 'CONSUL_LOCAL_CONFIG={"leave_on_terminate": true}
     Gossip encrypt: false, RPC-TLS: false, TLS-Incoming: false
              Atlas: <disabled>
 ...
+```
 
 This runs a Consul client agent sharing the host's network and advertising the external IP address to the rest of the cluster. Note that the agent defaults to binding its client interfaces to 127.0.0.1, which is the host's loopback interface. This would be a good configuration to use if other containers on the host also use --net=host, and it also exposes the agent to processes running directly on the host outside a container, such as HashiCorp's Nomad.
 
@@ -192,6 +203,7 @@ At startup, the agent will read config JSON files from /consul/config. Data will
 
 Here are some example queries on a host with an external IP of 66.175.220.234:
 
+```
 $ curl http://localhost:8500/v1/health/service/consul?pretty
 [
     {
@@ -215,9 +227,11 @@ $ dig @localhost -p 8600 consul.service.consul
 ;; ANSWER SECTION:
 consul.service.consul.  0       IN      A       66.175.220.234
 ...
+```
 
 If you want to expose the Consul interfaces to other containers via a different network, such as the bridge network, use the -client option for Consul:
 
+```
 docker run -d --net=host consul agent -bind=<external ip> -client=<bridge ip> -retry-join=<root agent ip>
 ==> Starting Consul agent...
 ==> Starting Consul agent RPC...
@@ -230,11 +244,14 @@ docker run -d --net=host consul agent -bind=<external ip> -client=<bridge ip> -r
     Gossip encrypt: false, RPC-TLS: false, TLS-Incoming: false
              Atlas: <disabled>
 ...
+```
 
 With this configuration, Consul's client interfaces will be bound to the bridge IP and available to other containers on that network, but not on the host network. Note that we still keep the cluster address out on the host network for performance. Consul will also accept the -client=0.0.0.0 option to bind to all interfaces.
 Running Consul Agent in Server Mode
 
+```
 $ docker run -d --net=host -e 'CONSUL_LOCAL_CONFIG={"skip_leave_on_interrupt": true}' consul agent -server -bind=<external ip> -retry-join=<root agent ip> -bootstrap-expect=<number of server agents>
+```
 
 This runs a Consul server agent sharing the host's network. All of the network considerations and behavior we covered above for the client agent also apply to the server agent. A single server on its own won't be able to form a quorum and will be waiting for other servers to join.
 
@@ -251,21 +268,27 @@ By default, Consul's DNS server is exposed on port 8600. Because this is cumbers
 
 Here's an example:
 
+```
 $ docker run -d --net=host -e 'CONSUL_ALLOW_PRIVILEGED_PORTS=' consul -dns-port=53 -recursor=8.8.8.8
+```
 
 This example also includes a recursor configuration that uses Google's DNS servers for non-Consul lookups. You may want to adjust this based on your particular DNS configuration. If you are binding Consul's client interfaces to the host's loopback address, then you should be able to configure your host's resolv.conf to route DNS requests to Consul by including "127.0.0.1" as the primary DNS server. This would expose Consul's DNS to all applications running on the host, but due to Docker's built-in DNS server, you can't point to this directly from inside your containers; Docker will issue an error message if you attempt to do this. You must configure Consul to listen on a non-localhost address that is reachable from within other containers.
 
 Once you bind Consul's client interfaces to the bridge or other network, you can use the --dns option in your other containers in order for them to use Consul's DNS server, mapped to port 53. Here's an example:
 
+```
 $ docker run -d --net=host -e 'CONSUL_ALLOW_PRIVILEGED_PORTS=' consul agent -dns-port=53 -recursor=8.8.8.8 -bind=<bridge ip>
+```
 
 Now start another container and point it at Consul's DNS, using the bridge address of the host:
 
+```
 $ docker run -i --dns=<bridge ip> -t ubuntu sh -c "apt-get update && apt-get install -y dnsutils && dig consul.service.consul"
 ...
 ;; ANSWER SECTION:
 consul.service.consul.  0       IN      A       66.175.220.234
 ...
+```
 
 In the example above, adding the bridge address to the host's /etc/resolv.conf file should expose it to all containers without running with the --dns option.
 Service Discovery with Containers
@@ -283,7 +306,9 @@ https://engineeringblog.yelp.com/2016/01/dumb-init-an-init-for-docker.html
 
 
 
+```
 # https://github.com/Yelp/dumb-init
+```
  A minimal init system for Linux containers
 
 
@@ -295,21 +320,27 @@ containerized workloads possible in a Docker environment.
 
 
 
+```
 #  $ docker volume create -d simplivity -o help
 
 $ sudo docker volume create -d simplivity --name <vol_name>
+```
 
 
 
     To set permissions of root directory of a file system:
 
+```
     $ docker volume create -d simplivity --name <volume-name> -o
     fsMode=<octal-number-specified-in-chmod>
+```
 
         To set ownership of root directory of a file system:
 
+```
         $ docker volume create -d simplivity --name <volume-name> -o
         fsOwner=<UserId>:<GroupId>
+```
 
 
 
@@ -331,6 +362,7 @@ completely:
 
 
 
+```
 # Wireshark
 
 FROM ubuntu
@@ -339,6 +371,7 @@ RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get install wireshark -y
 
 CMD ["wireshark"]
+```
 
 
 
@@ -348,18 +381,24 @@ traffic between docker containers.
 This container can be executed in both local or remote machine.
 Running in your own host:
 
+```
 $ docker run -ti --net=host --privileged -v $HOME:/root:ro -e
 XAUTHORITY=/root/.Xauthority -e DISPLAY=$DISPLAY manell/wireshark
 Running in a remote host:
+```
 
 First, ssh into the remote machine.
 
+```
 $ ssh -X user@host
+```
 
 Then, just run the same command.
 
+```
 $ docker run -ti --net=host --privileged -v $HOME:/root:ro -e
 XAUTHORITY=/root/.Xauthority -e DISPLAY=$DISPLAY manell/wireshark
+```
 
 
 
@@ -416,11 +455,13 @@ A Docker image consists of read-only layers each of which represents a
 Dockerfile instruction. The layers are stacked and each one is a delta of the
 changes from the previous layer. Consider this Dockerfile:
 
+```
 # syntax=docker/dockerfile:1
 FROM ubuntu:18.04
 COPY . /app
 RUN make /app
 CMD python /app/app.py
+```
 
 Each instruction creates one layer:
 
@@ -446,6 +487,7 @@ https://docs.docker.com/develop/develop-images/build_enhancements/
 https://docs.docker.com/develop/develop-images/image_management/
 
 
+```
 apt-cache madison docker-ce
 
  sudo apt-get install docker-ce=<VERSION_STRING>
@@ -457,6 +499,7 @@ apt-cache madison docker-ce
 
 
  sudo apt-get purge docker-ce docker-ce-cli containerd.io
+```
 
 
 
@@ -474,7 +517,9 @@ apt-cache madison docker-ce
 
  verify that Docker containers can resolve an internal hostname by pinging it.
 
+```
   docker run --rm -it alpine ping -c4 <my_internal_host>
+```
 
 
 # Docker limit
@@ -484,13 +529,17 @@ apt-cache madison docker-ce
 Edit the /etc/default/grub file. Add or edit the GRUB_CMDLINE_LINUX line to
 add the following two key-value pairs:
 
+```
 GRUB_CMDLINE_LINUX="cgroup_enable=memory swapaccount=1"
+```
 
 Save and close the file.
 
 Update GRUB.
 
+```
  sudo update-grub
+```
 
 
 
@@ -526,6 +575,7 @@ maintaining its working state.
 
 
 
+```
 
 #
 BUILD
@@ -588,29 +638,37 @@ Then, run the commands to build and run the Docker image:
 
 $ docker build -t my-apache2 .
 $ docker run -dit --name my-running-app -p 8080:80 my-apache2
+```
 
 Visit http://localhost:8080 and you will see It works!
 Without a Dockerfile
 
 If you don't want to include a Dockerfile in your project, it is sufficient to do the following:
 
+```
 $ docker run -dit --name my-apache-app -p 8080:80 -v "$PWD":/usr/local/apache2/htdocs/ httpd:2.4
+```
 
 Configuration
 
 To customize the configuration of the httpd server, first obtain the upstream default configuration from the container:
 
+```
 $ docker run --rm httpd:2.4 cat /usr/local/apache2/conf/httpd.conf > my-httpd.conf
+```
 
 You can then COPY your custom configuration in as /usr/local/apache2/conf/httpd.conf:
 
+```
 FROM httpd:2.4
 COPY ./my-httpd.conf /usr/local/apache2/conf/httpd.conf
+```
 
 SSL/HTTPS
 
 If you want to run your web traffic over SSL, the simplest setup is to COPY or mount (-v) your server.crt and server.key into /usr/local/apache2/conf/ and then customize the /usr/local/apache2/conf/httpd.conf by removing the comment symbol from the following lines:
 
+```
 ...
 #LoadModule socache_shmcb_module modules/mod_socache_shmcb.so
 ...
@@ -618,22 +676,26 @@ If you want to run your web traffic over SSL, the simplest setup is to COPY or m
 ...
 #Include conf/extra/httpd-ssl.conf
 ...
+```
 
 The conf/extra/httpd-ssl.conf configuration file will use the certificate files previously added and tell the daemon to also listen on port 443. Be sure to also add something like -p 443:443 to your docker run to forward the https port.
 
 This could be accomplished with a sed line similar to the following:
 
+```
 RUN sed -i \
         -e 's/^#\(Include .*httpd-ssl.conf\)/\1/' \
         -e 's/^#\(LoadModule .*mod_ssl.so\)/\1/' \
         -e 's/^#\(LoadModule .*mod_socache_shmcb.so\)/\1/' \
         conf/httpd.conf
+```
 
 
 
 
 # Alpine Linux is a Linux distribution built around musl libc and BusyBox. The image is only 5 MB in size and has access to a package repository that is much more complete than other BusyBox based images. This makes Alpine Linux a great image base for utilities and even production applications. Read more about Alpine Linux here and you can see how their mantra fits in right at home with Docker images.
 
+```
 logo
 How to use this image
 Usage
@@ -651,6 +713,7 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends mysql-client \
     && rm -rf /var/lib/apt/lists/*
 ENTRYPOINT ["mysql"]
+```
 
 This yields us a virtual image size of about 145MB image.
 
@@ -736,6 +799,7 @@ Retrieve CPU Affinity of Running Process
 If a process is already running and if you want to retrieve the CPU affinity
 properties of the process, use taskset in the following format.
 
+```
 # taskset -p <pid>
 
 If for example, to check the CPU affinity of a process with PID 5504, use the
@@ -777,15 +841,18 @@ To specify processor list, use the following syntax.
 # taskset -cp 0,3 5504
 pid 5504's current affinity mask: 0-3
 pid 5504's new affinity mask: 0,3
+```
 
 Launch a Process on Specific CPU Cores
 
 To launch a process and “bond” the process to a specific set of CPU cores,
 use one of the two formats below.
 
+```
 # taskset -p <bitmask> /path/to/program
 
 # taskset -cp <cpu-list> /path/to/program
+```
 
 Dedicate / Restrict CPU Core to Process
 
@@ -809,7 +876,4 @@ isolcpus=1,3
 If you are on GRUB2, and if you want to make the entries permanent, modify the
 value of GRUB_CMDLINE_LINUX parameter in the /etc/default/grub file.
 
-
-
-
-
+```

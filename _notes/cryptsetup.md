@@ -1,12 +1,14 @@
+---
+title: cryptsetup
+date: 2019-04-10
+---
 
-    ~/go/src  ls /home/barn                                                                                                                            ✔
-    ~/go/src  sudo cryptsetup luksOpen /dev/sda barn                                                                                                   ✔
+```
+$ sudo cryptsetup luksOpen /dev/sda barn
 Enter passphrase for /dev/sda:
 device-mapper: reload ioctl on barn (254:1) failed: No such file or directory
-    ~/go/src   
 
- sudo pacman -S device-mapper                                                                                                    4 ✘  4s 
-warning: device-mapper-2.03.14-2 is up to date -- reinstalling
+$ sudo pacman -S device-mapper
 resolving dependencies...
 looking for conflicting packages...
 
@@ -59,20 +61,15 @@ Net Upgrade Size:      0.00 MiB
 ==> Generating module dependencies
 ==> Creating gzip-compressed initcpio image: /boot/initramfs-5.10-x86_64-fallback.img
 ==> Image generation successful
-    ~/go/src   
+```
 
-
-#  1.6G  100K  1.6G   1% /run/user/1000
-    ~  sudo cryptsetup luksOpen /dev/sda barn
-  ✔
- [sudo] password for aaron:
+```
+$ sudo cryptsetup luksOpen /dev/sda barn
  Enter passphrase for /dev/sda:
  device-mapper: reload ioctl on barn (254:1) failed: No such file or directory
-     ~  cd  /
+```
 
-
-
-
+```
 Default compiled-in metadata format is LUKS2 (for luksFormat action).
 
 LUKS2 external token plugin support is compiled-in.
@@ -89,7 +86,4 @@ Default compiled-in device cipher parameters:
         plain: aes-cbc-essiv:sha256, Key: 256 bits, Password hashing: ripemd160
         LUKS: aes-xts-plain64, Key: 256 bits, LUKS header hashing: sha256, RNG: /dev/urandom
         LUKS: Default keysize with XTS mode (two internal keys) will be doubled.
-    ~   
-
-
-
+```

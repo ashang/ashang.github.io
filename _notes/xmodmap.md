@@ -4,6 +4,21 @@ date: 2019-06-26
 ---
 
 ```
+$ xmodmap -pm
+xmodmap:  up to 3 keys per modifier, (keycodes in parentheses):
+
+shift       Shift_L (0x32),  Shift_R (0x3e)
+lock
+control     Control_R (0x69),  Control_L (0x85),  Control_L (0xce)
+mod1        Alt_L (0x40),  Mode_switch (0x6c),  Meta_L (0xcd)
+mod2
+mod3        Mode_switch (0x33),  Mode_switch (0x42)
+mod4        Super_L (0x25),  Super_R (0x86),  Hyper_L (0xcf)
+mod5        ISO_Level3_Shift (0x5c),  ISO_Level3_Shift (0x5e)
+```
+
+```
+$ cat ~/.Xmodmap
 ! Filename:      .Xmodmap
 ! Purpose:       config file for keyboard layout @ X
 ! activate it with

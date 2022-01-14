@@ -62,13 +62,14 @@ permalink: /:title
 
 show_excerpts: true
 
-name: Aaron Shang
-email: hi@ashang.org
+#####name: Aaron Shang
+
+email: Aaron Shang <hi@ashang.org>
 github_username: ashang
 ## flickr_username: jekyll
 ## linkedin_username: jekyll
 
-github: ashang
+####github: ashang
 rss: "fee.xml"
 #rss: rss
 
@@ -95,7 +96,7 @@ defaults:
         #type: "post"
     values:
       layout: "post"
-      author: "Aaron Shang"
+      ####author: "Aaron Shang"
       category: "ramblings"
   - scope:
       path: "_posts"

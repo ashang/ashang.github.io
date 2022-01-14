@@ -3,6 +3,26 @@ title: git
 date: 2018-10-12
 ---
 
+# git patch
+
+## git format patch
+
+$ git show $(git rev-list -1 --before="2021-12-26" HEAD):arm/lib/systemd/system/openvpn-client@.service
+
+$ git cat-file -p 6a3452e7:arm/lib/systemd/system/openvpn-client@.service
+$ git show 6a3452e7:arm/lib/systemd/system/openvpn-client@.service
+
+# git branch
+
+## git branch rename
+
+```
+git branch -m <OLD> <NEW>
+git fetch origin
+git branch -u origin/<NEW> <NEW>
+git remote set-head origin -a
+```
+
 ## git commands
 
 git 的命令分低级命令 （称为“plumbing”) 和高级命令（称为“porcelain”），
@@ -236,4 +256,112 @@ Submodule path 'sha1collisiondetection': checked out '855827c583bc30645ba427885c
 ```
 git config --local status.showUntrackedFiles no
 ```
+
+# git stash
+
+## Stash untracked files as well
+{id: stash-untracked-files}
+
+```
+$ stash --include-untracked
+$ stash -u
+```
+
+
+
+## How to stash only part of the files
+{id: stash-some-files}
+
+
+Let's say we have made changes to two files (X and Y) and we would like to stash one of them (X)
+
+
+
+```
+$ git add Y
+$ git stash --keep-index
+$ git reset HEAD Y
+```
+
+
+## Clear stash
+{id: stash-clear}
+
+
+Remove everything from stash
+
+
+
+```
+$ git stash clear
+```
+
+
+## Undo last commit
+{id: undo-last-commit}
+{i: undo}
+
+```
+$ git reset --soft HEAD~
+
+
+$ git commit ...
+$ git reset --soft HEAD^
+$ edit
+$ git add ....
+$ git commit -c ORIG_HEAD     (
+```
+
+
+## Undo git reset
+{id: undo-git-reset}
+
+```
+$ git reset HEAD~
+
+$ git reset HEAD@{1}
+
+$ git reflog    # to list the history of HEAD
+```
+
+
+
+## git bisect - finding bugs
+{id: git-bisect}
+
+* Notice a bug that you recall was working earlier. (but apparently there were no automated tests checking it)
+* Task: find the change that broke it
+
+
+
+* Find an old commit where it was still working.
+* Binary search the commit since then to locate the breaking change.
+
+
+
+
+Preferably write an automated test that can verify the feature. Put it in a separate test file in the workspace.
+
+
+
+
+```
+$ git checkout master
+$ git bisect start
+$ git bisect bad
+$ git checkout sha1-that-is-known-to-be-good
+$ git bisect good
+...
+```
+
+
+```
+```
+
+
+
+## git rebase
+{id: git-rebase}
+
+
 

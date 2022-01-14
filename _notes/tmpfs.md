@@ -1,3 +1,8 @@
+---
+title: tmpfs
+layout: post
+---
+
 $ cat /lib/systemd/system/tmp.mount
 #  SPDX-License-Identifier: LGPL-2.1-or-later
 #

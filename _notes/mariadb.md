@@ -5,7 +5,6 @@ update: 2016-01-06
 
 ```
 $ sudo mysql_secure_installation
-[sudo] password for aaron:
 
 NOTE: RUNNING ALL PARTS OF THIS SCRIPT IS RECOMMENDED FOR ALL MariaDB
       SERVERS IN PRODUCTION USE!  PLEASE READ EACH STEP CAREFULLY!

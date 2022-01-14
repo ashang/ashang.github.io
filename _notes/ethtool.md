@@ -23,7 +23,6 @@ Some queries need priviledges.
 
 ```
 $ sudo ethtool eth0
-[sudo] password for aaron:
 Settings for eth0:
         Supported ports: [ TP ]
         Supported link modes:   10baseT/Half 10baseT/Full
@@ -120,7 +119,6 @@ $ ethtool -p eth0 120
 
 ```
 $ sudo ethtool -t eno1
-[sudo] password for aaron:
 The test result is PASS
 The test extra info:
 nvram test        (online)       0

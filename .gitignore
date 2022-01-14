@@ -14,3 +14,9 @@ vendor/
 # Generated
 _site/
 public/
+
+# JAM
+db.json
+
+# Debug
+debug.log

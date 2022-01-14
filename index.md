@@ -1,5 +1,9 @@
 ---
+# By default, content added below the "---" mark will appear in the home page
+# between the top bar and the list of recent posts.
+# To change the home page layout, edit the _layouts/home.html file.
 # See: https://jekyllrb.com/docs/themes/#overriding-theme-defaults
+# layout: home
 layout: default
 ---
 
@@ -63,34 +67,3 @@ layout: default
           <li><div class="pager-edge">•</div></li>
         {%- endif %}
     {%- endif %}
-
-
-- https://github.com/jekyll/minima
-
-https://globalimmerse.org/
-
-https://raw.githubusercontent.com/jglovier/jglovier/main/README.md
-
-https://pjw.io/articles/2018/05/18/jaeger-tutorial/
-
-https://pjw.io/articles/2018/05/08/opentracing-explanations/
-
-http://www.piedpiper.com/
-
-https://www.youtube.com/user/LowballJim
-
-https://youtu.be/H9_pg-gTOR8
-
-https://medium.com/@timanglade/how-hbos-silicon-valley-built-not-hotdog-with-mobile-tensorflow-keras-react-native-ef03260747f3
-
-https://pjw.io/articles/2018/04/25/access-to-the-container-network-of-docker-for-mac/
-
-https://pjw.io/articles/2016/07/01/mac-os-x-terminal-mouse-reporting-mark-bookmark/
-
-https://zh.wikipedia.org/wiki/GoAgent
-
-https://wiki.archlinux.org/title/Multiboot_USB_drive#Hybrid_UEFI_GPT_.2B_BIOS_GPT.2FMBR_boot
-
-https://github.com/aguslr/multibootusb/blob/master/docs/isos.md
-
-https://github.com/aguslr/multibootusb/tree/master/docs

@@ -1,6 +1,5 @@
 ---
 title: theme
-layout: page
 ---
 
 ## {{ page.title }} by jekyll
