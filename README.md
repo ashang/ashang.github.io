@@ -1,7 +1,7 @@
 ---
 title: site
 layout: page
-permalink: /site/
+permalink: /ashang/
 weight: 2
 date: 2010-10-18 07:48:03+00:00
 update: 2016-01-06

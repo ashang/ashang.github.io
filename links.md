@@ -1,7 +1,7 @@
 ---
 title: links
 date: 2010-10-29 09:30:24+00:00
-permalink: /links
+permalink: /links/
 layout: page
 ---
 
