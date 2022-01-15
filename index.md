@@ -5,7 +5,6 @@
 # See: https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 # layout: home
 layout: default
-permalink: /ama/
 ---
 
 {% if site.posts.size > 0 %}
