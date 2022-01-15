@@ -1,8 +1,6 @@
 ---
 title: Page Not Found
 date: 2010-10-29 09:30:24+00:00
-permalink: /4044
-layout: page
 ---
 
 # {{ page.title }}

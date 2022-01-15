@@ -3,18 +3,27 @@ title: git
 date: 2018-10-12
 ---
 
-# git patch
+## git repo
 
-## git format patch
+### Permission denied
+
+```
+$ git update-index --chmod=+x <files>
+$ git commit
+```
+
+## git patch
+
+### git format patch
 
 $ git show $(git rev-list -1 --before="2021-12-26" HEAD):arm/lib/systemd/system/openvpn-client@.service
 
 $ git cat-file -p 6a3452e7:arm/lib/systemd/system/openvpn-client@.service
 $ git show 6a3452e7:arm/lib/systemd/system/openvpn-client@.service
 
-# git branch
+## git branch
 
-## git branch rename
+### git branch rename
 
 ```
 git branch -m <OLD> <NEW>
@@ -23,7 +32,7 @@ git branch -u origin/<NEW> <NEW>
 git remote set-head origin -a
 ```
 
-## git commands
+### git commands
 
 git 的命令分低级命令 （称为“plumbing”) 和高级命令（称为“porcelain”），
 低级命令的名字一般是两个单词，高级命令则一般是一个单词。
@@ -52,7 +61,7 @@ master 指向 test 分支的 HEAD，不会创建新的 commit。
 更新 index，然后 git commit。
 
 
-### Error 500
+#### Error 500
 
 tail -f apps/gitlab/htdocs/log/production.log
 Started GET "/users/sign_in" for 10.10.50.201 at 2016-01-06 15:27:29 +0800
@@ -70,12 +79,12 @@ ActionView::Template::Error (Inconsistent indentation: 2 tabs used for indentati
   app/views/layouts/devise.html.haml:23
   app/controllers/sessions_controller.rb:15:in `new'
 
-### Must in htdocs path?
+#### Must in htdocs path?
 
 /opt/gitlab8/apps/gitlab/htdocs/app/views# RAILS_ENV=production bundle exec rake assets:precompile
 (in /opt/gitlab8/apps/gitlab/htdocs)
 
-## How does Git calculate the SHA1 digest for a blog object
+### How does Git calculate the SHA1 digest for a blog object
 
 SHA1 is not a simple 40 bit sha1 result of the file.
 
@@ -144,7 +153,7 @@ As a result if a file moves from one repository to another the SHA1 for the file
 
 (echo -n "tree "; echo -n `git cat-file tree HEAD^{tree} | wc -c`; printf "\000"; git-cat file tree HEAD^{tree}) | sha1sum
 
-## How to diff one file to an arbitrary version in Git?
+### How to diff one file to an arbitrary version in Git?
 
 git diff master~20:pom.xml pom.xml
 
@@ -180,7 +189,7 @@ Notes:
 
 Code:
 
-## gldiff.pl
+### gldiff.pl
 use strict;
 
 my $max  = shift;
@@ -204,7 +213,7 @@ while (<>) {
     last if ++$count >= $max *2;
 
 
-## Changing git commit message after push (given that no one pulled from remote)
+### Changing git commit message after push (given that no one pulled from remote)
 
     git commit --amend -m "New commit message"
 
@@ -223,7 +232,7 @@ The -f / --force option means "this command will delete data, and I know what I'
 
 
 
-## git clone
+### git clone
 
 ```
 $ git clone https://github.com/git/git
@@ -251,31 +260,24 @@ Submodule path 'sha1collisiondetection': checked out '855827c583bc30645ba427885c
 Submodule path 'sha1collisiondetection': checked out '855827c583bc30645ba427885caa40c5b81764d2'
 ```
 
-## git config
+### git config
 
 ```
 git config --local status.showUntrackedFiles no
 ```
 
-# git stash
+## git stash
 
-## Stash untracked files as well
-{id: stash-untracked-files}
+### Stash untracked files as well
 
 ```
 $ stash --include-untracked
 $ stash -u
 ```
 
-
-
-## How to stash only part of the files
-{id: stash-some-files}
-
+### How to stash only part of the files
 
 Let's say we have made changes to two files (X and Y) and we would like to stash one of them (X)
-
-
 
 ```
 $ git add Y
@@ -283,38 +285,19 @@ $ git stash --keep-index
 $ git reset HEAD Y
 ```
 
-
-## Clear stash
-{id: stash-clear}
-
-
-Remove everything from stash
-
-
-
-```
-$ git stash clear
-```
-
-
-## Undo last commit
-{id: undo-last-commit}
-{i: undo}
+### Undo last commit
 
 ```
 $ git reset --soft HEAD~
-
 
 $ git commit ...
 $ git reset --soft HEAD^
 $ edit
 $ git add ....
-$ git commit -c ORIG_HEAD     (
+$ git commit -c ORIG_HEAD
 ```
 
-
-## Undo git reset
-{id: undo-git-reset}
+### Undo git reset
 
 ```
 $ git reset HEAD~
@@ -324,25 +307,15 @@ $ git reset HEAD@{1}
 $ git reflog    # to list the history of HEAD
 ```
 
-
-
-## git bisect - finding bugs
-{id: git-bisect}
+### git bisect - finding bugs
 
 * Notice a bug that you recall was working earlier. (but apparently there were no automated tests checking it)
 * Task: find the change that broke it
 
-
-
 * Find an old commit where it was still working.
 * Binary search the commit since then to locate the breaking change.
 
-
-
-
 Preferably write an automated test that can verify the feature. Put it in a separate test file in the workspace.
-
-
 
 
 ```
@@ -353,15 +326,3 @@ $ git checkout sha1-that-is-known-to-be-good
 $ git bisect good
 ...
 ```
-
-
-```
-```
-
-
-
-## git rebase
-{id: git-rebase}
-
-
-
