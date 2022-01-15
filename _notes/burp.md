@@ -1,10 +1,9 @@
 ---
 title: burpsuite
 date: 2018-10-06
-update: 2016-11-11 11:00:00 CST
 ---
 
-```
+```html
 POST/feedback/submitHTTP/1.1
 Host:insecure-website.com
 User-Agent:Mozilla/5.0(Macintosh;IntelMacOSX10.14;rv:67.0)Gecko/20100101Firefox/67.0
@@ -22,8 +21,7 @@ csrf=AgPcq8h37cv2FtglRj4PodzvuEYOCeEz&name=test&email=test%40test.com&subject=te
 
 The Collaborator server received a DNS lookup of type CNAME for the domain name dr8eoesl8e0rlo9geugbvgjwknqge621qtdm1b.burpcollaborator.net.  The lookup was received from IP address 54.229.136.232 at 2019-Jun-20 08:58:14 UTC.
 
-
-```
+```json
  Issue:  
  OS command injection
  Severity:  
@@ -45,36 +43,21 @@ The Collaborator server received a DNS lookup of type CNAME for the domain name 
    If it is considered unavoidable to incorporate user-supplied data into operating system commands, the following two layers of defense should be used to prevent attacks:
    The user data should be strictly validated. Ideally, a whitelist of specific accepted values should be used. Otherwise, only short alphanumeric strings should be accepted. Input containing any other data, including any conceivable shell metacharacter or whitespace, should be rejected.
    The application should use command APIs that launch a specific process via its name and command-line parameters, rather than passing a command string to a shell interpreter that supports command chaining and redirection. For example, the Java API Runtime.exec and the ASP.NET API Process.Start do not support shell metacharacters. This defense can mitigate the impact of an attack even in the event that an attacker circumvents the input validation defenses
-
+```
 
 # The Collaborator server received a DNS lookup of type A for the domain name pmfqjqnx3qv3g04s96bnqse8fzls9mxqlj89wy.burpcollaborator.net.  The lookup was received from IP address 52.17.5.255 at 2019-Jun-20 10:21:58 UTC.
 
-
+```html
 GET / HTTP/1.0
-
 Host: pmfqjqnx3qv3g04s96bnqse8fzls9mxqlj89wy.burpcollaborator.net
-
 Content-Type: text/plain; charset=utf-8
-
-
-
-
-
-
 HTTP/1.1 200 OK
-
 Server: Burp Collaborator https://burpcollaborator.net/
-
 X-Collaborator-Version: 4
-
 Content-Type: text/html
-
 Content-Length: 61
 
-
-
 <html><body>tpswz8lk5dpgkx6u97xg8tzjlgmgwglfigz</body></html>
-
 
  Issue:  
  SQL injection
@@ -98,43 +81,23 @@ Content-Length: 61
    One common defense is to double up any single quotation marks appearing within user input before incorporating that input into a SQL query. This defense is designed to prevent malformed data from terminating the string into which it is inserted. However, if the data being incorporated into queries is numeric, then the defense may fail, because numeric data may not be encapsulated within quotes, in which case only a space is required to break out of the data context and interfere with the query. Further, in second-order SQL injection attacks, data that has been safely escaped when initially inserted into the database is subsequently read from the database and then passed back to it again. Quotation marks that have been doubled up initially will return to their original form when the data is reused, allowing the defense to be bypassed.
    Another often cited defense is to use stored procedures for database access. While stored procedures can provide security benefits, they are not guaranteed to prevent SQL injection attacks. The same kinds of vulnerabilities that arise within standard dynamic SQL queries can arise if any SQL is dynamically constructed within stored procedures. Further, even if the procedure is sound, SQL injection can arise if the procedure is invoked in an unsafe manner using user-controllable data.
 
-
 # GET /user-homepage?input=bobdj%7b%7b6*'2'%7d%7d%7b%23commentedout%23%7d%7b%7b8*3%7d%7dsl1s0 HTTP/1.1
-
 Host: insecure-bank.com
-
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:67.0) Gecko/20100101 Firefox/67.0
-
 Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
-
 Accept-Language: en-US,en;q=0.5
-
 Accept-Encoding: gzip, deflate
-
 Connection: close
-
 Upgrade-Insecure-Requests: 1
 
-
-
-
 HTTP/1.1 200 OK
-
 Content-Type: text/html
-
 Server: Apache/2.4.9 (Unix)
-
 Status: 200 OK
-
 Vary: Accept-Encoding
-
 Date: Thu, 20 Jun 2019 12:43:53 GMT
-
 Content-Length: 322
-
 Connection: close
-
-
 
 <head><title>Twig Template Injection</title><style>body { background-color: #D2E1CC; }</style></head><body><h3>Twig Template Injection (unsandboxed)</h3><b>Input: </b>bobdj&#123;&#123;6&#42;&#39;2&#39;&#125;&#125;&#123;&#35;commentedout&#35;&#125;&#123;&#123;8&#42;3&#125;&#125;sl1s0<br/></br><b>Output: </b>bobdj1224sl1s0
 
@@ -151,8 +114,10 @@ Connection: close
  /user-homepage
 
    Issue detail
-   The input parameter appears to be vulnerable to server-side template injection attacks. The template engine appears to be Twig.  The payload bobdj{{6*'2'}}{#commentedout#}{{8*3}}sl1s0 was submitted in the input parameter. This payload contains a Twig template statement.  The server response contained the string bobdj1224sl1s0. This indicates that the payload is being interpreted by a server-side template engine.
+   The input parameter appears to be vulnerable to server-side template injection attacks. The template engine appears to be Twig.  The payload bobdj{6*'2'}{#commentedout#}{8*3}sl1s0 was submitted in the input parameter. This payload contains a Twig template statement.  The server response contained the string bobdj1224sl1s0. This indicates that the payload is being interpreted by a server-side template engine.
+
    Issue background
+
    Server-side template injection occurs when user input is unsafely embedded into a server-side template, allowing users to inject template directives. Using malicious template directives, an attacker may be able to execute arbitrary code and take full control of the web server.
    The severity of this issue varies depending on the type of template engine being used. Template engines range from being trivial to almost impossible to exploit. The following steps should be used when attempting to develop an exploit:
    Identify the type of template engine being used.

@@ -2,7 +2,7 @@
 # which you are expected to set up once and rarely edit after that. If you find
 # yourself editing this file very often, consider using Jekyll's data files
 # feature for the data you need to update frequently.
-#
+
 # For technical reasons, this file is *NOT* reloaded automatically when you use
 # 'bundle exec jekyll serve'. If you change this file, please restart the server process.
 #
@@ -10,13 +10,11 @@
 # https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml
 # https://learnxinyminutes.com/docs/yaml/
 #
-# Site settings
-# These are used to personalize your new site. If you look in the HTML files,
-# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
-# You can create any custom variable you would like, and they will be accessible
+# Value accessed via {{ site.title }}, {{ site.email }}, and so on.
+# You can create custom variable and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: In Love We Trust
+title: in love we trust
 description: >- # this means to ignore newlines until "baseurl:"
  ramblings notes,
  what i learnt today.
@@ -54,22 +52,17 @@ permalink: /:title
 #   - vendor/gems/
 #   - vendor/ruby/
 #
-#
-#
-#
-#
 #exclude: ["README.md"]
 
 show_excerpts: true
 
 #####name: Aaron Shang
-
-email: Aaron Shang <hi@ashang.org>
+#####email: Aaron Shang <hi@ashang.org>
+email: hi@ashang.org
 github_username: ashang
 ## flickr_username: jekyll
 ## linkedin_username: jekyll
 
-####github: ashang
 rss: "fee.xml"
 #rss: rss
 

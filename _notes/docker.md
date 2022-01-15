@@ -1088,26 +1088,23 @@ Brandon Rhodes 创建了一个提供完整的 Docker 容器网络拓扑管理的
 Docker 1.2.0 开始支持在运行中的容器里编辑 /etc/hosts, /etc/hostname 和 /etc/resolv.conf 文件。
 但是这些修改是临时的，只在运行的容器中保留，容器终止或重启后并不会被保存下来，也不会被 docker commit 提交。
 
-
 ## 实例：创建一个点到点连接
 默认情况下，Docker 会将所有容器连接到由 docker0 提供的虚拟子网中。
 用户有时候需要两个容器之间可以直连通信，而不用通过主机网桥进行桥接。
 解决办法很简单：创建一对 peer 接口，分别放到两个容器中，配置成点到点链路类型即可。
 首先启动 2 个容器：
-1
+
 $ docker run -i -t --rm --net=none base /bin/bash
 2
-root@1f1f4c1f931a:/#
-3
 $ docker run -i -t --rm --net=none base /bin/bash
 
 找到进程号，然后创建网络命名空间的跟踪文件。
 
-```
-$ docker inspect -f '{{.State.Pid}}' 1f1f4c1f931a
+```shell
+$ docker inspect -f '\{\{.State.Pid}}' 1f1f4c1f931a
 2989
 
-$ docker inspect -f '{{.State.Pid}}' 12e343489d2f
+$ docker inspect -f '\{\{.State.Pid}}' 12e343489d2f
 3004
 
 $ sudo mkdir -p /var/run/netns
@@ -1117,7 +1114,7 @@ $ sudo ln -s /proc/3004/ns/net /var/run/netns/3004
 
 创建一对 peer 接口，然后配置路由
 
-```
+```shell
 $ sudo ip link add A type veth peer name B
 $ sudo ip link set A netns 2989
 $ sudo ip netns exec 2989 ip addr add 10.1.1.1/32 dev A
@@ -1328,76 +1325,60 @@ tmpfs 挂载（tmpfs mounts），仅仅存储于内存中，并不操作 宿主�
 
 默认配置下，Docker的日志（如：docker logs、docker service log）所记载的是命令行的输出结果（STDOUT和STDERR）。而STDOUT 和 STDERR 对应的文件路径分别是 /dev/stderr和/dev/stdout。[46] 另外，也可以在宿主主机上查看容器的日志，使用以下命令可以查看到容器的日志位置。[47]
 
-```
+```shell
 $ docker inspect --format='{{.LogPath}}' $INSTANCE_ID
 ```
 
-#
 docker exec -it ${name}/${id} /bin/bash
 
-示例：
 docker exec -it centOS1 /bin/bash「注：」 在容器内使用 「exit」 退出容器时，「容器不会停止」
 
-
-
 4. 删除镜像
-「删除单个：」
 
 docker rmi ${image_name} (or ${id})
 
-「删除多个：」
-
 docker rmi ${image_name}/${id} ${image_name}/${id} ...
-
-「删除所有：」
 
 docker rmi 「`docker images -q`」
 
 5. 查看镜像元数据
-```
-docker inspect ${image_name}
 
-docker inspect -f ='{{.NetworkSettings.IPAddress}}' ${image_name}
+```shell
+$ docker inspect ${image_name}
+
+$ docker inspect -f ='{{.NetworkSettings.IPAddress}}' ${image_name}
 ```
 
 「-f」：可用 「-format」 代替
-
-
 
 「查看最后一次运行的容器」
 docker ps -l
 
-
-
-
-
-
 6. 删除容器
-「删除一个容器」
-docker rm ${name}/${id}
 
-「删除多个容器」
 docker rm ${name1}/${id1} ${name2}/${id2} ...
 
-「删除多个容器」
 docker rm 「` docker ps -a -q`」
 
 7. 查看容器元数据
-```
-docker inspect ${name}
 
-docker inspect -f ='{{.NetworkSettings.IPAddress}}' ${name}
+```shell
+$ docker inspect ${name}
+
+$ docker inspect -f ='{{.NetworkSettings.IPAddress}}' ${name}
 ```
 
 「-f」：可用 「-format」 代替
+
 8. 查看容器日志
-docker logs ${name}/${id}
+
+$ docker logs ${name}/${id}
 
 9. 文件拷贝
+
 docker cp 需要拷贝的文件或目录 容器名称:容器目录
 
 「示例：」docker cp 1.txt c2:/root
-
 
 
 目录挂载

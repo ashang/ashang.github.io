@@ -1,38 +1,30 @@
 ---
 date: 2017-09-08
---- 
+---
 
 容器是微服务的最佳载体，Kubernetes 是微服务的最佳运行平台，Istio 是 Kubernetes 上最佳的 service mesh。
 
+## 容器
 
-# 容器
 历史上，第一个容器提供的仅仅是root file system的隔离（通过chroot），再加上FreeBSD jails提供额外的例如process ID这样的namespaces。Solaris后来成为先锋并且做了很多加强的探索。Linux control groups（cgroups）运用了很多这些想法，在这个领域的发展一直延续到今天。
 
+## 应用环境
 
-
-
-应用环境
 Linux内核里的cgroup、chroot和namespace的原本是为了保护应用不受周边杂乱邻里的影响。把这些和容器镜像组合起来创建一个抽象事物把应用从运行它们的（纷杂的）操作系统里隔离出来，提高了部署可靠性，也通过减少不一致性和冲突而加快了开发速度。
 
 能让这个抽象事物得以实现的关键在于有一个自包含的镜像，它把一个应用几乎所有的依赖环境都打包然后部署在一个容器里。如果这个过程做的正确，本地的外部环境就只剩下Linux内核的system-call interface. 这个有限制的interface极大提高了镜像的便携性，它并不完美：应用仍然暴露给了OS interface，尤其是在socket选项的广泛表面上、/proc、和给ioctl call的所传参数上。我们希望后面类似Open Container Initiative（OCI: https://www.opencontainers.org/）的努力能继续把容器抽象的表层能理清。
 
-
-
-
 # Docker启动的时候，可以使用--network参数指定使用的网络
-
 
 bridge： 默认情况下启动的Docker容器，都是使用 bridge，Docker安装时创建的桥接网络，每次Docker容器重启时，会按照顺序获取对应的IP地址，这个就导致重启下，Docker的IP地址就变了
 
-
 host：Docker 容器的网络会附属在主机上，两者是互通的。
-
-
 
 搭建一些集群软件的时候，组件和组件之间需要进行网络通信，这个时候如果每次重启IP都发生变化会很不方便，因此希望能够将容器的IP固定下来，这也是可以实现的，具体参考下面的方法。
 
 1.创建自定义网络
 
+```
 $ docker network create --subnet=172.18.0.0/16 es-network
 1e3e1eb702176df3e44111970292deaf5def7564135439fae21be489d6a8dcef
 $ docker network ls
@@ -41,16 +33,19 @@ NETWORK ID          NAME                DRIVER              SCOPE
 1e3e1eb70217        es-network          bridge              local
 e373574073e9        host                host                local
 d3d47c52f57b        none                null                local
+```
+
 2.创建Docker容器
 
+```
 docker run -e ES_JAVA_OPTS="-Xms256m -Xmx256m" -d -p 9202:9202 -p 9302:9302 -v ~/Projects/elk/elk-cluster/data3/es3.yml:/usr/share/elasticsearch/config/elasticsearch.yml -v ~/Projects/elk/elk-cluster/data3:/usr/share/elasticsearch/data --name ES03 --net=es-network --ip=172.18.0.12 --hostname=es-node3 docker.elastic.co/elasticsearch/elasticsearch:6.7.0
+```
+
 使用docker inspect container-id可以看到当前容器分配的IP就是固定IP了。
 
-
-(((
 docker自定义ip操作
 
-
+```
 docker network create --subnet=x.x.x.0/24 netBridgeName(网桥名称，随便写即可) ---创建自定义网桥
 
 docker run -itd --network=netBridgeName --ip x.x.x.8 --name containerName imageName ---创建容器且指定网络ip
@@ -58,12 +53,8 @@ docker run -itd --network=netBridgeName --ip x.x.x.8 --name containerName imageN
 docker network list ----查看docker下网络模式
 
 docker network rm netBridgeName ----删除创建的网桥
-)))
 
-
-
-
-$ route 
+$ route
 Kernel IP routing table
 Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 default         10.10.50.1      0.0.0.0         UG    0      0        0 eth0
@@ -73,10 +64,10 @@ default         10.10.50.1      0.0.0.0         UG    0      0        0 eth0
 
 
 p route
-default via 10.10.50.1 dev eth0 
-10.10.50.0/24 dev eth0  proto kernel  scope link  src 10.10.50.22 
-10.10.51.0/24 via 10.10.50.1 dev eth0 
-172.17.0.0/16 dev docker0  proto kernel  scope link  src 172.17.0.1 
+default via 10.10.50.1 dev eth0
+10.10.50.0/24 dev eth0  proto kernel  scope link  src 10.10.50.22
+10.10.51.0/24 via 10.10.50.1 dev eth0
+172.17.0.0/16 dev docker0  proto kernel  scope link  src 172.17.0.1
 
 
 
@@ -88,7 +79,7 @@ aaron@dd9079117fa0:~$ ip a
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
     inet 127.0.0.1/8 scope host lo
        valid_lft forever preferred_lft forever
-429: eth0@if430: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default 
+429: eth0@if430: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
     link/ether 02:42:ac:11:00:b9 brd ff:ff:ff:ff:ff:ff link-netnsid 0
     inet 172.17.0.185/16 brd 172.17.255.255 scope global eth0
        valid_lft forever preferred_lft forever
@@ -124,19 +115,20 @@ default         172.17.0.1      0.0.0.0         UG    0      0        0 eth0
 
 
 aaron@a88556dc6e9a:~$ ip route
-default via 172.17.0.1 dev eth0 
-172.17.0.0/16 dev eth0 proto kernel scope link src 172.17.0.185 
-
-
+default via 172.17.0.1 dev eth0
+172.17.0.0/16 dev eth0 proto kernel scope link src 172.17.0.185
+```
 
 # -> 容器1内部 ping 容器2
+
+```
 $ ping 172.17.0.3
 PING 172.17.0.3 (172.17.0.3): 56 data bytes
 64 bytes from 172.17.0.3: seq=0 ttl=64 time=0.142 ms
 64 bytes from 172.17.0.3: seq=1 ttl=64 time=0.096 ms
-64 bytes from 172.17.0.3: seq=2 ttl=64 time=0.089 ms
-我们看到，在一个容器内部ping另外一个容器的ip，是可以ping通的。也就意味着，这两个容器是可以互相通信的。
+```
 
+我们看到，在一个容器内部ping另外一个容器的ip，是可以ping通的。也就意味着，这两个容器是可以互相通信的。
 
 在容器1里访问容器2的地址，这个时候目的IP地址会匹配到容器1的第二条路由规则，这条路由规则的Gateway是0.0.0.0，意味着这是一条直连规则，也就是说凡是匹配到这个路由规则的请求，会直接通过eth0网卡，通过二层网络发往目的主机。而要通过二层网络到达容器2，就需要127.17.0.3对应的MAC地址。所以，容器1的网络协议栈就需要通过eth0网卡来发送一个ARP广播，通过IP找到MAC地址。
 
@@ -148,9 +140,8 @@ docker0转发的过程，就是继续扮演二层交换机，docker0根据数据
 
 CAM就是交换机通过MAC地址学习维护端口和MAC地址的对应表
 
-
-
 ## 跨主通信
+
 好了，这里不禁问个问题，到目前为止只是单主机内部的容器间通信，那跨主机网络呢？ 在Docker默认配置下，一台宿主机的docker0网桥是无法和其它宿主机连通的，它们之间没有任何关联，所以这些网桥上的容器，自然就没办法多主机之间互相通信。但是无论怎么变化，道理都是一样的，如果我们创建一个公共的网桥，是不是集群中所有容器都可以通过这个公共网桥去连接？
 
 当然在正常的情况下，节点与节点的通信往往可以通过NAT的方式，但是，这个在互联网发展的今天，在容器化环境下未必适用。例如在向注册中心注册实例的时候，肯定会携带IP，在正常物理机内的应用当然没有问题，但是容器化环境却未必，容器内的IP很可能就是上文所说的172.17.0.2，多个节点都会存在这个IP，大概率这个IP是冲突的。
@@ -161,8 +152,8 @@ CAM就是交换机通过MAC地址学习维护端口和MAC地址的对应表
 
 关于这些具体的网络解决方案，例如Flannel、Calico等
 
-
 ##docker的网络概念
+
 docker受一个github上的issue启发，引入了容器网络模型（container network model，CNM）[1]，容器网络模型主要包含了3个概念
 
 network：网络，可以理解为一个Driver，是一个第三方网络栈，包含多种网络模式，下文也会详细描述
@@ -175,19 +166,16 @@ endpoint：端点，用于连接sandbox和network
 
 可以类比传统网络模型，将network比作交换机，sandbox比作网卡，endpoint比作接口和网线
 
-
 另外，docker在创建容器时，先调用控制器创建sandbox对象，再调用容器运行时为容器创建network namespace
 
-
-
 二、docker的网络模式
+
 这里我们先讨论docker的单主机网络模式，它包括以下4类：
 
 host
 bridge
 none
 joined-container
-
 
 2.1 host
 
@@ -199,15 +187,12 @@ docker不会为容器创建独有的network namespace；
 
 这种模式用于网络性能较高的场景，但安全隔离性相对差一些。
 
-
 2.2 bridge
 
 桥接模式，有点类型VM-NAT，dockerd进程启动时会创建一个docker0网桥，容器内的数据通过这个网卡设备与宿主机进行数据传输。
 
 ￼
 docker会为容器创建独有的network namespace，也会为这个命名空间配置好虚拟网卡，路由，DNS，IP地址与iptables规则（也就是sandbox的内容）。
-
-
 
 2.3 none
 
@@ -221,17 +206,15 @@ none模式可以说是桥接模式的一种特例，docker会为容器创建独�
 
 kubernetes的pod就是使用的这一模式。
 
-
 关于跨主机的docker网络通信，包含overlay、macvaln，又包含calico、flannel、weave等方案，不过跨主机的docker网络管理更多的是交给kubernetes或swarm等编排工具去实现了。
 
-
-
+```
 vagrant ssh docker-node1
 ip a
-
-
+```
 
 # K8s
+
 可以实现容器集群的自动化部署、自动扩缩容、维护等功能。
 
 通过Kubernetes你可以：
@@ -247,7 +230,7 @@ K8s集群至少有一个工作节点，节点上运行 K8s 所管理的容器化
 
 在Master通常上包括 kube-apiserver、etcd 存储、kube-controller-manager、cloud-controller-manager、kube-scheduler 和用于 K8s 服务的 DNS 服务器（插件）。这些对集群做出全局决策(比如调度)，以及检测和响应集群事件的组件集合也称为控制平面。
 
-大多数安装工具（kubeadm）或者脚本为了架构更明了会把控制平面中的组件安装到一台机器上即Master机器，并且不会在此机器上运行用户容器。 
+大多数安装工具（kubeadm）或者脚本为了架构更明了会把控制平面中的组件安装到一台机器上即Master机器，并且不会在此机器上运行用户容器。
 
 在Node上组件包括 kubelet 、kube-porxy 以及服务于pod的容器运行时(runtime)。外部storage与registry用于为容器提供存储与镜像仓库服务。
 
@@ -262,40 +245,30 @@ K8s的基本工作流程：
 - 这样我们的任务已经在运行了，此时control-manager发挥作用保证任务一直是我们期望的状态。
 
 # k8s组件
+
 ## 控制平面组件
 
 Kubernetes 的 Master 包含四个主要的组件：API Server、Controller、Scheduler 以及 etcd。如下图所示：
 
 ### kube-apiserver
+
 API服务器为K8s集群资源操作提供唯一入口，并提供认证、授权、访问控制、API 注册和发现机制。
 
 Kubernetes API 服务器的主要实现是 kube-apiserver。 kube-apiserver 设计上考虑了水平伸缩，也就是说，它可通过部署多个实例进行伸缩。你可以运行 kube-apiserver 的多个实例，并在这些实例之间进行流量平衡。
 
 Kubernetes API 是由 **HTTP+JSON **组成的：用户访问的方式是 HTTP，访问的 API 中 content 的内容是 JSON 格式的。
 
-
-
 Kubernetes 的 kubectl 也就是 command tool，Kubernetes UI，或者有时候用 curl，直接与 Kubernetes 进行沟通，都是使用 HTTP + JSON 这种形式。
-
-
 
 下面有个例子：比如说，对于这个 Pod 类型的资源，它的 HTTP 访问的路径，就是 API，然后是 apiVesion: V1, 之后是相应的 Namespaces，以及 Pods 资源，最终是 Podname，也就是 Pod 的名字
 
 Spec 也就是我们希望 Pod 达到的一个预期的状态。比如说它内部需要有哪些 container 被运行；比如说这里面有一个 nginx 的 container，它的 image 是什么？它暴露的 port 是什么？
 
-
-
 当我们从 Kubernetes API 中去获取这个资源的时候，一般来讲在 Spec 下面会有一个项目叫 status，它表达了这个资源当前的状态；比如说一个 Pod 的状态可能是正在被调度、或者是已经 running、或者是已经被 terminates，就是被执行完毕了。
-
-
 
 刚刚在 API 之中，我们讲了一个比较有意思的 metadata 叫做“label”，这个 label 可以是一组 KeyValuePair。
 
-
-
 比如下图的第一个 pod 中，label 就可能是一个 color 等于 red，即它的颜色是红颜色。当然你也可以加其他 label，比如说 size: big 就是大小，定义为大的，它可以是一组 label。
-
-
 
 这些 label 是可以被 selector，也就是选择器所查询的。这个能力实际上跟我们的 sql 类型的 select 语句是非常相似的，比如下图中的三个 Pod 资源中，我们就可以进行 select。name color 等于 red，就是它的颜色是红色的，我们也可以看到，只有两个被选中了，因为只有他们的 label 是红色的，另外一个 label 中写的 color 等于 yellow，也就是它的颜色是黄色，是不会被选中的。
 
@@ -306,19 +279,18 @@ Spec 也就是我们希望 Pod 达到的一个预期的状态。比如说它内�
 
 例如说，我们刚刚介绍的 Deployment，它可能是代表一组的 Pod，它是一组 Pod 的抽象，一组 Pod 就是通过 label selector 来表达的。当然我们刚才讲到说 service 对应的一组 Pod，就是一个 service 要对应一个或者多个的 Pod，来对它们进行统一的访问，这个描述也是通过 label selector 来进行 select 选取的一组 Pod。
 
-
 ### API 与 Kubernetes Operator
-Kubernetes Operator 是一种利用 API 借助 kubectl 工具来封装、部署和管理应用的方法。 
+
+Kubernetes Operator 是一种利用 API 借助 kubectl 工具来封装、部署和管理应用的方法。
 
 在 Kubernetes 中，Operator 是一种特定于应用的控制器，它可以扩展 Kubernetes API 的功能，从而代表用户创建、配置和管理复杂应用的实例。通过包含特定于域或应用的信息，Operator 可以让 Kubernetes 在所管理软件的整个生命周期内实现自动化。
 
-
-
-
 ### etcd
+
 etcd 是兼具一致性和高可用性的键值数据库，可以作为保存 Kubernetes 所有集群数据的后台数据库(例如 Pod 的数量、状态、命名空间等）、API 对象和服务发现细节。 在生产级k8s中etcd通常会以集群的方式存在，安全原因，它只能从 API 服务器访问。
 
 ### kube-scheduler
+
 kube-scheduler 负责监视新创建、未指定运行Node的 Pods，决策出一个让pod运行的节点。
 
 例如，如果应用程序需要 1GB 内存和 2 个 CPU 内核，那么该应用程序的 pod 将被安排在至少具有这些资源的节点上。每次需要调度 pod 时，调度程序都会运行。调度程序必须知道可用的总资源以及分配给每个节点上现有工作负载的资源。
@@ -339,6 +311,7 @@ k8s在后台运行许多不同的控制器进程，当服务配置发生更改�
 - 服务帐户和令牌控制器（Service Account & Token Controllers）: 为新的命名空间创建默认帐户和 API 访问令牌
 
 ### cloud-controller-manager
+
 云控制器管理器使得你可以将你的集群连接到云提供商的 API 之上， 同时可以将云平台交互组件与本地集群中组件分离。
 
 cloud-controller-manager 仅运行特定于云平台的控制回路。 如果我们在自己的环境中运行 Kubernetes，大多数时候非混合云环境是用不到这个组件的。
@@ -366,43 +339,27 @@ Kubernetes 的 Node 并不会直接和 user 进行 interaction，它的 interact
 
 通过 UI 或者 CLI 提交一个 Pod 给 Kubernetes 进行部署，这个 Pod 请求首先会通过 CLI 或者 UI 提交给 Kubernetes API Server，下一步 API Server 会把这个信息写入到它的存储系统 etcd，之后 Scheduler 会通过 API Server 的 watch 或者叫做 notification 机制得到这个信息：有一个 Pod 需要被调度。
 
-
-
 这个时候 Scheduler 会根据它的内存状态进行一次调度决策，在完成这次调度之后，它会向 API Server report 说：“OK！这个 Pod 需要被调度到某一个节点上。”
-
-
 
 这个时候 API Server 接收到这次操作之后，会把这次的结果再次写到 etcd 中，然后 API Server 会通知相应的节点进行这次 Pod 真正的执行启动。相应节点的 kubelet 会得到这个通知，kubelet 就会去调 Container runtime 来真正去启动配置这个容器和这个容器的运行环境，去调度 Storage Plugin 来去配置存储，network Plugin 去配置网络。
 
-
-#Pod
+## Pod
 
 Pod 是 Kubernetes 的一个最小调度以及资源单元。用户可以通过 Kubernetes 的 Pod API 生产一个 Pod，让 Kubernetes 对这个 Pod 进行调度，也就是把它放在某一个 Kubernetes 管理的节点上运行起来。一个 Pod 简单来说是对一组容器的抽象，它里面会包含一个或多个容器。
 
-
 在 Pod 里面，我们也可以去定义容器所需要运行的方式。比如说运行容器的 Command，以及运行容器的环境变量等等。Pod 这个抽象也给这些容器提供了一个共享的运行环境，它们会共享同一个网络环境，这些容器可以用 localhost 来进行直接的连接。而 Pod 与 Pod 之间，是互相有 isolation 隔离的。
-
-
 
 Deployment 是在 Pod 这个抽象上更为上层的一个抽象，它可以定义一组 Pod 的副本数目、以及这个 Pod 的版本。一般大家用 Deployment 这个抽象来做应用的真正的管理，而 Pod 是组成 Deployment 最小的单元。
 
-
-
 Kubernetes 是通过 Controller，也就是我们刚才提到的控制器去维护 Deployment 中 Pod 的数目，它也会去帮助 Deployment 自动恢复失败的 Pod。
 
-
-
 比如说我可以定义一个 Deployment，这个 Deployment 里面需要两个 Pod，当一个 Pod 失败的时候，控制器就会监测到，它重新把 Deployment 中的 Pod 数目从一个恢复到两个，通过再去新生成一个 Pod。通过控制器，我们也会帮助完成发布的策略。比如说进行滚动升级，进行重新生成的升级，或者进行版本的回滚。
-
-
 
 ## 3.Pod
 
 运行于Node节点上，若干相关容器的组合。Pod内包含的容器运行在同一宿主机上，使用相同的网络命名空间、IP地址和端口，可以经过localhost进行通。Pod是Kurbernetes进行建立、调度和管理的最小单位，它提供了比容器更高层次的抽象，使得部署和管理更加灵活。一个Pod能够包含一个容器或者多个相关容器。
 
 Pod其实有两种类型：普通Pod和静态Pod，后者比较特殊，它并不存在Kubernetes的etcd存储中，而是存放在某个具体的Node上的一个具体文件中，而且只在此Node上启动。普通Pod一旦被建立，就会被放入etcd存储中，随后会被Kubernetes Master调度到摸个具体的Node上进行绑定，随后该Pod被对应的Node上的kubelet进程实例化成一组相关的Docker容器冰启动起来，在。在默认状况下，当Pod里的某个容器中止时，Kubernetes会自动检测到这个问起而且重启这个Pod（重启Pod里的全部容器），若是Pod所在的Node宕机，则会将这个Node上的全部Pod从新调度到其余节点上。
-
-架构资料领取地址：895244712
 
 4.Replication Controller
 
@@ -451,27 +408,20 @@ Kubernetes中的任意API对象都是经过Label进行标识，Label的实质是
 Label Selector在Kubernetes中重要使用场景以下:
 
 kube-Controller进程经过资源对象RC上定义Label Selector来筛选要监控的Pod副本的数量，从而实现副本数量始终符合预期设定的全自动控制流程
-　　kube-proxy进程经过Service的Label Selector来选择对应的Pod，自动创建起每一个Service岛对应Pod的请求转发路由表，从而实现Service的智能负载均衡
-　　经过对某些Node定义特定的Label，而且在Pod定义文件中使用Nodeselector这种标签调度策略，kuber-scheduler进程能够实现Pod”定向调度“的特性
 
+kube-proxy进程经过Service的Label Selector来选择对应的Pod，自动创建起每一个Service岛对应Pod的请求转发路由表，从而实现Service的智能负载均衡
 
-# 
+经过对某些Node定义特定的Label，而且在Pod定义文件中使用Nodeselector这种标签调度策略，kuber-scheduler进程能够实现Pod”定向调度“的特性
+
+#
 
 Service 提供了一个或者多个 Pod 实例的稳定访问地址。
 
-
-
 比如在上面的例子中，我们看到：一个 Deployment 可能有两个甚至更多个完全相同的 Pod。对于一个外部的用户来讲，访问哪个 Pod 其实都是一样的，所以它希望做一次负载均衡，在做负载均衡的同时，我只想访问某一个固定的 VIP，也就是 Virtual IP 地址，而不希望得知每一个具体的 Pod 的 IP 地址。
-
-
 
 我们刚才提到，这个 pod 本身可能 terminal go（终止），如果一个 Pod 失败了，可能会换成另外一个新的。
 
-
-
 对一个外部用户来讲，提供了多个具体的 Pod 地址，这个用户要不停地去更新 Pod 地址，当这个 Pod 再失败重启之后，我们希望有一个抽象，把所有 Pod 的访问能力抽象成一个第三方的一个 IP 地址，实现这个的 Kubernetes 的抽象就叫 Service。
-
-
 
 实现 Service 有多种方式，Kubernetes 支持 Cluster IP，上面我们讲过的 kuber-proxy 的组网，它也支持 nodePort、 LoadBalancer 等其他的一些访问的能力。
 
@@ -494,22 +444,18 @@ Service是分布式集群架构的核心，一个Service对象拥有以下关键
 要监控的目标Pod标签（Label）
 　　在建立好RC后，Kubernetes会经过RC中定义的的Label筛选出对应Pod实例并实时监控其状态和数量，若是实例数量少于定义的副本数量，则会根据RC中定义的Pod模板来建立一个新的Pod，而后将新Pod调度到合适的Node上启动运行，知道Pod实例的数量达到预约目标，这个过程彻底是自动化。
 
+## Namespace
 
-
-
-##Namespace
 Namespace 是用来做一个集群内部的逻辑隔离的，它包括鉴权、资源管理等。Kubernetes 的每个资源，比如刚才讲的 Pod、Deployment、Service 都属于一个 Namespace，同一个 Namespace 中的资源需要命名的唯一性，不同的 Namespace 中的资源可以重名。
-
-
 
 Namespace 一个用例，比如像在阿里巴巴，我们内部会有很多个 business units，在每一个 business units 之间，希望有一个视图上的隔离，并且在鉴权上也不一样，在 cuda 上面也不一样，我们就会用 Namespace 来去给每一个 BU 提供一个他所看到的这么一个看到的隔离的机制。
 
-
-
 # Node中组件
+
 节点组件在每个节点上运行，维护运行的 Pod 并提供 Kubernetes 运行环境。
 
 ### kubelet
+
 一个在集群中每个node上运行的代理。 它保证容器都 运行在 Pod 中。kubelet 定期接收新的或修改过的 pod 规范 PodSpecs（主要通过 kube-apiserver）并确保 pod 及容器健康并以所需状态运行。该组件还向 kube-apiserver 报告运行它的主机的健康状况。
 
 kubelet 不会管理不是由 Kubernetes 创建的容器。
@@ -518,48 +464,36 @@ kubelet 不会管理不是由 Kubernetes 创建的容器。
 - Container Network Interface：简称CNI（容器网络接口），提供网络通用插件接口服务。CNI定义了Kubernetes网络插件的基础，容器创建时通过CNI插件配置网络。
 - Container Storage Interface：简称CSI（容器存储接口），提供存储通用插件接口服务。CSI定义了容器存储卷标准规范，容器创建时通过CSI插件配置存储卷。
 
-
 ### kube-proxy
+
 kube-proxy 是集群中每个节点上运行的网络代理， 实现 Kubernetes 服务（Service） 概念的一部分。用于处理单个主机子网划分并向外部世界公开服务。它跨集群中的各种隔离网络将请求转发到正确的 pod/容器。
 
 kube-proxy 维护节点上的网络规则。这些网络规则允许从集群内部或外部的网络会话与 Pod 进行网络通信。
 
 如果操作系统提供了数据包过滤层并可用的话，kube-proxy 会通过它来实现网络规则。否则， kube-proxy 仅转发流量本身。
 
-
 kube-proxy组件，作为节点上的网络代理，运行在每个Kubernetes节点上。它监控kube-apiserver的服务和端点资源变化，并通过iptables/ipvs等配置负载均衡器，为一组Pod提供统一的TCP/UDP流量转发和负载均衡功能。
 
 kube-proxy组件是参与管理Pod-to-Service和External-to-Service网络的最重要的节点组件之一。kube-proxy组件相当于代理模型，对于某个IP:Port的请求，负责将其转发给专用网络上的相应服务或应用程序。但是，kube-proxy组件与其他负载均衡服务的区别在于，kube-proxy代理只向Kubernetes服务及其后端Pod发出请求。
 
-
-
 ### 容器运行时（Container Runtime）
+
 容器运行时负责创建容器运行环境。
 
 Kubernetes 支持多个容器运行时: Docker（即将被废弃）、containerd、rkt, CRI-O以及任何实现 Kubernetes CRI (容器运行环境接口)的runtime。
 
-
 # k8s 核心的功能：
+
 - 服务的发现与负载的均衡；
-
 - 容器的自动装箱，我们也会把它叫做 scheduling，就是“调度”，把一个容器放到一个集群的某一个机器上，Kubernetes 会帮助我们去做存储的编排，让存储的声明周期与容器的生命周期能有一个连接；
-
 - Kubernetes 会帮助我们去做自动化的容器的恢复。在一个集群中，经常会出现宿主机的问题或者说是 OS 的问题，导致容器本身的不可用，Kubernetes 会自动地对这些不可用的容器进行恢复；
-
 - Kubernetes 会帮助我们去做应用的自动发布与应用的回滚，以及与应用相关的配置密文的管理；
-
 - 对于 job 类型任务，Kubernetes 可以去做批量的执行；
-
 - 为了让这个集群、这个应用更富有弹性，Kubernetes 也支持水平的伸缩。
-
 
 Kubernetes 有一个节点健康检查的功能，它会监测这个集群中所有的宿主机，当宿主机本身出现故障，或者软件出现故障的时候，这个节点健康检查会自动对它进行发现。
 
-
-
 Kubernetes 有业务负载检查的能力，它会监测业务上所承担的负载，如果这个业务本身的 CPU 利用率过高，或者响应时间过长，它可以对这个业务进行一次扩容。
-
-
 
 #
 
@@ -577,26 +511,24 @@ Kubenetes中，所有的容器均在Pod中运行,一个Pod可以承载一个或�
 
 # Docker by default uses bridge network.
 
-
-
 Or if you are using kubernetes, for instance, to manage your Docker containers, let it handle the IP Addresses for you kubernetes-expose-external-ip-address ?.
+
 https://kubernetes.io/docs/tutorials/stateless-application/expose-external-ip-address/
 
 By default docker compose sets up a single network for your app. And your app’s network is given a name based on the “project name”, originated from the name of the directory it lives in.
 
-
-
 How to Get A Docker Container IP Address - examples
 
-<<<
  --format option of inspect comes to the rescue.
 
 Modern Docker client syntax is:
 
-docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' container_name_or_id
+```shell
+$ docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' container_name_or_id
 Old Docker client syntax is:
 
-docker inspect --format '{{ .NetworkSettings.IPAddress }}' container_name_or_id
+$ docker inspect --format '{{ .NetworkSettings.IPAddress }}' container_name_or_id
+```
 
 //// he new format is specific to the container and follows the form {{ .NetworkSettings.Networks.$network.IPAddress }}. The default appears to be bridge, but under docker-compose this will be a specific name that depends on the name of your app (I think from the --project-name flag, though that's also going to depend on what type of networking config you have set up)
 
@@ -607,16 +539,17 @@ For example:
 CID=$(docker run -d -p 4321 base nc -lk 4321);
 docker inspect $CID
 
+like docker inspect $CID | grep IPAddress | cut -d '"' -f 4, it works fine
 
-like docker inspect $CID | grep IPAddress | cut -d '"' -f 4, it works fine 
+Now, you can get the IP
 
-Now, you can get the Ip easier with docker inspect -format '{{ .NetworkSettings.IPAddress }}' ${CID} 
+```bash
+$ docker inspect -format '{{ .NetworkSettings.IPAddress }}' ${CID}
+```
 
+Bash script to get a table of IP addresses from all containers running under docker-compose.
 
-
-
-wrote the following Bash script to get a table of IP addresses from all containers running under docker-compose.
-
+```shell
 function docker_container_names() {
     docker ps -a --format "{{.Names}}" | xargs
 }
@@ -637,8 +570,7 @@ dipall() {
         fi
     done | sort -t . -k 3,3n -k 4,4n
 }
-
->>>
+```
 
 1. Using Docker Inspect
 
@@ -646,6 +578,7 @@ Docker inspect is a great way to retrieve low-level information on Docker object
 
 So shall we use it to get the IP Address from the dockerhive_datanode?
 
+```shell
 $ docker inspect -f \
 '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' \
 75000c343eb7
@@ -658,11 +591,10 @@ docker network inspect -f '{{range .IPAM.Config}}{{.Subnet}}{{end}}' thpr_defaul
 $ docker network inspect -f \
 '{{json .Containers}}' 9f6bc3c15568 | \
 jq '.[] | .Name + ":" + .IPv4Address'
+```
 
+1. Using Docker exec
 
-
-
-2. Using Docker exec
 In the following example we will work with the dockerhive_namenode.
 
 $ docker exec dockerhive_namenode cat /etc/hosts
@@ -675,8 +607,9 @@ ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
 172.18.0.3      607b00c25f29
 
+1. Inside the Docker Container
 
-3. Inside the Docker Container
+```
 $ docker exec -it dockerhive_namenode /bin/bash
 
 # running inside the dockerhive_namenode container
@@ -684,13 +617,9 @@ ip -4 -o address
 
 7: eth0    inet 172.18.0.3/16 brd 172.18.255.255 scope global eth0
 
-
 https://icons8.com/
 
 https://tehnoblog.org/ip-tools/ip-address-in-cidr-range/
-
-
-
 
 docker-compose.yml
 
@@ -741,11 +670,11 @@ services:
 volumes:
   namenode:
   datanode:
-
-
+```
 
 # minikube
 
+```
 minikube start --image-mirror-country='cn'
 minikube 提供了非常多的配置参数，
 
@@ -760,8 +689,7 @@ minikube 提供了非常多的配置参数，
 比如， 创建 minikube 环境并且调整默认资源配置
 
 minikube start --image-mirror-country='cn' --cpus=4 --memory=4096mb
-
-
+```
 
 使用Minikube
 用户使用Minikube CLI管理虚拟机上的Kubernetes环境，比如：启动，停止，删除，获取状态等。一旦Minikube虚拟机启动，用户就可以使用熟悉的Kubectl CLI在Kubernetes集群上执行操作。
@@ -868,7 +796,7 @@ For examples, visit https://github.com/katacoda/scenario-example
 
 
 
-npm install katacoda-cli   
+npm install katacoda-cli
 
 
 
@@ -939,7 +867,7 @@ FROM frolvlad/alpine-java:jdk8-slim
 ARG profile
 ENV SPRING_PROFILES_ACTIVE=${profile}
 项目的端口
-EXPOSE 8000 
+EXPOSE 8000
 WORKDIR /mnt
 修改时区
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories \
@@ -950,7 +878,7 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositorie
 && rm -rf /var/cache/apk/* /tmp/* /var/tmp/* $HOME/.cache
 
 COPY ./target/your-project-name-1.0-SNAPSHOT.jar ./app.jar
-ENTRYPOINT ["java", "-jar", "/mnt/app.jar"] 
+ENTRYPOINT ["java", "-jar", "/mnt/app.jar"]
 
 将SPRING_PROFILES_ACTIVE通过参数profile暴露出来，在构建的时候可以通过--build-args profile=xxx来进行动态设定，以满足不同环境的镜像构建要求。
 
@@ -958,24 +886,16 @@ SPRING_PROFILES_ACTIVE本可以在Docker容器启动时通过docker run -e SPRIN
 Helm配置文件
 Helm是Kubernetes的包管理工具，将应用部署相关的Deployment，Service，Ingress等打包进行发布与管理（可以像Docker镜像一样存储于仓库中）。
 
-
 # 搭建 k8s 环境
 
 主机名解析
 为了集群节点间的直接调用，我们需要配置一下主机名解析，分别在三台服务器上编辑 /etc/hosts
 
-
-
 同步时间
 集群中的时间必须要精确一致，我们可以直接使用chronyd服务从网络同步时间，三台服务器需做同样的操作
 
-
-
 禁用iptables和firewalld服务
 kubernetes和docker在运行中会产生大量的iptables规则，为了不让系统规则跟它们混淆，直接关闭系统的规则
-
-
-
 
 需要修改linux的内核参数，添加网桥过滤和地址转发功能，编辑/etc/sysctl.d/kubernetes.conf文件，添加如下配置:
 
@@ -985,9 +905,13 @@ net.ipv4.ip_forward = 1
 添加后进行以下操作：
 
 # 重新加载配置
+
 [root@master ~]# sysctl -p
+
 # 加载网桥过滤模块
+
 [root@master ~]# modprobe br_netfilter
+
 # 查看网桥过滤模块是否加载成功
 [root@master ~]# lsmod | grep br_netfilter
 
@@ -1057,7 +981,7 @@ KUBE_PROXY_MODE="ipvs"
 --image-repository registry.aliyuncs.com/google_containers \
 --kubernetes-version=v1.17.4 \
 --pod-network-cidr=10.244.0.0/16 \
---service-cidr=10.96.0.0/12 
+--service-cidr=10.96.0.0/12
 
 #使用 kubectl 工具
 [root@master ~]# mkdir -p $HOME/.kube
@@ -1067,7 +991,7 @@ KUBE_PROXY_MODE="ipvs"
 
 然后我们需要将node 节点加入集群中，在 node 服务器 上执行上述红框的命令：
 
-[root@master ~]# kubeadm join 192.168.108.100:6443 --token xxx \ 
+[root@master ~]# kubeadm join 192.168.108.100:6443 --token xxx \
 --discovery-token-ca-cert-hash sha256:xxx
 便可在 master 节点 获取到节点信息：
 
@@ -1120,20 +1044,15 @@ nginx   1/1     1            1           31s
 [root@master ~]# kubectl expose deploy nginx --port=80 --target-port=80 --type=NodePort
 service/nginx exposed
 
-[root@master ~]# kubectl get svc 
+[root@master ~]# kubectl get svc
 NAME         TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
 nginx        NodePort    10.110.224.214   <none>        80:31771/TCP   5s
 然后我们通过 node 节点的 IP 加上service 暴露出来的 nodePort 来访问我们的 nginx 服务：
 
 
-
 也可以直接在集群中通过 service 的 IP 加上映射出来的 port 来访问我们的服务：
 
-
-
 从结果上看两种访问都是可用的，说明我们的 nginx 服务部署成功，
-
-
 
 kubernetes 启动后，无论是 master 节点 亦或者 node 节点，都会将自身的信息存储到 etcd 数据库中
 创建 nginx 服务，首先会将安装请求发送到 master 节点上的 apiServer 组件中
@@ -1143,8 +1062,4 @@ node 节点上的 kubelet 组件接收到指令后，会通知docker，然后由
 
 pod 是 kubernetes 中的最小操作单元，容器都是跑在 pod 中
 以上步骤完成后，nginx 服务便运行起来了，如果需要访问 nginx，就需要通过 kube-proxy 来对 pod 产生访问的代理，这样外部用户就能访问到这个 nginx 服务
-
-
-
-
 
