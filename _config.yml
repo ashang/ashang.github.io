@@ -93,16 +93,13 @@ defaults:
       image: true
   - scope:
       path: "_notes"
-      type: "posts"
     values:
       layout: "post"
-      ####author: "Aaron Shang"
       category: "ramblings"
   - scope:
       path: "_posts"
       # The 'post' type has become 'posts'.
       type: "posts"
     values:
-      layout: "post"
-      #author: "Aaron Shang"
+      layout: "page"
       category: "journal"
