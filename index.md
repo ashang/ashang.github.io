@@ -5,6 +5,7 @@
 # See: https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 # layout: home
 layout: default
+permalink: /ama/
 ---
 
 {% if site.posts.size > 0 %}
@@ -32,7 +33,7 @@ layout: default
 {% if site.notes.size > 0 %}
 ## {{ page.list_title | default: "What I Learnt Today" }}
 
-  {% for p in site.notes limit:10 %}
+  {% for p in site.notes limit:60 %}
 
     {%- assign date_format = site.minima.date_format | default: "%Y%m%d" -%}
     - {{ p.date | date: date_format }} &mdash;  [{{ p.title | escape }}]({{ p.url | relative_url }})
