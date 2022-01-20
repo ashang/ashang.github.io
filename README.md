@@ -81,6 +81,8 @@ Settings in later files override settings in earlier files.
 
 ## Bundle and Bundler
 
+[Bundler](http://bundler.io/) is a tool to install all the needed Gems (programs, modules).
+
 ### update
 
 ```
@@ -881,3 +883,36 @@ Read more about [user/group Pages][userpages] and [project Pages][projpages].
 Get $100 using my special Referral
 
 https://www.vultr.com/?ref=9028737-8H
+
+## Trouble shooting
+
+Starting Jekyll with bundler and overwrites some settings in `\_config.yml` with the second configuration file `\_config\_dev.yml`.
+
+```
+bundle exec jekyll serve --config _config.yml,_config_dev.yml
+```
+
+Start tracing.
+
+```
+bundle exec jekyll serve --trace --config _config.yml
+```
+
+### Preview
+
+```
+bundle config set --local without 'test _test legacy benchmark'
+bundle install
+bundle exec rake site:preview
+```
+
+### In case SSL warning is reported, build first before serving
+
+```
+/var/lib/gems/2.7.0/gems/jekyll-gist-1.5.0/lib/jekyll-gist/gist_tag.rb:98: warning: constant ::TimeoutError is deprecated
+Liquid Exception: Connection reset by peer - SSL_connect
+```
+
+```
+bundle exec jekyll clean && bundle exec jekyll build && bundle exec jekyll serve
+```

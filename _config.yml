@@ -33,9 +33,22 @@ permalink: /:title
   #date_format: "%b %-d, %Y"
 
 #theme: minima
-  #plugins:
-  ###- jekyll-feed
-  #- jekyll-sitemap
+#plugins:
+###- jekyll-feed
+#- jekyll-sitemap
+#- jekyll-avatar
+#- jekyll-feed
+#- jekyll-mentions
+#- jekyll-redirect-from
+#- jekyll-seo-tag
+#- jekyll-sitemap
+#- jemoji
+#kramdown:
+#  syntax_highlighter_opts:
+#    default_lang: plaintext
+#sass:
+#  style: compressed
+#strict_front_matter: true
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
@@ -51,8 +64,25 @@ permalink: /:title
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
-#
+#   - readme.md
 #exclude: ["README.md"]
+exclude:
+  - CHANGELOG.md
+  - HOW_TO_RELEASE.md
+  - Gemfile
+  - Gemfile.lock
+  - LICENSE
+  - README-*.md
+  - README.md
+  - gulpfile.js
+  - jekyll-text-theme.gemspec
+  - package-lock.json
+  - package.json
+  - /docs
+  - /node_modules
+  - /screenshots
+  - /test
+  - /vendor
 
 show_excerpts: true
 
@@ -74,8 +104,11 @@ rss: "fee.xml"
 
 collections:
   notes:
+    # Default is "/:path/"
+    #permalink: "/:path/"
     output: true
   posts:
+    #permalink: "/:path/"
     output: true
 
 # default layouts for each page type
@@ -86,13 +119,22 @@ defaults:
       image: true
   - scope:
       path: "_notes"
-    values:
-      layout: "post"
-      category: "ramblings"
-  - scope:
-      path: "_posts"
-      # The 'post' type has become 'posts'.
       type: "posts"
     values:
-      layout: "page"
+      #layout: post
+      category: "ramblings"
+  - scope:
+      path: _posts
+      # The 'post' type has become 'posts'.
+      type: posts
+    values:
+      layout: page
       category: "journal"
+  #- scope:
+      #path: ''
+    #values:
+      #image: "/img/jekyll-og.png"
+#google_analytics_id: UA-50755011-1
+#google_site_verification: onQcXpAvtHBrUI5LlroHNE_FP0b2qvFyPq7VZw36iEY
+#cloudinary_url: https://res.cloudinary.com/jekyll/image/upload/f_auto,q_auto,w_404
+future: true
