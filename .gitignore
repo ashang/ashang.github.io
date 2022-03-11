@@ -17,6 +17,7 @@ public/
 
 # JAM
 db.json
+_multiconfig.yml
 
 # Debug
 debug.log
@@ -39,8 +40,8 @@ _gh_pages
 
 # OS or Editor folders
 .DS_Store
-._*
 Thumbs.db
+._*
 .cache
 .project
 .settings
@@ -60,5 +61,8 @@ validation-status.json
 validation-report.json
 
 # Folders to ignore
-node_modules
-bower_components
+bower_components/
+node_modules/
+public/
+.deploy*/
+
