@@ -5,20 +5,6 @@ date: 2019-06-11
 
 Error occurred when running VirtualBox, some box popped out.
 
-
-[![](http://aaronshang.files.wordpress.com/2008/11/virtualbox-wrong-0-707608.png?w=300)](http://aaronshang.files.wordpress.com/2008/11/virtualbox-wrong-0-707608.png)
-
-
-
-
-[![](http://aaronshang.files.wordpress.com/2008/11/virtualbox-wrong-1-710027.png?w=286)](http://aaronshang.files.wordpress.com/2008/11/virtualbox-wrong-1-710027.png)
-
-
-
-
-[![](http://aaronshang.files.wordpress.com/2008/11/virtualbox-wrong-2-710687.png?w=300)](http://aaronshang.files.wordpress.com/2008/11/virtualbox-wrong-2-710687.png)
-
-
 $ VirtualBox
 WARNING: The vboxdrv kernel module is not loaded. Either there is no module
 available for the current kernel (2.6.24-21-386) or it failed to

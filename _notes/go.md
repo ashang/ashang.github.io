@@ -1,4 +1,44 @@
 
+size
+
+Go build reduce compiled file size
+
+go build -ldflags "-w" main.go -o target-file-name
+
+
+----
+
+package main
+
+import (
+    "fmt"
+    "time"
+)
+
+func main() {
+    loc, _ := time.LoadLocation("Asia/Shanghai")
+    t := time.Now().In(loc)
+    fmt.Println(t)
+}
+
+Time Parse
+
+Layout should follow this date time: Mon, 02 Jan 2006 15:04:05 -0700
+
+e.g.:
+
+t, err := time.Parse("2006-01-02 15:04:05 -0700", input)
+
+
+
+$ go run localtime
+package localtime is not in GOROOT (/usr/lib/go-1.17/src/localtime)
+
+$ env | grep GO
+GOPATH=/home/aaron/go
+
+----
+
 
 - productive
 - expressive
@@ -203,11 +243,11 @@ Hello, world.  Sqrt(2) = 1.414213562373095
 ```sh
 mathapp
 ```
-	
+
 也是输出如下内容
 
 	Hello, world.  Sqrt(2) = 1.414213562373095
-	
+
 这里我们展示如何编译和安装一个可运行的应用，以及如何设计我们的目录结构。
 
 对于启用go module的Go版本，需要对mod.go进行配置。（使用replace的方式将远程包替换为本地包）
@@ -216,8 +256,8 @@ mathapp
    go语言有一个获取远程包的工具就是`go get`，目前go get支持多数开源社区(例如：GitHub、googlecode、bitbucket、Launchpad)
 
 	go get github.com/astaxie/beedb
-	
->go get -u 参数可以自动更新包，而且当go get的时候会自动获取该包依赖的其他第三方包	
+
+>go get -u 参数可以自动更新包，而且当go get的时候会自动获取该包依赖的其他第三方包
 
 通过这个命令可以获取相应的源码，对应的开源平台采用不同的源码控制工具，例如GitHub采用git、googlecode采用hg，所以要想获取这些源码，必须先安装相应的源码控制工具
 
@@ -263,10 +303,4 @@ go get本质上可以理解为首先第一步是通过源码工具clone代码到
 						util.go
 
 从上面的结构我们可以很清晰的看到，bin目录下面存的是编译之后可执行的文件，pkg下面存放的是应用包，src下面保存的是应用源代码
-
-
-## links
-  * [目录](<preface.md>)
-  * 上一节: [安装Go](<01.1.md>)
-  * 下一节: [GO 命令](<01.3.md>)
 

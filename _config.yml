@@ -15,12 +15,14 @@
 # in the templates via {{ site.myvariable }}.
 
 title: in love we trust
+subtitle: ramblings notes,
 description: >- # this means to ignore newlines until "baseurl:"
  ramblings notes,
  what i learnt today.
 
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site
+#baseurl: "http://ashang.github.io/" # the subpath of your site, e.g. /blog
+#url: "/" # the base hostname & protocol for your site
+#url:
 
 permalink: /:title
 # pages and collections (excluding posts and drafts) don’t have time
@@ -29,10 +31,11 @@ permalink: /:title
 
 ##markdown: kramdown
 # refer to http://shopify.github.io/liquid/filters/date/ if you want to customize this
-#minima:
-  #date_format: "%b %-d, %Y"
+thepro:
+  date_format: "%Y%m%d"
+date_format: "ordinal"
 
-#theme: minima
+# Gems
 #plugins:
 ###- jekyll-feed
 #- jekyll-sitemap
@@ -43,7 +46,15 @@ permalink: /:title
 #- jekyll-seo-tag
 #- jekyll-sitemap
 #- jemoji
+#  - jekyll-mentions
+#- jekyll-github-metadata
+#- rouge
+#- jekyll-html-pipeline
+#  - jekyll-paginate
+#paginate: 8
+
 #kramdown:
+#  input: GFM
 #  syntax_highlighter_opts:
 #    default_lang: plaintext
 #sass:
@@ -87,9 +98,9 @@ exclude:
 show_excerpts: true
 
 #####name: Aaron Shang
-#####email: Aaron Shang <hi@ashang.org>
-email: hi@ashang.org
-github_username: ashang
+email: Kea Wot <hi@ashang.org>
+#####email: hi@ashang.org
+#github_username: ashang
 ## flickr_username: jekyll
 ## linkedin_username: jekyll
 
@@ -109,32 +120,73 @@ collections:
     output: true
   posts:
     #permalink: "/:path/"
-    output: true
 
-# default layouts for each page type
+  wiki:
+    output: true
+    permalink: /wiki/:path/
+
+# types available are pages, posts, drafts or any collection
 defaults:
+  -
+    scope:
+      path: "" # an empty string here means all files in the project
+      # The 'post' type has become 'posts'.
+    values:
+      layout: "default"
+
   - scope:
       path: "images"
     values:
       image: true
   - scope:
       path: "_notes"
-      type: "posts"
+      type: "notes" # a collection in your site, in plural form
     values:
-      #layout: post
+      layout: post
       category: "ramblings"
   - scope:
       path: _posts
-      # The 'post' type has become 'posts'.
       type: posts
     values:
-      layout: page
+      layout: post
       category: "journal"
   #- scope:
       #path: ''
     #values:
       #image: "/img/jekyll-og.png"
-#google_analytics_id: UA-50755011-1
+
+# Custom vars
+version:             1.1.0
+# google_analytics_id: #UA-XXXX-Y
 #google_site_verification: onQcXpAvtHBrUI5LlroHNE_FP0b2qvFyPq7VZw36iEY
 #cloudinary_url: https://res.cloudinary.com/jekyll/image/upload/f_auto,q_auto,w_404
 future: true
+
+navs:
+  -
+    href: /
+    label: 首页
+
+  -
+    href: /categories/
+    label: 分类
+
+  -
+    href: /wiki/
+    label: 他山之石
+
+  -
+    href: /links/
+    label: 专家链接
+
+  -
+    href: /about/
+    label: 关于
+
+subscribe_rss: /feed.xml
+
+highlighter: rouge
+lsi: false
+quiet: false
+excerpt_separator: "\n\n"
+

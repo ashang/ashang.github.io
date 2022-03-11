@@ -11,5 +11,8 @@ int *fp() is int*(fp())
 
 
 == and != is higher than &, then =
-
 ```
+
+## Links
+
+- https://blog.joren.ga/vla-pitfalls

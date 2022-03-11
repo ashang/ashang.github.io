@@ -11,7 +11,7 @@ ruby RUBY_VERSION
 # Happy Jekylling!
 gem "jekyll", "~> 4.2.1"
 # This is the default theme for new Jekyll sites. You may change this to anything you like.
-gem "minima", "~> 2.5"
+#gem "minima", "~> 2.5"
 
 gem "webrick"
 
@@ -22,9 +22,9 @@ gem "webrick"
 # If you have any plugins, put them here!
 # Feed had been built in
 # Feed had been built in
-group :jekyll_plugins do
-  gem "jekyll-feed", "~> 0.12"
-end
+##group :jekyll_plugins do
+  ##gem "jekyll-feed", "~> 0.12"
+##end
 
 ## Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 ## and associated library.

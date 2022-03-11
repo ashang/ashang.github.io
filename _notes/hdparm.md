@@ -1,6 +1,6 @@
 ---
 date: 2017-06-30
-title: Write failed is SSH Timeout
+title: hdparm
 ---
 
 ```

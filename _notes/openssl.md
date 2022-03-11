@@ -1,11 +1,6 @@
 
-
-
-
----
 > system_default = system_default_sect
-# W48.1 1129 15:54:43 # W48.1 1129 15:54:43 tty/14 aaron@kali:/etc/ssl
-$
+# aaron@kali:/etc/ssl
 $ more kali.cnf
 # The configurations proposed here are only used if /etc/ssl/openssl.cnf has
 # been modified so that ssl_sect.system_default points to one of them. The
@@ -21,7 +16,4 @@ CipherString = ALL@SECLEVEL=0
 [kali_strong_security]
 MinProtocol = TLSv1.2
 CipherString = DEFAULT@SECLEVEL=2
-
-
-
 

@@ -1,30 +1,33 @@
 ---
 date: 2017-05-19
-title: adb no such file
 ---
 
-## Common adb errors and solutions
+# adb errors and solutions
 
-### No such file or directory
+## No such file or directory
 
+```shell
 /path/to/android-sdk-linux/platform-tools/adb: No such file or directory
+```
 
 Solution:
 
-$ sudo apt-get install ia32-libs
-
+```shell
+apt-get install ia32-libs
+```
 
 Links:
-[https://bugs.launchpad.net/ubuntu/+source/ia32-libs/+bug/852101](https://bugs.launchpad.net/ubuntu/+source/ia32-libs/+bug/852101)
-[http://askubuntu.com/questions/73491/no-such-file-or-directory-for-existing-executable](http://askubuntu.com/questions/73491/no-such-file-or-directory-for-existing-executable)
-[http://kenno.wordpress.com/2011/10/27/ubuntu-11-10-32-bit-applications-do-not-run-64-bit/](http://kenno.wordpress.com/2011/10/27/ubuntu-11-10-32-bit-applications-do-not-run-64-bit/)
+- [https://bugs.launchpad.net/ubuntu/+source/ia32-libs/+bug/852101](https://bugs.launchpad.net/ubuntu/+source/ia32-libs/+bug/852101)
+- [http://askubuntu.com/questions/73491/no-such-file-or-directory-for-existing-executable](http://askubuntu.com/questions/73491/no-such-file-or-directory-for-existing-executable)
+- [http://kenno.wordpress.com/2011/10/27/ubuntu-11-10-32-bit-applications-do-not-run-64-bit/](http://kenno.wordpress.com/2011/10/27/ubuntu-11-10-32-bit-applications-do-not-run-64-bit/)
 
-#### insufficient permissions for device
+## insufficient permissions for device
 
+```shell
 $ adb shell df
 error: insufficient permissions for device
 
-$ sudo adb kill-server
+$ adb kill-server
 
 $ adb shell df
 * daemon not running. starting it now on port 5037 *
@@ -38,25 +41,7 @@ Filesystem               Size     Used     Free   Blksize
 /cache                 246.1M     4.1M   241.9M   4096
 /mnt/sdcard             21.2G   912.8M    20.3G   32768
 /mnt/secure/asec: Permission denied
+```
 
-
-"adb start-server " is automatically run.
-
-$ adb kill-server ;  sudo adb start-server ; adb devices
-When to use "sudo" for adb? never needed?
-
-1
-  adb kill-server ;  sudo adb start-server ; adb shell df
-
-2
- adb kill-server ;  adb start-server ; adb shell df
-
-3
- adb kill-server ;  sudo adb shell df
-
-Result 1 equals 3
-
-2 will give
- error: insufficient permissions for device
-
+`adb start-server` is automatically run.
 
