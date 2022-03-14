@@ -1,3 +1,4 @@
+# {{ page.title }}
 
  Brotli is a generic-purpose lossless compression algorithm
  that compresses data using a combination of a modern variant
@@ -7,8 +8,6 @@
  deflate but offers more dense compression.
 
 - https://github.com/google/brotli
-
-
 
 HTTP数据在从服务器发送前就已压缩：兼容的浏览器将在下载所需的格式前宣告支持何种方法给服务器；不支持压缩方法的浏览器将下载未经压缩的数据。
 
