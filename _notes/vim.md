@@ -1,12 +1,16 @@
 ---
-layout: wiki
 title: Vim
-categories: Vim
-description: 个人最常用的 Vim 常用操作。
-keywords: Vim
+date: 2018-07-16
+
 ---
 
-### 移动
+# vim
+
+## vim yanking
+
+yy not go to clipboard
+
+## 移动
 
 **以字（符）为单位**
 
@@ -27,7 +31,7 @@ keywords: Vim
 | 本单词尾（已在本词尾则跳到后一单词尾） | `e`  |
 
 **以屏幕为单位**
- 
+
 | 功能                     | 按键     |
 |:-------------------------|:---------|
 | 向下翻页                 | `CTRL-f` |

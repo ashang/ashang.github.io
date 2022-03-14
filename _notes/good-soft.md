@@ -1,9 +1,5 @@
 ---
-layout: wiki
 title: 善用佳软
-categories: Recommends
-description: 用正确的工具做对的事情
-keywords: 软件, 推荐
 ---
 
 好的软件总是给人一种相见恨晚的感觉。

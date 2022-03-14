@@ -1,8 +1,5 @@
 ---
-layout: wiki
 title: Linux/Unix
-categories: Linux
-keywords: Linux
 ---
 
 JavaScript is a prototype-based, multi-paradigm, single-threaded, dynamic language, supporting object-oriented, imperative, and declarative (e.g. functional programming) styles.

@@ -1,3 +1,9 @@
+---
+title: jit
+tags: ["jit"]
+date: 2021-06-16
+---
+
 # JIT notes
 
 AOT ，常见的比如：使用 Clang 对 C/C++ 代码进行编译、使用 Babel 编译 ES6 代码，甚至是将 JavaScript 代码编译为专用于某一 JS 引擎的 IR（Intermediate Representation）的等等过程都可以被认作是 AOT 编译的一种具体类型。而 JIT 与 AOT 之间的最大区别便是“编译过程发生的时间点”，对于 JIT 而言，其编译过程发生在程序的运行时；而对 AOT 来说，编译过程则发生在程序执行之前（通常为构建时）。
@@ -39,13 +45,13 @@ std::vector<uint8_t> machineCode {
 case '+': {
   for (n = 0; *tok == '+'; ++n, ++tok);
   const auto ptrBytes = _resolvePtrAddr(ptrAddr);
-  std::vector<uint8_t> byteCode { 
+  std::vector<uint8_t> byteCode {
     0x80, 0x3, static_cast<uint8_t>(n),  // addb $0x1, (%rbx)
   };
   _appendBytecode(byteCode, machineCode);
   --tok;
   break;
-} 
+}
 // ...
 
 在这段代码中我们首先使用了一个很容易想到的优化策略，那就是当遇到连续的 “+” 指令时，相较于为每一个出现的 “+” 指令都生成相同的、重复的机器码，我们可以选择首先计算遇到的连续出现的 “+” 指令的个数，然后再通过一条单独的汇编指令 addb $N, (%rbx) 来将这多个 “+” 指令所产生的状态变更一次性完成。相同的方式还可以被应用到其余的三种指令，它们分别对应数据指针所指向单元格内值的改变，以及数据指针本身的值的改变。
@@ -61,7 +67,7 @@ case ',': {
     movl $0x1, %edx
     syscall
   */
-  std::vector<uint8_t> byteCode { 
+  std::vector<uint8_t> byteCode {
 #if __APPLE__
     0xb8, 0x3, 0x0, 0x0, 0x2,
 #elif __linux__
@@ -85,7 +91,7 @@ case '[': {
     cmpb $0x0, (%rbx)
     je <>
   */
-  std::vector<uint8_t> byteCode { 
+  std::vector<uint8_t> byteCode {
     0x80, 0x3b, 0x0,
     0xf, 0x84, 0x0, 0x0, 0x0, 0x0, /* near jmp */
   };
@@ -98,7 +104,7 @@ case '[': {
 
 至此，我们便完成了机器指令的动态编译工作。通过这个阶段，我们的程序可以将输入的 Brainfuck 指令字符序列转换成对应的平台相关的二进制机器码。你可以在 bfJITCompile 函数的最后看到如下这样一段用来收尾的代码。这段代码主要用于在程序退出前输出 stdout 缓存区中的内容，并重置 rip 寄存器的值，以将程序执行流程退回到 C++ 代码中。后续我们还将回顾这部分内容。
 
-// epilogue. 
+// epilogue.
 // mainly restoring the previous pc, flushing the stdout buffer.
 /**
   cmpq $0, %r11
@@ -122,9 +128,9 @@ uint8_t* allocateExecMem(size_t size) {
   return static_cast<uint8_t*>(
     mmap(
       NULL,
-      size, 
-      PROT_READ | PROT_WRITE | PROT_EXEC, 
-      MAP_PRIVATE | MAP_ANONYMOUS, 
+      size,
+      PROT_READ | PROT_WRITE | PROT_EXEC,
+      MAP_PRIVATE | MAP_ANONYMOUS,
       -1,
       0));
 }
@@ -150,11 +156,11 @@ void exec() {
     pushq %%r12
     movq %1, %%r10
     xorq %%r11, %%r11
-    lea 0xe(%%rip), %%rax 
+    lea 0xe(%%rip), %%rax
     pushq %%rax
     movq %0, %%rax
     addq %2, %%rax
-    jmpq *%%rax 
+    jmpq *%%rax
   )":: "m" (mem), "m" (stdoutBuf), "m" (prependStaticSize));
 
   // clean the stack.

@@ -1,9 +1,5 @@
 ---
-layout: wiki
 title: Eclipse
-categories: Eclipse
-description: Eclipse 常用快捷键和操作总结
-keywords: Eclipse
 ---
 
 ### 快捷键
