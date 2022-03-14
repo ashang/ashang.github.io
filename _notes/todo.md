@@ -948,15 +948,11 @@ https://speakerdeck.com/u/technicalpickles/p/a-pragmatic-approach-to-rails-deplo
 
     http://meiweisq.com/?from=meifm
 
-        http://www.gwtproject.org/
+    http://www.gwtproject.org/
 
+    http://www.mdw.la/pubs
 
-
-        http://www.mdw.la/pubs
-
-   http://www.daveakerman.com/
-
-
+http://www.daveakerman.com
 
 http://mapillary.github.io/mapillary_presentations/janerik/2014-05-Sony/
 

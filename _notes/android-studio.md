@@ -1,5 +1,6 @@
 ---
 title: Android Studio
+date: 2019-02-26
 ---
 
 | 功能                   | 快捷键 for win | 快捷键 for mac      |

@@ -1,4 +1,3 @@
-# {{ page.title }}
 
  Brotli is a generic-purpose lossless compression algorithm
  that compresses data using a combination of a modern variant

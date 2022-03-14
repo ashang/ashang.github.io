@@ -1,5 +1,6 @@
 ---
 title: 中文文案排版指北（简体中文版）
+date: 2013-02-26
 ---
 
 GitHub repository: [mzlogin/chinese-copywriting-guidelines](https://github.com/mzlogin/chinese-copywriting-guidelines)

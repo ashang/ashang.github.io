@@ -1,6 +1,5 @@
 ---
 title: bing
-categories: security
 date: 2019-02-26
 ---
 
