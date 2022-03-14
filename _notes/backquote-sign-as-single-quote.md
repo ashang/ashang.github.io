@@ -21,25 +21,15 @@ FATAL: modules must be specified using absolute paths.
 "uname" is a relative path
 FATAL: Could not load /lib/modules/uname/modules.dep: No such file
 or directory
-
 </blockquote>
 
-
-
-
-
-
 It was a typo:
+
 backquote (grave in diacritic) taken for apostrophe (single quote, or acute in diacritic)
 
 `uname -r` should be 'uname -r'
 
-
-
 See also:
-
-http://en.wikipedia.org/wiki/Apostrophe
-
-http://en.wikipedia.org/wiki/Diacritic
-
-http://en.wikipedia.org/wiki/Enhanced_keyboard
+- http://en.wikipedia.org/wiki/Apostrophe
+- http://en.wikipedia.org/wiki/Diacritic
+- http://en.wikipedia.org/wiki/Enhanced_keyboard
