@@ -14,6 +14,13 @@ kontena-lens
 
 postman
 
+ProcessOn.com
+Android Studio
+Genymotion
+VS Code
+OneNote
+LICEcap
+
 ## TODO
 
 版本**，修复了将密码保存到内存中的安全漏洞，强烈推荐所有用户升级，详见[完整更新日志](http://www.chiark.greenend.org.uk/~sgtatham/putty/changes.html)。[消息来源](http//www.h-online.com/open/news/item/Security-problem-in-PuTTY-SSH-client-fixed-1393673.html)
