@@ -3,10 +3,31 @@ title: Rust notes
 date: 2018-08-17
 ---
 
-## The most loved language in 2020
+https://doc.rust-lang.org/stable/rust-by-example/hello/print.html
+
+https://doc.rust-lang.org/stable/rust-by-example/meta/doc.html
+
+## Macro
+
+```rust
+// This is a simple macro named `say_hello`.
+macro_rules! say_hello {
+    // `()` indicates that the macro takes no argument.
+    () => {
+        // The macro will expand into the contents of this block.
+        println!("Hello!");
+    };
+}
+
+fn main() {
+    // This call will expand into `println!("Hello");`
+    say_hello!()
+}
+```
+
+## The most loved language
 
 当我们要使用多个线程编写高性能程序，同时又需要它非常快速且节省内存，那么 Rust 是理想的选择
-
 
 Rust 最初是 Mozilla 为了解决软件在语言级别上无法真正利用多核计算带来的性能提升而创建的，这一点与 Go 有些类似。相比前辈 C++，Rust 在代码安全这一特性上下足了功夫。比如内存安全方面，Rust 在安全代码里不容许空指针、悬垂指针和数据竞争，这些问题在编译阶段就无法通过。Rust 社区核心开发者 Nichols 表示：“之前，我们只能使用 C 或者 C++ 才能编写具有较低内存占用空间的高质量代码。但是，在生产代码中使用这些语言需要你手动管理内存并了解可能导致未定义行为的所有方法。”Nichols 指出，不断扩展的 CVE 代码漏洞数据库证明，即使是最优秀的程序员也疲于应对层出不穷的代码漏洞。“为了确保你安全地使用内存，Rust 编译器非常严格，这样你就可以专注于你真正想要解决的问题。”
 
@@ -16,10 +37,7 @@ Rust 最初是 Mozilla 为了解决软件在语言级别上无法真正利用多
 
 2019 年的 StackOverflow 开发者调查显示，Rust 已连续四年蝉联“最受开发者喜爱的编程语言”。开发人员喜欢它，因为它的语法更简单，并且使用 Rust 编写的应用程序 bug 更少，因此开发人员可以专注于扩展他们的应用程序，而不是进行持续的维护工作。
 
-
-当初你为什么会选择学习 Go 语言？有人告诉你，Go 的速度很快，而且它有很好的并发原语。现在，Rust 横空出世，每个人都在说，Rust 在各个方面都更好。他们是以前就说谎了呢，还是现在就在说谎呢？虽然没有单一的语言能够统治所有的语言，但你知道，人们仍然有可能做出错误的选择，最终陷入技术死胡同。毕竟，几年前你确实在其他语言中，选择了 Go 语言，你很高兴地加入圈子并融入其中，还问“为什么不用 Go 呢？”
-
-虽然上面的故事完全是我虚构出来的，但毫无疑问的是，Rust 有一些拥趸，他们过于激进，觉得有义务向每一个迷失的灵魂灌输螃蟹大神的美德。（译注：Rust 语言的吉祥物就是一只螃蟹 Ferris，这是因为 Rust 开发者有一个名字，叫 Rustacean，因为这个是从甲壳纲动物这个单词 Crustacean [krʌ’steʃən]，去掉了首字母 C，而演变而来的。因为这里面包含 Rust 这四个字母。）这真的并不是 Rust 的错，每个成功的项目都会有行为不端的追随者，这是很难避免的。虽然每个人都必须与这些人打交道，但我觉得，Go 开发者特别容易受到他们行为的影响，因为 Rust 和 Go 的消息传递有太多的重叠。
+Rust 语言的吉祥物是一只螃蟹 Ferris，因为 Rust 开发者有一个名字，叫 Rustacean，因为这个是从甲壳纲动物这个单词 Crustacean [krʌ’steʃən]，去掉了首字母 C 演变而来的。因为这里面包含 Rust 这四个字母。
 
 Go 速度很快，但 Rust 速度更快。
 
