@@ -23,16 +23,16 @@ By default, ZFS will allocate space in blocks of 128K.
 
 Create a new zpool.
 
-$ sudo zpool create -f zpool-docker /dev/xvdb
+# zpool create -f zpool-docker /dev/xvdb
 
 Check that the zpool exists.
 
-$ sudo zfs list
+# zfs list
 NAME            USED  AVAIL    REFER  MOUNTPOINT
 zpool-docker    55K   3.84G    19K    /zpool-docker
 
 
-$ sudo docker info
+# docker info
 Containers: 0
 Images: 0
 Storage Driver: zfs

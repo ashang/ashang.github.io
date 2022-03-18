@@ -105,36 +105,7 @@ It's not just a server-side vulnerability, it's also a client-side vulnerability
 The stolen data could contain usernames and passwords.[73] Reverse Heartbleed affected millions of application instances.[71] Some of the vulnerable applications are listed in the "Software applications" section below.
 Specific systems affected
 
-Cisco Systems has identified 78 of its products as vulnerable, including IP phone systems and telepresence (video conferencing) systems.[74]
-Websites and other online services
-
-An analysis posted on GitHub of the most visited websites on April 8, 2014 revealed vulnerabilities in sites including Yahoo!, Imgur, Stack Overflow, Slate, and DuckDuckGo.[75][76] The following sites have services affected or made announcements recommending that users update passwords in response to the bug:
-
-Akamai Technologies[77]
-Amazon Web Services[78]
-Ars Technica[79]
-Bitbucket[80]
-BrandVerity[81]
-Freenode[82]
-GitHub[83]
-IFTTT[84]
-Internet Archive[85]
-Mojang[86]
-Mumsnet[42]
-PeerJ[87]
-Pinterest[88]
-Prezi[89]
-Reddit[90]
-Something Awful[91]
-SoundCloud[92]
-SourceForge[93]
-SparkFun[94]
-Stripe[95]
-Tumblr[96][97]
-All Wikimedia Foundation wikis (including Wikipedia in all languages)[98][99]
-Wunderlist[100]
-
-The Canadian federal government temporarily shut online services of the Canada Revenue Agency (CRA) and several government departments over Heartbleed bug security concerns.[101][102]
+Cisco Systems has identified 78 of its products as vulnerable, including IP phone systems and telepresence (video conferencing) systems.
 
 Platform maintainers like the Wikimedia Foundation advised their users to change passwords.[98]
 

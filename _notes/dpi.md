@@ -50,7 +50,7 @@ Base Board Information
         Type: Motherboard
         Contained Object Handles: 0
 
-$ sudo dmidecode -t baseboard                                                                            ✔
+# dmidecode -t baseboard                                                                            ✔
 # dmidecode 3.3
 Getting SMBIOS data from sysfs.
 SMBIOS 3.2.1 present.

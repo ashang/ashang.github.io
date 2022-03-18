@@ -186,7 +186,7 @@ Stack trace:
 ```
 
 ```
-$ sudo -u http composer require guzzlehttp/guzzle
+# -u http composer require guzzlehttp/guzzle
 Cannot create cache directory /var/www/.cache/composer/repo/https---repo.packagist.org/, or directory is not writable. Proceeding without cache
 Cannot create cache directory /var/www/.cache/composer/files/, or directory is not writable. Proceeding without cache
 Using version ^7.4 for guzzlehttp/guzzle
@@ -257,7 +257,7 @@ http:x:33:33:http:/www:/usr/sbin/nologin
 ```
 
 ```
-$ sudo -u http tail -f logs/errors.log
+# -u http tail -f logs/errors.log
 
 [15-Dec-2021 16:39:13 +0800]: <b4e2isb6> PHP Error: php_network_getaddresses: getaddrinfo failed: Name or service not known (POST /mail/?_task=mail&_unlock=loading1639557566934&_framed=1&_lang=en_GB&_action=send)
 [15-Dec-2021 16:39:13 +0800]: <b4e2isb6> PHP Error: Failed to connect socket: php_network_getaddresses: getaddrinfo failed: Name or service not known (POST /mail/?_task=mail&_unlock=loading1639557566934&_framed=1&_lang=en_GB&_action=send)
@@ -267,7 +267,7 @@ $ sudo -u http tail -f logs/errors.log
 Root cause is that the smtp server is not resolvable.
 
 ```
-$ sudo $EDITOR config/config.inc.php
+# $EDITOR config/config.inc.php
 $config['smtp_server'] = 'xxxx';
 ```
 
@@ -346,8 +346,7 @@ unable to handle PHP files
 
 any navigation to them is triggering downloading rather than parsing.
 
-$ sudo apt-get install libapache2-mod-php5
-[sudo] password for 28850410:
+# apt-get install libapache2-mod-php5
 Reading package lists... Done
 Building dependency tree
 Reading state information... Done
@@ -359,7 +358,7 @@ The following NEW packages will be installed:
   apache2-mpm-prefork libapache2-mod-php5
 0 upgraded, 2 newly installed, 1 to remove and 8 not upgraded.
 
-sudo apt-get install --reinstall libapache2-mod-php5filter
+# apt-get install --reinstall libapache2-mod-php5filter
 
    sudo lsusb -v|grep idVendor
    sudo lsusb -v|grep idVendor|column -c
@@ -523,29 +522,20 @@ RewriteRule (.*\.php)s$ $1 [H=application/x-httpd-php-source]
 	NOTE:
 	You may want to add: /usr/local/lib/php to your php.ini include_path
 
-
 # Not fixed
+
 ./configure --enable-mbstring --enable-exif --enable-intl --with-openssl --with-mysql --with-apxs2=/usr/bin/apxs
-
-
-
-
 
 /usr/bin/ld: ext/intl/msgformat/msgformat_helpers.o: undefined reference to symbol '__gxx_personality_v0@@CXXABI_1.3'
 /usr/lib/x86_64-linux-gnu/libstdc++.so.6: error adding symbols: DSO missing from command line
 
-
 -lstdc++ into EXTRA_LIBS.
 
-
 Also if you change $(CC) to $(CXX) in BUILD_* vars in Makefile it seems to help too. Looks like if you use C++ anywhere in PHP the linker should be C++ or library should be added manually.
-
-
 
 replacing the $(BUILD_CGI) and $(BUILD_CLI)
 instances of $(CC) in the generated Makefile with $(CXX) fixes the
 build.
-
 
 (s/CC/CXX/ in BUILD_* vars)
 
@@ -813,9 +803,9 @@ fclose ($stream);
 
 ## Install needed packages
 ```bash
-sudo apt install expect-dev
-sudo apt install libtool
-sudo apt install php-pear
+# apt install expect-dev
+# apt install libtool
+# apt install php-pear
 
 ...
 checking specify path to Tcl needed by expect... yes, shared
@@ -827,13 +817,13 @@ ERROR: `/tmp/pear/temp/expect/configure' failed
 ### To phpize
 
 ```bash
-sudo apt install php5-dev
+# apt install php5-dev
 ```
 
 ### build expect
 
 ```bash
-sudo pecl install expect
+# pecl install expect
 
 downloading expect-0.3.3.tgz ...
 Starting to download expect-0.3.3.tgz (9,334 bytes)
@@ -910,11 +900,11 @@ Then, after restarted Apache the module is loaded and all works fine.
 ## You need to restart your webserver since the php.ini changed
 
 ```
-sudo apache2ctl graceful
+# apache2ctl graceful
 ```
 Or
 ```
-sudo systemctl restart apache2.service
+# systemctl restart apache2.service
 ```
 
 # Trouble shooting
@@ -941,13 +931,13 @@ Install PDO.
 - Solution
 
 ```
-sudo pear config-set php_ini /etc/php/php.ini
+# pear config-set php_ini /etc/php/php.ini
 ```
 
 	config-set succeeded
 
 ```
-sudo pecl config-set php_ini /etc/php/php.ini
+# pecl config-set php_ini /etc/php/php.ini
 ```
 
 	config-set succeeded
@@ -969,7 +959,7 @@ Please be careful when reusing variables.
 
 - Solution
 ```
-sudo apt install php5-mysql
+# apt install php5-mysql
 ```
 
 ## Fatal error: Call to undefined function mysqli_connect()
@@ -990,11 +980,11 @@ Parse error: syntax error, unexpected end of file in Command line code on line 1
 
 - Solution
 ```
-$ sudo phpenmod mysqli
+# phpenmod mysqli
 WARNING: Directory /etc/php/7.0/cli/conf.d doesn't exist, not enabling the module
-$ sudo mkdir /etc/php/7.0/cli
-$ sudo mkdir /etc/php/7.0/cli/conf.d
-$ sudo phpenmod mysqli
+# mkdir /etc/php/7.0/cli
+# mkdir /etc/php/7.0/cli/conf.d
+# phpenmod mysqli
 ```
 
 ## PHP Fatal error: Call to undefined function expect_popen()
@@ -1024,7 +1014,7 @@ error_reporting(E_ERROR | E_PARSE);
 
 ```
 
-# NOTES
+## NOTES
 
 First of all, most servers are configured by default to NOT allow remote root login via ssh.
 
@@ -1044,15 +1034,13 @@ ssh automate@10.1.2.3 sudo theCommand
 
 ## Trouble shooting
 
-sudo apt-get install libapache2-mod-php5
+# apt-get install libapache2-mod-php5
 
 unable to handle PHP files
 
 any navigation to them is triggering downloading rather than parsing.
 
-
-$ sudo apt-get install libapache2-mod-php5
-[sudo] password for 28850410:
+# apt-get install libapache2-mod-php5
 Reading package lists... Done
 Building dependency tree
 Reading state information... Done
@@ -1064,292 +1052,15 @@ The following NEW packages will be installed:
   apache2-mpm-prefork libapache2-mod-php5
 0 upgraded, 2 newly installed, 1 to remove and 8 not upgraded.
 
+# apt-get install --reinstall libapache2-mod-php5filter
 
-sudo apt-get install --reinstall libapache2-mod-php5filter
+lsusb -v|grep idVendor
+lsusb -v|grep idVendor|column -t
+lsusb -v|grep idVendor|column -c
+lsusb -v|grep idVendor|column -x
+lsusb -v|grep idVendor|column -n
 
-
- 6967  lsusb -v|grep idVendor
- 6968  sudo lsusb -v|grep idVendor
- 6969  sudo lsusb -v|grep idVendor|column
- 6970  sudo lsusb -v|grep idVendor|column -t
- 6971  man column
- 6972  sudo lsusb -v|grep idVendor|column -c
- 6973  sudo lsusb -v|grep idVendor|column -x
- 6974  sudo lsusb -v|grep idVendor|column -n
- 6975  vi bench/priv/note/adb.mkd
- 6976  sudo vi /etc/udev/rules.d/51-android.rules
- 6977  cat /etc/udev/rules.d/51-android.rules
- 6978  sudo vi /etc/udev/rules.d/51-android.rules
- 6979  vi bench/priv/note/adb.mkd
- 6980  vi /tmp/bb
- 6981  column /tmp/bb
- 6982  column -t /tmp/bb
- 6983  vi bench/priv/note/adb.mkd
- 6984  lt
- 6985  cd bench/
- 6986  cd priv/
- 6987  ll
- 6988  vi xxb.mkd
- 6989  sudo apt-get install ruby
- 6990  sudo apt-get install ruby rubygems
- 6991  rails -v
- 6992  sudo apt-get install rails
- 6993  sudo gem install rack rake mongrel i18n mysql
- 6994  sudo apt-get install sudo apt-get install libmysqlclient-dev
- 6995  sudo apt-get install libmysqlclient-dev mysql-server
- 6996  sudo gem install rack rake mongrel i18n mysql
- 6997  lt
- 6998  cd bench/
- 6999  lt
- 7000  ..
- 7001  lt
- 7002  ll redmine-2.6.0.zip
- 7003  unzip -t redmine-2.6.0.zip
- 7004  unzip redmine-2.6.0.zip
- 7005  cd redmine-2.6.0/
- 7006  ll
- 7007  ..
- 7008  ll /opt/
- 7009  sudo mv redmine-2.6.0 /opt/mine
- 7010  mysql
- 7011  sudo service mysql restart
- 7012  sudo service mysql stop
- 7013  sudo apt-get install mysql-server
- 7014  sudo apt-get install --reinstall mysql-server
- 7015  mysql
- 7016  sudo service mysql restart
- 7017  eng prox
- 7018  cd /var/run
- 7019  ll mysqld/
- 7020  cd
- 7021  sudo grep mysqld /etc/mysql/*cnf
- 7022  ll /var/lib/mysql/
- 7023  sudo ln -ll /var/lib/mysql/
- 7024  sudo ls -ll /var/lib/mysql/
- 7025  sudo ls -ll /var/lib/mysql/mysql
- 7026  dpkg -S /var/lib/mysql/mysql
- 7027  sudo dpkg -S /var/lib/mysql/mysql
- 7028*
- 7029  sudo dpkg -S /var/lib/mysql
- 7030  sudo apt-get autoremove --purge mysql-server-core-5.5
- 7031  as akonadi-server
- 7032  sudo apt-get install --reinstall mysql-server-core-5.5
- 7033  sudo apt-get autoremove --purge
- 7034  mysql
- 7035  sudo apt-get install --reinstall mysql-server-core-5.5
- 7036  sudo apt-get autoremove --purge mysql-server-5
- 7037  sudo apt-get autoremove --purge
- 7038  sudo apt-get install mysql-server
- 7039  mysql
- 7040  psg mysql
- 7041  sudo ls -ll /var/lib/mysql/mysql
- 7042*
- 7043  sudo a2enmod
- 7046  curl cnbjlx9076
- 7047  unset http_proxy
- 7048  curl cnbjlx9076
- 7049  sudo vi /etc/apache2/conf.d/mediawiki.conf
- 7050  diff /etc/apache2/conf.d/mediawiki.conf bench/priv/mediawiki.conf
- 7051  ll bench/priv/ | grep conf
- 7052  sudo vi /etc/apache2/apache2.conf
- 7053  cd /etc/apache2/
- 7054  ll
- 7055  cd mods-enabled/
- 7056  ll
- 7057  ll|grep php
- 7058  ..
- 7059  ll mods-available/
- 7060  ll mods-available/|grep php
- 7061  as php
- 7062  as php|grep mod
- 7066  curl cnbjlx9076
- 7067  history
-
- 6963  ..
- 6964  rm bbb/
- 6965  lsusb -v
- 6966  lsusb -v|grep -i vendor
- 6967  lsusb -v|grep idVendor
- 6968  sudo lsusb -v|grep idVendor
- 6969  sudo lsusb -v|grep idVendor|column
- 6970  sudo lsusb -v|grep idVendor|column -t
- 6971  man column
- 6972  sudo lsusb -v|grep idVendor|column -c
- 6973  sudo lsusb -v|grep idVendor|column -x
- 6974  sudo lsusb -v|grep idVendor|column -n
- 6975  vi bench/priv/note/adb.mkd
- 6976  sudo vi /etc/udev/rules.d/51-android.rules
- 6977  cat /etc/udev/rules.d/51-android.rules
- 6978  sudo vi /etc/udev/rules.d/51-android.rules
- 6979  vi bench/priv/note/adb.mkd
- 6980  vi /tmp/bb
- 6981  column /tmp/bb
- 6982  column -t /tmp/bb
- 6983  vi bench/priv/note/adb.mkd
- 6984  lt
- 6985  cd bench/
- 6986  cd priv/
- 6987  ll
- 6988  vi xxb.mkd
- 6989  sudo apt-get install ruby
- 6990  sudo apt-get install ruby rubygems
- 6991  rails -v
- 6992  sudo apt-get install rails
- 6993  sudo gem install rack rake mongrel i18n mysql
- 6994  sudo apt-get install sudo apt-get install libmysqlclient-dev
- 6995  sudo apt-get install libmysqlclient-dev mysql-server
- 6996  sudo gem install rack rake mongrel i18n mysql
- 6997  lt
- 6998  cd bench/
- 6999  lt
- 7000  ..
- 7001  lt
- 7002  ll redmine-2.6.0.zip
- 7003  unzip -t redmine-2.6.0.zip
- 7004  unzip redmine-2.6.0.zip
- 7005  cd redmine-2.6.0/
- 7006  ll
- 7007  ..
- 7008  ll /opt/
- 7009  sudo mv redmine-2.6.0 /opt/mine
- 7010  mysql
- 7011  sudo service mysql restart
- 7012  sudo service mysql stop
- 7013  sudo apt-get install mysql-server
- 7014  sudo apt-get install --reinstall mysql-server
- 7015  mysql
- 7016  sudo service mysql restart
- 7017  eng prox
- 7018  cd /var/run
- 7019  ll mysqld/
- 7020  cd
- 7021  sudo grep mysqld /etc/mysql/*cnf
- 7022  ll /var/lib/mysql/
- 7023  sudo ln -ll /var/lib/mysql/
- 7024  sudo ls -ll /var/lib/mysql/
- 7025  sudo ls -ll /var/lib/mysql/mysql
- 7026  dpkg -S /var/lib/mysql/mysql
- 7027  sudo dpkg -S /var/lib/mysql/mysql
- 7028*
- 7029  sudo dpkg -S /var/lib/mysql
- 7030  sudo apt-get autoremove --purge mysql-server-core-5.5
- 7031  as akonadi-server
- 7032  sudo apt-get install --reinstall mysql-server-core-5.5
- 7033  sudo apt-get autoremove --purge
- 7034  mysql
- 7035  sudo apt-get install --reinstall mysql-server-core-5.5
- 7036  sudo apt-get autoremove --purge mysql-server-5
- 7037  sudo apt-get autoremove --purge
- 7038  sudo apt-get install mysql-server
- 7039  mysql
- 7040  psg mysql
- 7041  sudo ls -ll /var/lib/mysql/mysql
- 7042*
- 7043  sudo a2enmod
- 7047  unset http_proxy
- 7048  curl cnbjlx9076
- 7049  sudo vi /etc/apache2/conf.d/mediawiki.conf
- 7050  diff /etc/apache2/conf.d/mediawiki.conf bench/priv/mediawiki.conf
- 7051  ll bench/priv/ | grep conf
- 7052  sudo vi /etc/apache2/apache2.conf
- 7053  cd /etc/apache2/
- 7054  ll
- 7055  cd mods-enabled/
- 7056  ll
- 7057  ll|grep php
- 7058  ..
- 7059  ll mods-available/
- 7060  ll mods-available/|grep php
- 7061  as php
- 7062  as php|grep mod
- 7066  curl cnbjlx9076
- 7067  history
-usb -v
- 6966  lsusb -v|grep -i vendor
- 6967  lsusb -v|grep idVendor
- 6968  sudo lsusb -v|grep idVendor
- 6969  sudo lsusb -v|grep idVendor|column
- 6970  sudo lsusb -v|grep idVendor|column -t
- 6971  man column
- 6972  sudo lsusb -v|grep idVendor|column -c
- 6973  sudo lsusb -v|grep idVendor|column -x
- 6974  sudo lsusb -v|grep idVendor|column -n
- 6975  vi bench/priv/note/adb.mkd
- 6976  sudo vi /etc/udev/rules.d/51-android.rules
- 6977  cat /etc/udev/rules.d/51-android.rules
- 6978  sudo vi /etc/udev/rules.d/51-android.rules
- 6979  vi bench/priv/note/adb.mkd
- 6980  vi /tmp/bb
- 6981  column /tmp/bb
- 6982  column -t /tmp/bb
- 6983  vi bench/priv/note/adb.mkd
- 6984  lt
- 6985  cd bench/
- 6986  cd priv/
- 6987  ll
- 6988  vi xxb.mkd
- 6989  sudo apt-get install ruby
- 6990  sudo apt-get install ruby rubygems
- 6991  rails -v
- 6992  sudo apt-get install rails
- 6993  sudo gem install rack rake mongrel i18n mysql
- 6994  sudo apt-get install sudo apt-get install libmysqlclient-dev
- 6995  sudo apt-get install libmysqlclient-dev mysql-server
- 6996  sudo gem install rack rake mongrel i18n mysql
- 6997  lt
- 6998  cd bench/
- 6999  lt
- 7000  ..
- 7001  lt
- 7002  ll redmine-2.6.0.zip
- 7003  unzip -t redmine-2.6.0.zip
- 7004  unzip redmine-2.6.0.zip
- 7005  cd redmine-2.6.0/
- 7006  ll
- 7007  ..
- 7008  ll /opt/
- 7009  sudo mv redmine-2.6.0 /opt/mine
- 7010  mysql
- 7011  sudo service mysql restart
- 7012  sudo service mysql stop
- 7013  sudo apt-get install mysql-server
- 7014  sudo apt-get install --reinstall mysql-server
- 7015  mysql
- 7016  sudo service mysql restart
- 7017  eng prox
- 7018  cd /var/run
- 7019  ll mysqld/
- 7020  cd
- 7021  sudo grep mysqld /etc/mysql/*cnf
- 7022  ll /var/lib/mysql/
- 7023  sudo ln -ll /var/lib/mysql/
- 7024  sudo ls -ll /var/lib/mysql/
- 7025  sudo ls -ll /var/lib/mysql/mysql
- 7026  dpkg -S /var/lib/mysql/mysql
- 7027  sudo dpkg -S /var/lib/mysql/mysql
- 7028*
- 7029  sudo dpkg -S /var/lib/mysql
- 7030  sudo apt-get autoremove --purge mysql-server-core-5.5
- 7031  as akonadi-server
- 7032  sudo apt-get install --reinstall mysql-server-core-5.5
- 7033  sudo apt-get autoremove --purge
- 7034  mysql
- 7035  sudo apt-get install --reinstall mysql-server-core-5.5
- 7036  sudo apt-get autoremove --purge mysql-server-5
- 7037  sudo apt-get autoremove --purge
- 7038  sudo apt-get install mysql-server
- 7039  mysql
- 7040  psg mysql
- 7041  sudo ls -ll /var/lib/mysql/mysql
- 7042*
- 7043  sudo a2enmod
- 7049  sudo vi /etc/apache2/conf.d/mediawiki.conf
- 7050  diff /etc/apache2/conf.d/mediawiki.conf bench/priv/mediawiki.conf
- 7051  ll bench/priv/ | grep conf
- 7052  sudo vi /etc/apache2/apache2.conf
- 7053  cd /etc/apache2/
- 7054  ll
- 7055  cd mods-enabled/
+vi /etc/udev/rules.d/51-android.rules
 
 <?php // PHP必须被包围于 <?php ?> 之中
 

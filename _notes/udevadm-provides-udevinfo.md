@@ -3,10 +3,10 @@ date: 2016-11-13
 title: udevadm provides udevinfo
 ---
 
-$ sudo apt-get install --reinstall initramfs-tools  bootcd-mkinitramfs   
+# apt-get install --reinstall initramfs-tools  bootcd-mkinitramfs   
 E: dpkg was interrupted, you must manually run 'sudo dpkg --configure -a' to correct the problem.   
   
-$ sudo dpkg --configure -a  
+# dpkg --configure -a  
 Setting up initramfs-tools (XXX) ...  
 update-initramfs: deferring update (trigger activated)  
   
@@ -49,7 +49,7 @@ udevadm info [options]
   
 dirty for dirty's sake  
   
-$ sudo cp /sbin/udevadm /bin/udevinfo
+# cp /sbin/udevadm /bin/udevinfo
 
   
 done.   

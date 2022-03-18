@@ -18,7 +18,7 @@ echo 'ls -lR >> /to-file ' | sudo sh
 Or
 
 ```shell
-sudo sh -c 'ls -lR >> /to-file '
+# sh -c 'ls -lR >> /to-file '
 ```
 
 Using `tee` is another solution:

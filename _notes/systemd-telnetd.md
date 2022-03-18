@@ -1,8 +1,6 @@
 ---
-date: 2017-08-07
 title: "telnetd systemd"
-Description: ""
-Categories: ""
+date: 2017-08-07
 ---
 
 Start telnet server on boot.

@@ -3,7 +3,7 @@ date: 2017-11-27
 ---
 
 ```
-$ sudo apt install sox
+# apt install sox
 Reading package lists... Done
 Building dependency tree... Done
 Reading state information... Done

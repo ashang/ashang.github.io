@@ -8,9 +8,9 @@ title: mount and rescue lvm system
   
 **mount boot partition**  
   
-sudo mount /dev/sda1 /opt  
+# mount /dev/sda1 /opt  
   
-sudo vi /opt/grub/grub.cfg  
+# vi /opt/grub/grub.cfg  
   
 menuentry  
   
@@ -22,15 +22,15 @@ linux /vmlinuz root=/dev/mapper/vg-root
   
 **mount root partition on lvm**  
    
-sudo apt-get install lvm2  
+# apt-get install lvm2  
   
-sudo lvdisplay  
+# lvdisplay  
   
-sudo lvchange -ay /dev/vg-label  
+# lvchange -ay /dev/vg-label  
   
-sudo mount /dev/mapper/vg-root /mnt  
+# mount /dev/mapper/vg-root /mnt  
   
-sudo vi /mnt/etc/fstab  
+# vi /mnt/etc/fstab  
   
 UUID=$UUID_OF_BOOT_PARTITION /boot ext2 defaults 0 2  
  /dev/mapper/vg-root / ext4 defaults 0 2  

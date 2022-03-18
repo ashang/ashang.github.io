@@ -401,16 +401,11 @@ cloud-controller-manager 仅运行特定于云平台的控制回路。 如果我
 - 路由控制器（Route Controller）: 用于在底层云基础架构中设置路由
 - 服务控制器（Service Controller）: 用于创建、更新和删除云提供商负载均衡器
 
-
 ## some some
 
 OS 上去创建容器所需要运行的环境，最终把容器或者 Pod 运行起来，也需要对存储跟网络进行管理。Kubernetes 并不会直接进行网络存储的操作，他们会靠 Storage Plugin 或者是网络的 Plugin 来进行操作。用户自己或者云厂商都会去写相应的 Storage Plugin 或者 Network Plugin，去完成存储操作或网络操作。
 
-
-
 在 Kubernetes 自己的环境中，也会有 Kubernetes 的 Network，它是为了提供 Service network 来进行搭网组网的。（等一下我们也会去介绍“service”这个概念。）真正完成 service 组网的组件的是 Kube-proxy，它是利用了 iptable 的能力来进行组建 Kubernetes 的 Network，就是 cluster network，以上就是 Node 上面的四个组件。
-
-
 
 Kubernetes 的 Node 并不会直接和 user 进行 interaction，它的 interaction 只会通过 Master。而 User 是通过 Master 向节点下发这些信息的。Kubernetes 每个 Node 上，都会运行我们刚才提到的这几个组件。
 
@@ -662,7 +657,7 @@ $ docker inspect -f \
 
 172.18.0.5
 
-docker network inspect -f '{{range .IPAM.Config}}{{.Subnet}}{{end}}' thpr_default
+docker network inspect -f '{{range .IPAM.Config}}{{.Subnet}}{{end}}' pro_default
 172.18.0.0/16
 
 $ docker network inspect -f \
@@ -855,13 +850,10 @@ Serverless
 声明式通信模型由于多种原因而变得更加健壮。最重要的是，它规范了通信模型，并且它将（如何从某种状态到达期望状态的）功能实现从应用程序转移到远程 API 或服务端点。这有助于简化应用程序，并使它们彼此的行为更具可预测性。
 
 
-
-
 # katacoda
 
 Configure Git Repository for Scenarios
 Scenarios are stored within a Git repository. This allows teams to collaborate and share ideas around the Katacoda content.
-
 
 
 Visit https://www.katacoda.com/ashang to view the profile and interactive scenarios
@@ -934,11 +926,11 @@ Istio 的遥测技术包括详细的指标、分布式跟踪和完整的访问�
 Istio 的安全模型是基于默认安全的，旨在提供深度防御，允许您部署安全的应用程序，甚至跨不可信的网络。
 
 
-
-
-
 #  Dockerfile
+
 在项目根目录中添加一个Dockerfile文件（文件名就叫Dockerfile），定义如何构建Docker镜像，以Spring Boot项目为例：
+
+```dockerfile
 FROM frolvlad/alpine-java:jdk8-slim
 在build镜像时可以通过 --build-args profile=xxx 进行修改
 ARG profile
@@ -947,7 +939,6 @@ ENV SPRING_PROFILES_ACTIVE=${profile}
 EXPOSE 8000
 WORKDIR /mnt
 修改时区
-RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories \
 && apk add --no-cache tzdata \
 && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
 && echo "Asia/Shanghai" > /etc/timezone \
@@ -960,6 +951,10 @@ ENTRYPOINT ["java", "-jar", "/mnt/app.jar"]
 将SPRING_PROFILES_ACTIVE通过参数profile暴露出来，在构建的时候可以通过--build-args profile=xxx来进行动态设定，以满足不同环境的镜像构建要求。
 
 SPRING_PROFILES_ACTIVE本可以在Docker容器启动时通过docker run -e SPRING_PROFILES_ACTIVE=xxx来设定，因这里使用Helm进行部署不直接通过docker run运行，因此通过ARG在镜像构建时指定
+
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories \
+```
+
 Helm配置文件
 Helm是Kubernetes的包管理工具，将应用部署相关的Deployment，Service，Ingress等打包进行发布与管理（可以像Docker镜像一样存储于仓库中）。
 

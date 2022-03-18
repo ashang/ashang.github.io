@@ -37,9 +37,6 @@ package localtime is not in GOROOT (/usr/lib/go-1.17/src/localtime)
 $ env | grep GO
 GOPATH=/home/aaron/go
 
-----
-
-
 - productive
 - expressive
 - concise
@@ -50,18 +47,16 @@ GOPATH=/home/aaron/go
 - garbage collection
 - run-time reflection
 
-
 - Go为软件构造提供了一种模型，它使依赖分析更加容易，且避免了大部分C风格include文件与库的开头。
 - Go是静态类型的语言，它的类型系统没有层级。因此用户不需要在定义类型之间的关系上花费时间，这样感觉起来比典型的面向对象语言更轻量级。
 - Go完全是垃圾回收型的语言，并为并发执行与通信提供了基本的支持。
 - 按照其设计，Go打算为多核机器上系统软件的构造提供一种方法。
 
-# prebuilts
+## prebuilts
 
 https://ci.android.com/builds/branches/aosp-build-tools-release/grid?head=7064006&tail=7064006
 
-
-# gvm
+## gvm
 
 ```
 bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)

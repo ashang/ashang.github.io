@@ -11,7 +11,7 @@ edit
 /etc/apt/apt.conf  
   
 or  
-$ sudo vi /etc/apt/apt.conf.d/60proxy  
+# vi /etc/apt/apt.conf.d/60proxy  
 Acquire::http::Proxy "http://x.x.x.x:port";  
   
 Don't miss the trailing ";".   

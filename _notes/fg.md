@@ -5,7 +5,7 @@ date: 2018-11-09
 ---
 
 ```
-$ sudo bash -c 'echo "deb http://httpredir.debian.org/debian bullseye-backports main contrib non-free" >  /etc/apt/sources.list.d/backports.list'
+# bash -c 'echo "deb http://httpredir.debian.org/debian bullseye-backports main contrib non-free" >  /etc/apt/sources.list.d/backports.list'
 ```
 
 ```

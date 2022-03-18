@@ -77,7 +77,7 @@ By default, a container has no resource constraints and can use as much of a giv
 ```
 $ docker info
 Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get http://%2Fvar%2Frun%2Fdocker.sock/v1.39/info: dial unix /var/run/docker.sock: connect: permission denied
-$ sudo docker info
+# docker info
 Containers: 10
  Running: 0
  Paused: 0

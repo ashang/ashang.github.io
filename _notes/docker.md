@@ -1,18 +1,19 @@
 ---
 title: docker
+render_with_liquid: false
 date: 2019-03-02
 update: 2021-12-21 21:20:02 CST
 ---
 
 ```
-$ sudo apt-get install linux-image-extra-$(uname -r) linux-image-extra-virtual
+# apt-get install linux-image-extra-$(uname -r) linux-image-extra-virtual
 
-$ sudo modprobe aufs
+# modprobe aufs
 
 $ more /etc/apt/sources.list.d/docker.list
 deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian bullseye stable
 
-$ sudo systemctl enable docker
+# systemctl enable docker
 Synchronizing state of docker.service with SysV service script with /lib/systemd/systemd-sysv-install.
 Executing: /lib/systemd/systemd-sysv-install enable docker
 
@@ -28,7 +29,7 @@ WARNING: Access to the remote API on a privileged Docker daemon is equivalent [6
 ```
 
 ```
-$ sudo systemctl stop docker Copy the contents of /var/lib/docker to a temporary location.
+# systemctl stop docker Copy the contents of /var/lib/docker to a temporary location.
 
 $ cp -au /var/lib/docker /var/lib/docker.bk
 
@@ -38,7 +39,7 @@ Edit /etc/docker/daemon.json. If it does not yet exist, create it. Assuming that
 ```
 
 ```
-$ sudo systemctl start docker
+# systemctl start docker
 ```
 
 Verify that the daemon is using the overlay/overlay2 storage driver. $ sudo docker info
@@ -61,15 +62,15 @@ Loaded image: build:debian-jessie
 ```
 
 ```
-$ sudo dockerd -D
+# dockerd -D
 INFO[2021-12-16T18:32:23.792059363+08:00] Starting up
 failed to start daemon: pid file found, ensure docker is not running or delete /var/run/docker.pid
 
-$ sudo systemctl stop docker.service
+# systemctl stop docker.service
 Warning: Stopping docker.service, but it can still be activated by:
   docker.socket
 
-$ sudo dockerd -D
+# dockerd -D
 INFO[2021-12-16T18:32:49.501399896+08:00] Starting up
 DEBU[2021-12-16T18:32:49.501673667+08:00] Listener created for HTTP on unix (/var/run/docker.sock)
 DEBU[2021-12-16T18:32:49.501685092+08:00] Containerd not running, starting daemon managed containerd
@@ -514,7 +515,7 @@ Digest: sha256:d45a8aa2a60df199410b14c2e311603eca51c0f1885247a090fe05c251fa612f
 Status: Downloaded newer image for cmd.cat/ethtool:latest
 docker: Error response from daemon: failed to create endpoint frosty_lovelace on network bridge: failed to add the host (veth8b07dba) <=> sandbox (veth20feac9) pair interfaces: operation not supported.
 
-$ sudo docker run cmd.cat/ethtool ethtool
+# docker run cmd.cat/ethtool ethtool
 docker: Error response from daemon: failed to create endpoint lucid_shirley on network bridge: failed to add the host (vethcab6880) <=> sandbox (vethd9c8666) pair interfaces: operation not supported.
 ERRO[0000] error waiting for container: context canceled
 ```
@@ -581,7 +582,7 @@ nodev   overlay
 ```
 
 ```
-$ sudo docker daemon --storage-driver=aufs &
+# docker daemon --storage-driver=aufs &
 ```
 
 Alternatively, you can edit the Docker config file and add the --storage-driver=aufs option to the DOCKER_OPTS line.
@@ -674,18 +675,18 @@ Transaction successfully finished.
 $ docker run -d -P nginx:alpine
 docker: Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?.
 See 'docker run --help'.
-$ sudo systemctl status docker
+# systemctl status docker
 ○ docker.service - Docker Application Container Engine
      Loaded: loaded (/usr/lib/systemd/system/docker.service; disabled; vendor preset: disabled)
      Active: inactive (dead)
 TriggeredBy: ○ docker.socket
        Docs: https://docs.docker.com
-$ sudo systemctl enable --now docker
+# systemctl enable --now docker
 Created symlink /etc/systemd/system/multi-user.target.wants/docker.service → /usr/lib/systemd/system/docker.service.
 $ docker run -d -P nginx:alpine
 docker: Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Post "http://%2Fvar%2Frun%2Fdocker.sock/v1.24/containers/create": dial unix /var/run/docker.sock: connect: permission denied.
 See 'docker run --help'.
-$ sudo docker run -d -P nginx:alpine
+# docker run -d -P nginx:alpine
 Unable to find image 'nginx:alpine' locally
 alpine: Pulling from library/nginx
 97518928ae5f: Pull complete
@@ -947,7 +948,7 @@ Copied!
 例如，在启动 Docker 服务时，可以同时使用 icc=false --iptables=true 参数来关闭允许相互的网络访问，并让 Docker 可以修改系统中的 iptables 规则。
 此时，系统中的 iptables 规则可能是类似
 1
-$ sudo iptables -nL
+# iptables -nL
 2
 ...
 3
@@ -962,7 +963,7 @@ Copied!
 之后，启动容器（docker run）时使用 --link=CONTAINER_NAME:ALIAS 选项。Docker 会在 iptable 中为 两个容器分别添加一条 ACCEPT 规则，允许相互访问开放的端口（取决于 Dockerfile 中的 EXPOSE 指令）。
 当添加了 --link=CONTAINER_NAME:ALIAS 选项后，添加了 iptables 规则。
 1
-$ sudo iptables -nL
+# iptables -nL
 2
 ...
 3
@@ -985,7 +986,7 @@ Copied!
 容器所有到外部网络的连接，源地址都会被 NAT 成本地系统的 IP 地址。这是使用 iptables 的源地址伪装操作实现的。
 查看主机的 NAT 规则。
 1
-$ sudo iptables -t nat -nL
+# iptables -t nat -nL
 2
 ...
 3
@@ -1039,19 +1040,19 @@ Copied!
 在启动 Docker 服务的时候，使用 -b BRIDGE或--bridge=BRIDGE 来指定使用的网桥。
 如果服务已经运行，那需要先停止服务，并删除旧的网桥。
 1
-$ sudo systemctl stop docker
+# systemctl stop docker
 2
-$ sudo ip link set dev docker0 down
+# ip link set dev docker0 down
 3
-$ sudo brctl delbr docker0
+# brctl delbr docker0
 Copied!
 然后创建一个网桥 bridge0。
 1
-$ sudo brctl addbr bridge0
+# brctl addbr bridge0
 2
-$ sudo ip addr add 192.168.5.1/24 dev bridge0
+# ip addr add 192.168.5.1/24 dev bridge0
 3
-$ sudo ip link set dev bridge0 up
+# ip link set dev bridge0 up
 Copied!
 查看确认网桥创建并启动。
 1
@@ -1110,23 +1111,23 @@ $ docker inspect -f '{{.State.Pid}}' 1f1f4c1f931a
 $ docker inspect -f '{{.State.Pid}}' 12e343489d2f
 3004
 
-$ sudo mkdir -p /var/run/netns
-$ sudo ln -s /proc/2989/ns/net /var/run/netns/2989
-$ sudo ln -s /proc/3004/ns/net /var/run/netns/3004
+# mkdir -p /var/run/netns
+# ln -s /proc/2989/ns/net /var/run/netns/2989
+# ln -s /proc/3004/ns/net /var/run/netns/3004
 ```
 
 创建一对 peer 接口，然后配置路由
 
 ```
-$ sudo ip link add A type veth peer name B
-$ sudo ip link set A netns 2989
-$ sudo ip netns exec 2989 ip addr add 10.1.1.1/32 dev A
-$ sudo ip netns exec 2989 ip link set A up
-$ sudo ip netns exec 2989 ip route add 10.1.1.2/32 dev A
-$ sudo ip link set B netns 3004
-$ sudo ip netns exec 3004 ip addr add 10.1.1.2/32 dev B
-$ sudo ip netns exec 3004 ip link set B up
-$ sudo ip netns exec 3004 ip route add 10.1.1.1/32 dev B
+# ip link add A type veth peer name B
+# ip link set A netns 2989
+# ip netns exec 2989 ip addr add 10.1.1.1/32 dev A
+# ip netns exec 2989 ip link set A up
+# ip netns exec 2989 ip route add 10.1.1.2/32 dev A
+# ip link set B netns 3004
+# ip netns exec 3004 ip addr add 10.1.1.2/32 dev B
+# ip netns exec 3004 ip link set B up
+# ip netns exec 3004 ip route add 10.1.1.1/32 dev B
 ```
 
 现在这 2 个容器就可以相互 ping 通，并成功建立连接。点到点链路不需要子网和子网掩码。
@@ -1161,7 +1162,7 @@ etcd 是服务主文件，etcdctl 是提供给用户的命令客户端，其他�
 下面将 etcd etcdctl 文件放到系统可执行目录（例如 /usr/local/bin/）。
 
 ￼
-$ sudo cp etcd* /usr/local/bin/
+# cp etcd* /usr/local/bin/
 1
 默认 2379 端口处理客户端的请求，2380 端口用于集群各成员间的通信。启动 etcd 显示类似如下的信息：
 
@@ -1656,33 +1657,33 @@ nohup ./etcd --name docker-node1 --initial-advertise-peer-urls http://172.28.128
 
 docker-node1 和 docker-node2 共同操作查看状态
 ./etcdctl cluster-heallth
-sudo service docker stop
+# service docker stop
 
 
 docker-node1 和docker-node2 分别操作
 docker-node1
-sudo /usr/bin/dockerd -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock --cluster-store=etcd://172.28.128.3:2379 --cluster-advertise=172.28.128.3:2375&
+# /usr/bin/dockerd -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock --cluster-store=etcd://172.28.128.3:2379 --cluster-advertise=172.28.128.3:2375&
 exit
 vagrant ssh docker-node1
-sudo docker network ls
+# docker network ls
 docker-node2
-sudo /usr/bin/dockerd -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock --cluster-store=etcd://172.28.128.4:2379 --cluster-advertise=172.28.128.4:2375&
+# /usr/bin/dockerd -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock --cluster-store=etcd://172.28.128.4:2379 --cluster-advertise=172.28.128.4:2375&
 exit
 vagrant ssh docker-node2
-sudo docker network ls
+# docker network ls
 
 
 docker-node1
-sudo docker network create -d overlay demo
-sudo docker network ls
+# docker network create -d overlay demo
+# docker network ls
 docker-node2
 #docker-node1创建了overlay网络后，node2也创建了。这是为什么呢？其实这就是etcd帮咱们做的。
-sudo docker network ls
+# docker network ls
 
 
 
 docker-node1 查看网络信息
-sudo docker network inspect demo
+# docker network inspect demo
 
 
 
@@ -1690,32 +1691,32 @@ sudo docker network inspect demo
 
 创建连接demo网络的容器
 创建docker-node1内部的容器tes11t1
-sudo docker run -d --name tes11t1--net demo busybox sh -c "while true; do sleep 3600; done"
-sudo docker ps
+# docker run -d --name tes11t1--net demo busybox sh -c "while true; do sleep 3600; done"
+# docker ps
 
 
 创建docker-node2内部的容器tes11t1
 #说有相同容器已经存在了，不允许创建。如果在同一台docker机器上不允许名称一样的，说明这2个docker-node1 和docker-node2 已经在同一个网络空间内了
-sudo docker run -d --name tes11t1--net demo busybox sh -c "while true; do sleep 3600; done"
+# docker run -d --name tes11t1--net demo busybox sh -c "while true; do sleep 3600; done"
 
 #更改一个名称，可以成功创建
-sudo docker run -d --natme test111--net demo busybox sh -c "while true; do sleep 3600; done"
-sudo docker ps
+# docker run -d --natme test111--net demo busybox sh -c "while true; do sleep 3600; done"
+# docker ps
 
 
 
 
 docker-node1中的容器，查看tes11t1的ip地址
-sudo docker exec tes11t1 ip a
+# docker exec tes11t1 ip a
 docker-node2中的容器，查看tes11t1的ip地址
-sudo docker exec test111 ip a
+# docker exec test111 ip a
 
 
 
 
 
 查看下demo的network
-sudo docker network inspect demo
+# docker network inspect demo
 
 
 
@@ -1723,12 +1724,12 @@ sudo docker network inspect demo
 
 试试2个容器能否互相ping通
 docker-node2
-sudo docker exec test111 ping 10.0.0.2
-sudo docker exec test111 ping tes11t1
+# docker exec test111 ping 10.0.0.2
+# docker exec test111 ping tes11t1
 docker-node1
 
-sudo docker exec tes11t1 ping 10.0.0.3
-sudo docker exec tes11t1 ping test111
+# docker exec tes11t1 ping 10.0.0.3
+# docker exec tes11t1 ping test111
 
 
 
@@ -1756,15 +1757,15 @@ Tmpfs Mount 支持挂载系统内存中的一部分到容器的文件系统里�
 8.3 挂载文件到容器
 要将宿主操作系统中的目录挂载到容器之后，我们可以在容器创建的时候通过传递 -v 或 –volume 选项来指定内外挂载的对应目录或文件
 
-$ sudo docker run -d --name nginx -v /webapp/html:/usr/share/nginx/html nginx:1.12
+# docker run -d --name nginx -v /webapp/html:/usr/share/nginx/html nginx:1.12
 使用 -v或 --volume 来挂载宿主操作系统目录的形式是 -v <host-path>:<container-path> 或 --volume <host-path>:<container-path>，其中 host-path 和 container-path 分别代表宿主操作系统中的目录和容器中的目录。这里需要注意的是，为了避免混淆，Docker这里强制定义目录时必须使用绝对路径，不能使用相对路径。
 我们能够指定目录进行挂载，也能够指定具体的文件来挂载，具体选择何种形式来挂载，大家可以根据具体的情况来选择。
 当挂载了目录的容器启动后，我们可以看到我们在宿主操作系统中的文件已经出现在容器中了…
-$ sudo docker exec nginx ls /usr/share/nginx/html
+# docker exec nginx ls /usr/share/nginx/html
 index.html
 在 docker inspect 的结果里，我们可以看到有关容器数据挂载相关的信息
 
-$ sudo docker inspect nginx
+# docker inspect nginx
 [
     {
 ## ......
@@ -1783,14 +1784,14 @@ $ sudo docker inspect nginx
 ]...
 在关于挂载的信息中我们可以看到一个 RW 字段，这表示挂载目录或文件的读写性 ( Read and Write )。实际操作中，Docker 还支持以只读的方式挂载，通过只读方式挂载的目录和文件，只能被容器中的程序读取，但不接受容器中程序修改它们的请求。在挂载选项 -v后再接上 :ro 就可以只读挂载了…
 
-$ sudo docker run -d --name nginx -v /webapp/html:/usr/share/nginx/html:ro nginx:1.12
+# docker run -d --name nginx -v /webapp/html:/usr/share/nginx/html:ro nginx:1.12
 8.4 挂载临时文件目录
 Tmpfs Mount 是一种特殊的挂载方式，它主要利用内存来存储数据。由于内存不是持久性存储设备，所以其带给 Tmpfs Mount 的特征就是临时性挂载。
 与挂载宿主操作系统目录或文件不同，挂载临时文件目录要通过 --tmpfs 这个选项来完成。由于内存的具体位置不需要我们来指定，这个选项里我们只需要传递挂载到容器内的目录即可。…
-$ sudo docker run -d --name webapp --tmpfs /webapp/cache webapp:latest
+# docker run -d --name webapp --tmpfs /webapp/cache webapp:latest
 容器已挂载的临时文件目录我们也可以通过 docker inspect 命令查看。
 
-$ sudo docker inspect webapp
+# docker inspect webapp
 [
     {
 ## ......
@@ -1807,10 +1808,10 @@ $ sudo docker inspect webapp
 除了与其他虚拟机工具近似的宿主操作系统目录挂载的功能外，Docker 还创造了数据卷 ( Volume ) 这个概念。数据卷的本质其实依然是宿主操作系统上的一个目录，只不过这个目录存放在Docker 内部，接受 Docker的管理。
 在使用数据卷进行挂载时，我们不需要知道数据具体存储在了宿主操作系统的何处，只需要给定容器中的哪个目录会被挂载即可。
 我们依然可以使用 -v或 --volume 选项来定义数据卷的挂载。…
-$ sudo docker run -d --name webapp -v /webapp/storage webapp:latest
+# docker run -d --name webapp -v /webapp/storage webapp:latest
 数据卷挂载到容器后，我们可以通过 docker inspect 看到容器中数据卷挂载的信息。
 
-$ sudo docker inspect webapp
+# docker inspect webapp
 [
     {
 ## ......
@@ -1832,7 +1833,7 @@ $ sudo docker inspect webapp
 这里我们所得到的信息与绑定挂载有所区别，除了 Type 中的类型不一样之外，在数据卷挂载中，我们还要关注一下Name 和 Source 这两个信息。
 其中 Source 是 Docker 为我们分配用于挂载的宿主机目录，其位于 Docker 的资源区域 ( 这里是默认的/var/lib/docker ) 内。当然，我们并不需要关心这个目录，一切对它的管理都已经在 Docker内实现了。
 为了方便识别数据卷，我们可以像命名容器一样为数据卷命名，这里的 Name 就是数据卷的命名。在我们未给出数据卷命名的时候，Docker会采用数据卷的 ID 命名数据卷。我们也可以通过 -v <name>:<container-path> 这种形式来命名数据卷…
-$ sudo docker run -d --name webapp -v appdata:/webapp/storage webapp:latest
+# docker run -d --name webapp -v appdata:/webapp/storage webapp:latest
 由于 -v 选项既承载了 Bind Mount 的定义，又参与了 Volume 的定义，所以其传参方式需要特别留意。前面提到了，-v 在定义绑定挂载时必须使用绝对路径，其目的主要是为了避免与数据卷挂载中命名这种形式的冲突。
 
 

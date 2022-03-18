@@ -1,5 +1,6 @@
 ---
 title: Jekyll
+render_with_liquid: false
 date: 2018-05-12
 ---
 
@@ -67,3 +68,16 @@ LiveReload address: http://127.0.0.1:35729
   Server running... press ctrl-c to stop.
         LiveReload: Browser connected
 ```
+
+## Liquid syntax error
+
+Add `render_with_liquid: false` to front matter to not report liquid warnings.
+
+```log
+Unexpected character ` in "{{ trimPrefix `/` .Name }}"
+[:dot, "."] is not a valid expression in "{{.State.Pid}}"
+[:dot, "."] is not a valid expression in "{{.LogPath}}"
+[:dot, "."] is not a valid expression in "{{ .NetworkSettings.Networks.$network.IPAddress }}"
+[:dot, "."] is not a valid expression in "{{range .IPAM.Config}}"
+```
+

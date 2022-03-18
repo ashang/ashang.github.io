@@ -4,7 +4,7 @@ update: 2016-01-06
 ---
 
 ```
-$ sudo mysql_secure_installation
+# mysql_secure_installation
 
 NOTE: RUNNING ALL PARTS OF THIS SCRIPT IS RECOMMENDED FOR ALL MariaDB
       SERVERS IN PRODUCTION USE!  PLEASE READ EACH STEP CAREFULLY!
@@ -32,7 +32,6 @@ Re-enter new password:
 Password updated successfully!
 Reloading privilege tables..
  ... Success!
-
 
 By default, a MariaDB installation has an anonymous user, allowing anyone
 to log into MariaDB without having to have a user account created for
@@ -74,7 +73,7 @@ Thanks for using MariaDB!
 ```
 
 ```
-$ sudo mariadb-install-db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+# mariadb-install-db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
 Installing MariaDB/MySQL system tables in '/var/lib/mysql' ...
 OK
 

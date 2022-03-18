@@ -959,3 +959,7 @@ Maruku
 
 - http://www.lagom.nl/lcd-test/
 
+Collecting stars...
+[![Star This Project](https://img.shields.io/github/stars/ashang/ashang.svg?label=Stars&style=social)](https://github.com/ashang/ashang/)
+
+https://www.reddit.com/r/gnome/comments/8sh7oa/a_nice_trick_to_create_a_mojavelike_time_shifting/

@@ -1,5 +1,4 @@
 ---
-title: read process status
 date: 2018-08-22
 tags:
 - process
@@ -15,7 +14,6 @@ $ cat /proc/pid/stat
 See psmisc/prtstat.c
 
 ```c
-
 210 static void print_stat(const int pid, const opt_type options)
 211 {
 212   char *pathname;

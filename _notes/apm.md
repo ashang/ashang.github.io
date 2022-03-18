@@ -1,5 +1,6 @@
 ---
 title: apm
+render_with_liquid: false
 date: 2017-09-21
 ---
 
@@ -323,7 +324,7 @@ containerized workloads possible in a Docker environment.
 ```
 #  $ docker volume create -d simplivity -o help
 
-$ sudo docker volume create -d simplivity --name <vol_name>
+# docker volume create -d simplivity --name <vol_name>
 ```
 
 

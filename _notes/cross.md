@@ -4,7 +4,7 @@ date: 2017-11-16
 ---
 
 ```
-$ sudo vtysh -d zebra -c "show version"
+# vtysh -d zebra -c "show version"
 FRRouting 8.0
 Copyright 1996-2022 Kunihiro Ishiguro, et al.
 configured with:
@@ -100,7 +100,7 @@ fi
 
 ## yang
 
-$ sudo cp  ./build/arm/.rootfs-FYrikY/usr/lib/libyang* /usr/lib/arm-linux-gnueabi/
+# cp  ./build/arm/.rootfs-FYrikY/usr/lib/libyang* /usr/lib/arm-linux-gnueabi/
 
 找不到libyang，关键在rpath
 
@@ -158,7 +158,7 @@ syntax
 
 # Docker
 
-sudo apt install libsystemd-dev sudo libjson-c-dev gcc-arm-linux-gnueabi crossbuild-essential-armel vim git automake autoconf libtool build-essential cmake libelf-dev python3
+# apt install libsystemd-dev sudo libjson-c-dev gcc-arm-linux-gnueabi crossbuild-essential-armel vim git automake autoconf libtool build-essential cmake libelf-dev python3
 
 
 # I've included -Wl,-rpath,/home/aosterman/tools/system/lib -Wl,-rpath,/home/aosterman/tools/system/lib64 in LDFLAGS, CFLAGS and CPPFLAGS and exported all of them. I can force the build to succeed by setting LD_LIBRARY_PATH, but the final result only works if I set it again at run time, which I absolutely do not want to do.

@@ -4,7 +4,7 @@ date: 2009-04-10
 ---
 
 ```
-$ sudo parted -l
+# parted -l
 Error: /dev/sda: unrecognised disk label
 Model: ATA TOSHIBA MQ01ABF0 (scsi)
 Disk /dev/sda: 500GB
@@ -36,7 +36,7 @@ Number  Start  End     Size    File system  Flags
 $ partx --show /dev/sdb
 partx: cannot open /dev/sdb: Permission denied
 
-$ sudo partx --show /dev/sdb
+# partx --show /dev/sdb
 NR START      END  SECTORS SIZE NAME   UUID
  1    34 15630302 15630269 7.5G mypart 81d4f17d-bdaf-48ac-bbf5-58fb14bd5e48
 
@@ -46,7 +46,7 @@ Sometimes it's necessary to logically remove (or hide) a device or some of its p
 
 Note that this is not an fdisk-like program as it doesn't actually write anything to the disk layout, however, it can be used for listing on-disk partitions:
 
-$ sudo partx --show /dev/sda
+# partx --show /dev/sda
 NR     START       END   SECTORS   SIZE NAME UUID
  1      2048 214843391 214841344 102.5G
  2 214845438 488396799 273551362 130.5G
@@ -56,7 +56,7 @@ NR     START       END   SECTORS   SIZE NAME UUID
 
 So, say we just inserted a SD card and we want to hide one of the partitions from the kernel with out really doing anything to the device - make sure that the device is actually unmounted:
 
-$ sudo fdisk -l
+# fdisk -l
 Disk /dev/nvme0n1: 238.47 GiB, 256060514304 bytes, 500118192 sectors
 Disk model: BC501 NVMe SK hynix 256GB
 Units: sectors of 1 * 512 = 512 bytes
@@ -95,7 +95,7 @@ Units: sectors of 1 * 512 = 512 bytes
 Sector size (logical/physical): 512 bytes / 512 bytes
 I/O size (minimum/optimal): 512 bytes / 512 bytes
 
-$ sudo parted -l
+# parted -l
 Model: ATA TOSHIBA MQ01ABF0 (scsi)
 Disk /dev/sda: 500GB
 Sector size (logical/physical): 512B/4096B
@@ -270,7 +270,6 @@ Error: Unable to satisfy all constraints on the partition.
 Information: You may need to update /etc/fstab.
 
  $ sudo parted /dev/sda
-[sudo] password for aaron:
 GNU Parted 3.4
 Using /dev/sda
 Welcome to GNU Parted! Type 'help' to view a list of commands.
@@ -487,12 +486,12 @@ Information: You may need to update /etc/fstab.
 ...
 
 ```
-$ sudo partx -d /dev/sdd1
+# partx -d /dev/sdd1
 ```
 
 Make sure we haven't screwed up and actually deleted the partition:
 ```
-$ sudo parted -l /dev/sdd
+# parted -l /dev/sdd
 
 Model: Generic- Multi-Card (scsi)
 Disk /dev/sdd: 16.0GB
@@ -503,7 +502,7 @@ Number  Start   End     Size    Type     File system  Flags
 
 Recently we also support adding loop devices, so if we have an image file with the contents, we can map it to a block device:
 
-$ sudo partx --show dos+bsd.img
+# partx --show dos+bsd.img
 NR START   END SECTORS SIZE NAME UUID
  1    32  7679    7648 3.8M
  2  7680 16383    8704 4.3M
@@ -512,7 +511,7 @@ NR START   END SECTORS SIZE NAME UUID
 
 Add the first five partitions, note that these don't have to be sequential:
 
-$ sudo partx -a -n 1:5 images-pt/dos+bsd.img
+# partx -a -n 1:5 images-pt/dos+bsd.img
 
 # ls /dev/loop0* -ltr
 brw-rw---- 1 root disk 7, 0 2011-08-15 00:07 /dev/loop0

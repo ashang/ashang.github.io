@@ -6,7 +6,7 @@ title: packages cannot be authenticated
 ```
 WARNING: The following packages cannot be authenticated!  
   
-$ sudo apt-get install gstreamer1.0-pulseaudio   
+# apt-get install gstreamer1.0-pulseaudio   
 Reading package lists... Done  
 Building dependency tree         
 Reading state information... Done  

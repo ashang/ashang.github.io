@@ -3,74 +3,51 @@ date: 2017-02-18
 title: case insensitive tab-completion or wild expansion
 ---
 
-  
-To let wildcard expansion case insensitive, enable this in bashrc  
-  
+To let wildcard expansion case insensitive, enable in bashrc
 
+```shell
+shopt -s nocaseglob
+```
 
-shopt -s nocaseglob  
+To let tab-completion case insensitive, bind the completion-ignore-case option
 
+```shell
+bind `echo set completion-ignore-case on`
+```
 
-  
-To let tab-completion case insensitive, you can bind the completion-ignore-case option for bash:  
-   
+This will be effective immediately.
 
+Or add this in inputrc for readline;
 
-bind `echo set completion-ignore-case on`  
+```shell
+$ echo 'set completion-ignore-case On' >> ~/.inputrc
+```
 
+Include the system inputrc file:
 
-  
-This will be effective immediately.  
-  
-  
-Or add this in inputrc for readline;  
-  
+```shell
+include /etc/inputrc
+```
 
+To show all binds:
 
-$ echo 'set completion-ignore-case On' >> ~/.inputrc   
- 
+```shell
+bind -p
+```
 
-  
-Include the system inputrc file:  
+To let bash recognizes spelling mistakes, add this in ~/.bashrc:
 
+```shell
+shopt -s cdspell
+```
 
-include /etc/inputrc  
+For tcsh / zsh users:
 
+```shell
+set complete enhance
+```
 
-  
-  
-To show all binds:  
-
-
-bind -p  
-
-
-  
-  
-  
-To let bash recognizes spelling mistakes, add this  in ~/.bashrc:  
-   
-
-
-shopt -s cdspell  
-
-
-  
-  
-For tcsh / zsh users:  
-  
-
-
-set complete enhance  
-
-
-  
-  
-Reference:  
-[http://www.caliban.org/bash/index.shtml#completion](http://www.caliban.org/bash/index.shtml#completion)  
- [https://wiki.ubuntu.com/Spec/EnhancedBash](https://wiki.ubuntu.com/Spec/EnhancedBash)  
-  
-  
-  
-  
+Reference:
+- [http://www.caliban.org/bash/index.shtml#completion](http://www.caliban.org/bash/index.shtml#completion)
+- [https://wiki.ubuntu.com/Spec/EnhancedBash](https://wiki.ubuntu.com/Spec/EnhancedBash)
 

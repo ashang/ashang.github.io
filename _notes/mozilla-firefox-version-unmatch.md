@@ -10,7 +10,7 @@ Error: Platform version '1.9' is not compatible with
 minVersion >= 1.9.0.1  
 maxVersion <= 1.9.0.*  
   
-$ sudo vi /usr/lib/firefox-3.0.4/application.ini   
+# vi /usr/lib/firefox-3.0.4/application.ini   
     
 find these lines:  
 [Gecko]  

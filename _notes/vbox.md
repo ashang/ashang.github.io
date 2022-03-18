@@ -16,7 +16,7 @@ available for the current kernel (2.6.24-21-386) or it failed to
 ```
 
 ```
-$ sudo /etc/init.d/vboxdrv setup
+# /etc/init.d/vboxdrv setup
 ```
 
 ```
@@ -27,7 +27,7 @@ Please consult the User Manual for build instructions.
 ```
 
 ```
-$ sudo /etc/init.d/vboxdrv setup
+# /etc/init.d/vboxdrv setup
 * Stopping VirtualBox kernel module * done.
   * Recompiling VirtualBox kernel module
 * Look at /var/log/vbox-install.log to find out what went wrong
@@ -39,7 +39,7 @@ Makefile:142: *** Error: unable to find the sources of your current Linux kernel
 ```
 
 ```
-$ sudo KERN_DIR=/usr/src/linux-source-2.6.24 /etc/init.d/vboxdrv setup
+# KERN_DIR=/usr/src/linux-source-2.6.24 /etc/init.d/vboxdrv setup
   * Stopping VirtualBox kernel module * done.
 * Recompiling VirtualBox kernel module * done.
   * Starting VirtualBox kernel module * done.
@@ -65,7 +65,7 @@ WARNING: The vboxdrv kernel module is not loaded. Either there is no module
 available for the current kernel (2.6.24-21-386) or it failed to
 load. Please recompile the kernel module and install it by
 
-sudo /etc/init.d/vboxdrv setup
+# /etc/init.d/vboxdrv setup
 ```
 
 You will not be able to start VMs until this problem is fixed.
@@ -74,7 +74,7 @@ installation for some reason. Starting a VM will not be possible.
 Please consult the User Manual for build instructions.
 
 ```
-$ sudo /etc/init.d/vboxdrv setup
+# /etc/init.d/vboxdrv setup
 * Stopping VirtualBox kernel module                                                                                                                                                   *  done.
 * Recompiling VirtualBox kernel module
 * Look at /var/log/vbox-install.log to find out what went wrong
@@ -82,7 +82,7 @@ $ sudo /etc/init.d/vboxdrv setup
 $ tail /var/log/vbox-install.log
 Makefile:142: *** Error: unable to find the sources of your current Linux kernel. Specify KERN_DIR= and run Make again.  Stop.
 
-$ sudo KERN_DIR=/usr/src/linux-source-2.6.24   /etc/init.d/vboxdrv setup
+# KERN_DIR=/usr/src/linux-source-2.6.24   /etc/init.d/vboxdrv setup
 * Stopping VirtualBox kernel module                                                                                                                                                   *  done.
 * Recompiling VirtualBox kernel module                                                                                                                                                *  done.
 * Starting VirtualBox kernel module                                                                                                                                                   *  done.

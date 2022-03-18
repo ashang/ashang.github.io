@@ -1,5 +1,5 @@
 ---
-title: "Lighty Lighttpd notes"
+title: Lighty notes
 tags: ["Apps"]
 date: 2017-02-04
 update: 2012-02-09T16:52:29+08:00
@@ -12,13 +12,12 @@ update: 2012-02-09T16:52:29+08:00
 - Log files are placed in /var/log/lighttpd. The frequency of rotation can be easily changed by editing /etc/logrotate.d/lighttpd.
 - The default directory index is index.html, meaning that requests for a directory /foo/bar/ will give the contents of the file /var/www/foo/bar/index.html if it exists (assuming that /var/www is your DocumentRoot).
 - You can enable user directories by using command "lighty-enable-mod userdir"
-```
 
 ## Enable accesslog
 
-```
-$ sudo lighttpd-enable-mod accesslog
-$ sudo /etc/init.d/lighttpd force-reload
+```shell
+# lighttpd-enable-mod accesslog
+# /etc/init.d/lighttpd force-reload
 ```
 
 Got
@@ -33,7 +32,7 @@ Duplicate config variable in conditional 0 global: accesslog.filename
 Correct the settings.
 
 ```
-$ sudo vi /etc/lighttpd/conf-enabled/10-accesslog.conf
+# vi /etc/lighttpd/conf-enabled/10-accesslog.conf
 ```
 
 To have lines.
@@ -44,8 +43,8 @@ accesslog.filename = "/var/log/lighttpd/access.log"
 ```
 
 ```
-$ sudo /etc/init.d/lighttpd force-reload
-$ sudo tail -f /var/log/lighttpd/access.log
+# /etc/init.d/lighttpd force-reload
+# tail -f /var/log/lighttpd/access.log
 ```
 
 ```

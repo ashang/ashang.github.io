@@ -19,11 +19,11 @@ mkfs.btrfs /dev/mapper/lilybackup
 
 
 ```
-$ sudo cryptsetup luksOpen /dev/sda barn
+# cryptsetup luksOpen /dev/sda barn
 Enter passphrase for /dev/sda:
 device-mapper: reload ioctl on barn (254:1) failed: No such file or directory
 
-$ sudo pacman -S device-mapper
+# pacman -S device-mapper
 resolving dependencies...
 looking for conflicting packages...
 
@@ -79,7 +79,7 @@ Net Upgrade Size:      0.00 MiB
 ```
 
 ```
-$ sudo cryptsetup luksOpen /dev/sda barn
+# cryptsetup luksOpen /dev/sda barn
  Enter passphrase for /dev/sda:
  device-mapper: reload ioctl on barn (254:1) failed: No such file or directory
 ```

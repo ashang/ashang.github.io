@@ -46,7 +46,7 @@ menuentry "Install" {
 }
 Remember to update grub after making the change.
 
-sudo update-grub
+# update-grub
 
 
 

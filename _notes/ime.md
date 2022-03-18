@@ -4,5 +4,5 @@ title: IME
 ---
 
 ```
-sudo bash -c "echo ko_KR.UTF-8 UTF-8 >> /etc/locale.gen"
+# bash -c "echo ko_KR.UTF-8 UTF-8 >> /etc/locale.gen"
 ```

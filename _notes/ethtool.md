@@ -22,7 +22,7 @@ Most features are dependent on support in the specific driver.
 Some queries need priviledges.
 
 ```
-$ sudo ethtool eth0
+# ethtool eth0
 Settings for eth0:
         Supported ports: [ TP ]
         Supported link modes:   10baseT/Half 10baseT/Full
@@ -57,7 +57,7 @@ Settings for eth0:
 ## -i
 
 ```
-$ sudo ethtool -i enp0s31f6
+# ethtool -i enp0s31f6
 driver: e1000e
 version: 5.13.0-22-generic
 firmware-version: 0.8-4
@@ -118,7 +118,7 @@ $ ethtool -p eth0 120
 ## -t
 
 ```
-$ sudo ethtool -t eno1
+# ethtool -t eno1
 The test result is PASS
 The test extra info:
 nvram test        (online)       0
@@ -142,7 +142,7 @@ interrupt test    (offline)      0
 # Some deb distros support interface scripts.
 
 ```
-$ sudo vim /etc/network/interfaces
+# vim /etc/network/interfaces
 post-up ethtool -s eth2 speed 1000 duplex full autoneg off
 ```
 
@@ -230,7 +230,7 @@ supports-priv-flags: no
 ```
 
 ```
-$ sudo ethtool -S wlo1
+# ethtool -S wlo1
 NIC statistics:
      rx_packets: 75551
      rx_bytes: 8534342

@@ -49,7 +49,7 @@ Filename Type Size Used Priority
 workaround:
 
 ```
-$ sudo swapoff /dev/ramzwap0
+# swapoff /dev/ramzwap0
 ```
 
 Also put this line into /etc/init.d/rc.local .

@@ -4,22 +4,22 @@ title: hdparm
 ---
 
 ```
-$ sudo hdparm -W 0 /dev/sda
+# hdparm -W 0 /dev/sda
 
 /dev/sda:
  setting drive write-caching to 0 (off)
  write-caching =  0 (off)
 
-$ sudo hdparm -I /dev/sda | grep 'Write cache'
+# hdparm -I /dev/sda | grep 'Write cache'
                 Write cache
 
 
-$ sudo hdparm -W 1 /dev/sda
+# hdparm -W 1 /dev/sda
 
 /dev/sda:
  setting drive write-caching to 1 (on)
  write-caching =  1 (on)
 
-$ sudo hdparm -I /dev/sda | grep 'Write cache'
+# hdparm -I /dev/sda | grep 'Write cache'
            *    Write cache
 ```

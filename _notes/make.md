@@ -13,7 +13,7 @@ make: *** [Makefile:531: xconfig] Error 2
 ```
 
 ```
-$ sudo apt-get install qttools5-dev
+# apt-get install qttools5-dev
 ```
 
 

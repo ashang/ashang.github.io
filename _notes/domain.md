@@ -1,24 +1,13 @@
 ---
 title: domain
 date: 2016-10-14
---- 
+---
 
 # Apex domains
 
-An apex domain is a root domain that does not contain a subdomain part. Apex domains are also known as base, bare, naked, root apex, or zone apex domains. In DNS provider settings apex domains are sometimes symbolized by an @ symbol. For example:
-
-    example.com is an apex domain because it doesn't have any subdomain parts.
-
-## Setting up apex domains
+An apex domain is a root domain that does not contain a subdomain part. Apex domains are also known as base, bare, naked, root apex, or zone apex domains. In DNS provider settings apex domains are sometimes symbolized by an @ symbol.
 
 An apex domain is usually configured with an A, ALIAS, or ANAME record through your DNS provider.
-
-
-
-
-
-
-# Subdomains
 
 ## Custom subdomains
 

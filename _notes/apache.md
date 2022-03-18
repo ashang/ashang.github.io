@@ -6,7 +6,7 @@ update: 2016-01-06
 ---
 
 ```
-$ sudo pacman -S apache
+# pacman -S apache
 resolving dependencies...
 looking for conflicting packages...
 
@@ -57,9 +57,9 @@ Detected unsafe path transition /usr/bin (owned by aaron) → /usr/bin/postqueue
 error: command failed to execute correctly
 (3/3) Arming ConditionNeedsUpdate...
 
-$ sudo systemctl restart httpd.service
+# systemctl restart httpd.service
 
-$ sudo apachectl -l
+# apachectl -l
 Compiled in modules:
   core.c
   mod_so.c
