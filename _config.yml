@@ -38,7 +38,10 @@ codepen_username: "username"
 medium_username: "@username"
 linkedin_username: "username"
 
-permalink: pretty
+#permalink: pretty
+#permalink: :title/
+permalink: :collection/:title/
+#permalink: /:collection/:title/
 markdown: kramdown
 kramdown:
     auto_ids: false
