@@ -1,0 +1,44 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely need to edit after that.
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'jekyll serve'. If you change this file, please restart the server process.
+
+# Site title
+title:
+
+# Below the site title
+tagline: Tales
+
+# Site logo
+logo:
+
+# The subpath of your site, if you want to host your path on a subpath like on GitHub Pages. e.g. /blog
+baseurl:
+
+sass:
+  sass_dir: _sass
+
+# Site navigation - each item must have a title and a url.
+navigation:
+- text: Home
+  url: /
+- text: About
+  url: /about/
+- text: Style Guide
+  url: /style-guide/
+- text: Archives
+  url: /tags/
+
+
+# Social links in the site footer
+github_username: "username"
+codepen_username: "username"
+medium_username: "@username"
+linkedin_username: "username"
+
+permalink: pretty
+markdown: kramdown
+kramdown:
+    auto_ids: false
