@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Post Archives
+title: Archives
 ---
 <main class="content fade-in-down delay-0_75s">
     <div class="inner">

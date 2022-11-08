@@ -41,7 +41,7 @@
                     <section class="widget widget-recent-posts">
                         <h2 class="widget-title">Latest Posts</h2>
                         <ul class="recent-posts">
-                        {% for post in site.posts limit:3 %}
+                        {% for post in site.posts limit:5 %}
                             <li>
                                 {% if post.featured_image %}
                                 <a href="{{ site.baseurl }}{{ post.url}}" class="post-thumb" style="background-image: url({{ "/images/posts/" | append: post.featured_image | prepend: site.baseurl }});"></a>

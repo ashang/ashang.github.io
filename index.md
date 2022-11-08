@@ -1,7 +1,26 @@
 ---
 layout: default
-title: Home
+#title: Home
 ---
+<!--
+-->
+<main class="content fade-in-down delay-0_75s">
+    <div class="inner">
+        {% include loop.html %}
+        {% if paginator.total_pages > 1 %}
+        <nav class="pagination">
+            <h2 class="screen-reader-text">Posts navigation</h2>
+            {% if paginator.previous_page %}
+            <a href="{{ paginator.previous_page_path | prepend: site.baseurl }}" class="newer-posts"><i class="fa fa-angle-left" aria-hidden="true"></i> Newer Posts</a>
+            {% endif %}
+            <span class="page-number">Page {{ paginator.page }} of {{ paginator.total_pages }}</span>
+            {% if paginator.next_page %}
+            <a href="{{ paginator.next_page_path | prepend: site.baseurl }}" class="older-posts">Older Posts <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+            {% endif %}
+        </nav><!-- .pagination -->
+        {% endif %}
+    </div><!-- .inner -->
+</main><!-- .content -->
 
 <div class="posts">
   {% for post in paginator.posts %}
@@ -25,6 +44,7 @@ title: Home
   {% else %}
     <span class="pagination-item older">Older</span>
   {% endif %}
+
   {% if paginator.previous_page %}
     {% if paginator.page == 2 %}
       <a class="pagination-item newer" href="{{ '/' | absolute_url }}">Newer</a>

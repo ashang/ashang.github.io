@@ -1,7 +1,5 @@
 # Welcome to Jekyll!
 #
-# This config file is meant for settings that affect your whole blog, values
-# which you are expected to set up once and rarely need to edit after that.
 # For technical reasons, this file is *NOT* reloaded automatically when you use
 # 'jekyll serve'. If you change this file, please restart the server process.
 
@@ -34,9 +32,9 @@ navigation:
 
 # Social links in the site footer
 github_username: "username"
-codepen_username: "username"
 medium_username: "@username"
-linkedin_username: "username"
+#codepen_username: "username"
+#linkedin_username: "username"
 
 #permalink: pretty
 #permalink: :title/
@@ -44,4 +42,31 @@ permalink: :collection/:title/
 #permalink: /:collection/:title/
 markdown: kramdown
 kramdown:
-    auto_ids: false
+    auto_ids: true
+
+collections:
+  note:
+    # Default is "/:path/"
+    #for collections, :collection is part of path
+    #permalink: /:collection/:title/
+    layout: post
+    output: true
+  posts:
+    #permalink: /:collection/:path/
+    #permalink: /:collection/:title/
+    layout: post
+    #output: true    # always true
+
+#defaults            : []
+defaults:
+  - scope:
+      path: '' # an empty string here means all files in the project
+    values:
+      # so as not to add layout to each file
+      layout: post
+      # types available are pages, posts, or any collection, in plural form
+      type: posts
+      # The 'post' type has become 'posts'.
+      category: "journal"
+      image: "/img/jekyll-og.png"
+      #permalink: /:title/
