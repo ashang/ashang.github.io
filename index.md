@@ -6,12 +6,13 @@ title: Home
   <div class="inner">
     {% include loop.html %}
     <div id="home">
-        <h1>Posts</h1>
+
         <ul class="posts">
-          {% for post in site.posts limit:42 %}
+          {%- for post in site.note reversed -%}
             <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url | absolute_url }}">{{ post.title }}</a></li>
           {% endfor %}
         </ul>
+
     </div>
-    </div>
+  </div>
 </main>

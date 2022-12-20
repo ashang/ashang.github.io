@@ -25,9 +25,11 @@
     //margin-left: auto;
     margin-left: auto;
     margin-right: auto;
-    max-width: 960px;
+    //max-width: 960px;
 }
 
+//.fixed-nav
+.site-nav,
 .entry-header,
 .entry-content,
 .entry-footer,
@@ -36,7 +38,9 @@
 .pagination,
 .comments-inner,
 .widget .inner,
-.full-width .caption-text {
+.site .inner,
+.full-width .caption-text
+{
     margin-left: auto;
     margin-right: auto;
     max-width: 720px;
@@ -283,13 +287,13 @@ ul.search-results {
 .site-header {
     text-align: center;
     .inner {
-        padding-bottom: 72px;
-        padding-top: 60px;
+        //padding-bottom: 72px;
+        //padding-top: 60px;
     }
 }
 
 .fixed-nav .site-header {
-    padding-top: 48px;
+    //padding-top: 48px;
 }
 
 .site-logo {
@@ -324,7 +328,7 @@ ul.search-results {
  */
 
 .post {
-    background: #fff;
+    //background: #fff;
     margin-bottom: 60px;
 }
 
@@ -900,10 +904,6 @@ ul.search-results {
     }
     #footer-columns .one-third {
         width: 100%;
-    }
-    .site-header .inner {
-        padding-bottom: 60px;
-        padding-top: 48px;
     }
     .entry-box {
         padding-bottom: 30px;

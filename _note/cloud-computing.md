@@ -1,9 +1,7 @@
 ---
-layout: post
-title: Cloud computing overview
+title: Cloud computing API
+date: 2020-11-20
 ---
-
-## Cloud computing overview
 
 ## Compute
 

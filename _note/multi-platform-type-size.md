@@ -1,7 +1,6 @@
 ---
-layout: post
 title: Multi-platform coding and 'printf'
-date:   Sun Feb 13, 2022 12:54 pm
+date: 2011-11-20
 ---
 
 C99 `/usr/include/inttypes.h`
@@ -216,3 +215,28 @@ $ cat /usr/arm-linux-gnueabi/include/bits/wordsize.h
 ## Links
 
 - <https://en.cppreference.com/w/c/types/integer>
+
+
+
+ISO C99 includes the inttypes.h header file that includes a number of macros for use in platform-independent printf coding. These must be outside double-quotes, e.g. printf("%" PRId64 "\n", t);
+
+Example macros include:
+
+    Macro 	Description
+    PRId32 	Typically equivalent to I32d (Win32/Win64) or d
+    PRId64 	Typically equivalent to I64d (Win32/Win64), lld (32-bit platforms) or ld (64-bit platforms)
+    PRIi32 	Typically equivalent to I32i (Win32/Win64) or i
+    PRIi64 	Typically equivalent to I64i (Win32/Win64), lli (32-bit platforms) or li (64-bit platforms)
+    PRIu32 	Typically equivalent to I32u (Win32/Win64) or u
+    PRIu64 	Typically equivalent to I64u (Win32/Win64), llu (32-bit platforms) or lu (64-bit platforms)
+    PRIx32 	Typically equivalent to I32x (Win32/Win64) or x
+    PRIx64 	Typically equivalent to I64x (Win32/Win64), llx (32-bit platforms) or lx (64-bit platforms)
+
+The syntax for a format placeholder is
+
+    %[parameter][flags][width][.precision][length]type
+
+Length
+z 	For integer types, causes printf to expect a size_t-sized integer argument.
+j 	For integer types, causes printf to expect a intmax_t-sized integer argument.
+
