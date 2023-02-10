@@ -1,5 +1,4 @@
 ---
-layout: post
 title: xapt
 tags: [xapt, apt, arm, armel, cross]
 date: 2020-03-09

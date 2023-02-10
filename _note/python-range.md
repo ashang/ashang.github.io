@@ -1,5 +1,4 @@
 ---
-layout: post
 title: python range
 tags: [python2, python3, range, xrange]
 date: 2020-03-09

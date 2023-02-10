@@ -1,6 +1,5 @@
 ---
 title: ldd
-layout: post
 tags: [ldd]
 date: 2022-12-19
 ---

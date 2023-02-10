@@ -1,6 +1,5 @@
 ---
 title: timestamp
-layout: post
 tags: [timestamp]
 date: 2022-12-19
 ---

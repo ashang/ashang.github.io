@@ -1,16 +1,56 @@
 ---
 layout: default
 ---
+
+<div class="post">
+  <h1 class="post-title">{{ page.title }}</h1>
+
+  <div class="post-info">
+    {% if page.date %}
+      <time datetime="{{ page.date }}">{{ page.date | date: "%B %d, %Y" }}</time>,
+    {% endif %}
+    {% if page.author %}
+        {{ page.author }}
+    {% endif %}
+  </div>
+
+  <div class="post-line"></div>
+
+  {{ content }}
+</div>
+
+  <a href="#" class="top">Top</a>
+
+<div class="pagination">
+  {% if page.next.url %}
+    <a href="{{ page.next.url | prepend: site.baseurl }}" class="left arrow">Next &#8592;
+      <br/>
+      {{ page.next.title }}
+    </a>
+  {% endif %}
+      <br/>
+      <br/>
+      <br/>
+  {% if page.previous.url %}
+    <a href="{{ page.previous.url | prepend: site.baseurl }}" class="right arrow">&#8594; Prev
+      <br/>
+      {{ page.previous.title }}
+    </a>
+  {% endif %}
+</div>
+
+----
+
 <main class="content fade-in-down delay-0_5s">
   <div class="inner">
     <article class="post">
       <div class="entry-box">
         <header class="entry-header">
-            <h1 class="entry-title">{{ page.title }}</h1>
-            <div class="entry-meta">
-                <time class="post-date" datetime="{{ page.date | date: "%Y-%m-%d" }}">{{ page.date | date: "%B %-d, %Y" }}</time> | {{ site.author }}
-            </div><!-- .entry-meta -->
+          <div class="entry-meta">
+            <time class="post-date" datetime="{{ page.date | date: "%Y-%m-%d" }}">{{ page.date | date: "%B %-d, %Y" }}</time> | {{ site.author }}
+          </div><!-- .entry-meta -->
         </header><!-- .entry-header -->
+
         <div class="entry-content">
             {{content}}
         </div><!-- .entry-content -->
@@ -29,6 +69,7 @@ layout: default
             </div><!-- .share-post -->
         </footer><!-- .entry-footer -->
     </div><!-- .entry-box -->
+
     <div class="author-box">
         <div class="author-info">
             <div class="author-details">

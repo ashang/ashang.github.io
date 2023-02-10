@@ -1,5 +1,4 @@
 ---
-layout: post
 date: 2018-06-04
 title: time, timezone, epoch and Year 2038 issue
 ---

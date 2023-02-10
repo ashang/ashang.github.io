@@ -1,0 +1,73 @@
+<footer class="site-footer">
+<!--
+  <a href="https://creativecommons.org/licenses/by-nc/3.0/deed.en_US">
+    <span>
+        <b>{{ site.owner}}</b>
+    </span>
+    {% capture currentyear %}{{ 'now' | date: "%Y" }}{% endcapture %}
+    <span>© {{ currentyear }}</span>
+  </a>
+-->
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+
+<!--
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
+        </ul>
+      </div>
+-->
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+      <!--
+          {% if site.github_username %}
+          <li>
+            <a href="https://github.com/{{ site.github_username }}">
+              <span class="icon icon--github">{% include icon-github.svg %}
+              </span>
+              <span class="username">{{ site.github_username }}
+              </span>
+            </a>
+          </li>
+          {% endif %}
+        -->
+        </ul>
+      </div>
+      <div class="footer-col footer-col-3">
+      <!--
+        <p>{{ site.description }}</p>
+      -->
+      </div>
+    </div>
+  </div>
+  <div class="offsite-links">
+<!--
+    {% if site.footer.has_social %}
+      {% include social.html %}
+    {% endif %}
+-->
+  </div><!-- .offsite-links -->
+  <div class="footer-bottom">
+
+    <!--
+    <div class="site-info">
+      {{ site.footer.content | markdownify }}
+    </div>
+    -->
+
+      <div class="site-footer-links right mobile-hidden">
+        <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+      </div>
+<!--
+  ONLY leaves viewport.
+
+    <a href="#page" id="back-to-top" class="back-to-top"><span class="screen-reader-text">Top </span>&#8593;</a>
+
+      <div class="copyright left mobile-block">
+        <a href="javascript:window.scrollTo(0,0)" class="right mobile-visible">UP</a>
+      </div>
+-->
+  </div><!-- .footer-bottom -->
+</footer><!-- .site-footer -->

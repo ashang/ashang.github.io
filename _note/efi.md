@@ -1,6 +1,7 @@
 ---
 title: uefi notes
 date: 2012-07-09T16:04:56+08:00
+layout: post
 ---
 
 Installing for x86_64-efi platform

@@ -1,6 +1,5 @@
 ---
 title: locale
-layout: post
 tags: [locale]
 date: 2022-12-19
 ---

@@ -12,14 +12,20 @@ void level0()
 
 void test(int level)
 {
-    if (level > 0)
-    {
+    if (level > 0) {
         int prevLevel = level - 1;
         printf("Level %d\n", level);
         test(prevLevel);
-    }
-    else
+    } else
         level0();
+
+    if (level < 0)
+    if (level < 0)
+        ;
+    if (level < 0) {
+        //;//
+        ;//
+    }
 }
 
 int main()

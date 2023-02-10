@@ -1,5 +1,4 @@
 ---
-layout: post
 title:  the time command
 ---
 

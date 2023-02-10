@@ -6,13 +6,34 @@
 # modern flat style and beautiful
 # night/dark mode.
 #
+# NOTE:
+#      some of the settings in this file get overwritten in later config
+#      files like _prod.yml, _dev.yml, and _defaults.yml
+
+# the docs version that is shown by default when clicking on docs links on the site
+default_linked_docs_version: latest
+
+# the language that serves as the source for the translations
+src_language: en
+
+language: en
+
+# Build settings
+#source:      www
+#destination: build-dev
+
+# don't erase these files in the output directory
+keep_files: [".git", ".svn", "wiki-images", "images", "downloads"]
+
 # Site settings
 email: aaron@ashang.org
 author: aaron
-heading:
-subheading: ""
-banner: ""
+
+heading: H
+subheading: "S"
+banner: "B"
 title:
+title:          Tale <ruby>sim<rt>ops</rt></ruby> notes
 
 # Below the site title
 tagline: Tales
@@ -20,11 +41,20 @@ tagline: Tales
 # Site logo
 logo:
 
-# The subpath of your site, if you want to host your path on a subpath like on GitHub Pages. e.g. /blog
-baseurl:
-
+# Assets
 sass:
   sass_dir: _sass
+  #style:        compressed
+  #style:
+  # possible values: nested expanded compact compressed
+  # possible values: expanded compressed --DART styles now
+  # http://sass-lang.com/documentation/file.SASS_REFERENCE.html#output_style
+  style: :expanded
+  line_numbers: true
+  # trace_selectors: true
+  # debug_info: true
+  # FUTURE https://github.com/jekyll/jekyll-sass-converter/issues/12
+  # sourcemap: true # Produces an error
 
 # Site navigation - each item must have a title and a url.
 navigation:
@@ -41,11 +71,15 @@ medium_username: "@username"
 #codepen_username: "username"
 #linkedin_username: "username"
 
-permalink_defaults:
+#permalink_defaults:
 #[permalinks]
 #	page: "/:title/"
 #	about: "/:filename/"
-permalink: /:collection/:title/
+permalink: /:title/
+#permalink: pretty  # Permalink style (/YYYY/MM/DD/page-name/)
+#ilwt/_config.yml:pretty_urls:
+#hexo-new/_config.yml:pretty_urls:
+#content/_config.yml:url-pretty: "MyWebsite.com"
 
 # Copyright setting
 # You can use any html code, currently below placeholders are available:
@@ -61,12 +95,13 @@ permalink: /:collection/:title/
 # copyright: "Unpublished Work (cleft) 2017-{currentYear} {author}"
 
 description: >- # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
+  edit this line in _config.yml. It will appear in your document head meta (for
   Google search results) and in your feed.xml site description.
+# The subpath of your site, if you want to host your path on a subpath like on GitHub Pages. e.g. /blog
+baseurl: "" # the subpath of your site, e.g. /weblog
 
-baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. https://example.com
+#url:            "https://chesterhow.github.io"
 favicon: "" # the favicon for your site
 
 # refer to https://shopify.github.io/liquid/filters/date/ if you want to customize this
@@ -169,7 +204,6 @@ date_format: "%b %d, %Y"
 #   loop: true              # Video loop
 #   volume: 0               # Video volume (100% is 1.0)
 #   start_at: 0             # Video start time
-#   image: null             # Image banner source
 #   opacity: 1.0            # Banner opacity (100% is 1.0)
 #   background: "rgba(0, 0, 0, 0.8)"  # Banner background (Could be a image)
 #   height: "640px"         # Banner default height
@@ -209,19 +243,37 @@ date_format: "%b %d, %Y"
 #markdown: kramdown
 kramdown:
   input: GFM
+  auto_ids: false
+  hard_wrap: false
+  syntax_highlighter: rouge
   syntax_highlighter_opts:
     default_lang: plaintext
-#highlighter: rouge
-# highlighter: none
-#  syntax_highlighter: rouge
-#quiet: false
-#lsi: false
-#auto_ids: true
+    span:
+      disable: true
+  entity_output: numeric
+  smart_quotes: [apos, apos, quot, quot]
+  typographic_symbols:
+    ndash: --
 
+mathjax: true
+#highlighter: rouge
+#highlighter: none
+#quiet: false
+
+#pygments: true
+lsi:  false # don't produce an index for related posts
+safe: false # disables plugins
+
+
+# Gems
 plugins:
-  - jekyll-seo-tag
+  #- jekyll-feed
+  #- jekyll-seo-tag
   - jekyll-sitemap
-  - jemoji
+  - jemoji # allow emoji in your post
+
+## Disqus (Set to your disqus id)
+#disqus:         jekyll-tale
 
 # Page default value
 # defaults:
@@ -230,39 +282,150 @@ plugins:
 #     subheading: "Your awesome subheading"
 #     banner: "Your image url"
 
-# types available are pages, posts, drafts or any collection
 #defaults            : []
 defaults:
+  #- scope:
+      #path: '' # an empty string here means all files in the project
+      #type: "notes" # a collection in your site, in plural form
+    #values:
+      #type: "notes" # a collection in your site, in plural form
+      #image: "/img/jekyll-og.png"
   - scope:
       path: '' # an empty string here means all files in the project
     values:
       # so as not to add layout to each file
-      layout: post
-      # types available are pages, posts, or any collection, in plural form
-      type: posts
-      # The 'post' type has become 'posts'.
-      image: "/img/jekyll-og.png"
+      layout: page
+      type: pages
   -
     scope:
       path: "images"
     values:
       image: true
   - scope:
+      path: "_notes"
+      type: "notes" # a collection in your site, in plural form
+    values:
+      layout: post
+  - scope:
       path: "_note"
       type: "notes" # a collection in your site, in plural form
     values:
       layout: post
-  #- scope:
-      #path: ''
-    #values:
-      #image: "/img/jekyll-og.png"
+  - scope:
+      path: "note"
+      type: "notes" # a collection in your site, in plural form
+    values:
+      layout: post
 
 collections:
   note:
-    # Default is "/:path/"
+    # Default is "/:path/", which is XXX
     #for collections, :collection is part of path
     # It's a must to explicitly set; the global setting cannot override the default
+    #permalink: /:collection/:title/
     permalink: /:collection/:title/
     layout: post
     output: true
 
+highlight          : rouge
+#include            : ['.htaccess']
+include:
+  - _pages
+
+# Excludes
+#exclude: [ Gemfile, Gemfile.lock ]
+exclude:
+    - Gemfile
+    - Gemfile.lock
+    - LICENSE
+    - INSTALL.md
+    - README.md
+    - .jekyll-cache/
+    - .sass-cache/
+    - gemfiles/
+    - node_modules/
+    - vendor/
+#   - vendor/bundle/
+#   - vendor/cache/
+#   - vendor/gems/
+#   - vendor/ruby/
+
+# Used › default.html front-matter and compress.html
+# Options › http://jch.penibelst.de
+compress_html:
+  clippings: all
+  comments: ["<!-- ", " -->"]
+  endings: all
+  profile: false
+  ignore:
+    envs: [development]
+
+#google_site_verification:  ''
+#bing_webmastertools_id:    ''
+# yandex_site_verification:  ''
+# alexa_verify_id:           ''
+
+favicon: "" # the favicon for your site
+# Favicon-Crap: Favicons, Chrome, Android & Apple Touch Buttons
+# More information » https://mathiasbynens.be/notes/touch-icons
+favicon-32x32:                          'favicon-32x32.png'
+touch-icon-192x192:                     'touch-icon-192x192.png'
+apple-touch-icon-180x180-precomposed:   'apple-touch-icon-180x180-precomposed.png'
+apple-touch-icon-152x152-precomposed:   'apple-touch-icon-152x152-precomposed.png'
+apple-touch-icon-144x144-precomposed:   'apple-touch-icon-144x144-precomposed.png'
+apple-touch-icon-120x120-precomposed:   'apple-touch-icon-120x120-precomposed.png'
+apple-touch-icon-114x114-precomposed:   'apple-touch-icon-114x114-precomposed.png'
+apple-touch-icon-76x76-precomposed:     'apple-touch-icon-76x76-precomposed.png'
+apple-touch-icon-72x72-precomposed:     'apple-touch-icon-72x72-precomposed.png'
+apple-touch-icon-precomposed:           'apple-touch-icon-precomposed.png'
+msapplication_tileimage:                'msapplication_tileimage.png'               # Size 144x144
+msapplication_tilecolor:                '#fabb00'
+
+# Facebook-Optimization › http://j.mp/fb_optimize
+
+og_image:                           'http://ashang.github.io/resp/logo.png'
+og_locale:                          'en_EN'
+og_type:                            'website'
+
+socialmedia:
+    github: ashang
+
+# https://www.google.com/analytics/
+# google_analytics: [Tracking ID]
+# used in _includes/footer_scripts
+# google_analytics_tracking_id:
+# Disable when not in production
+google_analytics_tracking_id: false
+
+# https://www.tawk.to/knowledgebase/
+#
+#  tawk.to is a free live chat app that lets you monitor and chat
+#  with visitors on your website or from a free customizable page
+#
+#  To load the script add tawkto: true in front matter of each page
+#
+# used in _includes/footer_scripts
+# tawkto_embed_uri:
+
+
+# _config_dev.yml is only needed for development.
+# start both config-files, overwriting
+# the first one with the development variables needed.
+# Start dvelopment with › $ jekyll serve --config _config.yml,_config_dev.yml
+
+ # 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+ # <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
+ # <script>
+ # 	WebFont.load({
+ # 		google: {
+ # 			families: [ 'Lato:400,700,400italic:latin', 'Volkhov::latin' ]
+ # 		}
+ # 	});
+ # </script>
+
+ # <noscript>
+ # 	<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic%7CVolkhov' rel='stylesheet' type='text/css'>
+ # </noscript>
+
+algolia_api_key: "0a916ab198bd93d031aa70611271e42e"

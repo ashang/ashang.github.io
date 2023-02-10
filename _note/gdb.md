@@ -4,62 +4,153 @@ date: 2012-08-21
 lastmod: 2013-08-18
 ---
 
+
+
+
+bt -100
+
+And it is likely you will see the frame that you need to inspect on the first or second screen.
+Once insecting the stack trace using bt -100 helped me to fix a pboblem with a lot of recursive calls easily.
+
+And then issue command
+f <here the number of your frame you need to inspect>
+
+    up 200 will bring you up 200 frames
+    If you know the initial caller of the recursive routine, you can do f[rame] <caller-func> - this will jump to the frame of address caller-func.
+
+###
+
+"e2fsck-wrapper".
+
+        #!/usr/bin/expect -f
+        set timeout -1
+        spawn /sbin/e2fsck -f $argv
+        expect {
+            "Clear<y>? " { send "n" ; exp_continue }
+            "<y>? "      { send "y" ; exp_continue }
+        }
+
+
+
+
+## Symbols
+
+Exposed interface to the other programs is composed of named functions and data symbols, that can be accessed either by linking to the library or by using dlsym() and similar interfaces provided by the runtime loader.
+
+Not all symbols defined within a shared object need to be exported, though. In the vast majority of cases, a dynamic library will provide a set of symbols corresponding to its public API, while for plugins, the interface to be exposed is usually mandated by the host application or library.
+
+Exposing more symbols than necessary can have negative effects on the object in many ways: it almost always increases the time necessary for the dynamic loader to completely load the object, and – if the internal symbols are not properly guarded – it can cause collisions between different objects, on operating systems using flat namespaces, as it is the case for Linux and most Unix-based systems.
+
+Most, if not all, link editors allow to avoid this problem by defining a list of symbols to export; any symbol not in such lists will be hidden and thus not be part of the public interface of the object. Since the options used by the link editors to provide this function are not standard, libtool leverages it via three main options: -export-dynamic, -export-symbols and -export-symbols-regex.
+
+3.1. -export-dynamic
+The -export-dynamic option is used to declare that the interface exposed by the current object is to be used with the dlopen() and dlsym() functions (or their equivalent on non-Unix operating systems). This is the case for instance of all plugins, as seen in Section 2, “Building plugins”.
+
+This option is not commonly used for projects whose main target is Linux or other operating systems using ELF for their objects, as any symbol exposed by an ELF object is available to be accessed through the dlsym() function. It is a requirement, though, of other operating system that make difference whether the symbol should be resolved at build time or during execution, such as Windows.
+
+3.2. -export-symbols and -export-symbols-regex
+As the title implies, the -export-symbols and -export-symbols-regex are tightly related. They both are used to provide libtool with a list of symbols that should be exposed (the interface of the object).
+
+The first option takes as a single parameter the path to a file, containing the list of symbols to expose, one per line. The second instead takes as a parameter a regular expression: symbols whose name matches the expression will be exposed by the object; libtool takes care of producing the list in that case.
+
+Once libtool knows the list of symbols to expose, it then uses the link editor's own interface to complete the task; this is done through either linker scripts for Unix-derived link editors, or through definition lists for link editors for Windows, as they both serve similar purposes.
+
+Example 3.7. Exposing only the public interface of a library via -export-symbols-regex
+
+lib_LTLIBRARIES = libfoo.la
+
+libfoo_la_SOURCES = foo1.c foo2.c foo3.c
+libfoo_la_LDFLAGS = -export-symbols-regex '^foo_'
+
+Using the -export-symbols-regex option makes it very easy to hide unnecessary symbols from a library's interface, but relies on the library being designed to use a regular pattern for naming of non-static functions and data symbols. In the earlier example, for instance, libtool will export all the symbols whose name start with foo_, assuming that the internal symbols use instead a prefix like x_foo or something along those lines.
+
+When this assumption cannot be applied, you have instead to use the other option, -export-symbols, providing it with a complete list of the interfaces to export. The main downside to this method is, obviously, that you have to either manually compile it (which is prone to errors) or find a different, automated way to produce it, similarly to what libtool does when provided with a regular expression.
+
+
 ## frame
+
+Usually stack frame address is kept in the frame pointer register while execution is going on in that frame.
+
+GDB assigns numbers to all existing stack frames, starting with zero for the innermost frame, one for the frame that called it, and so on upward. These numbers do not really exist in your program; they are assigned by GDB to give you a way of designating stack frames in GDB commands.
+
+Some compilers provide a way to compile functions so that they operate without stack frames.
+
+For example, the gcc option
+
+`-fomit-frame-pointer`
+generates functions without a frame.
+
+This is occasionally done with heavily used library functions to save the frame setup time.
+
+GDB has limited facilities for dealing with these function invocations. If the innermost function invocation has no stack frame, GDB nevertheless regards it as though it had a separate frame, which is numbered zero as usual, allowing correct tracing of the function call chain. However, GDB has no provision for frameless functions elsewhere in the stack.
+
+- frame args
+- select-frame
+
+The select-frame command allows you to move from one stack frame to another without printing the frame.
+
+
 
 Selects a stack frame or displays the currently selected stack frame.
 
-f [Frame number]
+- f [Frame number]
 
 If no frame number is specified, this command displays the currently selected frame.
 
 The frame command displays brief information about the selected frame after selecting it. If you want to avoid it, use the select-frame command that is a silent version of the frame command.
 
-# Getting stacktrace with gdb
+## backtrace
+bt
+Print a backtrace of the entire stack: one line per frame for all frames in the stack. You can stop the backtrace at any time by typing the system interrupt character, normally C-c.
+backtrace n
+bt n
+Similar, but print only the innermost n frames.
+backtrace -n
+bt -n
+Similar, but print only the outermost n frames.
+backtrace full
+Print the values of the local variables also.
+bt full
+The names where and info stack (abbreviated info s) are additional aliases for backtrace.
 
-If the problem when running Flowblade happens when native code is executed, the information needed to debug the issue can usually be collected using a program called **gdb**.
 
-## Steps ##
+up n
+Move n frames up the stack. For positive numbers n, this advances toward the outermost frame, to higher frame numbers, to frames that have existed longer. n defaults to one.
+down n
+Move n frames down the stack. For positive numbers n, this advances toward the innermost frame, to lower frame numbers, to frames that were created more recently. n defaults to one. You may abbreviate down as do.
 
-**1. Install gdb debugger.**
 
-To install **gdb** give command on terminal:
+info f addr
+Print a verbose description of the frame at address addr, without selecting that frame. The selected frame remains unchanged by this command. This requires the same kind of address (more than one for some architectures) that you specify in the frame command. See section Selecting a frame.
+info args
+Print the arguments of the selected frame, each on a separate line.
+info locals
+Print the local variables of the selected frame, each on a separate line. These are all variables (declared either static or automatic) accessible at the point of execution of the selected frame.
+info catch
+Print a list of all the exception handlers that are active in the current stack frame at the current point of execution. To see other exception handlers, visit the associated frame (using the up, down, or frame commands); then type info catch.
+
+
+For release builds, you should use the following as part of CFLAGS and CXXFLAGS for release builds:
+
+-On -g2
+
+-On sets optimizations for speed or size (for example, -Os or -O2), and -g2 ensure debugging information is created.
+
+
 
 ```
-sudo apt-get install gdb
-```
-and give your password to allow install to take place.
-
-**2. Run gdb on python interpreter running Flowblade**
-
-On terminal give command:
-
-```
-gdb python
+echo "GET / HTTP1.0" | openssl s_client -connect <nowiki>example.com:443
 ```
 
-This starts gdb running python interpreter. Now you need to run Flowblade inside debugger. You'll see text (gdb), this is the command prompt for debugger. Now give command:
+nm or openssl s_client will show that compression is enabled in the client. In fact, any symbol within the OPENSSL_NO_COMP preprocessor macro will bear witness since -no-comp is translated into a CFLAGS define.
 
 ```
-run /usr/bin/flowblade
+$ nm /usr/local/ssl/iphoneos/lib/libcrypto.a 2>/dev/null | egrep -i "(COMP_CTX_new|COMP_CTX_free)"
+0000000000000110 T COMP_CTX_free
+0000000000000000 T COMP_CTX_new
 ```
 
-This runs Flowblade. After program has crashed give command:
-
-```
-backtrace
-```
-
-**3. Copy/paste output to a text file**
-
-Use mouse to select printed output on terminal, and press SHIFT+CONTROL+C to copy text.
-
-Open a text file and paste text - with CONTROL+V or  SHIFT+CONTROL+V - into it, and provide the text file as an attachment with the Issue report or comment.
-
-
-
-
-
-Set a breakpoint in a sub-function:
+## Set a breakpoint in a sub-function:
 
 (gdb) b subfunc
 Breakpoint 1 at 0x400f09: file prog.c, line 94.
@@ -1772,28 +1863,11 @@ unset PYTHONPATH
 ```
 
 ## reload warning: Source file is more recent than executable.
+
 * [How to 'reload' source files in GDB](https://stackoverflow.com/questions/4118207/how-to-reload-source-files-in-gdb/6044513)
 - http://www.sysprof.com
 - https://wiki.gnome.org/Projects/GnomeShell/Debugging
 
-
-# shell gcc crash.c -o crash -gstabs+
-
-
-
----
-
-
-bt -100
-
-And it is likely you will see the frame that you need to inspect on the first or second screen.
-Once insecting the stack trace using bt -100 helped me to fix a pboblem with a lot of recursive calls easily.
-
-And then issue command
-f <here the number of your frame you need to inspect>
-
-    up 200 will bring you up 200 frames
-    If you know the initial caller of the recursive routine, you can do f[rame] <caller-func> - this will jump to the frame of address caller-func.
 
 ## Trouble shooting
 
@@ -1830,4 +1904,732 @@ To solve this Debian/GDB issue.
     # ln -s /usr/lib/python2.7/plat-*/_sysconfigdata_nd.py /usr/lib/python2.7/
 
 GDB want to use that path, but the python package installs in another path.
+
+## gdb python
+
+```
+gdb python
+run /usr/bin/flowblade
+```
+
+## Chromium V8
+
+As of V8 v6.9, it’s possible to create breakpoints in GDB (and possibly other debuggers) to debug CSA / ASM / Torque builtins.
+
+```
+(gdb) tb i::Isolate::Init
+Temporary breakpoint 1 at 0x7ffff706742b: i::Isolate::Init. (2 locations)
+(gdb) r
+Thread 1 "d8" hit Temporary breakpoint 1, 0x00007ffff7c55bc0 in Isolate::Init
+(gdb) br Builtins_RegExpPrototypeExec
+Breakpoint 2 at 0x7ffff7ac8784
+(gdb) c
+Thread 1 "d8" hit Breakpoint 2, 0x00007ffff7ac8784 in Builtins_RegExpPrototypeExec ()
+```
+
+Note that it works well to use a temporary breakpoint (shortcut `tb` in GDB) instead of a regular breakpoint (`br`) for this, since you only need it at process start.
+
+Builtins are also visible in stack traces:
+
+```
+(gdb) bt
+#0  0x00007ffff7ac8784 in Builtins_RegExpPrototypeExec ()
+#1  0x00007ffff78f5066 in Builtins_ArgumentsAdaptorTrampoline ()
+#2  0x000039751d2825b1 in ?? ()
+#3  0x000037ef23a0fa59 in ?? ()
+#4  0x0000000000000000 in ?? ()
+```
+
+Caveats:
+
+- Only works with embedded builtins.
+- Breakpoints can only be set at the start of the builtin.
+- The initial breakpoint in `Isolate::Init` is needed prior to setting the builtin breakpoint, since GDB modifies the binary and we verify a hash of the builtins section in the binary at startup. Otherwise, V8 complains about a hash mismatch:
+
+    ```
+    # Fatal error in ../../src/isolate.cc, line 117
+    # Check failed: d.Hash() == d.CreateHash() (11095509419988753467 vs. 3539781814546519144).
+    ```
+
+coredumpctl gdb and then bt full
+
+
+
+-   对 Google Go 语言支持。
+
+-   配合 SystemTap 实现 SDT（定位静态追溯）。
+
+# TUI
+
+  `gdb -tui`
+
+
+
+root@1:/pica/core# scp admin@dev22:/srv/gdb-x8* .
+^Croot@1:/pica/core# scp admin@10.10.50.22:/srv/gdb-x8* .
+The authenticity of host '10.10.50.22 (10.10.50.22)' can't be established.
+ECDSA key fingerprint is SHA256:lQeGCR9rGbkAhYrAGWypR5Uu6UoU5pmgD2PurhOcKlg.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '10.10.50.22' (ECDSA) to the list of known hosts.
+admin@10.10.50.22's password:
+gdb-x86.tar.gz                                                                                                                             100% 3080KB  42.4MB/s   00:00
+root@1:/pica/core# tar vfx gdb-x86.tar.gz
+gdb-x86/
+gdb-x86/gdb
+gdb-x86/libpython2.7.so.1.0
+root@1:/pica/core# find gdb-x86
+gdb-x86
+gdb-x86/gdb
+gdb-x86/libpython2.7.so.1.0
+root@1:/pica/core# find gdb-x86 -ls
+    50130      4 drwxr-xr-x   2 1034     1035         4096 Aug 14  2018 gdb-x86
+    50131   5768 -rw-r--r--   1 1034     1035      5906280 Mar  8  2017 gdb-x86/gdb
+    50132   3004 -rw-r--r--   1 1034     1035      3073448 Mar  8  2017 gdb-x86/libpython2.7.so.1.0
+root@1:/pica/core# chmod +x gdb-x86/gdb
+root@1:/pica/core# ./gdb-x86/gdb
+./gdb-x86/gdb: error while loading shared libraries: libreadline.so.6: cannot open shared object file: No such file or directory
+root@1:/pica/core# find /lib* /usr/lib/ | grep libreadl
+/lib/x86_64-linux-gnu/libreadline.so.7.0
+/lib/x86_64-linux-gnu/libreadline.so.7
+root@1:/pica/core# ln -sf /lib/x86_64-linux-gnu/libreadline.so.7.0 /lib/x86_64-linux-gnu/libreadline.so.6
+root@1:/pica/core# ./gdb-x86/gdb
+./gdb-x86/gdb: error while loading shared libraries: libpython2.7.so.1.0: cannot open shared object file: No such file or directory
+root@1:/pica/core#
+root@1:/pica/core# find /lib* /usr/lib/ | grep libpython2.7
+root@1:/pica/core# apt install gdb
+Reading package lists... Done
+Building dependency tree... Done
+E: Unable to locate package gdb
+root@1:/pica/core# apt update
+Get:1 http://security.debian.org buster/updates InRelease [65.4 kB]
+Get:2 http://security.debian.org buster/updates/main amd64 Packages [292 kB]
+
+
+
+
+7 kB 16%]                                                                                                                      22.6 kB/s 9min 32s^C
+root@1:/pica/core# vi /etc/apt/sources.list
+root@1:/pica/core# apt update
+Get:1 http://mirrors.ustc.edu.cn/debian buster InRelease [121 kB]
+Get:2 http://mirrors.ustc.edu.cn/debian buster-updates InRelease [51.9 kB]
+Get:3 http://mirrors.ustc.edu.cn/debian buster/main amd64 Packages [7907 kB]
+Get:4 http://mirrors.ustc.edu.cn/debian buster/main Translation-en [5969 kB]
+Get:5 http://mirrors.ustc.edu.cn/debian buster/contrib amd64 Packages [50.1 kB]
+Get:6 http://mirrors.ustc.edu.cn/debian buster/contrib Translation-en [44.2 kB]
+Get:7 http://mirrors.ustc.edu.cn/debian buster/non-free amd64 Packages [87.7 kB]
+Get:8 http://mirrors.ustc.edu.cn/debian buster/non-free Translation-en [88.8 kB]
+Get:9 http://mirrors.ustc.edu.cn/debian buster-updates/main amd64 Packages [10.9 kB]
+Get:10 http://mirrors.ustc.edu.cn/debian buster-updates/main Translation-en [7807 B]
+Fetched 14.3 MB in 1min 21s (177 kB/s)
+Reading package lists... Done
+Building dependency tree... Done
+2 packages can be upgraded. Run 'apt list --upgradable' to see them.
+root@1:/pica/core# apt install gdb
+Reading package lists... Done
+Building dependency tree... Done
+The following additional packages will be installed:
+  libbabeltrace1 libc6-dbg libdw1 libglib2.0-0 libglib2.0-data libipt2 libpython3.7 shared-mime-info xdg-user-dirs
+Suggested packages:
+  gdb-doc gdbserver
+The following NEW packages will be installed:
+  gdb libbabeltrace1 libc6-dbg libdw1 libglib2.0-0 libglib2.0-data libipt2 libpython3.7 shared-mime-info xdg-user-dirs
+0 upgraded, 10 newly installed, 0 to remove and 2 not upgraded.
+Need to get 19.7 MB of archives.
+After this operation, 51.6 MB of additional disk space will be used.
+Do you want to continue? [Y/n]
+0% [Connecting to mirrors.ustc.edu.cn]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+The following additional packages will be installed:
+  libbabeltrace1 libc6-dbg libdw1 libglib2.0-0 libglib2.0-data libipt2 libpython3.7 shared-mime-info xdg-user-dirs
+Suggested packages:
+  gdb-doc gdbserver
+The following NEW packages will be installed:
+  gdb libbabeltrace1 libc6-dbg libdw1 libglib2.0-0 libglib2.0-data libipt2 libpython3.7 shared-mime-info xdg-user-dirs
+0 upgraded, 10 newly installed, 0 to remove and 2 not upgraded.
+Need to get 19.7 MB of archives.
+After this operation, 51.6 MB of additional disk space will be used.
+Do you want to continue? [Y/n]
+Get:1 http://mirrors.ustc.edu.cn/debian buster/main amd64 libdw1 amd64 0.176-1.1 [235 kB]
+
+
+
+
+
+
+
+Get:8 http://mirrors.ustc.edu.cn/debian buster/non-free Translation-en [88.8 kB]
+Get:9 http://mirrors.ustc.edu.cn/debian buster-updates/main amd64 Packages [10.9 kB]
+Get:10 http://mirrors.ustc.edu.cn/debian buster-updates/main Translation-en [7807 B]
+Fetched 14.3 MB in 1min 21s (177 kB/s)
+Reading package lists... Done
+Building dependency tree... Done
+2 packages can be upgraded. Run 'apt list --upgradable' to see them.
+root@1:/pica/core# apt install gdb
+Reading package lists... Done
+Building dependency tree... Done
+The following additional packages will be installed:
+  libbabeltrace1 libc6-dbg libdw1 libglib2.0-0 libglib2.0-data libipt2 libpython3.7 shared-mime-info xdg-user-dirs
+Suggested packages:
+  gdb-doc gdbserver
+The following NEW packages will be installed:
+  gdb libbabeltrace1 libc6-dbg libdw1 libglib2.0-0 libglib2.0-data libipt2 libpython3.7 shared-mime-info xdg-user-dirs
+0 upgraded, 10 newly installed, 0 to remove and 2 not upgraded.
+Need to get 19.7 MB of archives.
+After this operation, 51.6 MB of additional disk space will be used.
+Do you want to continue? [Y/n]
+Get:1 http://mirrors.ustc.edu.cn/debian buster/main amd64 libdw1 amd64 0.176-1.1 [235 kB]
+Get:2 http://mirrors.ustc.edu.cn/debian buster/main amd64 libglib2.0-0 amd64 2.58.3-2+deb10u2 [1258 kB]
+Get:3 http://mirrors.ustc.edu.cn/debian buster/main amd64 libbabeltrace1 amd64 1.5.6-2+deb10u1 [172 kB]
+Get:4 http://mirrors.ustc.edu.cn/debian buster/main amd64 libipt2 amd64 2.0-2 [41.7 kB]
+Get:5 http://mirrors.ustc.edu.cn/debian buster/main amd64 libpython3.7 amd64 3.7.3-2+deb10u3 [1498 kB]
+Get:6 http://mirrors.ustc.edu.cn/debian buster/main amd64 gdb amd64 8.2.1-2+b3 [3133 kB]
+Get:7 http://mirrors.ustc.edu.cn/debian buster/main amd64 libc6-dbg amd64 2.28-10 [11.5 MB]
+Get:8 http://mirrors.ustc.edu.cn/debian buster/main amd64 libglib2.0-data all 2.58.3-2+deb10u2 [1110 kB]
+Get:9 http://mirrors.ustc.edu.cn/debian buster/main amd64 shared-mime-info amd64 1.10-1 [766 kB]
+Get:10 http://mirrors.ustc.edu.cn/debian buster/main amd64 xdg-user-dirs amd64 0.17-2 [53.8 kB]
+Fetched 19.7 MB in 1min 48s (183 kB/s)
+Selecting previously unselected package libdw1:amd64.
+(Reading database ... 14470 files and directories currently installed.)
+Preparing to unpack .../0-libdw1_0.176-1.1_amd64.deb ...
+Unpacking libdw1:amd64 (0.176-1.1) ...
+Selecting previously unselected package libglib2.0-0:amd64.
+Preparing to unpack .../1-libglib2.0-0_2.58.3-2+deb10u2_amd64.deb ...
+
+
+
+
+
+## Overview
+
+GDB is using the very low level ptrace(2) system call to set breakpoints etc..
+
+## Latest changes
+
+### gdb (7.8-1) experimental; urgency=medium
+
+>  WARNING: gdb now uses Python 3 by default.
+>
+>  Please update your Python scripts to work on both Python 2 and 3 as
+>  soon as possible.
+>
+>  See /usr/share/doc/gdb*/README.python_switch for details.
+
+## Get started
+
+Commands
+
+- `bt` (for backtrace) to get a stack trace from the time of the crash. In the backtrace, each function invocation is given a number.
+- `frame NUMBER` to select a particular stack frame.
+- `list` to see code around that function
+- `info locals` to see the local variables.
+- `print NAME_OF_VARIABLE` to see its value.
+- `apropos search-topic` to find help
+- `up/down N` to select frames N up/down
+
+
+## XXX
+
+```
+root@57604cfc938d:/# gdb
+GNU gdb (Debian 7.7.1+dfsg-5) 7.7.1
+Copyright (C) 2014 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word".
+
+root@57604cfc938d:/# gdb /pica/bin/vrrp/xorp_vrrp
+GNU gdb (Debian 7.7.1+dfsg-5) 7.7.1
+Copyright (C) 2014 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from /pica/bin/vrrp/xorp_vrrp...(no debugging symbols found)...done.
+(gdb) r
+Starting program: /pica/bin/vrrp/xorp_vrrp
+warning: the debug information found in "/usr/lib/debug//lib/x86_64-linux-gnu/ld-2.19.so" does not match "/lib64/ld-linux-x86-64.so.2" (CRC mismatch).
+
+warning: the debug information found in "/usr/lib/debug/lib/x86_64-linux-gnu//ld-2.19.so" does not match "/lib64/ld-linux-x86-64.so.2" (CRC mismatch).
+
+/pica/bin/vrrp/xorp_vrrp: error while loading shared libraries: libxorptargets.so.0: cannot open shared object file: No such file or directory
+[Inferior 1 (process 160) exited with code 0177]
+
+root@XorPlus:/pica/core# gdb -c core.xorp_policy.pid_18451.uid_0.sig_11 /pica/bin/policy/xorp_policy
+GNU gdb (GDB) 7.4.1-debian
+Copyright (C) 2012 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>...
+Reading symbols from /pica/bin/policy/xorp_policy...done.
+[New LWP 18451]
+
+ warning: Could not load shared library symbols for linux-vdso.so.1.
+ Do you need "set solib-search-path" or "set sysroot"?
+[Thread debugging using libthread_db enabled]
+ Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+
+  warning: no loadable sections found in added symbol-file system-supplied DSO at 0x7ffefcff6000
+  Core was generated by `xorp_policy'.
+  Program terminated with signal 11, Segmentation fault.
+  #0  0x00007f9d6c69ab45 in ?? () from /lib/x86_64-linux-gnu/libc.so.6
+  (gdb) bt
+  #0  0x00007f9d6c69ab45 in ?? () from /lib/x86_64-linux-gnu/libc.so.6
+  #1  0x00007f9d6c69b641 in ?? () from /lib/x86_64-linux-gnu/libc.so.6
+  #2  0x00007f9d6dc69db5 in ref_counter_pool::~ref_counter_pool() () from /pica/lib/libxorp.so.0
+  #3  0x00007f9d6c659eaf in __cxa_finalize () from /lib/x86_64-linux-gnu/libc.so.6
+  #4  0x00007f9d6dc58743 in ?? () from /pica/lib/libxorp.so.0
+  #5  0x00007ffefcfeb370 in ?? ()
+  #6  0x00007f9d6f6b91fa in ?? () from /lib64/ld-linux-x86-64.so.2
+  Backtrace stopped: previous frame identical to this frame (corrupt stack?)
+  (gdb)
+```
+
+- `list (l)`：列出源代码，默认 10 行，其后可跟函数名或行号；也可以用逗号分隔两个参数，以打印指定范围的源代码
+- `break (b)`：设置断点，后接函数名或行号
+- `run (r)`：执行程序，遇到断点会自动暂停
+- `continue (c)`：程序继续执行，直到遇到下一个断点或到达程序结尾
+- `next (n)`：执行一整行代码，然后停留在下一行，也称“单步跳过”
+- `step
+- (s)`：功能基本和`next`一样，但是遇到函数调用时，`step`会跳进函数体内，然后停留在函数的第一条语句处，也称“单步跳入”
+- `finish (fin)`：继续执行目前所在的函数，直到遇到函数体内的下一个断点或直到函数结束，也称“单步跳出”
+- `print (p)`：打印变量的值
+- `kill`：终止调试器，但并不关闭，所有设置都将保存，待修改好源文件重新编译后使用`run`再次开始调试，`GDB`会重新加载可执行文件
+- `file`：加载需要调试的目标程序
+- `set args`：后跟当前调试程序所需的参数表列
+- `show args`：显示目前为调试程序所设置的参数表列
+
+- 对于`next`和`step`命令，如果执行一次后还想继续执行，只需直接回车即可，`GDB`会自动执行上一条命令
+
+- `info all-registers (info all)`：显示所有处理器寄存器的内容，包括浮点和向量寄存器
+- `info register (info reg)`：显示 CPU 寄存器的内容
+- `info source`：打印当前源文件的信息
+- `info sources`：打印当前调试程序包含的所有源文件信息
+- `info address`：后跟变量或函数名，可以显示目标变量或函数的地址信息
+- `info breakpoints (info b)`：显示所有设置的断点
+- `info frame (info f)`：显示当前堆栈帧的相关信息，包括返回值、寄存器值
+- `info locals (info lo)`：列出当前函数的局部变量
+
+- `tbreak (tb)`：设置临时断点，`GDB`会在到达这个语句后自动将其删除
+- `delete (d)`：删除某个断点或某个范围内的断点，后接断点的编号，或以竖线分隔的两个断点编号；不加参数则删除所有断点
+- `disable (dis)`：临时禁用某个断点或某个范围内的断点，使用格式同`delete`
+- `enable (en)`：恢复被禁用的某个断点或某个范围内的断点，使用格式同`delete`
+- `ignore 1 5 (ig 1 5)`：连续忽略编号为 1 的断点 5 次
+
+### 条件中断
+
+`break 断点位置 if 中断条件`：其中位置可以是函数名或行号，条件可以是 C 语言任何形式的表达式
+如：`break 20 if i == j - 1`
+
+`condition 断点编号 中断条件`：可以在已有断点的位置再新增一个断点，或修改其原来的中断条件
+如：`condition 20 \*p1 \!= \*p2`
+如想删除中断条件，直接使用`condition 断点编号`即可
+
+- `set logging on (set lo on)`：开启日志记录
+- `show logging (show lo)`：显示日志信息
+- `set listsize 5 (set li 5)`：设置`list`默认输出的行数
+- `show listsize (show li)`：显示`list`默认输出的行数
+
+### 显示调用轨迹
+
+`backtrace (bt)`，同义词还有`where`、`info stack (info s)`
+使用上述命令可以得到函数的调用次序，这在调试递归调用时特别有效
+
+`frame (f)`：显示堆栈帧信息，后面可跟堆栈帧的编号，不跟参数则显示当前堆栈帧的信息
+
+`up`，跳到上一个堆栈；`down`，跳到下一个堆栈
+
+### 显示数据的详细用法
+
+`pint 输出格式 变量名称或表达式`：表达式的执行结果会影响到程序中相应变量的值，示例如下
+
+`p a`：输出变量 a 的取值
+`p a=7`：给变量 a 赋值为 7，相当于命令`set variable a=7 (set var a=7)`
+`p a\*a`：输出变量 a 自乘的结果
+`p
+2\*sum($3)`：调用 sum 函数，传入参数`$3`（此即调试过程中第三次打印的数值），然后将 sum 函数执行的结果乘以2返回
+`p main::a`：跨堆栈帧存取变量信息
+
+可以在`GDB`调试过程中定义新的变量，使用`p $a = \*p1`或`set $a = \*p1`的格式
+
+格式化输出选项
+
+1.  `/d`：十进制输出，也是输出整数时的默认格式
+2.  `/u`：十进制无符号整数
+3.  `/c`：字符形式输出
+4.  `/o`：八进制输出
+5.  `/x`：十六进制输出
+6.  `/t`：二进制输出
+
+其他格式化选项
+
+1.  `/a`：以十六进制形式输出地址
+2.  `/f`；将目标值以浮点数的形式显示
+
+### 显示内存区域
+
+基本格式：`x / 显示个数 格式修饰符 单位内存大小 address`
+
+`显示个数`：指定要显示多少个内存单位，默认为 1
+`格式修饰符`：除了可以使用`print`的格式修饰符以外，还可以额外使用以下两个
+\# `/s`：将目标地址的数据以字符串的形式显示出来
+
+1.  `/i`：以汇编语言的形式显示机器指令
+
+`单位内存大小`：指定每个内存单位空间的大小，有以下四种类别，默认为`w`
+\# `b`：一个字节
+
+1.  `h`：两个字节（半个字）
+2.  `w`：四个字节（一个字）
+3.  `g`：八个字节（双字）
+
+`address`：目标地址
+
+使用示例如下：
+
+`x/s \&a`：以字符串的形式显示变量 a 所处地址开始的一个字的内容（因为默认显示 1 个单位，每个单位为一个字）
+`x/15xb \&a`：以十六进制形式显示变量 a 所处地址开始的 15 个字节的内容
+`x/10i \&a`：将变量 a 所处地址开始的 10 条机器语言翻译成汇编代码
+
+### 观测点的设置
+
+`watch (wa)`：当指定表达式的值发生改变时，程序中止执行
+`rwatch (rw)`：当程序读取和目标表达式相关的任何对象时，程序中止执行
+`awatch (aw)`：当程序读取或修改和目标表达式相关的任何对象时，程序中止执行
+
+-----
+
+# Running gdb
+
+Now run your program as follows, replacing "[--args]" with any arguments
+you want to run the program with:
+`--args`：此选项后必须立即跟要调试的目标程序名，然后接该目标程序需要的参数表列，这样这些参数就不会被当成`GDB`自身的参数
+
+    $ gdb hello
+    ... gdb loads ...
+    (gdb) set pagination 0
+    (gdb) run [--args]
+    ... hello loads...
+
+Then try to reproduce your crash. If you’re lucky, a crash will occur
+and you’ll be dropped back to the gdb prompt.
+If you are not so lucky to get a crash but instead get a freeze, you can
+still get gdb prompt by pressing CTRL-C in the terminal running gdb.
+At that point, you can run:
+
+    (gdb) bt
+
+You’ll then get a lot of output, which you can then copy & paste to
+a bug followup e-mail or other bug reporting tool.
+
+When you’re done with gdb, you can just run:
+
+    (gdb) quit
+
+If the problem seems to be in a major library such as libc6, xlibs, or
+libgtk2.0-0, you’ll want to install the appropriate -dbg package (e.g.
+libc6-dbg in the case of libc6) and then run the problematic program
+again under gdb.
+
+Often, you will see a backtrace where one or more of the top lines is in
+malloc() or g_malloc(). When this happens, chances are your backtrace
+isn’t very useful. The easiest way to find some useful information is
+to set the environment variable `MALLOC_CHECK_` to a value of 2. You can do this while running gdb by doing this:
+
+    $ MALLOC_CHECK_=2 gdb hello
+
+# Advanced gdb commands
+If the program you’re backtracing is multi-threaded, you might want to
+get a backtrace for all threads:
+
+    (gdb) thread apply all bt
+Another thing which is quite helpful to report is what variables were
+set locally at each point in the stack:
+
+    (gdb) bt full
+You might want to report the output of the combination of the preceding
+options:
+
+    (gdb) thread apply all bt full
+And if this is too much irrelevant output, you might want to keep only
+a few calls, such as the top 10:
+
+    (gdb) thread apply all bt full 10
+If you have a large backtrace, you can log gdb output to a file (the
+default is gdb.txt):
+
+    (gdb) set logging on
+To check you have debugging symbols in your binary:
+
+    $ gdb
+     (gdb) symbol-file /usr/bin/hello
+
+    # you should see something like this:
+     Reading symbols from /usr/bin/hello ... done
+     Using host libthread_db library
+    /lib/tls/i686/cmov/libthread_db.so.1".
+     (gdb)
+
+    # NB you should _not_ see
+     Reading symbols from /usr/bin/hello...(no debugging symbols
+    ound)...done
+
+# Debugging X Errors
+
+If a GTK program has received an X error; i.e. you see a message of the
+form:
+
+then you can try running the program with `--sync`, and break on the
+`gdk_x_error` function in order to obtain a backtrace, thus:
+
+    (gdb) break gdk_x_error
+    (gdb) run --sync
+
+# Debugging
+
+Start the program under control of gdb via a terminal (some programs run
+as root, so one would use sudo gdb instead of just gdb below):
+
+    gdb <program> 2>&1 | tee ~/gdb-<program>.txt
+    (gdb) handle SIG33 pass nostop noprint
+    (gdb) set pagination 0
+    (gdb) run <arguments, if any>
+The program will start. Perform any actions necessary to reproduce the
+crash. If the program hangs but doesn't crash you can press ctrl+c in
+gdb while the program is frozen and then continue with the next step.
+
+Retrieve a backtrace:
+
+    (gdb) backtrace full
+    (gdb) info registers
+    (gdb) x/16i $pc
+    (gdb) thread apply all backtrace
+    (gdb) quit
+
+Attach the complete output from GDB, contained in gdb-<program>.txt, in
+your bug report. You will find the file in your $HOME directory
+
+
+# Already running programs
+
+Find the process ID of <program>:
+
+    pidof <program>
+Start gdb (some programs run as root, so one would use sudo gdb instead
+of just gdb below):
+
+    gdb 2>&1 | tee gdb-<program>.txt
+    (gdb) handle SIG33 pass nostop noprint
+    (gdb) set pagination 0
+    (gdb) attach <PID>
+Continue the <program>:
+
+    (gdb) continue
+The program will continue running. Perform any actions necessary to
+reproduce the crash. If the program hangs but doesn't crash you can
+press ctrl+c in gdb while the program is frozen and then continue with
+the next step.
+
+Retrieve a backtrace:
+
+    (gdb) backtrace full
+    (gdb) info registers
+    (gdb) x/16i $pc
+    (gdb) thread apply all backtrace
+    (gdb) quit
+Attach the complete output from GDB, contained in gdb-<program>.txt, in
+your bug report.
+
+Note that you can also set logging to a file like this:
+
+    (gdb) set logging file gdb-<program>.txt
+    (gdb) set logging on
+
+
+# Core file
+Load the core file into the debugger
+
+    gdb -c <corefile> 2>&1 | tee gdb-<program>.txt
+Retrieve a backtrace of the crash:
+
+    (gdb) backtrace full
+    (gdb) info registers
+    (gdb) x/16i $pc
+    (gdb) thread apply all backtrace
+    (gdb) quit
+
+# backtrace.sh
+```
+
+#---------------------------------------------------------------------
+usage() {
+    cat<<EOF
+Usage: ${0} program_name [program_args]
+
+Trace a given program using gdb.
+
+EOF
+}
+
+log() {
+    echo "${*}" 1>&2
+}
+
+die() {
+    usage
+    log 'error:' ${*}'.'
+    exit 1
+}
+#---------------------------------------------------------------------
+test "x${*}" = "x" && die 'no process given'
+
+LOG="/tmp/gdb-`basename ${1}`.txt"
+log "outputting trace to '${LOG}'"
+
+exec gdb -batch-silent \
+    -ex 'set logging overwrite on' \
+    -ex "set logging file ${LOG}" \
+    -ex 'set logging on' \
+    -ex 'handle SIG33 pass nostop noprint' \
+    -ex 'set pagination 0' \
+    -ex 'run' \
+    -ex 'backtrace full' \
+    -ex 'info registers' \
+    -ex 'x/16i $pc' \
+    -ex 'thread apply all backtrace' \
+    -ex 'quit' \
+    --args ${*} \
+    < /dev/null>>>}
+```
+
+## Debug binaries with arguments
+
+```c
+#include<stdio.h>
+
+int main(int argc,char *argv[])
+{
+    if(1 >= argc)
+    {
+        printf("usage:hello name\n");
+        return 0;
+    }
+    printf("Hello World %s!\n",argv[1]);
+    return 0 ;
+}
+```
+
+    gcc -g -o hello hello.c
+
+You need to run with args, or set args for run.
+
+## Debug core dumps
+
+The binary with debugging symbols included should be identical to the one that generated the core dump file.
+
+    gdb /path/to/binary-with-symbols /path/to/core/dump/file
+
+Or
+
+    gdb -c /path/to/core/dump/file /path/to/binary-with-symbols
+
+### ulimit
+
+    $ ulimit -c
+    0
+
+    ulimit -c unlimied  #unlimited
+    ulimit -c 10        # maximum size in blocks, each block is 512 B
+
+## Debug running binaries
+
+Find the pid
+
+    ps -ef | grep process
+
+Or
+
+    pidof process
+
+    (gdb) attach PID
+
+
+## Trouble shooting
+
+### Could not attach to process. If your uid matches the uid of the target process, check the setting of /proc/sys/kernel/yama/ptrace_scope, or try again as the root user.
+
+```
+echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
+```
+
+* https://askubuntu.com/questions/41629/after-upgrade-gdb-wont-attach-to-process
+
+### ptrace: Operation not permitted.
+
+    Could not attach to process.  If your uid matches the uid of the target
+    process, check the setting of /proc/sys/kernel/yama/ptrace_scope, or try
+    again as the root user.  For more details, see /etc/sysctl.d/10-ptrace.conf
+    ptrace: Operation not permitted.
+
+
+Change
+
+    /etc/sysctl.d/10-ptrace.conf
+
+    kernel.yama.ptrace_scope = 1
+
+to
+
+    kernel.yama.ptrace_scope = 0
+
+## load pid
+
+    gdb PROG PID
+
+    gdb PROG --pid PID
+
+## For running binaries without debug info
+
+You need to build one binary using same code, then load the symbols using `file FILE` from that.
+
+    (gdb) file FILE
+    (gdb) attach XXXXX
 

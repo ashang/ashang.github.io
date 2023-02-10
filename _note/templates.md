@@ -292,7 +292,6 @@ For instance, you might declare:
 ```yaml
 params:
   CopyrightHTML: "Copyright &#xA9; 2013 John Doe. All Rights Reserved."
-  TwitterUser: "spf13"
   SidebarRecentLimit: 5
 ```
 
@@ -315,8 +314,7 @@ and skips the block if the variable is absent:
 ```
 {{with .Site.Params.TwitterUser}}<span class="twitter">
 <a href="https://twitter.com/{{.}}" rel="author">
-<img src="/images/twitter.png" width="48" height="48" title="Twitter: {{.}}"
- alt="Twitter"></a>
+</a>
 </span>{{end}}
 ```
 

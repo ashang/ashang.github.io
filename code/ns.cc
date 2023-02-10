@@ -4,7 +4,8 @@
 
 namespace my{
 	void foo(){
-	int myInt;
+		int myInt;
+		std::cout << "Calling  " << __func__ << std::endl;
 		std::cout << "foo() called in my ns." << std::endl;
 		std::cout << "uninitialized Int: " << myInt << std::endl;
 	}

@@ -1,6 +1,5 @@
 ---
 title: timesyncd
-layout: post
 tags: [timesyncd]
 date: 2022-12-19
 ---

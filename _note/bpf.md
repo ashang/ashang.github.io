@@ -1,6 +1,5 @@
 ---
 title: bpf
-layout: post
 tags: [bpf]
 date: 2022-12-19
 ---

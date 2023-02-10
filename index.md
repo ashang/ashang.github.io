@@ -1,18 +1,20 @@
 ---
-layout: default
-title: Home
 ---
 <main class="content fade-in-down delay-0_75s">
   <div class="inner">
-    {% include loop.html %}
     <div id="home">
-
-        <ul class="posts">
-          {%- for post in site.note reversed -%}
-            <li><span>{{ post.date | date_to_string }}</span> &raquo; <a href="{{ post.url | absolute_url }}">{{ post.title }}</a></li>
-          {% endfor %}
-        </ul>
-
+      {%- for note in site.note reversed -%}
+          <ul class="entry-box">
+              <li class="entry-item">
+                <time datetime="{{ note.date }}" class="entry-time">{{ note.date | date: "%Y-%m-%d" }}</time>
+                &raquo;
+                <a href="{{ note.url }}" rel="bookmark">
+                    {{ note.title }}
+                </a>
+                <del class="entry-line"></del>
+              </li>
+          </ul>
+      {% endfor %}
     </div>
   </div>
 </main>

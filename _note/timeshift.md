@@ -1,6 +1,5 @@
 ---
 title: timeshift
-layout: post
 tags: [timeshift]
 date: 2022-12-19
 ---

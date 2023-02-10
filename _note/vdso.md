@@ -1,6 +1,5 @@
 ---
 title: vdso
-layout: post
 tags: [vdso]
 date: 2022-12-19
 ---

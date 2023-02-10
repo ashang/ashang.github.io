@@ -1,0 +1,69 @@
+<header class="site-header">
+  <div class="wrapper">
+<!--
+    {% if page.url == "/" %}
+      <h1 class="site-title"><a class="logo-text" href="{{ site.baseurl }}/">{{site.title}}</a></h1>
+    {% else %}
+      <p class="site-title"><a class="logo-text" href="{{ site.baseurl }}/">{{site.title}}</a></p>
+    {% endif %}
+
+    <a href="{{ "/" | prepend: site.baseurl | replace: '//', '/' }}">
+      {% assign owner_first_name = site.owner | split: " " %}
+      <h1>{{ owner_first_name[0] | downcase }}@home:~$</h1>
+    </a>
+<a href="{{ "/archive" | prepend: site.baseurl | replace: '//', '/' }}"><h2 class="header-link">Archive</h2></a>
+<a href="{{ "/about" | prepend: site.baseurl | replace: '//', '/' }}"><h2 class="header-link">About</h2></a>
+<a href="{{ "/atom.xml" | prepend: site.baseurl | replace: '//', '/' }}"><h2 class="header-link">RSS</h2></a>
+
+    <nav class="site-nav">
+      <div class="trigger">
+        {% for p in site.pages %}
+          {% if p.title %}
+          <a class="page-link" href="{{ p.url | prepend:
+            site.baseurl }}">{{ p.title }}</a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </nav>
+  </div>
+-->
+    <nav class="site-navigation">
+      <div class="site-navigation-wrap">
+        <a id="a-title" href="{{ '/' | relative_url }}">
+          <h1>{{ site.title | default: site.github.repository_name }}</h1>
+        </a>
+
+        {% if site.description and site.description != "" and page.url == "/" %}
+        <div class="site-description fadeInDown delay_05s">
+              {{ site.description | default: site.github.project_tagline }}
+        </div><!-- .site-description -->
+        {% endif %}
+        <!--
+        <h2 class="screen-reader-text">Main navigation</h2>
+        -->
+        <ul class="menu">
+        <!--
+          {% for item in site.navigation %}
+            {% assign current = nil %}
+            {% if page.url == item.url %}
+              {% assign current = 'nav-current' %}
+            {% endif %}
+            <span class="menu-item {{ current }}">
+              <a class="{{ current }}" href="{{ item.url }}">{{ item.text }}</a>
+            </span>
+          {% endfor %}
+        -->
+        </ul><!-- .menu -->
+
+    <!--
+        <section id="downloads">
+          {% if site.show_downloads %}
+            <a href="{{ site.github.zip_url }}" class="btn">Download as .zip</a>
+            <a href="{{ site.github.tar_url }}" class="btn">Download as .tar.gz</a>
+          {% endif %}
+          <a href="{{ site.github.repository_url }}" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+    -->
+      </div><!-- .site-navigation-wrap -->
+    </nav><!-- .site-navigation -->
+</header >

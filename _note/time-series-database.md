@@ -1,5 +1,4 @@
 ---
-layout: post
 title: tsdb
 tags: [tsdb, db, database]
 date: 2020-03-09

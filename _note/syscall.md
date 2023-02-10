@@ -1,6 +1,5 @@
 ---
 title: syscall
-layout: post
 tags: [syscall]
 date: 2022-12-19
 ---
