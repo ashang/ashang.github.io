@@ -9,10 +9,6 @@ layout: null
     <description>{{ site.description | xml_escape }}</description>
     <atom:link href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}" rel="self" type="application/rss+xml"/>
 
-    <link>{{ site.url }}{{ site.baseurl }}/</link>
-    <pubDate>{{ site.time | date_to_rfc822 }}</pubDate>
-    <lastBuildDate>{{ site.time | date_to_rfc822 }}</lastBuildDate>
-
     {% for post in site.note limit:42 %}
       <item>
         <title>{{ post.title | xml_escape }}</title>
