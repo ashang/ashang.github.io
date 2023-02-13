@@ -1,5 +1,19 @@
 # Welcome to Jekyll!
+# If you change this file, please restart the server process.
 #
+# If you need help with YAML syntax, here are some quick references for you:
+# https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml
+# https://learnxinyminutes.com/docs/yaml/
+title: in love we trust
+description: >- # this means to ignore newlines
+ things I worked through to make sure I understand.
+
+#baseurl             : "" # does not include hostname
+##baseurl: "" # the subpath of your site, e.g. /blog
+url_base: "/yarn" # the subpath of your site, e.g. /blog
+##url: "/" # the base hostname & protocol for your site
+#url:
+
 # For technical reasons, this file is *NOT* reloaded automatically when you use
 # 'jekyll serve'. If you change this file, please restart the server process.
 
@@ -28,10 +42,20 @@ keep_files: [".git", ".svn", "wiki-images", "images", "downloads"]
 # Site settings
 email: aaron@ashang.org
 author: aaron
+# Author settings
+author:
+  name: Torun
+  bio: Computer Engineer @pardinus <br> Founder @zaqa <br> Open Source /#linux
+  github: onepase # github username
+  instagram: onepase # instagram username
+  youtube: https://www.youtube.com/channel/UCMmAto-wxBootXN91AzBiDg # youtube username
+  linkedin: hakantorun # linkedin username
+  email: your-email@email.com # email adress
 
-heading: H
-subheading: "S"
-banner: "B"
+# Site settings
+site: Ephesus
+lang: en-US
+
 title:
 title:          Tale <ruby>sim<rt>ops</rt></ruby> notes
 
@@ -65,11 +89,12 @@ navigation:
 #- text: Archive
 #  url: /archive/
 
-# Social links in the site footer
-github_username: "username"
-medium_username: "@username"
-#codepen_username: "username"
-#linkedin_username: "username"
+## Outputting
+#permalink           : date
+#permalink: /:slug/
+## pages and collections (excluding posts and drafts) don’t have time
+## and categories (for pages, the above :title is equivalent to :basename),
+## these aspects of the permalink are ignored for the output.
 
 #permalink_defaults:
 #[permalinks]
@@ -94,32 +119,12 @@ permalink: /:title/
 #   "Copyright © 2017-2021 Foobar"
 # copyright: "Unpublished Work (cleft) 2017-{currentYear} {author}"
 
-description: >- # this means to ignore newlines until "baseurl:"
-  edit this line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
-# The subpath of your site, if you want to host your path on a subpath like on GitHub Pages. e.g. /blog
-baseurl: "" # the subpath of your site, e.g. /weblog
-
-url: "" # the base hostname & protocol for your site, e.g. https://example.com
-#url:            "https://chesterhow.github.io"
-favicon: "" # the favicon for your site
-
-# refer to https://shopify.github.io/liquid/filters/date/ if you want to customize this
-date_format: "%b %d, %Y"
-
 # If you want more debug log, you can set true
 # debug: false
-
-# If you don't want transparent header, you can set false
-# header_transparent: true
-# header_transparent: true
 
 # If you want to change the content width, you can set to another value
 # content_width: "920px"
 # content_width: "920px"
-
-# Google analytics
-# google_analytics: [Tracking ID]
 
 # If you want to generate website sitemap, you can set true
 # sitemap: false
@@ -240,7 +245,15 @@ date_format: "%b %d, %Y"
 #   follow_site_theme: true
 
 # Build settings
-#markdown: kramdown
+## Conversion
+#markdown            : kramdown
+#incremental         : false
+#quiet               : false
+#verbose             : false
+#pygments: true
+lsi:  false # don't produce an index for related posts
+safe: false # disables plugins
+
 kramdown:
   input: GFM
   auto_ids: false
@@ -260,30 +273,97 @@ mathjax: true
 #highlighter: none
 #quiet: false
 
-#pygments: true
-lsi:  false # don't produce an index for related posts
-safe: false # disables plugins
-
 
 # Gems
+#whitelist           : []
+#plugins             : []
 plugins:
-  #- jekyll-feed
-  #- jekyll-seo-tag
+  - jekyll-feed                 # automatically generate an Atom feed at /feed.xml
+  #- jekyll-html-pipeline
+  #- jekyll-relative-links
+  - jekyll-redirect-from
+  - jekyll-seo-tag
   - jekyll-sitemap
   - jemoji # allow emoji in your post
+  #- rouge
 
-## Disqus (Set to your disqus id)
-#disqus:         jekyll-tale
-
-# Page default value
-# defaults:
-#   home:
-#     heading: "Your awesome heading"
-#     subheading: "Your awesome subheading"
-#     banner: "Your image url"
+relative_links:
+  enabled:     true
+  collections: false
 
 #defaults            : []
 defaults:
+  - scope:
+      path: '' # an empty string here means all files in the project
+    values:
+      layout: post
+      #layout: page
+      # types available are pages, posts, or any collection, in plural form
+      type: posts
+      # The 'post' type has become 'posts'.
+      category: "journal"
+      image: "/img/jekyll-og.png"
+      #permalink: /:title/
+  - scope:
+      path: _note
+      type: "notes"
+    values:
+      layout: page
+      category: "ramblings"
+
+  -
+    scope:
+      path: "projects"
+      type: "pages" # previously `page`
+    values:
+      layout: "project" # overrides previous default layout
+      author: "Mr. Poole"
+  - scope:
+      path: "img"
+    values:
+      image: true
+
+#data_dir: /docs/_data
+#collections_dir: docs
+  - scope:
+      path: _docs
+      type: docs
+    values:
+      layout: article
+      sharing: true
+      category: post
+      aside:
+        toc: true
+      show_edit_on_github: true
+      show_subscribe: true
+      pageview: true
+      lightbox: true
+  ## docs
+  - scope:
+      path: "_docs/en"
+    values:
+      layout: article
+      nav_key: docs
+      sidebar:
+        nav: docs-en
+      aside:
+        toc: true
+      show_edit_on_github: true
+      show_date: false
+      lightbox: true
+  - scope:
+      path: "_docs/zh"
+    values:
+      layout: article
+      nav_key: docs
+      sidebar:
+        nav: docs-zh
+      aside:
+        toc: true
+      lang: zh
+      show_edit_on_github: true
+      show_date: false
+      lightbox: true
   #- scope:
       #path: '' # an empty string here means all files in the project
       #type: "notes" # a collection in your site, in plural form
@@ -298,14 +378,26 @@ defaults:
       type: pages
   -
     scope:
+      path: ""
+    values:
+      layout: "default"
+  -
+    scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "page"
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+  -
+    scope:
       path: "images"
     values:
       image: true
-  - scope:
-      path: "_notes"
-      type: "notes" # a collection in your site, in plural form
-    values:
-      layout: post
   - scope:
       path: "_note"
       type: "notes" # a collection in your site, in plural form
@@ -326,29 +418,55 @@ collections:
     permalink: /:collection/:title/
     layout: post
     output: true
+  posts:
+    output: true
+    permalink: /:slug
+    #permalink: /:name
+    #permalink: /:collection/:path/
+    #output: true
+
 
 highlight          : rouge
 #include            : ['.htaccess']
 include:
   - _pages
 
-# Excludes
-#exclude: [ Gemfile, Gemfile.lock ]
-exclude:
-    - Gemfile
-    - Gemfile.lock
-    - LICENSE
-    - INSTALL.md
-    - README.md
-    - .jekyll-cache/
-    - .sass-cache/
-    - gemfiles/
-    - node_modules/
-    - vendor/
+## Exclude from processing.
+## exclude: [DIR, FILE, ...]
+# Any item listed under the `exclude:` key here will be automatically added to
+# the internal "default list".
+#
+# Excluded items can be processed by explicitly listing the directories or
+# their entries' file path in the `include:` list.
+
+# The following items will not be processed, by default. Create a custom list
+# to override the default setting.
+#exclude             : ["Gemfile", "Gemfile.lock", "node_modules", "vendor/bundle/", "vendor/cache/", "vendor/gems/", "vendor/ruby/"]
 #   - vendor/bundle/
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+exclude:
+  - CHANGELOG.md
+  - HOW_TO_RELEASE.md
+  # - /screenshots
+  #- /index.html
+  #- README-*.md
+  #- README.md
+  #- readme.md
+  - gulpfile.js
+  - package-lock.json
+  - package.json
+  - /test
+  - /vendor
+  - .obsidian
+  - CONTRIBUTING.md
+  - gemfiles/
+  - LICENSE
+  - LICENSE.md
+  - .jekyll-cache/
+  - .sass-cache/
+  - vendor/
 
 # Used › default.html front-matter and compress.html
 # Options › http://jch.penibelst.de
@@ -366,6 +484,7 @@ compress_html:
 # alexa_verify_id:           ''
 
 favicon: "" # the favicon for your site
+favicon: "img/t.svg" # name+extension of favicon (which must be put on the root folder)
 # Favicon-Crap: Favicons, Chrome, Android & Apple Touch Buttons
 # More information » https://mathiasbynens.be/notes/touch-icons
 favicon-32x32:                          'favicon-32x32.png'
@@ -390,24 +509,6 @@ og_type:                            'website'
 socialmedia:
     github: ashang
 
-# https://www.google.com/analytics/
-# google_analytics: [Tracking ID]
-# used in _includes/footer_scripts
-# google_analytics_tracking_id:
-# Disable when not in production
-google_analytics_tracking_id: false
-
-# https://www.tawk.to/knowledgebase/
-#
-#  tawk.to is a free live chat app that lets you monitor and chat
-#  with visitors on your website or from a free customizable page
-#
-#  To load the script add tawkto: true in front matter of each page
-#
-# used in _includes/footer_scripts
-# tawkto_embed_uri:
-
-
 # _config_dev.yml is only needed for development.
 # start both config-files, overwriting
 # the first one with the development variables needed.
@@ -429,3 +530,298 @@ google_analytics_tracking_id: false
  # </noscript>
 
 algolia_api_key: "0a916ab198bd93d031aa70611271e42e"
+
+## Serving
+#detach              : false
+#port                : 4000
+#host                : 127.0.0.1
+#show_dir_listing    : false
+
+show_description: false
+
+#source: DIR
+
+disable_disk_cache: true
+
+
+#timezone            : null
+#lang: # the language of your site, default as "en"
+#lang: "en"
+#timezone: # see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones for the available values
+timezone: America/Los_Angeles
+
+# This can be in front matter of each markdown file
+#mermaid: true
+
+navs:
+  -
+    href: /
+    label: DEN
+
+  -
+    href: /note/
+    label: DROP
+
+  -
+    href: /about/
+    label: AMA
+
+#rss: rss
+#rss: "feed.xml"
+rss: "/feed.xml"
+####
+#subscribe_rss: /feed.xml
+####
+
+# <p class="rss-subscribe">subscribe <a href="{{ '/feed.xml' | relative_url }}">via RSS</a></p>
+
+#feed:
+  #categories:
+  #- release
+
+# goat_counter: "yoursitename" # put your GoatCounter name if you want to use GoatCounter analytics
+
+appearance: "dark" # can be "light", "dark" or "auto"
+#back_home_text: "$title" # customize text for homepage link in post layout
+
+########
+# refer to http://shopify.github.io/liquid/filters/date/ if you want to customize this
+thepro:
+  date_format: "%Y%m%d"
+date_format: "ordinal"
+########
+date_format: "%Y%m%d" # customize how date is formatted
+##date_format: "%b %d, %Y"
+
+algolia:
+  application_id: 8A9B3KASX2
+  index_name:     jekyll # You can replace that with whatever name you want
+  search_only_api_key: d1b7336f6715c79e548902a41754aa23
+#_includes/algolia.html
+
+#encoding            : "utf-8"
+#markdown_ext        : "markdown,mkdown,mkdn,mkd,md"
+#strict_front_matter : false
+strict_front_matter: true
+
+
+# Filtering Content
+show_drafts         : null
+limit_posts         : 0
+#future              : false
+future: true
+#unpublished         : false
+
+liquid:
+  ##error_mode        : lax
+  #strict_filters    : false
+  #strict_variables  : false
+##Do note that while error_mode configures Liquid’s parser, the strict_variables and strict_filters options configure Liquid’s renderer and are consequently orthogonal.
+  #error_mode        : warn
+  error_mode        : warn
+  #error_mode: strict
+########
+  #strict_variables: true
+########
+  strict_filters: true
+#######
+#render_with_liquid: "false"
+#######
+
+
+## Markdown Processors
+kramdown:
+  #auto_ids          : true
+  #entity_output     : as_char
+  #toc_levels        : [1, 2, 3, 4, 5, 6]
+  #smart_quotes      : lsquo,rsquo,ldquo,rdquo
+  #input             : GFM
+  #hard_wrap         : false
+  #footnote_nr       : 1
+  #header_offset: 2
+  #show_warnings     : false
+  #syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    default_lang: plaintext
+
+  #syntax_highlighter: coderay
+  #syntax_highlighter_opts:
+    #line_numbers: table
+    #bold_every: 5
+
+
+text_skin: default # "default" (default), "dark", "forest", "ocean", "chocolate", "orange"
+highlight_theme: default # "default" (default), "tomorrow", "tomorrow-night", "tomorrow-night-eighties", "tomorrow-night-blue", "tomorrow-night-bright"
+
+
+## => Author and Social
+##############################
+author:
+  type      : organization # "person" (default), "organization"
+  url       :
+  avatar    : /img/apple-touch-icon.png
+  bio: >
+    Tefor development.
+  email     : 1
+  telegram  : 1
+  medium    : 1
+  linkedin  : 1
+  github    : ashang
+  npm       : 1
+#####name: Aaron Shang
+#email: Kea Wot <aaron@ashang.org>
+
+# Social
+medium_username: "@username"
+#codepen_username: "username"
+#linkedin_username: "username"
+github_username: ashang
+
+## => GitHub Repository (if the site is hosted by GitHub)
+##############################
+#repository:
+#repository_tree: main
+
+
+## => Paths
+##############################
+paths:
+  root    : # title link url, "/" (default)
+  home    : /test/ # home layout url, "/" (default)
+  archive : # "/archive.html" (default)
+  rss     : # "/feed.xml" (default)
+
+
+## license
+license: CC-BY-4.0 # "CC-BY-4.0", "CC-BY-SA-4.0", "CC-BY-NC-4.0", "CC-BY-ND-4.0"
+
+
+## TOC
+toc:
+  selectors: "h1,h2,h3,h4,h5,h6" # "h1,h2,h3" (default)
+
+
+## => Markdown Enhancements
+##############################
+## Mathjax
+mathjax: true # false (default), true
+mathjax_autoNumber: true # false (default), true
+
+## Mermaid
+mermaid: true # false (default), true
+
+## Chart
+chart: true # false (default), true
+
+
+## => Sources
+##############################
+sources: unpkg # bootcdn (default), unpkg
+
+
+## => Sharing
+##############################
+sharing:
+  provider: addtoany # false (default), "addtoany", "addthis", "custom"
+
+  ## AddThis
+  addthis:
+    id: # AddThis pubid, e.g. ra-5xxxxxxxxxxx
+
+
+## => Comments
+##############################
+comments:
+  provider: gitalk # false (default), "disqus", "gitalk", "valine", "custom"
+  # provider: valine
+
+  ## Disqus
+  disqus:
+    shortname: # the Disqus shortname for the site
+
+  ## Gitalk
+  # please refer to https://github.com/gitalk/gitalk for more info.
+  gitalk:
+    clientID    : 143666b578a416f82175
+    clientSecret: 1d1c0604a1a4bff9b59ab7f56724dc0e8b837775
+    repository  : gitalk-demo
+    owner       : ashang
+    #admin: # GitHub repo owner and collaborators, only these guys can initialize GitHub issues, IT IS A LIST.
+    admin:
+      - ashang
+
+  ## Valine
+  # please refer to https://valine.js.org/en/ for more info.
+  valine:
+    app_id      : uAG3OhdcH8H4fxSqXLyBljA7-gzGzoHsz
+    app_key     : Mzf5m9skSwYVWVXhGiYMNyXs
+    placeholder : # Prompt information
+    visitor     : # false (default)
+    meta        : # "[nick, mail, link]" (default) nickname, E-mail, Personal-site
+
+## => Pageview
+##############################
+pageview:
+  provider: leancloud # false (default), "leancloud", "custom"
+
+  ## Leancloud
+  leancloud:
+    app_id    : uAG3OhdcH8H4fxSqXLyBljA7-gzGzoHsz
+    app_key   : Mzf5m9skSwYVWVXhGiYMNyXs
+    app_class : TeXtDemo
+
+
+## => Search
+##############################
+search:
+  provider: default # "default" (default), false, "google", "custom"
+
+  ## Google Custom Search Engine
+  google:
+    # custom_search_engine_id: 017643444788069204610:4gvhea_mvga # Google Custom Search Engine ID
+
+
+## => Analytics
+##############################
+analytics:
+  provider: google # false (default), "google", "custom"
+
+  ## Google Analytics
+  google:
+    tracking_id : UA-71907556-1
+    anonymize_ip: false # Anonymize IP tracking for Analytics
+
+# https://www.google.com/analytics/
+# google_analytics: [Tracking ID]
+# used in _includes/footer_scripts
+
+# https://www.tawk.to/knowledgebase/
+#
+#  tawk.to is a free live chat app that lets you monitor and chat
+#  with visitors on your website or from a free customizable page
+#
+#  To load the script add tawkto: true in front matter of each page
+#
+# used in _includes/footer_scripts
+# tawkto_embed_uri:
+
+# google_analytics_id: #"UA-NNNNNNNN-N"
+#google_verify:      XXX # Put your Google Verification here
+#discus-identifier:  XXX
+
+#google_site_verification: onQcXpAvtHBrUI5LlroHNE_FP0b2qvFyPq7VZw36iEY
+#cloudinary_url: https://res.cloudinary.com/jekyll/image/upload/f_auto,q_auto,w_404
+
+
+
+
+
+description: >- # this means to ignore newlines until "baseurl:"
+  edit this line in _config.yml. It will appear in your document head meta (for
+  Google search results) and in your feed.xml site description.
+# The subpath of your site, if you want to host your path on a subpath like on GitHub Pages. e.g. /blog
+baseurl: "" # the subpath of your site, e.g. /weblog
+
+# URL settings
+url: "" # the base hostname & protocol for your site, e.g. https://example.com
+#url:            "https://chesterhow.github.io"

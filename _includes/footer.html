@@ -1,11 +1,4 @@
-
 <footer>
-  <span>
-    CC-BY-SA 4.0 &copy; <time datetime="{{ site.time }}">{{ site.time | date: '%Y' }}</time> {{ site.author }}.
-
-Email questions, comments, and corrections to hi@ashang.org
-
-  </span>
 
   <div class="main">
     {%- assign _site_author = site.author -%}
@@ -34,9 +27,12 @@ Email questions, comments, and corrections to hi@ashang.org
       <div>
         {%- include snippets/get-locale-string.html key='COPYRIGHT_DATES' -%}
         {%- assign _locale_copyright_dates = __return -%}
-<!--
-        © {{ site.title }} {{ _locale_copyright_dates }},
--->
+
+    CC-BY-SA 4.0 &copy; <time datetime="{{ site.time }}">{{ site.time | date: '%Y' }}</time> {{ site.author }}.
+|
+    Email questions, comments, and corrections to hi@ashang.org
+|
+        {{ _locale_copyright_dates }},
       </div>
     </div>
   </div>

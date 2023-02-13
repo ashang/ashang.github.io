@@ -27,11 +27,12 @@ ruby RUBY_VERSION
 
 # Feed had been built in; From 4.4??
 group :jekyll_plugins do
+  gem 'jekyll-babel'
   gem "jekyll-feed", "~> 0.12"
+  #gem 'jekyll-relative-links'
   gem 'jekyll-seo-tag'
   gem 'jekyll-sitemap'
   gem 'jemoji'
-  gem 'jekyll-babel'
 end
 
 # kramdown v2 ships without the gfm parser by default. If you're using

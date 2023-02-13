@@ -3,7 +3,6 @@ layout: default
 title: "Tags"
 permalink: /tags/
 ---
-
 <div class="tags">
   <div class="tags-header">
     <h2 class="tags-header-title">{{ page.title }}</h2>
@@ -11,7 +10,7 @@ permalink: /tags/
   </div>
   <div class="tags-clouds">
     {% for tag in site.tags %}
-    <a href="#{{ tag[0] }}">{{ tag[0] }}</a>
+      <a href="#{{ tag[0] }}">{{ tag[0] }}</a>
     {% endfor %}
   </div>
   {% for tag in site.tags %}
@@ -50,4 +49,28 @@ permalink: /tags/
     {% endfor %}
   </div>
   {% endfor %}
+</div>
+
+{% capture site_tags %}{% for tag in site.tags %}{{ tag | first }}{% unless forloop.last %},{% endunless %}{% endfor %}{% endcapture %}
+{% assign tag_words = site_tags | split:',' | sort %}
+
+<h1>Tags</h1>
+<div class="tags">
+  <div class="entry-container">
+    {% for item in (0..site.tags.size) %}{% unless forloop.last %}
+      {% capture this_word %}{{ tag_words[item] | strip_newlines }}{% endcapture %}
+
+      <a href="tags/#{{ this_word | cgi_escape }}" class="tag">{{ this_word }} <span>({{ site.tags[this_word].size }})</span></a>
+
+      <h2 id="{{ this_word | cgi_escape }}">{{ this_word }}</h2>
+      {% for post in site.tags[this_word] %}
+        {% if post.title != null %}
+          <div class="entry-list">
+            <a class="entry-title" href="{{ site.url }}{{ post.url }}">{{ post.title }}</a>
+            <time datetime="{{ post.date | date_to_xmlschema }}" class="entry-time">{{ post.date | date: "%d.%m.%Y" }}</time>
+          </div>
+        {% endif %}
+      {% endfor %}
+    {% endunless %}{% endfor %}
+  </div>
 </div>

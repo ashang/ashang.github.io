@@ -1,9 +1,7 @@
 ---
-layout: post
 title: "C++ STL extras - random_sample_n"
 date: 2003-09-13 22:20
 comments: true
-categories: 
 ---
 
 Working on some code for my research tonight, I wasted a lot of time looking for some information on a particlar STL function.  Since I couldn't find the answers elsewhere, I am posting a quick explanation/solution here, to hopefully save someone else the trouble.
