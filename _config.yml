@@ -256,17 +256,19 @@ sass:
 ## pages and collections (excluding posts and drafts) don’t have time
 ## and categories (for pages, the above :title is equivalent to :basename),
 ## these aspects of the permalink are ignored for the output.
-
+    #permalink: /:collection/:path/
+      #permalink: /:collection/:title/
+    #permalink: /:name
 #permalink_defaults:
 #[permalinks]
 #	page: "/:title/"
 #	about: "/:filename/"
-#permalink: /:slug/
 ## pages and collections (excluding posts and drafts) don’t have time
 ## and categories (for pages, the above :title is equivalent to :basename),
 ## these aspects of the permalink are ignored for the output.
 permalink: /:title/
-#permalink: pretty  # Permalink style (/YYYY/MM/DD/page-name/)
+permalink: /:collection/:title/
+
 #ilwt/_config.yml:pretty_urls:
 #hexo-new/_config.yml:pretty_urls:
 #content/_config.yml:url-pretty: "MyWebsite.com"
@@ -513,14 +515,10 @@ collections:
     #for collections, :collection is part of path
     # It's a must to explicitly set; the global setting cannot override the default
     #permalink: /:collection/:title/
-    permalink: /:collection/:title/
     layout: post
     output: true
   posts:
     output: true
-    permalink: /:slug
-    #permalink: /:name
-    #permalink: /:collection/:path/
     #output: true
 
 

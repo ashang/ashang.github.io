@@ -1,0 +1,47 @@
+---
+layout: default
+title: Archive
+---
+<main class="content fade-in-down delay-0_75s">
+  <div class="inner">
+    <article class="post">
+      <div class="entry-box">
+        <header class="entry-header">
+          <h1 class="entry-title">{{page.title}}</h1>
+        </header><!-- .entry-header -->
+        <div class="entry-content">
+          <div class="archive-tags-list">
+            {% capture site_tags %}{% for tag in site.tags %}{{ tag | first }}{% unless forloop.last %},{% endunless %}{% endfor %}{% endcapture %}
+            {% assign sortedTags = site_tags | split:',' | sort %}
+            {% for tag in sortedTags %}
+              <a href="#{{ tag | cgi_escape }}">{{ tag }} </a>
+            {% endfor %}
+          </div><!-- .archive-tags-list -->
+          {% for tag in sortedTags %}
+            <h2 id="{{ tag | cgi_escape }}">{{ tag }}</h2>
+            <ul class="archive-posts-list">
+              {% for post in site.tags[tag] %}
+                <li><a href="{{ site.baseurl }}{{ post.url }}" rel="bookmark">{{ post.title }}</a> <span class="archive-meta"> — <time class="published" datetime="{{ post.date | date: "%Y-%m-%d" }}">{{ post.date | date: "%B %-d, %Y" }}</time></span></li>
+              {% endfor %}
+            </ul>
+            <p><a href="#page" class="archive-top-link">Return to top <i class="fa fa-angle-up" aria-hidden="true"></i></a></p>
+          {% endfor %}
+        </div><!-- .entry-content -->
+      </div><!-- .entry-box -->
+    </article><!-- .post -->
+  </div><!-- .inner -->
+</main><!-- .content -->
+
+# Archive
+
+Browse all posts by month and year.
+
+{% assign postsByYearMonth = site.posts | group_by_exp: "post", "post.date | date: '%B %Y'" %}
+{% for yearMonth in postsByYearMonth %}
+  <h2>{{ yearMonth.name }}</h2>
+  <ul>
+    {% for post in yearMonth.items %}
+      <li><a href="{{ post.url }}">{{ post.title }}</a></li>
+    {% endfor %}
+  </ul>
+{% endfor %}
