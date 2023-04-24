@@ -4,6 +4,11 @@ Page_Order: 8
 date: 2018-01-29T00:52:12+08:00
 ---
 
+禁用服务
+
+# systemctl mask --now rpc-statd.service rpcbind.service rpcbind.socket
+
+
 
 $ sudo systemctl -q restart logrotate.service && df
 

@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=GNOME Flashback (Xfwm4)
-Comment=This session logs you into GNOME Flashback with Xfwm4
-Exec=/usr/libexec/gnome-flashback-xfwm4
-TryExec=xfwm4
-Type=Application
-DesktopNames=GNOME-Flashback;GNOME;
-X-Ubuntu-Gettext-Domain=gnome-flashback

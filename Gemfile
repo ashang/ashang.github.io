@@ -33,7 +33,7 @@ group :jekyll_plugins do
   #- jekyll-html-pipeline
   #- jekyll-paginate
   #gem 'jekyll-relative-links'
-  #- jekyll-redirect-from
+  gem 'jekyll-redirect-from'
   gem 'jekyll-seo-tag'
   gem 'jekyll-sitemap'
   gem 'jemoji'

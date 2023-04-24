@@ -162,7 +162,7 @@ plugins:
   #- jekyll-github-metadata
   #- jekyll-html-pipeline
 # the docs version that is shown by default when clicking on docs links on the site
-  #- jekyll-redirect-from
+  - jekyll-redirect-from
   #- jekyll-relative-links
   - jekyll-seo-tag
   - jekyll-sitemap

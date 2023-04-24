@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=GNOME Flashback (Openbox)
-Comment=This session logs you into GNOME Flashback with Openbox
-Exec=/usr/libexec/gnome-flashback-openbox
-TryExec=openbox
-Type=Application
-DesktopNames=GNOME-Flashback;GNOME;
-X-Ubuntu-Gettext-Domain=gnome-flashback
