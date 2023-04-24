@@ -32,7 +32,7 @@ group :jekyll_plugins do
   gem 'jekyll-feed'                 # automatically generate an Atom feed at /feed.xml
   #- jekyll-html-pipeline
   #- jekyll-paginate
-  #gem 'jekyll-relative-links'
+  gem 'jekyll-relative-links'
   gem 'jekyll-redirect-from'
   gem 'jekyll-seo-tag'
   gem 'jekyll-sitemap'

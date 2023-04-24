@@ -163,7 +163,7 @@ plugins:
   #- jekyll-html-pipeline
 # the docs version that is shown by default when clicking on docs links on the site
   #- jekyll-redirect-from
-  #- jekyll-relative-links
+  - jekyll-relative-links
   - jekyll-seo-tag
   - jekyll-sitemap
   - jemoji # allow emoji in your post
