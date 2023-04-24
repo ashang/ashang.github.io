@@ -28,11 +28,6 @@ author:
 site: Ephesus
 lang: en-US
 
-title:
-title:          Tale <ruby>sim<rt>ops</rt></ruby> notes
-
-# Below the site title
-tagline: Tales
 
 # Site logo
 logo:
@@ -158,20 +153,23 @@ kramdown:
 text_skin: default # "default" (default), "dark", "forest", "ocean", "chocolate", "orange"
 highlight_theme: default # "default" (default), "tomorrow", "tomorrow-night", "tomorrow-night-eighties", "tomorrow-night-blue", "tomorrow-night-bright"
 
-
 # Gems
+#whitelist           : []
+#plugins             : []
 plugins:
-  #- jekyll-feed
-  #- jekyll-seo-tag
+  - jekyll-archives
+  - jekyll-feed                 # automatically generate an Atom feed at /feed.xml
+  #- jekyll-github-metadata
+  #- jekyll-html-pipeline
+# the docs version that is shown by default when clicking on docs links on the site
+  #- jekyll-redirect-from
+  #- jekyll-relative-links
+  - jekyll-seo-tag
   - jekyll-sitemap
   - jemoji # allow emoji in your post
-    #- jekyll-github-metadata
-    #- jekyll-github-metadata
-    #- jekyll-github-metadata
-    #- jekyll-github-metadata
-    #- jekyll-html-pipeline
-    #- rouge
+  #- rouge
 
+default_linked_docs_version: latest
 
 # Used › default.html front-matter and compress.html
 # Options › http://jch.penibelst.de
@@ -189,7 +187,9 @@ compress_html:
 #  - glowfish
 #  - legacy
 #  - yule
-color_scheme: simplicity
+#####
+#color_scheme: simplicity
+#####
 
 #   font combinations:
 #   import is necessary to import the font from google
@@ -229,22 +229,10 @@ modular_scale: modular_scale_1em
 
 show_description: false
 
-## Gems
-## Plugins
-#whitelist           : []
-#plugins             : []
-plugins:
-  - jemoji # allow emoji in your post
-  - jekyll-feed                 # automatically generate an Atom feed at /feed.xml
-  - jekyll-sitemap
-  - jekyll-seo-tag
-  #- jekyll-redirect-from
-  #- jekyll-github-metadata
-  #- rouge
-  #- jekyll-html-pipeline
+relative_links:
+  enabled:     true
+  collections: false
 
-# the docs version that is shown by default when clicking on docs links on the site
-default_linked_docs_version: latest
 
 # Assets
 sass:
@@ -401,24 +389,6 @@ language: en
 #  min_height: "38vh"
 #  heading_style: "font-size: 4.25em; font-weight: bold; text-decoration: underline"
 #  subheading_style: "color: gold"
-
-
-# Gems
-#whitelist           : []
-#plugins             : []
-plugins:
-  - jekyll-feed                 # automatically generate an Atom feed at /feed.xml
-  #- jekyll-html-pipeline
-  #- jekyll-relative-links
-  - jekyll-redirect-from
-  - jekyll-seo-tag
-  - jekyll-sitemap
-  - jemoji # allow emoji in your post
-  #- rouge
-
-relative_links:
-  enabled:     true
-  collections: false
 
 #defaults            : []
 defaults:
@@ -758,7 +728,7 @@ author:
   linkedin  : 1
   github    : ashang
   npm       : 1
-#####name: Aaron Shang
+  name: Aaron Shang
 #email: Kea Wot <aaron@ashang.org>
 
 
@@ -1039,7 +1009,6 @@ analytics:
 # https://www.google.com/analytics/
 # google_analytics: [Tracking ID]
 
-
 # https://www.tawk.to/knowledgebase/
 #
 #  tawk.to is a free live chat app that lets you monitor and chat
@@ -1067,3 +1036,22 @@ analytics:
 # google_analytics_id: #"UA-NNNNNNNN-N"
 #google_verify:      XXX # Put your Google Verification here
 #discus-identifier:  XXX
+
+jekyll-archives:
+  enabled:
+    - tags
+  layout: archive
+  permalinks:
+    tag: /tags/:name/
+#    year: '/:year/'
+# Note: trailing slashes are required to create the archive as an index.html file of a directory.
+
+# Defaults
+#  enabled: []
+#  layout: archive
+#  permalinks:
+#    year: '/:year/'
+#    month: '/:year/:month/'
+#    day: '/:year/:month/:day/'
+#    tag: '/tag/:name/'
+#    category: '/category/:name/'

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=GNOME Flashback (I3)
+Comment=This session logs you into GNOME Flashback with I3
+Exec=/usr/libexec/gnome-flashback-i3
+TryExec=i3
+Type=Application
+DesktopNames=GNOME-Flashback;GNOME;
+X-Ubuntu-Gettext-Domain=gnome-flashback

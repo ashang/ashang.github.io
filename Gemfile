@@ -27,12 +27,17 @@ ruby RUBY_VERSION
 
 # Feed had been built in; From 4.4??
 group :jekyll_plugins do
+  gem 'jekyll-archives'
   gem 'jekyll-babel'
-  gem "jekyll-feed", "~> 0.12"
+  gem 'jekyll-feed'                 # automatically generate an Atom feed at /feed.xml
+  #- jekyll-html-pipeline
+  #- jekyll-paginate
   #gem 'jekyll-relative-links'
+  #- jekyll-redirect-from
   gem 'jekyll-seo-tag'
   gem 'jekyll-sitemap'
   gem 'jemoji'
+  gem "just-the-docs"
 end
 
 # kramdown v2 ships without the gfm parser by default. If you're using

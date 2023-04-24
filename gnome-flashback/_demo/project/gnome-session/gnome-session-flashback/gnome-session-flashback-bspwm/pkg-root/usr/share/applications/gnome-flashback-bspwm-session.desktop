@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=gnome-flashback-bspwm-session
+NoDisplay=true
+Comment=improved dynamic tiling window manager
+Exec=gnome-flashback-bspwm-session
+Icon=preferences-system-windows
+X-GNOME-WMName=bspwm-gnome
+X-GNOME-Autostart-Phase=WindowManager
+X-GNOME-Provides=windowmanager
+X-GNOME-Autostart-Notify=false

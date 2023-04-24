@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=GNOME Flashback (Cwm)
+Comment=This session logs you into GNOME Flashback with Cwm
+Exec=/usr/libexec/gnome-flashback-cwm
+TryExec=openbsd-cwm
+Type=Application
+DesktopNames=GNOME-Flashback;GNOME;
+X-Ubuntu-Gettext-Domain=gnome-flashback

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=GNOME Flashback (BerryWM)
+Comment=This session logs you into GNOME Flashback with BerryWM
+Exec=/usr/libexec/gnome-flashback-berrywm
+TryExec=berry
+Type=Application
+DesktopNames=GNOME-Flashback;GNOME;
+X-Ubuntu-Gettext-Domain=gnome-flashback

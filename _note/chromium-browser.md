@@ -25,39 +25,23 @@ git-cl - integration with code review and tryjobs
   $ export PATH=`pwd`/depot_tools:"$PATH"
 
 
-
-
-
-
 gclient attempts to update itself each run and can fail here
 gclient sync both updates your source code, and regenerates build files (implicitly doing gclient runhooks)
 
+- https://chromium.googlesource.com/chromium/src/+/HEAD/docs/linux/debugging.md
 
+- https://chromium.googlesource.com/chromium/src.git
 
-https://chromium.googlesource.com/chromium/src/+/HEAD/docs/linux/debugging.md
+- https://chromium.googlesource.com/chromium/src/+/main/docs/linux/build_instructions.md
 
+- https://chromium.googlesource.com/chromium/src/+/main/docs/linux/build_instructions.md
 
-https://chromium.googlesource.com/chromium/src.git
+## The Difference between Google Chrome and Chromium on Linux
 
+Google Chrome is the Chromium open source project built, packaged, and
+distributed by Google.
 
-https://chromium.googlesource.com/chromium/src/+/main/docs/linux/build_instructions.md
-
-https://chromium.googlesource.com/chromium/src/+/main/docs/linux/build_instructions.md
-
-
-
-# The Difference between Google Chrome and Chromium on Linux
-
-Chromium on Linux has two general flavors: You can either get
-[Google Chrome](http://www.google.com/chrome?platform=linux) or chromium-browser
-(see [Linux Chromium Packages](linux_chromium_packages.md).
-This page tries to describe the differences between the two.
-
-In short, Google Chrome is the Chromium open source project built, packaged, and
-distributed by Google. This table lists what Google adds to the Google Chrome
-builds **on Linux**.
-
-## Google Chrome
+### Google Chrome
 
 *   Colorful logo
 *   [Reports crashes](linux_crash_dumping.md) only if turned on.
@@ -75,7 +59,7 @@ builds **on Linux**.
 *   New releases are tested before being sent to users
 *   Google API keys are added by Google
 
-## Chromium
+### Chromium
 
 *   Blue logo
 *   Does not ever [report crashes](linux_crash_dumping.md). Please include
@@ -96,8 +80,6 @@ builds **on Linux**.
         and http://gsdview.appspot.com/chromium-browser-official/
 *   Google API keys depend on the distribution
     *   See http://www.chromium.org/developers/how-tos/api-keys
-
-
 
 $ google-chrome --ozone-platform-hint=auto
 [3531127:3531127:1230/092422.642314:ERROR:gpu_init.cc(523)] Passthrough is not supported, GL is egl, ANGLE is

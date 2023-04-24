@@ -5,6 +5,25 @@ date: 2022-12-19
 ---
 
 
+  24   │ 这里普及一下 VDSO 这个小知识，知道的人跳过，不知道的人读一下 biggrin.gif
+  25   │ VDSO 就是 Virtual Dynamic Shared Object ... 就是内核提供的虚拟的 .so , 这个 .so
+  26   │ 文件不在磁盘上，而是在内核里头。
+  27   │ 内核把包含某 .so 的内存页在程序启动的时候映射入其内存空间，对应的程序就可以当普通的 .so 来使用里头的函数。比如 syscall()
+  28   │ 这个函数就是在 linux-vdso.so.1 里头的，但是磁盘上并没有对应的文件. 可以通过 ldd /bin/bash 看看
+  29   │ }
+  30   │
+  31   │ 这样，随内核发行的 libc (注意，VDSO只是随内核发行，没有在内核空间运行，这个不会导致内核膨胀。)
+  32   │ 就唯一的和一个特定版本的内核绑定到一起了。这样内核和libc都不需要为兼容多个不同版本的对方而写太多的代码 ... 引入太多的 bug 了
+  33   │
+  34   │ 当然， libc 不当当有到内核的接口，还有很多常用的函数，这些函数不需要
+  35   │ 特别的为不同版本的内核小心编写，所以，我估计Linux上会出现两个 libc , 一个 libc 在内核，只是系统调用的包裹，另一个
+  36   │ libc 还是普通的 libc ， 只是这个 libc 再也不需要花精力去配合如此繁多的 kernel 了 .....
+  37   │
+  38   │ 姑且一个叫  klibc, 一个叫 glibc :
+  39   │ ... printf() 这些的还在 glibc  。 open() , read() , write(), socket()
+  40   │ 这些却不再是 glibc 的了，他们在 klibc 。
+
+
 
 
 vDSO (virtual dynamic shared object) is a kernel mechanism for exporting a carefully selected set of kernel space routines to user space applications so that applications can call these kernel space routines in-process, without incurring the performance penalty of a mode switch from user mode to kernel mode that is inherent when calling these same kernel space routines by means of the system call interface.[1][2]

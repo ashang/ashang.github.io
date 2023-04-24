@@ -5,6 +5,11 @@ date: 2018-01-29T00:52:12+08:00
 ---
 
 
+$ sudo systemctl -q restart logrotate.service && df
+
+> http://10.10.50.50/repo/pica8/-/commit/d9d8e8c530f6fdbf01120fc1da7eda636c78c289
+
+
 ## systemctl mask a service
 
 This is like disabling a service, but on steroids. It not only makes sure that service is not started automatically anymore, but even ensures that a service cannot even be started manually anymore. This is a bit of a hidden feature in systemd, since it is not commonly useful and might be confusing the user. But here's how you do it:
