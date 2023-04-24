@@ -5,9 +5,29 @@ date: 2018-08-11
 tags: Example
 ---
 
-https://mark.reid.name/info/site.html
+create a single file named /assets/styles/main.scss (known as a SASS manifest), store your modular stylesheets under _sass/, and then consolidate all of those imports in the manifest for transpilation. The result is a single, transpiled CSS stylesheet containing all of the styles that you imported.
 
-https://jaspervdj.be/hakyll/
+SASS manifest under assets/styles/main.scss. When Jekyll compiles my site, this file becomes _site/assets/styles/main.css. Then, as long as you include this stylesheet in the head of your default layout, it will load on the page:
+
+Notice that we reference the compiled version (.css) that’s going to live under _site/ once your site is built, not the .scss version that we have access to only in the precompiled source.
+
+
+manifest looks like:
+
+```scss
+---
+---
+
+@import 'components/topnav';
+@import 'general/themes';
+@import 'general/general';
+```
+
+<http://webtypography.net/toc/>
+
+<https://mark.reid.name/info/site.html>
+
+<https://jaspervdj.be/hakyll/>
 
 
 Hakyll requires you to write a small Haskell program to describe how you want pages to be rendered using a very flexible “Rules” language. For example, in my site.hs file I use the following code to set up my CSS files and render and wrap my blog posts.
