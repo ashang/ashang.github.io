@@ -2,7 +2,8 @@
 
 source "https://rubygems.org"
 
-gem "jekyll", "~> 4.3.2"
+gem "jekyll", "~> 3.9.0"
+#gem "jekyll", "~> 4.3.2"
 gem "webrick"
 
 ruby RUBY_VERSION
@@ -31,6 +32,7 @@ group :jekyll_plugins do
   gem 'jekyll-babel'
   gem 'jekyll-feed'                 # automatically generate an Atom feed at /feed.xml
   #- jekyll-html-pipeline
+  gem 'kramdown-parser-gfm'
   #- jekyll-paginate
   gem 'jekyll-relative-links'
   gem 'jekyll-redirect-from'

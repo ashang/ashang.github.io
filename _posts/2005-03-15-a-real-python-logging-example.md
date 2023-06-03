@@ -2,8 +2,6 @@
 layout: post
 title: "A real Python logging example"
 date: 2005-03-15 10:56
-comments: true
-categories: 
 ---
 
 For some reason, all the examples of the configuration files for the Python logging framework are artificial ones, with names like `handler01, handler02` and so on.  This makes it a little difficult to figure out how to apply it to a real world example.  So after a bit of fiddling around, here is a real example of using the Python `logging` module in a non-trivial application (ie. with multiple hierarchical modules) with an associated configuration file.
@@ -37,16 +35,16 @@ The `logging.getLogger()` call will return us a logger for just that module, whi
 
 {% highlight python %}
 class CalibrationCanvas:
- 
+
     #... some stuff
- 
+
     def _on_draw(self):
- 
+
         log.debug('ImageCanvas._on_draw')
         # do some funky stuff
         glBegin()
         # ...
- 
+
     def _update(self, model):
         if not model:
             log.warning('update: No model specified')
@@ -61,38 +59,38 @@ So now we need to set up the logging configuration.  Don't bother trying to do t
 {% highlight ini %}
 [formatters]
 keys: detailed,simple
- 
+
 [handlers]
 keys: console,syslog
- 
+
 [loggers]
 keys: root,gui,engine
- 
+
 [formatter_simple]
 format: %(name)s:%(levelname)s:  %(message)s
- 
+
 [formatter_detailed]
 format: %(name)s:%(levelname)s %(module)s:%(lineno)d:  %(message)s
- 
+
 [handler_console]
 class: StreamHandler
 args: []
 formatter: simple
- 
+
 [handler_syslog]
 class: handlers.SysLogHandler
 args: [('myhost.mycorp.net', handlers.SYSLOG_UDP_PORT), handlers.SysLogHandler.LOG_USER]
 formatter: detailed
- 
+
 [logger_root]
 level: INFO
 handlers: syslog
- 
+
 [logger_gui]
 level: WARNING
 qualname: pi.basil.gui
 handlers: console
- 
+
 [logger_engine]
 level: INFO
 qualname: pi.basil
@@ -141,7 +139,7 @@ DATE: 08/02/2005 07:00:29 AM
 
 Typo in config file
 Thanks for clearing up this mistery! I encountered a small typo in the config file. In section
- [logger_root]
+[logger_root]
  level: INFO
  handlers: root
 the handlers value should be syslog instead of root.
@@ -177,4 +175,3 @@ DATE: 05/07/2008 11:07:44 PM
 The font configured for the PRE tag in this article is too small: 0.8em.
 It forces me to process the article by hand to read it.
 Why you don't leave it on the default settings, which are at least readable?
-    
