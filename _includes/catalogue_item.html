@@ -1,0 +1,11 @@
+<a href="{{ post.url | prepend: site.baseurl }}" class="catalogue-item">
+  <div>
+    {% if include.sticky == 'true' %}
+      <span class="catalogue-pinned">Pinned &middot;</span>
+    {% endif %}
+    <h1 class="catalogue-title">{{ post.title }}</h1>
+    <time datetime="{{ post.date }}" class="catalogue-time">{{ post.date | date: "%B %d, %Y" }}</time>
+    <div class="catalogue-line"></div>
+
+  </div>
+</a>

@@ -1,0 +1,94 @@
+
+:root {
+/* Colours */
+
+    --color-dark: #141414;
+    --color-dark-alpha: rgba(0, 0, 0, 0.1);
+    
+    --color-light: #efefef;
+    --color-light-alpha: rgba(255, 255, 255, 0.9);
+    
+    --color-link: var(--color-blue-bright);
+    
+    --background: #ffffff;
+    --text-color: #141414;
+    
+    
+    --light: #ffffff;
+    --dark: #0e0e0e;
+    --grey-light: #eeeeee;
+    --grey: #dddddd;
+    --grey-mid: #999999;
+    --grey-dark: #666666;
+    --blue-brighter: #0084ff;
+    
+    
+    /* bright colour palette */
+    --color-red: #770F0F;
+    --color-blue-bright: #0036ff;
+    --color-bright-green: #C4F86F;
+    --color-dark-blue: #162E44;
+    
+    /* colour palette for case studies */
+    --case-study-vogue: var(--color-red);
+    --case-study-monotype: var(--dark);
+    --case-study-embl: var(--color-bright-green);
+    --case-study-cern: var(--color-dark-blue);
+    
+    
+/* Spacing scale */
+    --spacing-01 : 0.125rem;
+    --spacing-02 : 0.25em;
+    --spacing-03 : 0.5rem;
+    --spacing-04 : 0.75rem;
+    --spacing-05 : 1rem;
+    --spacing-06 : 1.1rem;
+    --spacing-07 : 1.2rem;
+    --spacing-08 : 1.25rem;
+    --spacing-09 : 1.5rem;
+    --spacing-10 : 2rem;
+    --spacing-11 : 2.5rem;
+    --spacing-12 : 3rem;
+
+/* Spacing : Layout scale */
+    --layout-01 : 1rem;
+    --layout-02 : 1.5em;
+    --layout-03 : 2rem;
+    --layout-04 : 3rem;
+    --layout-05 : 4rem;
+    --layout-06 : 6rem;
+    --layout-07 : 10rem;
+
+/* Fonts */
+    --font-family-sans: "Noi Sans", sans-serif;
+    --font-family-mono: "Matter Mono", sans-serif;
+    --font-settings-dark: "wght" 520, "wdth" 0, "ital" 0;
+    --font-settings-light: "wght" 320, "wdth" 0, "ital" 0;
+    
+
+/* Opentype features */
+    --otf-singlestoreyA : "ss01";       /* Single Storey A */
+    --otf-doublestoreyA : "ss02";           /* Outstroke A */
+    --otf-sweepingY : "ss03";           /* Sweeping Y */
+    --otf-creamyft : "ss04";                /* Alt figure 4*/
+	--otf-creamyqg : "ss05";             /* Kurrent KQRk */
+	--otf-smallnos : "ss06";        /* Alt ampersand */
+	--otf-thinpunc : "ss07";                /* Alt Figure 7 */
+	--otf-squaredots : "ss08";          /* Schoolbook + rounded ligatures */
+	--otf-headlineletters : "ss09";               /* Blunt */
+    --otf-spaghettiletters : "ss10";   /* Collated ligatures */
+    --otf-altamp : "ss11";   /* Collated ligatures */
+    --otf-caseSensitive : "case";       /* Collated ligatures */
+    --otf-tabularNumbers : "tnum";      /* Tabular numbers */
+    --otf-superior : "sups";            /* Superior */
+    --otf-numerator : "numr";           /* Numerator */
+    --otf-denominator: "dnom";          /* Denominator */
+    --otf-fractions: "frac";            /* Fractions */
+    --otf-ordinals: "ordn";             /* Ordinals */
+    --otf-slashed0: "zero";             /* Slashed Zero */
+    --otf-kerning: "kern";              /* Kerning */
+    --otf-commonLigatures: "liga";      /* Common Ligatures */
+    --otf-contextLigatures: "calt";     /* Contextual Ligatures */
+    --otf-discretLigatures: "dlig";     /* Discretionary Ligatures */
+}
+

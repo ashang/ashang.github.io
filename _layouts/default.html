@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: "en-US" | default: "en" }}">
+{%- include head.html -%}
+<body class="fixed-nav">
+  {%- include header.html -%}
+  <div class="container">
+    <div id="page" class="site">
+      <main class="page-content" aria-label="Content">
+        {{ content }}
+      </main>
+    {% include widgets.html %}
+    </div><!-- .site -->
+    <div class="profile">
+      <a href="{{ site.url }}"><img src="{{site.author.picture}}" class="profile-image"></a>
+      <div class="profile-about">
+        <h2 style="margin-bottom: 0; font-weight: 700;">{{site.author.name}}</h2>
+        {% if site.author.youtube %}
+          <a href="{{site.author.youtube}}" target="_blank"><img src="/img/icon/youtube.svg" class="social-icon"></a>
+        {% endif %}
+        {% if site.author.github %}
+          <a href="https://github.com/{{site.author.github}}" target="_blank"><img src="/img/icon/github.svg" class="social-icon"></a>
+        {% endif %}
+        {% if site.author.linkedin %}
+          <a href="https://linkedin.com/in/{{site.author.linkedin}}" target="_blank"><img src="/img/icon/linkedin.svg" class="social-icon"></a>
+        {% endif %}
+        <a href="about"><img src="/img/icon/me.svg" class="social-icon"></a>
+        <br>
+        {{ site.author.bio }}
+        <br>
+        <div class="mode" id="mode-switcher" onclick="toggleNightMode();">
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--
+  {% include footer.html %}
+-->
+</body>
+</html>
