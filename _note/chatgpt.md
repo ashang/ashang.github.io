@@ -1,12 +1,10 @@
 ---
 title: ChatGPT
 date: 2022-12-20
+tags: [AI, GPT, ChatGPT]
 ---
 
-
-
 http://t.cn/A69gB6Gf 训练在生物医学文献上，可以讨论文献内容。
-
 
 http://t.cn/A69gPdjD 训练在美国哲学家 Daniel Dennett 的著作上，可以伪装成这个哲学家本人和你讨论哲学问题。
 
