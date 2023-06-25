@@ -1,0 +1,301 @@
+ONIE:/ # onie-sysinfo
+x86_64-dlink_dxs_f3610_54t-r0
+ONIE:/ # onie-syseeprom
+TlvInfo Header:
+   Id String:    TlvInfo
+   Version:      1
+   Total Length: 167
+TLV Name             Code Len Value
+-------------------- ---- --- -----
+Manufacture Date     0x25  19 08/13/2016 13:41:36
+Label Revision       0x27   4 R01C
+Manufacturer         0x2B   6 Accton
+Country Code         0x2C   2 TW
+Base MAC Address     0x24   6 8C:EA:1B:17:4F:C3
+Part Number          0x22  13 FP3ZZ7632014A
+MAC Addresses        0x2A   2 131
+Vendor Name          0x2D   8 Edgecore
+Diag Version         0x2E   7 0.0.5.4
+ONIE Version         0x29  13 2016.08.00.03
+Platform Name        0x28  29 x86_64-dlink_dxs_f3610_54t-r0
+Product Name         0x21  13 DXS-F3610-54T
+Serial Number        0x23  13 RV54T32000001
+CRC-32               0xFE   4 0x8B9E81CA
+Checksum is valid.
+ONIE:/ # cat /etc/machine.conf
+onie_version=2016.08.00.03
+onie_vendor_id=259
+onie_platform=x86_64-dlink_dxs_f3610_54t-r0
+onie_machine=dlink_dxs_f3610_54t-r0
+onie_machine_rev=0
+onie_arch=x86_64
+onie_config_version=1
+onie_build_date="2016-10-03T13:52+0800"
+onie_partition_type=gpt
+onie_kernel_version=4.1.23
+onie_firmware=bios
+onie_switch_asic=bcm
+onie_skip_ethmgmt_macs=no
+ONIE:/ # diff /etc/machine-build.conf /etc/machine.conf
+diff: can't stat '/etc/machine-build.conf': No such file or directory
+
+ONIE:/ # onie-nos-install http://10.10.50.22/build/x86/onie-installer-D-LinkOS-4.4.0.1-dec0be5c01-dlink-x86.bin
+discover: Rescue mode detected. No discover stopped.
+Info: Fetching http://10.10.50.22/build/x86/onie-installer-D-LinkOS-4.4.0.1-dec0be5c01-dlink-x86.bin ...
+Connecting to 10.10.50.22 (10.10.50.22:80)
+installer            100% |*******************************|   229M  0:00:00 ETA
+ONIE: Executing installer: http://10.10.50.22/build/x86/onie-installer-D-LinkOS-4.4.0.1-dec0be5c01-dlink-x86.bin
+Verifying image checksum ... OK.
+Preparing image archive ... OK.
+  [1]  D-LinkOS L2/L3 (default)
+  [2]  D-LinkOS Open vSwitch/OpenFlow
+Enter your choice (1,2):1
+D-LinkOS L2/L3 is selected.
+ONIE installation will overwrite the configuration file of existing system.
+It is recommended to follow the upgrade procedure to upgrade the system.
+Press any key to stop the installation...
+10 9 8 7 6 5 4 3 2 1 ...
+Found x86 platform: as5835
+Found the storage device: /dev/sda
+Format /dev/sda4
+Install image to /dev/sda4, please wait...
+Install GRUB on /dev/sda3
+Image(D-LinkOS-4.4.0.1-dec0be5c01) successfully installed.
+ONIE: NOS install successful: http://10.10.50.22/build/x86/onie-installer-D-LinkOS-4.4.0.1-dec0be5c01-dlink-x86.bin
+ONIE: Rebooting...
+ONIE:/ # discover: Rescue mode detected. No discover stopped.
+Stopping: dropbear ssh daemon... done.
+Stopping: telnetd... done.
+Stopping: syslogd... done.
+Info: Unmounting kernel filesystems
+umount: can't umount /: Invalid argument
+The system is going down NOW!
+Sent SIGTERM to all processes
+Sent SIGKILL tosd 4:0:0:0: [sda] Synchronizing SCSI cache
+reboot: Restarting system
+reboot: machine restart
+
+Initializing Intel(R) Boot Agent GE v1.5.43
+PXE 2.1 Build 092 (WfM 2.0)
+Press Ctrl+S to enter the Setup Menu..
+
+
+
+                                                                             B2
+Version 2.19.1266. Copyright (C) 2019 American Megatrends, Inc.
+BIOS Date: 10/04/2019 10:41:46 AS5835-54_IKM_T Ver:v37.0b.01.02
+
+Press <DEL> or <ESC> to enter setup.
+
+
+
+
+                     GNU GRUB  version 2.02~beta2+e4a1fe391
+
+ +----------------------------------------------------------------------------+
+ |*D-LinkOS-4.4.0.1-dec0be5c01                                                |
+ | ONIE                                                                       |
+ |                                                                            |
+ |                                                                            |
+ |                                                                            |
+ +----------------------------------------------------------------------------+
+
+      Use the ^ and v keys to select which entry is highlighted.
+      Press enter to boot the selected OS, `e' to edit the commands
+      before booting or `c' for a command-line.
+   The highlighted entry will be executed automatically in 0s.
+  Booting `D-LinkOS-4.4.0.1-dec0be5c01'
+
+Loading, please wait...
+[   17.635863] picos-pre.sh[518]: ssh-keygen: generating new host keys: RSA DSA ECDSA ED25519
+[   18.573208] picos-pre.sh[479]: Auto Provisioning Tool - checking updates ....
+[   18.743294] picos-pre.sh[479]: No tftp server address found, exit now
+[   19.241543] system-diag[611]: ************ System Diagnosis Start ************
+[   19.250858] system-diag[611]:
+[   19.257239] system-diag[611]: Date: Sun Aug  7 13:25:23 UTC 2022
+[   19.266205] system-diag[611]: Version:
+[   19.272243] system-diag[611]:        Copyright (C) 2009-2023 D-Link (India) Ltd.
+[   19.281241] system-diag[611]:        ===================================
+[   19.290231] system-diag[611]:        Hardware Model                : DXS-F3610-54T
+[   19.299238] system-diag[611]:        Linux System Version/Revision : 4.4.0.1/dec0be5c01-dlink
+[   19.310205] system-diag[611]:        Linux System Released Date    : 06/01/2023
+[   19.319200] system-diag[611]:        L2/L3 Version/Revision        : 4.4.0.1/dec0be5c01-dlink
+[   19.330194] system-diag[611]:        L2/L3 Released Date           : 06/01/2023
+[   19.339194] system-diag[611]:        OVS/OF Version/Revision       : 4.4.0.1/dec0be5c01-dlink
+[   19.350222] system-diag[611]:        OVS/OF Released Date          : 06/01/2023
+[   19.359111] system-diag[611]:        ONIE version    : 2016.08.00.03
+[   19.366126] system-diag[611]:        CPLD1 version   : 0xa
+[   19.373104] system-diag[611]:        CPLD2 version   : 0xfa
+[   19.380102] system-diag[611]:        CPLD3 version   : 0xfa
+[   19.387094] system-diag[611]:        CPLD4 version   : 0x8
+[   19.394094] system-diag[611]: Hardware information:
+[   19.402228] system-diag[611]:        MAC address     : 8C:EA:1B:17:4F:C4
+[   19.411242] system-diag[611]:        Serial number   : RV54T32000001
+[   19.420235] system-diag[611]:        Product name    : DXS-F3610-54T
+[   19.428231] system-diag[611]: PSU:
+[   19.434223] system-diag[611]:        PSU 1 status    : present and powered on
+[   19.443222] system-diag[611]:        PSU 2 status    : present but powered off
+[   19.452227] system-diag[611]: System FAN:
+[   19.458212] system-diag[611]:        Fan 1 OK, fan speed is 18000 / 21500
+[   19.468213] system-diag[611]:        Fan 2 OK, fan speed is 17900 / 20800
+[   19.478197] system-diag[611]:        Fan 3 OK, fan speed is 18100 / 21200
+[   19.488185] system-diag[611]:        Fan 4 OK, fan speed is 18000 / 21400
+[   19.497113] system-diag[611]:        Fan 5 OK, fan speed is 17800 / 21500
+[   19.507226] system-diag[611]:        Fan 6 OK, fan speed is 17800 / 21500
+[   19.516214] system-diag[611]: Temperature:
+[   19.522232] system-diag[611]:        CPU temperature         : 41 C / 105 F
+[   19.531196] system-diag[611]:        Switch chip temperature : 39 C / 102 F
+[   19.540232] system-diag[611]:        Board temperature       : 41 C / 105 F
+[   19.549246] system-diag[611]: Optical modules:
+[   19.557213] system-diag[611]:        Port 1 Module type: QSFP+; Vendor name: OEM; Serial number: WTQ31H90009
+[   19.569206] system-diag[611]:        Port 2 no module
+[   19.576196] system-diag[611]:        Port 3 Module type: QSFP28; Vendor name: OEM; Serial number: HQ18013030002
+[   19.588220] system-diag[611]:        Port 4 no module
+[   19.596205] system-diag[611]:        Port 5 no module
+[   19.603200] system-diag[611]:        Port 6 no module
+[   19.610184] system-diag[611]:        Port 7 no module
+[   19.617184] system-diag[611]:        Port 8 no module
+[   19.624200] system-diag[611]:        Port 9 no module
+[   19.631184] system-diag[611]:        Port 10 no module
+[   19.638439] system-diag[611]:        Port 11 no module
+[   19.646260] system-diag[611]:        Port 12 no module
+[   19.654239] system-diag[611]:        Port 13 no module
+[   19.662197] system-diag[611]:        Port 14 no module
+[   19.669180] system-diag[611]:        Port 15 no module
+[   19.676185] system-diag[611]:        Port 16 Module type: QSFP+; Vendor name: OEM; Serial number: HQ18050330002
+[   19.688224] system-diag[611]:        Port 17 no module
+[   19.695186] system-diag[611]:        Port 18 no module
+[   19.702181] system-diag[611]:        Port 19 no module
+[   19.709185] system-diag[611]:        Port 20 no module
+[   19.716192] system-diag[611]:        Port 21 no module
+[   19.723291] system-diag[611]:        Port 22 no module
+[   19.731174] system-diag[611]:        Port 23 no module
+[   19.739245] system-diag[611]:        Port 24 no module
+[   19.746227] system-diag[611]:        Port 25 no module
+[   19.753259] system-diag[611]:        Port 26 no module
+[   19.762226] system-diag[611]:        Port 27 no module
+[   19.769221] system-diag[611]:        Port 28 no module
+[   19.776241] system-diag[611]:        Port 29 no module
+[   19.784229] system-diag[611]:        Port 30 no module
+[   19.791207] system-diag[611]:        Port 31 no module
+[   19.798197] system-diag[611]:        Port 32 Module type: QSFP28; Vendor name: FINISAR; Serial number: DTS01W5
+[   19.810214] system-diag[611]: RTC:
+[   19.816549] system-diag[611]:        RTC is OK!
+[   19.822212] system-diag[611]:        Time    : 2001-01-01 18:16:32.889707+00:00
+[   19.831239] system-diag[611]: Disk space:
+[   19.837206] system-diag[611]:        /dev/sda        : 61057 MB
+[   19.844209] system-diag[611]:        /dev/sda1       : 2 MB
+[   19.851231] system-diag[611]:        /dev/sda2       : 128 MB
+[   19.858222] system-diag[611]:        /dev/sda3       : 16 MB
+[   19.865238] system-diag[611]:        /dev/sda4       : 2048 MB       (Rootfs)
+[   19.872197] system-diag[611]:        /dev/sda5       : 2048 MB
+[   19.879213] system-diag[611]:        /dev/sda6       : 56814 MB
+[   19.886230] system-diag[611]:        Free space of rootfs partition is 1104 MB.
+[   19.895219] system-diag[611]: Memory size:
+[   19.901212] system-diag[611]:        Total memory    : 16366572 KB
+[   19.908217] system-diag[611]:        Free memory     : 16136304 KB
+[   19.915216] system-diag[611]: CPU utilization: 19.92%
+[   19.922206] system-diag[611]: ************  System Diagnosis End  ************
+[   78.066856] picos.sh[610]: .
+
+D-LinkOS login: admin
+Password:
+You are required to change your password immediately (administrator enforced)
+Changing password for admin.
+Current password:
+New password:
+Retype new password:
+Linux D-LinkOS 5.10.23 #24 SMP Fri Jun 2 06:03:23 CST 2023 x86_64
+Synchronizing configuration...OK.
+Welcome to D-LinkOS
+****************************************************************************
+                            NOTICE TO USERS
+
+
+This system is running a trial version. In this version only a
+limited number of ports will be available for use, please refer
+to config document for details.
+
+To activate every port, a license should be installed in the system. Please
+contact the support team for any help regarding the installation or the
+acquisition of such license.
+
+
+*****************************************************************************
+admin@D-LinkOS>
+admin@D-LinkOS> show system os
+Linux D-LinkOS 5.10.23 #24 SMP Fri Jun 2 06:03:23 CST 2023 x86_64 GNU/Linux
+admin@D-LinkOS> show system hwinfo
+Product Name: DXS-F3610-54T
+Part Number: FP3ZZ7632014A
+Serial Number: RV54T32000001
+Base MAC Address: 8C:EA:1B:17:4F:C3
+Manufacture Date: 08/13/2016 13:41:36
+Label Revision: R01C
+Platform Name: x86_64-dlink_dxs_f3610_54t-r0
+Loader Version: 2016.08.00.03
+MAC Addresses: 131
+Manufacturer: Accton
+Country Code: TW
+Vendor Name: Edgecore
+Diag Version: 0.0.5.4
+CRC-32: 0x8B9E81CA(Valid)
+admin@D-LinkOS> show system name
+D-LinkOS
+admin@D-LinkOS> show version
+Copyright (C) 2009-2023 D-Link (India) Ltd.
+===================================
+Base ethernet MAC Address     : 8c:ea:1b:17:4f:c4
+Hardware Model                : DXS-F3610-54T
+Linux System Version/Revision : 4.4.0.1/dec0be5c01-dlink
+Linux System Released Date    : 06/01/2023
+L2/L3 Version/Revision        : 4.4.0.1/dec0be5c01-dlink
+L2/L3 Released Date           : 06/01/2023
+
+admin@D-LinkOS> show spanning-tree mstp bridge
+--------------------------------------------------
+Bridge Spanning Tree Parameters
+  Enabled Protocol: MSTP
+  Root ID: 32768.8c:ea:1b:17:4f:c4
+  External Root Path Cost: 0
+  CIST Regional Root ID: 32768.8c:ea:1b:17:4f:c4
+  Root Port:
+  CIST Internal Root Path Cost: 0
+  Hello Time: 2
+  Maximum Age: 20
+  Forward Delay: 15
+  Remaining Hops: 20
+  Bridge Configuration Name: D-Link
+  Bridge Revision Level: 0
+  Bridge Configuration Digest: ac36177f50283cd4b83821d8ab26de62
+  Number of Topology Changes: 0
+  Time Since Last Topology Change: 0 day 00:07:05
+Local Parameters
+  Bridge ID: 32768.8c:ea:1b:17:4f:c4
+  Hello Time: 2
+  Maximum Age: 20
+  Forward Delay: 15
+  Remaining Hops: 20
+admin@D-LinkOS> configure
+Entering configuration mode.
+There are no other users in configuration mode.
+admin@D-LinkOS# exit
+
+admin@D-LinkOS> start shell sh
+admin@D-LinkOS:~$ hostname
+D-LinkOS
+admin@D-LinkOS:~$ cat /etc/lsb-release
+DISTRIB_ID=D-Link
+DISTRIB_CODENAME=bullseye
+DISTRIB_RELEASE=4.4.0.1
+DISTRIB_REVISION=dec0be5c01-dlink
+CREATED_DATE=06/01/2023
+GA_RELEASE_DATE=06/01/2023
+admin@D-LinkOS:~$ cat /etc/picos/branding
+BRAND_NAME=D-Link
+COMPANY_NAME=D-Link (India) Ltd.
+PLATFORM_NAME=D-LinkOS
+HOST_NAME=D-LinkOS
+HARDWARE_MODEL=DXS-F3610-54T
+VENDOR_MACHINE=as5835
+MACHINE_RELEASE=4.4.0.1-dec0be5c01

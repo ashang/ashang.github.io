@@ -1,0 +1,179 @@
+title: "Ttl"
+author: "thr"
+permalink: /:title/
+lang: "en"
+#excerpt_separator: "\n\n\n"
+date_format: "%Y-%m-%d"
+
+# Layout
+#show_excerpts: true        # show article excerpts on the home page
+#show_frame: true           # adds a gray frame to the site
+show_frame: false
+
+#show_sidebar: true        # show a sidebar instead of the usual header
+show_sidebar: false        # show a sidebar instead of the usual header
+
+dark_header: true
+
+# Menu
+navigation:                # accepts {file, title, url, icon, sidebaricon}
+  - {file: "index.html"}
+  #- {file: "archive.html"}
+  #- {file: "README.md"}
+
+description: "with <b style=\"color: #f45;\">&lt;3</b>"
+
+external:                  # shows a footer with social links - for available icons see fontawesome.com/icons
+  - {title: Mail, icon: envelope, url: "mailto:niklasbuschmann@users.noreply.github.com"}
+  - {title: Github, icon: github, url: "https://github.com/niklasbuschmann/contrast"}
+  - {title: Subscribe, icon: rss, url: "/feed.xml"}
+
+comments:
+#  disqus_shortname: ""    # see https://disqus.com/
+#  isso_domain: ""         # see https://posativ.org/isso/
+
+plugins:
+ - jekyll-feed
+ - jekyll-gist
+
+# By default, Jekyll Gist will make an HTTP call per Gist to retrieve the raw content of the Gist. This information is used to propagate noscript tags for search engines and browsers without JavaScript support. If you’d like to disable this feature, for example, to speed up builds locally, add the following to your site’s _config.yml:
+# <noscript><pre>400: Invalid request</pre></noscript><script src="https://gist.github.com/c08ee0f2726fd0e3909d.js"> </script>
+
+gist:
+  noscript: false
+
+# Defaults
+#  enabled: []
+#  layout: archive
+#  permalinks:
+#    year: '/:year/'
+#    month: '/:year/:month/'
+#    day: '/:year/:month/:day/'
+#    tag: '/tag/:name/'
+#    category: '/category/:name/'
+
+#defaults            : []
+defaults:
+  - scope:
+      path: '' # an empty string here means all files in the project
+    values:
+      layout: post
+      #layout: page
+      # types available are pages, posts, or any collection, in plural form
+      type: posts
+      # The 'post' type has become 'posts'.
+      category: "journal"
+      image: "/img/jekyll-og.png"
+      #permalink: /:title/
+  - scope:
+      path: _note
+      type: "notes"
+    values:
+      layout: page
+      category: "ramblings"
+
+  -
+    scope:
+      path: "projects"
+      type: "pages" # previously `page`
+    values:
+      layout: "project" # overrides previous default layout
+      author: "Mr. Poole"
+  - scope:
+      path: "img"
+    values:
+      image: true
+  - scope:
+      path: "_docs/zh"
+    values:
+      layout: article
+      nav_key: docs
+      sidebar:
+        nav: docs-zh
+      aside:
+        toc: true
+      lang: zh
+      show_edit_on_github: true
+      show_date: false
+      lightbox: true
+  #- scope:
+      #path: '' # an empty string here means all files in the project
+      #type: "notes" # a collection in your site, in plural form
+    #values:
+      #type: "notes" # a collection in your site, in plural form
+      #image: "/img/jekyll-og.png"
+  - scope:
+      path: '' # an empty string here means all files in the project
+    values:
+      # so as not to add layout to each file
+      layout: page
+      type: pages
+  -
+    scope:
+      path: ""
+    values:
+      layout: "default"
+  -
+    scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "page"
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+  -
+    scope:
+      path: "images"
+    values:
+      image: true
+  - scope:
+      path: "_note"
+      type: "notes" # a collection in your site, in plural form
+    values:
+      layout: post
+  - scope:
+      path: "note"
+      type: "notes" # a collection in your site, in plural form
+    values:
+      layout: post
+
+  #- scope:
+      #path: '' # an empty string here means all files in the project
+    #values:
+      #type: posts
+      # The 'post' type has become 'posts'.
+      # types available are pages, posts, drafts or any collection, in plural form
+      #image: "/img/jekyll-og.png"
+  - scope:
+      path: '' # an empty string here means all files in the project
+    values:
+      # so as not to add layout to each file
+      layout: page      # Set default layout to page
+      type: pages
+      show_meta: false	# Hide metadata for all pages
+      # sidebar:# Possible values › left, right › by default there will be no sidebar
+      comments: false
+  - scope:
+      path: '' # an empty string here means all files in the project
+    values:
+      layout: post
+      type: posts
+  - scope:
+      path: "_note"
+    values:
+      type: "notes" # collection, in plural form
+      layout: post
+  - scope:
+      path: "note"
+      type: "notes" # a collection in your site, in plural form
+    values:
+      layout: post
+  -
+    scope:
+      path: "img"
+    values:
+      image: true
