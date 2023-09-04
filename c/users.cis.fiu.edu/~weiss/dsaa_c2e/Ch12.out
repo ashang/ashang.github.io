@@ -1,0 +1,2706 @@
+
+
+Nov  4 20:38 1997  splay.h Page 1
+
+
+        #include <stdlib.h>
+        #include "fatal.h"
+
+        typedef int ElementType;
+        #define Infinity 30000
+        #define NegInfinity (-30000)
+
+/* START: fig12_5.txt */
+        #ifndef _Splay_H
+        #define _Splay_H
+
+        struct SplayNode;
+        typedef struct SplayNode *SplayTree;
+
+        SplayTree MakeEmpty( SplayTree T );
+        SplayTree Find( ElementType X, SplayTree T );
+        SplayTree FindMin( SplayTree T );
+        SplayTree FindMax( SplayTree T );
+        SplayTree Initialize( void );
+        SplayTree Insert( ElementType X, SplayTree T );
+        SplayTree Remove( ElementType X, SplayTree T );
+        ElementType Retrieve( SplayTree T );  /* Gets root item */
+
+        #endif  /* _Splay_H */
+/* END */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Aug 12 15:27 1996  splay.c Page 1
+
+
+        #include "splay.h"
+        #include <stdlib.h>
+        #include "fatal.h"
+        
+        struct SplayNode
+        {
+            ElementType Element;
+            SplayTree      Left;
+            SplayTree      Right;
+        };
+
+        typedef struct SplayNode *Position;
+        static Position NullNode = NULL;  /* Needs initialization */
+
+        SplayTree
+        Initialize( void )
+        {
+            if( NullNode == NULL )
+            {
+                NullNode = malloc( sizeof( struct SplayNode ) );
+                if( NullNode == NULL )
+                    FatalError( "Out of space!!!" );
+                NullNode->Left = NullNode->Right = NullNode;
+            }
+            return NullNode;
+        }
+
+        static SplayTree Splay( ElementType Item, Position X );
+
+        SplayTree
+        MakeEmpty( SplayTree T )
+        {
+            if( T != NullNode )
+            {
+                MakeEmpty( T->Left );
+                MakeEmpty( T->Right );
+                free( T );
+            }
+            return NullNode;
+        }
+
+        void
+        PrintTree( SplayTree T )
+        {
+            if( T != NullNode )
+            {
+                PrintTree( T->Left );
+                printf( "%d ", T->Element );
+                PrintTree( T->Right );
+            }
+        }
+
+        SplayTree
+        Find( ElementType X, SplayTree T )
+        {
+            return Splay( X, T );
+
+
+
+
+
+
+
+Aug 12 15:27 1996  splay.c Page 2
+
+
+        }
+
+        SplayTree
+        FindMin( SplayTree T )
+        {
+            return Splay( NegInfinity, T );
+        }
+
+        SplayTree
+        FindMax( SplayTree T )
+        {
+            return Splay( Infinity, T );
+        }
+
+        /* This function can be called only if K2 has a left child */
+        /* Perform a rotate between a node (K2) and its left child */
+        /* Update heights, then return new root */
+
+        static Position
+        SingleRotateWithLeft( Position K2 )
+        {
+            Position K1;
+
+            K1 = K2->Left;
+            K2->Left = K1->Right;
+            K1->Right = K2;
+
+            return K1;  /* New root */
+        }
+
+        /* This function can be called only if K1 has a right child */
+        /* Perform a rotate between a node (K1) and its right child */
+        /* Update heights, then return new root */
+
+        static Position
+        SingleRotateWithRight( Position K1 )
+        {
+            Position K2;
+
+            K2 = K1->Right;
+            K1->Right = K2->Left;
+            K2->Left = K1;
+
+            return K2;  /* New root */
+        }
+
+/* START: fig12_6.txt */
+        /* Top-down splay procedure, */
+        /* not requiring Item to be in tree */
+
+        SplayTree
+        Splay( ElementType Item, Position X )
+        {
+            static struct SplayNode Header;
+            Position LeftTreeMax, RightTreeMin;
+
+
+
+
+
+
+
+
+Aug 12 15:27 1996  splay.c Page 3
+
+
+            Header.Left = Header.Right = NullNode;
+            LeftTreeMax = RightTreeMin = &Header;
+            NullNode->Element = Item;
+
+            while( Item != X->Element )
+            {
+                if( Item < X->Element )
+                {
+                    if( Item < X->Left->Element )
+                        X = SingleRotateWithLeft( X );
+                    if( X->Left == NullNode )
+                        break;
+                    /* Link right */
+                    RightTreeMin->Left = X;
+                    RightTreeMin = X;
+                    X = X->Left;
+                }
+                else
+                {
+                    if( Item > X->Right->Element )
+                        X = SingleRotateWithRight( X );
+                    if( X->Right == NullNode )
+                        break;
+                    /* Link left */
+                    LeftTreeMax->Right = X;
+                    LeftTreeMax = X;
+                    X = X->Right;
+                }
+            }  /* while Item != X->Element */
+
+            /* Reassemble */
+            LeftTreeMax->Right = X->Left;
+            RightTreeMin->Left = X->Right;
+            X->Left = Header.Right;
+            X->Right = Header.Left;
+
+            return X;
+        }
+/* END */
+
+
+
+
+/* START: fig12_7.txt */
+        SplayTree
+        Insert( ElementType Item, SplayTree T )
+        {
+            static Position NewNode = NULL;
+
+            if( NewNode == NULL )
+            {
+                NewNode = malloc( sizeof( struct SplayNode ) );
+                if( NewNode == NULL )
+                    FatalError( "Out of space!!!" );
+            }
+            NewNode->Element = Item;
+
+
+
+
+
+
+
+Aug 12 15:27 1996  splay.c Page 4
+
+
+
+            if( T == NullNode )
+            {
+                NewNode->Left = NewNode->Right = NullNode;
+                T = NewNode;
+            }
+            else
+            {
+                T = Splay( Item, T );
+                if( Item < T->Element )
+                {
+                    NewNode->Left = T->Left;
+                    NewNode->Right = T;
+                    T->Left = NullNode;
+                    T = NewNode;
+                }
+                else
+                if( T->Element < Item )
+                {
+                    NewNode->Right = T->Right;
+                    NewNode->Left = T;
+                    T->Right = NullNode;
+                    T = NewNode;
+                }
+                else
+                    return T;  /* Already in the tree */
+            }
+
+            NewNode = NULL;   /* So next insert will call malloc */
+            return T;
+        }
+/* END */
+
+
+/* START: fig12_8.txt */
+        SplayTree
+        Remove( ElementType Item, SplayTree T )
+        {
+            Position NewTree;
+
+            if( T != NullNode )
+            {
+                T = Splay( Item, T );
+                if( Item == T->Element )
+                {
+                    /* Found it! */
+                    if( T->Left == NullNode )
+                        NewTree = T->Right;
+                    else
+                    {
+                        NewTree = T->Left;
+                        NewTree = Splay( Item, NewTree );
+                        NewTree->Right = T->Right;
+                    }
+                    free( T );
+                    T = NewTree;
+
+
+
+
+
+
+
+Aug 12 15:27 1996  splay.c Page 5
+
+
+                }
+            }
+
+            return T;
+        }
+
+/* END */
+
+        ElementType
+        Retrieve( SplayTree T )
+        {
+            return T->Element;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Aug 12 15:27 1996  testsply.c Page 1
+
+
+#include "splay.h"
+#include <stdio.h>
+#define NumItems 500
+
+main( )
+{
+    SplayTree T;
+    SplayTree P;
+    int i;
+    int j = 0;
+
+    T = Initialize( );
+    T = MakeEmpty( T );
+    for( i = 0; i < NumItems; i++, j = ( j + 7 ) % NumItems )
+        T = Insert( j, T );
+  
+    for( j = 0; j < 2; j++ )
+        for( i = 0; i < NumItems; i++ )
+        {
+            T = Find( i, T );
+            if( Retrieve( T ) != i )
+                printf( "Error1 at %d\n", i );
+        }
+
+    printf( "Entering remove\n" );
+
+    for( i = 0; i < NumItems; i += 2 )
+        T = Remove( i, T );
+
+    for( i = 1; i < NumItems; i += 2 )
+    {
+        T = Find( i, T );
+        if( Retrieve( T ) != i )
+            printf( "Error2 at %d\n", i );
+    }
+
+    for( i = 0; i < NumItems; i += 2 )
+    {
+        T = Find( i, T );
+        if( Retrieve( T ) == i )
+            printf( "Error3 at %d\n", i );
+    }
+
+    printf( "Min is %d\n", Retrieve( T = FindMin( T ) ) );
+    printf( "Max is %d\n", Retrieve( T = FindMax( T ) ) );
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Nov  4 20:35 1997  dsl.h Page 1
+
+
+        #include <stdlib.h>
+        #include "fatal.h"
+
+        typedef int ElementType;
+        #define Infinity (10000)
+
+        #ifndef _SkipList_H
+        #define _SkipList_H
+
+        struct SkipNode;
+        typedef struct SkipNode *Position;
+        typedef struct SkipNode *SkipList;
+
+        SkipList MakeEmpty( SkipList L );
+        Position Find( ElementType X, SkipList L );
+        Position FindMin( SkipList L );
+        Position FindMax( SkipList L );
+        SkipList Initialize( void );
+        SkipList Insert( ElementType X, SkipList L );
+        SkipList Remove( ElementType X, SkipList L );
+        ElementType Retrieve( Position P );
+
+        #endif  /* _SkipList_H */
+
+/* END */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Aug 12 15:27 1996  dsl.c Page 1
+
+
+#include "dsl.h"
+#include <stdlib.h>
+#include "fatal.h"
+
+
+/* START: fig12_23.txt */
+        struct SkipNode
+        {
+            ElementType Element;
+            SkipList    Right;
+            SkipList    Down;
+        };
+
+        static Position Bottom = NULL;  /* Needs initialization */
+        static Position Tail   = NULL;  /* Needs initialization */
+
+        /* Initialization procedure */
+
+        SkipList
+        Initialize( void )
+        {
+            SkipList L;
+
+            if( Bottom == NULL )
+            {
+                Bottom = malloc( sizeof( struct SkipNode ) );
+                if( Bottom == NULL )
+                    FatalError( "Out of space!!!" );
+                Bottom->Right = Bottom->Down = Bottom;
+
+                Tail = malloc( sizeof( struct SkipNode ) );
+                if( Tail == NULL )
+                    FatalError( "Out of space!!!" );
+                Tail->Element = Infinity;
+                Tail->Right = Tail;
+            }
+
+            /* Create the header node */
+            L = malloc( sizeof( struct SkipNode ) );
+            if( L == NULL )
+                FatalError( "Out of space!!!" );
+            L->Element = Infinity;
+            L->Right = Tail;
+            L->Down = Bottom;
+
+            return L;
+        }
+/* END */
+
+        void
+        Output( ElementType Element )
+        {
+            printf( "%d\n", Element );
+        }
+
+        /* Memory reclamation is left as an exercise */
+
+
+
+
+
+
+
+Aug 12 15:27 1996  dsl.c Page 2
+
+
+        /* Hint: Delete from top level to bottom level */
+        SkipList
+        MakeEmpty( SkipList L )
+        {
+            L->Right = Tail;
+            L->Down = Bottom;
+            return L;
+        }
+
+/* START: fig12_24.txt */
+        /* Return Position of node containing Item, */
+        /* or Bottom if not found */
+
+        Position
+        Find( ElementType Item, SkipList L )
+        {
+            Position Current = L;
+
+            Bottom->Element = Item;
+            while( Item != Current->Element )
+                if( Item < Current->Element )
+                    Current = Current->Down;
+                else
+                    Current = Current->Right;
+
+            return Current;
+        }
+/* END */
+
+        Position
+        FindMin( SkipList L )
+        {
+            Position Current = L;
+
+            while( Current->Down != Bottom )
+                Current = Current->Down;
+
+            return Current;
+        }
+
+        Position
+        FindMax( SkipList L )
+        {
+            Position Current = L;
+
+            while( Current->Right->Right != Tail ||
+                   Current->Down != Bottom )
+            {
+                if( Current->Right->Right != Tail )
+                    Current = Current->Right;
+                else
+                    Current = Current->Down;
+            }
+
+            return Current;
+        }
+
+
+
+
+
+
+
+Aug 12 15:27 1996  dsl.c Page 3
+
+
+
+/* START: fig12_25.txt */
+        SkipList
+        Insert( ElementType Item, SkipList L )
+        {
+            Position Current = L;
+            Position NewNode;
+
+            Bottom->Element = Item;
+            while( Current != Bottom )
+            {
+                while( Item > Current->Element )
+                    Current = Current->Right;
+
+                /* If gap size is 3 or at bottom level */
+                /* and must insert, then promote middle element */
+                if( Current->Element >
+                          Current->Down->Right->Right->Element )
+                {
+                    NewNode = malloc( sizeof( struct SkipNode ) );
+                    if( NewNode == NULL )
+                        FatalError( "Out of space!!!" );
+                    NewNode->Right = Current->Right;
+                    NewNode->Down = Current->Down->Right->Right;
+                    Current->Right = NewNode;
+                    NewNode->Element = Current->Element;
+                    Current->Element = Current->Down->Right->Element;
+                }
+                else
+                    Current = Current->Down;
+            }
+
+            /* Raise height of DSL if necessary */
+            if( L->Right != Tail )
+            {
+                NewNode = malloc( sizeof( struct SkipNode ) );
+                if( NewNode == NULL )
+                    FatalError( "Out of space!!!" );
+                NewNode->Down = L;
+                NewNode->Right = Tail;
+                NewNode->Element = Infinity;
+                L = NewNode;
+            }
+
+            return L;
+        }
+/* END */
+
+        SkipList
+        Remove( ElementType Item, SkipList L )
+        {
+            printf( "Remove is unimplemented\n" );
+            if( Item )
+                return L;
+            return L;
+        }
+
+
+
+
+
+
+
+Aug 12 15:27 1996  dsl.c Page 4
+
+
+
+        ElementType
+        Retrieve( Position P )
+        {
+            return P->Element;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Aug 12 15:27 1996  testdsl.c Page 1
+
+
+#include "dsl.h"
+#include <stdio.h>
+
+#define N 800
+
+main( )
+{
+    SkipList T;
+    Position P;
+    int i;
+    int j = 0;
+
+    T = Initialize( );
+    T = MakeEmpty( T );
+
+    for( i = 0; i < N; i++, j = ( j + 7 ) % N )
+        T = Insert( j, T );
+    printf( "Inserts are complete\n" );
+
+
+    for( i = 0; i < N; i++ )
+        if( ( P = Find( i, T ) ) == NULL || Retrieve( P ) != i )
+            printf( "Error at %d\n", i );
+
+    printf( "Min is %d, Max is %d\n", Retrieve( FindMin( T ) ),
+               Retrieve( FindMax( T ) ) );
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Nov  4 20:33 1997  aatree.h Page 1
+
+
+        #include <stdlib.h>
+        #include "fatal.h"
+
+        typedef int ElementType;
+
+        #ifndef _AATree_H
+        #define _AATree_H
+
+        struct AANode;
+        typedef struct AANode *Position;
+        typedef struct AANode *AATree;
+
+        AATree MakeEmpty( AATree T );
+        Position Find( ElementType X, AATree T );
+        Position FindMin( AATree T );
+        Position FindMax( AATree T );
+        AATree Initialize( void );
+        AATree Insert( ElementType X, AATree T );
+        AATree Remove( ElementType X, AATree T );
+        ElementType Retrieve( Position P );
+
+        extern Position NullNode;
+
+        #endif  /* _AATree_H */
+
+/* END */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Aug 12 15:27 1996  aatree.c Page 1
+
+
+#include "aatree.h"
+#include <stdlib.h>
+#include "fatal.h"
+
+/* START: fig12_27.txt */
+            /* Returned for failures */
+        Position NullNode = NULL;  /* Needs more initialization */
+
+        struct AANode
+        {
+            ElementType Element;
+            AATree      Left;
+            AATree      Right;
+            int         Level;
+        };
+
+        AATree
+        Initialize( void )
+        {
+            if( NullNode == NULL )
+            {
+                NullNode = malloc( sizeof( struct AANode ) );
+                if( NullNode == NULL )
+                    FatalError( "Out of space!!!" );
+                NullNode->Left = NullNode->Right = NullNode;
+                NullNode->Level = 0;
+            }
+            return NullNode;
+        }
+/* END */
+
+        AATree
+        MakeEmpty( AATree T )
+        {
+            if( T != NullNode )
+            {
+                MakeEmpty( T->Left );
+                MakeEmpty( T->Right );
+                free( T );
+            }
+            return NullNode;
+        }
+
+        Position
+        Find( ElementType X, AATree T )
+        {
+            if( T == NullNode )
+                return NullNode;
+            if( X < T->Element )
+                return Find( X, T->Left );
+            else
+            if( X > T->Element )
+                return Find( X, T->Right );
+            else
+                return T;
+        }
+
+
+
+
+
+
+
+Aug 12 15:27 1996  aatree.c Page 2
+
+
+
+        Position
+        FindMin( AATree T )
+        {
+            if( T == NullNode )
+                return NullNode;
+            else
+            if( T->Left == NullNode )
+                return T;
+            else
+                return FindMin( T->Left );
+        }
+
+        Position
+        FindMax( AATree T )
+        {
+            if( T != NullNode )
+                while( T->Right != NullNode )
+                    T = T->Right;
+
+            return T;
+        }
+
+        /* This function can be called only if K2 has a left child */
+        /* Perform a rotate between a node (K2) and its left child */
+        /* Update heights, then return new root */
+
+        static Position
+        SingleRotateWithLeft( Position K2 )
+        {
+            Position K1;
+
+            K1 = K2->Left;
+            K2->Left = K1->Right;
+            K1->Right = K2;
+
+            return K1;  /* New root */
+        }
+
+        /* This function can be called only if K1 has a right child */
+        /* Perform a rotate between a node (K1) and its right child */
+        /* Update heights, then return new root */
+
+        static Position
+        SingleRotateWithRight( Position K1 )
+        {
+            Position K2;
+
+            K2 = K1->Right;
+            K1->Right = K2->Left;
+            K2->Left = K1;
+
+            return K2;  /* New root */
+        }
+
+/* START: fig12_29.txt */
+
+
+
+
+
+
+
+Aug 12 15:27 1996  aatree.c Page 3
+
+
+        /* If T's left child is on the same level as T, */
+        /* perform a rotation */
+
+        AATree
+        Skew( AATree T )
+        {
+            if( T->Left->Level == T->Level )
+                T = SingleRotateWithLeft( T );
+            return T;
+        }
+
+        /* If T's rightmost grandchild is on the same level, */
+        /* rotate right child up */
+
+        AATree
+        Split( AATree T )
+        {
+            if( T->Right->Right->Level == T->Level )
+            {
+                T = SingleRotateWithRight( T );
+                T->Level++;
+            }
+            return T;
+        }
+/* END */
+
+
+
+
+/* START: fig12_36.txt */
+        AATree
+        Insert( ElementType Item, AATree T )
+        {
+            if( T == NullNode )
+            {
+                /* Create and return a one-node tree */
+                T = malloc( sizeof( struct AANode ) );
+                if( T == NULL )
+                    FatalError( "Out of space!!!" );
+                else
+                {
+                    T->Element = Item; T->Level = 1;
+                    T->Left = T->Right = NullNode;
+                }
+            }
+            else
+            if( Item < T->Element )
+                T->Left = Insert( Item, T->Left );
+            else
+            if( Item > T->Element )
+                T->Right = Insert( Item, T->Right );
+
+            /* Otherwise it's a duplicate; do nothing */
+
+            T = Skew( T );
+            T = Split( T );
+
+
+
+
+
+
+
+Aug 12 15:27 1996  aatree.c Page 4
+
+
+            return T;
+        }
+/* END */
+
+/* START: fig12_38.txt */
+        AATree
+        Remove( ElementType Item, AATree T )
+        {
+            static Position DeletePtr, LastPtr;
+
+            if( T != NullNode )
+            {
+                /* Step 1: Search down tree */
+                /*         set LastPtr and DeletePtr */
+                LastPtr = T;
+                if( Item < T->Element )
+                    T->Left = Remove( Item, T->Left );
+                else
+                {
+                    DeletePtr = T;
+                    T->Right = Remove( Item, T->Right );
+                }
+
+                /* Step 2: If at the bottom of the tree and */
+                /*         item is present, we remove it */
+                if( T == LastPtr )
+                {
+                    if( DeletePtr != NullNode &&
+                             Item == DeletePtr->Element )
+                    {
+                        DeletePtr->Element = T->Element;
+                        DeletePtr = NullNode;
+                        T = T->Right;
+                        free( LastPtr );
+                    }
+                }
+
+                /* Step 3: Otherwise, we are not at the bottom; */
+                /*         rebalance */
+                else
+                    if( T->Left->Level < T->Level - 1 ||
+                        T->Right->Level < T->Level - 1 )
+                    {
+                        if( T->Right->Level > --T->Level )
+                            T->Right->Level = T->Level;
+                        T = Skew( T );
+                        T->Right = Skew( T->Right );
+                        T->Right->Right = Skew( T->Right->Right );
+                        T = Split( T );
+                        T->Right = Split( T->Right );
+                    }
+            }
+            return T;
+        }
+/* END */
+
+
+
+
+
+
+
+
+Aug 12 15:27 1996  aatree.c Page 5
+
+
+        ElementType
+        Retrieve( Position P )
+        {
+            return P->Element;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Aug 12 15:27 1996  testaa.c Page 1
+
+
+#include "aatree.h"
+#include <stdio.h>
+
+#define NumItems 20
+
+main( )
+{
+
+    AATree T;
+    Position P;
+    int i;
+    int j = 0;
+
+    T = Initialize( );
+    T = MakeEmpty( NullNode );
+    for( i = 0; i < NumItems; i++, j = ( j + 7 ) % NumItems )
+        T = Insert( j, T );
+    for( i = 0; i < NumItems; i++ )
+        if( ( P = Find( i, T ) ) == NullNode || Retrieve( P ) != i )
+            printf( "Error at %d\n", i );
+
+    for( i = 0; i < NumItems; i += 2 )
+        T = Remove( i, T );
+
+    for( i = 1; i < NumItems; i += 2 )
+        if( ( P = Find( i, T ) ) == NullNode || Retrieve( P ) != i )
+            printf( "Error at %d\n", i );
+
+    for( i = 0; i < NumItems; i += 2 )
+        if( ( P = Find( i, T ) ) != NullNode )
+            printf( "Error at %d\n", i );
+
+    printf( "Min is %d, Max is %d\n", Retrieve( FindMin( T ) ),
+               Retrieve( FindMax( T ) ) );
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Nov  4 20:39 1997  treap.h Page 1
+
+
+        #include <stdlib.h>
+        #include "fatal.h"
+
+        typedef int ElementType;
+        #define Infinity 32767
+
+        #ifndef _Treap_H
+        #define _Treap_H
+
+        struct TreapNode;
+        typedef struct TreapNode *Position;
+        typedef struct TreapNode *Treap;
+
+        Treap MakeEmpty( Treap T );
+        Position Find( ElementType X, Treap T );
+        Position FindMin( Treap T );
+        Position FindMax( Treap T );
+        Treap Initialize( void );
+        Treap Insert( ElementType X, Treap T );
+        Treap Remove( ElementType X, Treap T );
+        ElementType Retrieve( Position P );
+
+
+        extern Position NullNode;
+
+        #endif  /* _Treap_H */
+
+/* END */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Aug 12 15:27 1996  treap.c Page 1
+
+
+#include "treap.h"
+#include <stdlib.h>
+#include "fatal.h"
+
+
+        struct TreapNode
+        {
+            ElementType Element;
+            Treap       Left;
+            Treap       Right;
+            int         Priority;
+        };
+
+        Position NullNode = NULL;  /* Needs initialization */
+
+/* START: fig12_39.txt */
+        Treap
+        Initialize( void )
+        {
+            if( NullNode == NULL )
+            {
+                NullNode = malloc( sizeof( struct TreapNode ) );
+                if( NullNode == NULL )
+                    FatalError( "Out of space!!!" );
+                NullNode->Left = NullNode->Right = NullNode;
+                NullNode->Priority = Infinity;
+            }
+            return NullNode;
+        }
+/* END */
+
+        /* Use ANSI C random number generator for simplicity */
+
+        int
+        Random( void )
+        {
+            return rand( ) -  1;
+        }
+
+        Treap
+        MakeEmpty( Treap T )
+        {
+            if( T != NullNode )
+            {
+                MakeEmpty( T->Left );
+                MakeEmpty( T->Right );
+                free( T );
+            }
+            return NullNode;
+        }
+
+        void
+        PrintTree( Treap T )
+        {
+            if( T != NullNode )
+            {
+
+
+
+
+
+
+
+Aug 12 15:27 1996  treap.c Page 2
+
+
+                PrintTree( T->Left );
+                printf( "%d ", T->Element );
+                PrintTree( T->Right );
+            }
+        }
+
+        Position
+        Find( ElementType X, Treap T )
+        {
+            if( T == NullNode )
+                return NullNode;
+            if( X < T->Element )
+                return Find( X, T->Left );
+            else
+            if( X > T->Element )
+                return Find( X, T->Right );
+            else
+                return T;
+        }
+
+        Position
+        FindMin( Treap T )
+        {
+            if( T == NullNode )
+                return NullNode;
+            else
+            if( T->Left == NullNode )
+                return T;
+            else
+                return FindMin( T->Left );
+        }
+
+        Position
+        FindMax( Treap T )
+        {
+            if( T != NullNode )
+                while( T->Right != NullNode )
+                    T = T->Right;
+
+            return T;
+        }
+
+        /* This function can be called only if K2 has a left child */
+        /* Perform a rotate between a node (K2) and its left child */
+        /* Update heights, then return new root */
+
+        static Position
+        SingleRotateWithLeft( Position K2 )
+        {
+            Position K1;
+
+            K1 = K2->Left;
+            K2->Left = K1->Right;
+            K1->Right = K2;
+
+            return K1;  /* New root */
+
+
+
+
+
+
+
+Aug 12 15:27 1996  treap.c Page 3
+
+
+        }
+
+        /* This function can be called only if K1 has a right child */
+        /* Perform a rotate between a node (K1) and its right child */
+        /* Update heights, then return new root */
+
+        static Position
+        SingleRotateWithRight( Position K1 )
+        {
+            Position K2;
+
+            K2 = K1->Right;
+            K1->Right = K2->Left;
+            K2->Left = K1;
+
+            return K2;  /* New root */
+        }
+
+/* START: fig12_40.txt */
+        Treap
+        Insert( ElementType Item, Treap T )
+        {
+            if( T == NullNode )
+            {
+                /* Create and return a one-node tree */
+                T = malloc( sizeof( struct TreapNode ) );
+                if( T == NULL )
+                    FatalError( "Out of space!!!" );
+                else
+                {
+                    T->Element = Item; T->Priority = Random( );
+                    T->Left = T->Right = NullNode;
+                }
+            }
+            else
+            if( Item < T->Element )
+            {
+                T->Left = Insert( Item, T->Left );
+                if( T->Left->Priority < T->Priority )
+                    T = SingleRotateWithLeft( T );
+            }
+            else
+            if( Item > T->Element )
+            {
+                T->Right = Insert( Item, T->Right );
+                if( T->Right->Priority < T->Priority )
+                    T = SingleRotateWithRight( T );
+            }
+
+            /* Otherwise it's a duplicate; do nothing */
+
+            return T;
+        }
+/* END */
+
+/* START: fig12_41.txt */
+
+
+
+
+
+
+
+Aug 12 15:27 1996  treap.c Page 4
+
+
+        Treap
+        Remove( ElementType Item, Treap T )
+        {
+            if( T != NullNode )
+            {
+                if( Item < T->Element )
+                    T->Left = Remove( Item, T->Left );
+                else
+                if( Item > T->Element )
+                    T->Right = Remove( Item, T->Right );
+                else
+                {
+                    /* Match found */
+                    if( T->Left->Priority < T->Right->Priority )
+                        T = SingleRotateWithLeft( T );
+                    else
+                        T = SingleRotateWithRight( T );
+
+                    if( T != NullNode )    /* Continue on down */
+                        T = Remove( Item, T );
+                    else
+                    {
+                        /* At a leaf */
+                        free( T->Left );
+                        T->Left = NullNode;
+                    }
+                }
+            }
+            return T;
+        }
+/* END */
+
+        ElementType
+        Retrieve( Position P )
+        {
+            return P->Element;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Aug 12 15:27 1996  testtrp.c Page 1
+
+
+#include "treap.h"
+#include <stdio.h>
+
+#define NumItems 12000
+
+main( )
+{
+
+    Treap T;
+    Position P;
+    int i;
+    int j = 0;
+
+    T = Initialize( );
+    T = MakeEmpty( NullNode );
+    for( i = 0; i < NumItems; i++, j = ( j + 7 ) % NumItems )
+        T = Insert( j, T );
+    for( i = 0; i < NumItems; i++ )
+        if( ( P = Find( i, T ) ) == NullNode || Retrieve( P ) != i )
+            printf( "Error1 at %d\n", i );
+
+    for( i = 0; i < NumItems; i += 2 )
+        T = Remove( i, T );
+
+    for( i = 1; i < NumItems; i += 2 )
+        if( ( P = Find( i, T ) ) == NullNode || Retrieve( P ) != i )
+           printf( "Error2 at %d\n", i );
+
+    for( i = 0; i < NumItems; i += 2 )
+        if( ( P = Find( i, T ) ) != NullNode )
+            printf( "Error3 at %d\n", i );
+    printf( "Min is %d, Max is %d\n", Retrieve( FindMin( T ) ),
+               Retrieve( FindMax( T ) ) );
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Nov  4 20:38 1997  redblack.h Page 1
+
+
+        #include <stdlib.h>
+        #include "fatal.h"
+
+        typedef int ElementType;
+        #define NegInfinity (-10000)
+
+        #ifndef _RedBlack_H
+        #define _RedBlack_H
+
+        struct RedBlackNode;
+        typedef struct RedBlackNode *Position;
+        typedef struct RedBlackNode *RedBlackTree;
+
+        RedBlackTree MakeEmpty( RedBlackTree T );
+        Position Find( ElementType X, RedBlackTree T );
+        Position FindMin( RedBlackTree T );
+        Position FindMax( RedBlackTree T );
+        RedBlackTree Initialize( void );
+        RedBlackTree Insert( ElementType X, RedBlackTree T );
+        RedBlackTree Remove( ElementType X, RedBlackTree T );
+        ElementType Retrieve( Position P );
+        void PrintTree( RedBlackTree T );
+
+        #endif  /* _RedBlack_H */
+
+/* END */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Aug 12 15:27 1996  redblack.c Page 1
+
+
+#include "redblack.h"
+#include <stdlib.h>
+#include "fatal.h"
+
+
+/* START: fig12_14.txt */
+        typedef enum ColorType { Red, Black } ColorType;
+
+        struct RedBlackNode
+        {
+            ElementType  Element;
+            RedBlackTree Left;
+            RedBlackTree Right;
+            ColorType    Color;
+        };
+
+        static Position NullNode = NULL;  /* Needs initialization */
+
+        /* Initialization procedure */
+        RedBlackTree
+        Initialize( void )
+        {
+            RedBlackTree T;
+
+            if( NullNode == NULL )
+            {
+                NullNode = malloc( sizeof( struct RedBlackNode ) );
+                if( NullNode == NULL )
+                    FatalError( "Out of space!!!" );
+                NullNode->Left = NullNode->Right = NullNode;
+                NullNode->Color = Black;
+                NullNode->Element = 12345;
+            }
+
+            /* Create the header node */
+            T = malloc( sizeof( struct RedBlackNode ) );
+            if( T == NULL )
+                FatalError( "Out of space!!!" );
+            T->Element = NegInfinity;
+            T->Left = T->Right = NullNode;
+            T->Color = Black;
+
+            return T;
+        }
+/* END */
+
+        void
+        Output( ElementType Element )
+        {
+            printf( "%d\n", Element );
+        }
+
+/* START: fig12_13.txt */
+        /* Print the tree, watch out for NullNode, */
+        /* and skip header */
+
+
+
+
+
+
+
+
+Aug 12 15:27 1996  redblack.c Page 2
+
+
+        static void
+        DoPrint( RedBlackTree T )
+        {
+            if( T != NullNode )
+            {
+                DoPrint( T->Left );
+                Output( T->Element );
+                DoPrint( T->Right );
+            }
+        }
+
+        void
+        PrintTree( RedBlackTree T )
+        {
+            DoPrint( T->Right );
+        }
+/* END */
+
+        static RedBlackTree
+        MakeEmptyRec( RedBlackTree T )
+        {
+            if( T != NullNode )
+            {
+                MakeEmptyRec( T->Left );
+                MakeEmptyRec( T->Right );
+                free( T );
+            }
+            return NullNode;
+        }
+
+        RedBlackTree
+        MakeEmpty( RedBlackTree T )
+        {
+            T->Right = MakeEmptyRec( T->Right );
+            return T;
+        }
+
+        Position
+        Find( ElementType X, RedBlackTree T )
+        {
+            if( T == NullNode )
+                return NullNode;
+            if( X < T->Element )
+                return Find( X, T->Left );
+            else
+            if( X > T->Element )
+                return Find( X, T->Right );
+            else
+                return T;
+        }
+
+        Position
+        FindMin( RedBlackTree T )
+        {
+            T = T->Right;
+            while( T->Left != NullNode )
+
+
+
+
+
+
+
+Aug 12 15:27 1996  redblack.c Page 3
+
+
+                T = T->Left;
+
+            return T;
+        }
+
+        Position
+        FindMax( RedBlackTree T )
+        {
+            while( T->Right != NullNode )
+                T = T->Right;
+
+            return T;
+        }
+
+        /* This function can be called only if K2 has a left child */
+        /* Perform a rotate between a node (K2) and its left child */
+        /* Update heights, then return new root */
+
+        static Position
+        SingleRotateWithLeft( Position K2 )
+        {
+            Position K1;
+
+            K1 = K2->Left;
+            K2->Left = K1->Right;
+            K1->Right = K2;
+
+            return K1;  /* New root */
+        }
+
+        /* This function can be called only if K1 has a right child */
+        /* Perform a rotate between a node (K1) and its right child */
+        /* Update heights, then return new root */
+
+        static Position
+        SingleRotateWithRight( Position K1 )
+        {
+            Position K2;
+
+            K2 = K1->Right;
+            K1->Right = K2->Left;
+            K2->Left = K1;
+
+            return K2;  /* New root */
+        }
+
+/* START: fig12_15.txt */
+        /* Perform a rotation at node X */
+        /* (whose parent is passed as a parameter) */
+        /* The child is deduced by examining Item */
+
+        static Position
+        Rotate( ElementType Item, Position Parent )
+        {
+
+            if( Item < Parent->Element )
+
+
+
+
+
+
+
+Aug 12 15:27 1996  redblack.c Page 4
+
+
+                return Parent->Left = Item < Parent->Left->Element ?
+                    SingleRotateWithLeft( Parent->Left ) :
+                    SingleRotateWithRight( Parent->Left );
+            else
+                return Parent->Right = Item < Parent->Right->Element ?
+                    SingleRotateWithLeft( Parent->Right ) :
+                    SingleRotateWithRight( Parent->Right );
+        }
+/* END */
+
+/* START: fig12_16.txt */
+        static Position X, P, GP, GGP;
+
+        static
+        void HandleReorient( ElementType Item, RedBlackTree T )
+        {
+            X->Color = Red;        /* Do the color flip */
+            X->Left->Color = Black;
+            X->Right->Color = Black;
+
+            if( P->Color == Red )  /* Have to rotate */
+            {
+                GP->Color = Red;
+                if( (Item < GP->Element) != (Item < P->Element) )
+                    P = Rotate( Item, GP );  /* Start double rotate */
+                X = Rotate( Item, GGP );
+                X->Color = Black;
+            }
+            T->Right->Color = Black;  /* Make root black */
+        }
+
+        RedBlackTree
+        Insert( ElementType Item, RedBlackTree T )
+        {
+            X = P = GP = T;
+            NullNode->Element = Item;
+            while( X->Element != Item )  /* Descend down the tree */
+            {
+                GGP = GP; GP = P; P = X;
+                if( Item < X->Element )
+                    X = X->Left;
+                else
+                    X = X->Right;
+                if( X->Left->Color == Red && X->Right->Color == Red )
+                    HandleReorient( Item, T );
+            }
+
+            if( X != NullNode )
+                return NullNode;  /* Duplicate */
+
+            X = malloc( sizeof( struct RedBlackNode ) );
+            if( X == NULL )
+                FatalError( "Out of space!!!" );
+            X->Element = Item;
+            X->Left = X->Right = NullNode;
+
+
+
+
+
+
+
+
+Aug 12 15:27 1996  redblack.c Page 5
+
+
+            if( Item < P->Element )  /* Attach to its parent */
+                P->Left = X;
+            else
+                P->Right = X;
+            HandleReorient( Item, T ); /* Color it red; maybe rotate */
+
+            return T;
+        }
+/* END */
+
+        RedBlackTree
+        Remove( ElementType Item, RedBlackTree T )
+        {
+            printf( "Remove is unimplemented\n" );
+            if( Item )
+                return T;
+            return T;
+        }
+
+        ElementType
+        Retrieve( Position P )
+        {
+            return P->Element;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Aug 12 15:27 1996  testrb.c Page 1
+
+
+#include "redblack.h"
+#include <stdio.h>
+
+#define N 800
+
+main( )
+{
+    RedBlackTree T;
+    Position P;
+    int i;
+    int j = 0;
+
+    T = Initialize( );
+    T = MakeEmpty( T );
+
+    for( i = 0; i < N; i++, j = ( j + 7 ) % N )
+        T = Insert( j, T );
+    printf( "Inserts are complete\n" );
+
+
+
+    for( i = 0; i < N; i++ )
+        if( ( P = Find( i, T ) ) == NULL || Retrieve( P ) != i )
+            printf( "Error at %d\n", i );
+
+
+    printf( "Min is %d, Max is %d\n", Retrieve( FindMin( T ) ),
+               Retrieve( FindMax( T ) ) );
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Aug 12 15:27 1996  kdtree.c Page 1
+
+
+        #include <stdio.h>
+        #include <stdlib.h>
+        #include "fatal.h"
+
+        typedef int ElementType;
+        typedef ElementType ItemType[ 2 ];
+
+        struct KdNode;
+        typedef struct KdNode *Position;
+        typedef struct KdNode *KdTree;
+
+        struct KdNode
+        {
+            ItemType Data;
+            KdTree   Left;
+            KdTree   Right;
+        };
+
+/* START: fig12_43.txt */
+        static KdTree
+        RecursiveInsert( ItemType Item, KdTree T, int Level )
+        {
+            if( T == NULL )
+            {
+                T = malloc( sizeof( struct KdNode ) );
+                if( T == NULL )
+                    FatalError( "Out of space!!!" );
+                T->Left = T->Right = NULL;
+                T->Data[ 0 ] = Item[ 0 ];
+                T->Data[ 1 ] = Item[ 1 ];
+            }
+            else
+            if( Item[ Level ] < T->Data[ Level ] )
+                T->Left = RecursiveInsert( Item, T->Left, !Level );
+            else
+                T->Right = RecursiveInsert( Item, T->Right, !Level );
+            return T;
+        }
+
+        KdTree
+        Insert( ItemType Item, KdTree T )
+        {
+            return RecursiveInsert( Item, T, 0 );
+        }
+/* END */
+
+/* START: fig12_44.txt */
+        /* Print items satisfying */
+        /* Low[ 0 ] <= Item[ 0 ] <= High[ 0 ] and */
+        /* Low[ 1 ] <= Item[ 1 ] <= High[ 1 ] */
+
+        static void
+        RecPrintRange( ItemType Low, ItemType High,
+                       KdTree T, int Level )
+        {
+            if( T != NULL )
+
+
+
+
+
+
+
+Aug 12 15:27 1996  kdtree.c Page 2
+
+
+            {
+                if( Low[ 0 ] <= T->Data[ 0 ] &&
+                                T->Data[ 0 ] <= High[ 0 ] &&
+                                Low[ 1 ] <= T->Data[ 1 ] &&
+                                T->Data[ 1 ] <= High[ 1 ] )
+                    printf( "(%d,%d)\n",
+                                T->Data[ 0 ], T->Data[ 1 ] );
+
+                if( Low[ Level ] <= T->Data[ Level ] )
+                    RecPrintRange( Low, High, T->Left, !Level );
+                if( High[ Level ] >= T->Data[ Level ] )
+                    RecPrintRange( Low, High, T->Right, !Level );
+            }
+        }
+
+        void
+        PrintRange( ItemType Low, ItemType High, KdTree T )
+        {
+            RecPrintRange( Low, High, T, 0 );
+        }
+/* END */
+
+main( )
+{
+    KdTree T;
+    ItemType It, L, H;
+    int i;
+
+    printf( "Starting program\n" );
+
+    T = NULL;
+    for( i = 300; i < 370; i++ )
+    {
+        It[ 0 ] = i; It[ 1 ] = 2500 - i;
+        T = Insert( It, T );
+    }
+
+    printf( "Insertions complete\n" );
+
+    i = 1;
+    L[ 0 ] = 70; L[ 1 ] = 2186; H[ 0 ] = 1200; H[ 1 ] = 2200;
+    PrintRange( L, H, T );
+
+    printf( "Done...\n" ) ;
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Nov  4 20:37 1997  pairheap.h Page 1
+
+
+
+        typedef int ElementType;
+
+        #ifndef _PairHeap_H
+        #define _PairHeap_H
+
+        struct PairNode;
+        typedef struct PairNode *PairHeap;
+        typedef struct PairNode *Position;
+
+        PairHeap Initialize( void );
+        void Destroy( PairHeap H );
+        PairHeap MakeEmpty( PairHeap H );
+        PairHeap Insert( ElementType Item, PairHeap H, Position *Loc );
+        PairHeap DeleteMin( ElementType *MinItem, PairHeap H );
+        ElementType FindMin( PairHeap H );
+        PairHeap DecreaseKey( Position P,
+                              ElementType NewVal, PairHeap H );
+        int IsEmpty( PairHeap H );
+        int IsFull( PairHeap H );
+        #endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Aug 12 15:27 1996  pairheap.c Page 1
+
+
+        #include "pairheap.h"
+        #include "fatal.h"
+        #include <stdlib.h>
+
+        struct PairNode
+        {
+            ElementType Element;
+            Position    LeftChild;
+            Position    NextSibling;
+            Position    Prev;
+        };
+
+        #define MaxSiblings 1000
+
+        Position CompareAndLink( Position First, Position Second );
+        PairHeap CombineSiblings( Position FirstSibling );
+
+
+        PairHeap
+        Initialize( void )
+        {
+            return NULL;
+        }
+
+        PairHeap
+        MakeEmpty( PairHeap H )
+        {
+            if( H != NULL )
+            {
+                MakeEmpty( H->LeftChild );
+                MakeEmpty( H->NextSibling );
+                free( H );
+            }
+            return NULL;
+        }
+
+/* START: fig12_54.txt */
+        /* Insert Item into pairing heap H */
+        /* Return resulting pairing heap */
+        /* A pointer to the newly allocated node */
+        /* is passed back by reference and accessed as *Loc */
+
+        PairHeap
+        Insert( ElementType Item, PairHeap H, Position *Loc )
+        {
+            Position NewNode;
+
+            NewNode = malloc( sizeof( struct PairNode ) );
+            if( NewNode == NULL )
+                FatalError( "Out of space!!!" );
+            NewNode->Element = Item;
+            NewNode->LeftChild = NewNode->NextSibling = NULL;
+            NewNode->Prev = NULL;
+
+            *Loc = NewNode;
+            if( H == NULL )
+
+
+
+
+
+
+
+Aug 12 15:27 1996  pairheap.c Page 2
+
+
+                return NewNode;
+            else
+                return CompareAndLink( H, NewNode );
+        }
+
+
+        /* Lower item in Position P by Delta */
+
+        PairHeap
+        DecreaseKey( Position P, ElementType Delta, PairHeap H )
+        {
+            if( Delta < 0 )
+                Error( "DecreaseKey called with negative Delta" );
+
+            P->Element -= Delta;
+            if( P == H )
+                return H;
+
+            if( P->NextSibling != NULL )
+                P->NextSibling->Prev = P->Prev;
+            if( P->Prev->LeftChild == P )
+                P->Prev->LeftChild = P->NextSibling;
+            else
+                P->Prev->NextSibling = P->NextSibling;
+
+            P->NextSibling = NULL;
+            return CompareAndLink( H, P );
+        }
+/* END */
+
+
+/* START: fig12_55.txt */
+        PairHeap
+        DeleteMin( ElementType *MinItem, PairHeap H )
+        {
+            Position NewRoot = NULL;
+
+            if( IsEmpty( H ) )
+                Error( "Pairing heap is empty!" );
+            else
+            {
+                *MinItem = H->Element;
+                if( H->LeftChild != NULL )
+                    NewRoot = CombineSiblings( H->LeftChild );
+                free( H );
+            }
+            return NewRoot;
+        }
+/* END */
+
+/* START: fig12_53.txt */
+        /* This is the basic operation to maintain order */
+        /* Links First and Second together to satisfy heap order */
+        /* Returns the resulting tree */
+        /* First is assumed NOT NULL */
+        /* First->NextSibling  MUST be NULL on entry */
+
+
+
+
+
+
+
+Aug 12 15:27 1996  pairheap.c Page 3
+
+
+
+        Position
+        CompareAndLink( Position First, Position Second )
+        {
+            if( Second == NULL )
+                return First;
+            else
+            if( First->Element <= Second->Element )
+            {
+                /* Attach Second as the leftmost child of First */
+                Second->Prev = First;
+                First->NextSibling = Second->NextSibling;
+                if( First->NextSibling != NULL )
+                    First->NextSibling->Prev = First;
+                Second->NextSibling = First->LeftChild;
+                if( Second->NextSibling != NULL )
+                    Second->NextSibling->Prev = Second;
+                First->LeftChild = Second;
+                return First;
+            }
+            else
+            {
+                /* Attach First as the leftmost child of Second */
+                Second->Prev = First->Prev;
+                First->Prev = Second;
+                First->NextSibling = Second->LeftChild;
+                if( First->NextSibling != NULL )
+                    First->NextSibling->Prev = First;
+                Second->LeftChild = First;
+                return Second;
+            }
+        }
+/* END */
+
+/* START: fig12_56.txt */
+        /* Assumes FirstSibling is NOT NULL */
+
+        PairHeap
+        CombineSiblings( Position FirstSibling )
+        {
+            static Position TreeArray[ MaxSiblings ];
+            int i, j, NumSiblings;
+
+            /* If only one tree, return it */
+            if( FirstSibling->NextSibling == NULL )
+                return FirstSibling;
+
+            /* Place each subtree in TreeArray */
+            for( NumSiblings = 0; FirstSibling != NULL; NumSiblings++ )
+            {
+                TreeArray[ NumSiblings ] = FirstSibling;
+                FirstSibling->Prev->NextSibling = NULL; /* Break links */
+                FirstSibling = FirstSibling->NextSibling;
+            }
+            TreeArray[ NumSiblings ] = NULL;
+
+
+
+
+
+
+
+
+Aug 12 15:27 1996  pairheap.c Page 4
+
+
+            /* Combine the subtrees two at a time, */
+            /* going left to right */
+            for( i = 0; i + 1 < NumSiblings; i += 2 )
+                TreeArray[ i ] = CompareAndLink(
+                        TreeArray[ i ], TreeArray[ i + 1 ] );
+
+            /* j has the result of the last CompareAndLink */
+            /* If an odd number of trees, get the last one */
+            j = i - 2;
+            if( j == NumSiblings - 3 )
+                TreeArray[ j ] = CompareAndLink(
+                        TreeArray[ j ], TreeArray[ j + 2 ] );
+
+            /* Now go right to left, merging last tree with */
+            /* next to last. The result becomes the new last */
+            for( ; j >= 2; j -= 2 )
+                TreeArray[ j - 2 ] = CompareAndLink(
+                        TreeArray[ j - 2 ],  TreeArray[ j ] );
+
+            return TreeArray[ 0 ];
+        }
+/* END */
+
+        ElementType
+        FindMin( PairHeap H )
+        {
+            if( !IsEmpty( H ) )
+                return H->Element;
+            Error( "Priority Queue is Empty" );
+            return 0;
+        }
+
+        int
+        IsEmpty( PairHeap H )
+        {
+            return H == NULL;
+        }
+
+        int
+        IsFull( PairHeap H )
+        {
+            return 0;   /* Never full */
+        }
+
+        void
+        Destroy( PairHeap H )
+        {
+            MakeEmpty( H );
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Aug 12 15:27 1996  testpair.c Page 1
+
+
+#include "pairheap.h"
+#include <stdio.h>
+
+void
+sleep( int x )
+{
+    int i, j, k, m;
+
+    for( i = 0; i < 10000; i++ )
+        for( j = 0; j < 1000; j++ )
+            for( k = 0; k < x; k++ )
+                m++;
+    printf( "Done sleeping!! %d", m );
+}
+
+#define MaxSize 500
+
+main( )
+{
+    PairHeap H;
+    Position P[ MaxSize ];
+    int i, j;
+    int AnItem;
+
+    H = Initialize( );
+    for( i=0, j=MaxSize/2; i<MaxSize; i++, j=( j+71)%MaxSize )
+        H = Insert( j + MaxSize, H, &P[ j ] );
+
+    printf( "Done inserting\n" );
+
+    for( i = 0, j = MaxSize / 2; i <MaxSize; i++, j=(j+51)%MaxSize )
+        H = DecreaseKey( P[ j ], MaxSize, H );
+
+    j = 0;
+    while( !IsEmpty( H ) )
+    {
+        if( ( ( H = DeleteMin( &AnItem, H ) ), AnItem ) != j++ )
+            printf( "Error in DeleteMin, %d\n", j );
+    }
+    printf( "Done...\n" );
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

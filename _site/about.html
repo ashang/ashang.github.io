@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta name="description" content="ramblings notes, things I worked through to make sure I understand.">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://10.10.50.50:1125/about">
+  <link rel="alternate" type="application/rss+xml" title="in love we trust" href="http://10.10.50.50:1125/feed.xml">
+  <title>
+    
+       &middot; in love we trust
+    
+  </title>
+
+  
+  <link rel="canonical" href="http://10.10.50.50:1125/about">
+  
+
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/poole.css">
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/syntax.css">
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/lanyon.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <link rel="shortcut icon" href="http://10.10.50.50:1125/favicon.ico">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://10.10.50.50:1125/atom.xml">
+
+  
+</head>
+<body class="fixed-nav"><header class="site-header" >
+    <a class="site-title" href="/">in love we trust</a>
+
+    <nav class="site-nav">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+
+      <div class="trigger">
+        
+          
+        
+          
+          <a class="page-link" href="/404/"> </a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/ansible-examples">Ansible examples</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-guide">Ansible quickstart</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-modules">Ansible modules</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-roles">Ansible roles</a>
+          
+        
+          
+          <a class="page-link" href="/ansible">Ansible</a>
+          
+        
+          
+          <a class="page-link" href="/archive">Archive</a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/cmd-test">cmd Test</a>
+          
+        
+          
+          <a class="page-link" href="/cryptsetup">cryptsetup with LUKS</a>
+          
+        
+          
+          <a class="page-link" href="/cupper-shortcodes--percent-sign">Cupper Shortcodes with percent sign</a>
+          
+        
+          
+          <a class="page-link" href="/curl">curl</a>
+          
+        
+          
+          <a class="page-link" href="/downtime">downtime</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/frontend">front-end</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/notes/">WILT</a>
+          
+        
+          
+          <a class="page-link" href="/p4-lang">p4</a>
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/tags/">Tags</a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/tutorials">Tutorials</a>
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+</header>
+<div class="container">
+    <div id="page" class="site">
+      <main class="page-content" aria-label="Content">
+        <h2 id="features">Features</h2>
+
+<ul>
+  <li>Responsive</li>
+  <li>Semantic HTML</li>
+  <li>Skins</li>
+  <li>Highlight Theme</li>
+  <li>Internationalization</li>
+  <li>Search</li>
+  <li>Table of contents</li>
+  <li>Authors</li>
+  <li>Additional styles (alert, tag, image, icon, button, grid, etc)</li>
+  <li>Extensions (audios, videos, slides, demos)</li>
+  <li>Markdown enhancements (<a href="https://www.mathjax.org/">MathJax</a>, <a href="https://mermaidjs.github.io/">mermaid</a>, <a href="http://www.chartjs.org/">chartjs</a>)</li>
+  <li>Sharing (<a href="https://www.addtoany.com/">AddToAny</a>, <a href="https://www.addthis.com/">AddThis</a>)</li>
+  <li>Comments (<a href="https://disqus.com/">Disqus</a>, <a href="https://gitalk.github.io/">Gitalk</a>, <a href="https://valine.js.org/en/">Valine</a>)</li>
+  <li>Pageview (<a href="https://leancloud.cn/">LeanCloud</a>)</li>
+  <li>Analytics (<a href="https://analytics.google.com/analytics/web/">Google Analytics</a>)</li>
+  <li>RSS (<a href="https://github.com/jekyll/jekyll-feed">jekyll-feed</a>)</li>
+</ul>
+
+<p>:+1:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(()</span> <span class="o">=&gt;</span> <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hello, World!</span><span class="dl">'</span><span class="p">))();</span>
+</code></pre></div></div>
+<p>TeXt use <a href="https://github.com/chriskempson/tomorrow-theme">Tomorrow</a> as the highlight theme.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th><code class="language-plaintext highlighter-rouge">tomorrow</code></th>
+      <th><code class="language-plaintext highlighter-rouge">tomorrow-night-eighties</code></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><img src="https://raw.githubusercontent.com/kitian616/jekyll-TeXt-theme/master/screenshots/highlight_tomorrow.png" alt="Tomorrow" /></td>
+      <td><img src="https://raw.githubusercontent.com/kitian616/jekyll-TeXt-theme/master/screenshots/highlight_tomorrow-night-eighties.png" alt="Tomorrow Night Eighties" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="whoami">whoami</h2>
+
+<p>I am an engineer.</p>
+
+<p>I innovate. I am inspired by others.</p>
+
+<p>I admire great people who make great products.</p>
+
+<p>And I love it best when I make a difference in the lives of others.</p>
+
+<p>I am keen on classical or esp. new things.</p>
+
+<p>HTML code</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;p&gt;&lt;script type="text/javascript"&gt;
+&lt;!--
+h='&amp;#x61;&amp;#x73;&amp;#104;&amp;#x61;&amp;#110;&amp;#x67;&amp;#46;&amp;#x6f;&amp;#114;&amp;#x67;';a='&amp;#64;';n='&amp;#x61;&amp;#x61;&amp;#114;&amp;#x6f;&amp;#110;';e=n+a+h;
+document.write('&lt;a h'+'ref'+'="ma'+'ilto'+':'+e+'"&gt;'+e+'&lt;\/'+'a'+'&gt;');
+// --&gt;
+&lt;/script&gt;&lt;noscript&gt;&amp;#x61;&amp;#x61;&amp;#114;&amp;#x6f;&amp;#110;&amp;#32;&amp;#x61;&amp;#116;&amp;#32;&amp;#x61;&amp;#x73;&amp;#104;&amp;#x61;&amp;#110;&amp;#x67;&amp;#32;&amp;#100;&amp;#x6f;&amp;#116;&amp;#32;&amp;#x6f;&amp;#114;&amp;#x67;&lt;/noscript&gt;&lt;/p&gt;
+
+
+
+&lt;p&gt;&lt;script type="text/javascript"&gt;
+&lt;!--
+h='&amp;#x67;&amp;#x6d;&amp;#x61;&amp;#x69;&amp;#108;&amp;#46;&amp;#x63;&amp;#x6f;&amp;#x6d;';a='&amp;#64;';n='&amp;#x61;&amp;#x61;&amp;#114;&amp;#x6f;&amp;#110;&amp;#x73;&amp;#104;&amp;#x61;&amp;#110;&amp;#x67;';e=n+a+h;
+document.write('&lt;a h'+'ref'+'="ma'+'ilto'+':'+e+'"&gt;'+e+'&lt;\/'+'a'+'&gt;');
+// --&gt;
+&lt;/script&gt;&lt;noscript&gt;&amp;#x61;&amp;#x61;&amp;#114;&amp;#x6f;&amp;#110;&amp;#x73;&amp;#104;&amp;#x61;&amp;#110;&amp;#x67;&amp;#32;&amp;#x61;&amp;#116;&amp;#32;&amp;#x67;&amp;#x6d;&amp;#x61;&amp;#x69;&amp;#108;&amp;#32;&amp;#100;&amp;#x6f;&amp;#116;&amp;#32;&amp;#x63;&amp;#x6f;&amp;#x6d;&lt;/noscript&gt;&lt;/p&gt;
+</code></pre></div></div>
+
+<p>win with integrity.
+make it better.
+inspire and be the change.</p>
+
+<p>久坐电脑前，请多起身动动筋骨！</p>
+
+<p>en-3
+This user is able to contribute with an advanced level of English.
+ru-0
+Этот участник не понимает по-русски (или понимает с большим трудом).
+ko-0
+이 사용자는 한국어/조선어를 모르거나, 이해하는 데 어려움이 있습니다.
+ja-0
+この利用者は日本語が分かりません。
+IPA-0
+ə   这个用户不懂国际音标。
+zh-wenyan-2
+此君有志文言也。
+Morse-0 这个用户无法理解摩尔斯电码。
+Nuvola apps kcmsystem.svg   这个用户是工程师。
+JS  该用户会用JavaScript语言。
+bash    这个用户会编写Bash脚本。
+C-2
+这个用户能一般地使用C语言。
+C++-1
+这个用户刚开始使用C++语言。
+CSS-2
+这个用户能一般地使用CSS。
+html-3
+这个用户能熟练地使用HTML。
+Java-1
+这个用户刚开始使用Java语言。
+Perl    该用户会使用Perl。
+php-1
+这个用户刚开始使用PHP。
+Python-2    这个用户是个初级Python程序员。
+Regex   该用户会使用正则表达式。
+sql-1
+这个用户开始使用sql。
+查阅所有用户语言</p>
+
+<p>Wikimedia logo family complete-2013.svg 这是一个全域用户帐号，主站在维基百科 (zh)</p>
+
+<p>Hanzi.svg   这位用户能熟练地用简体中文书写并能流畅地阅读繁体中文
+Email   这个用户使用电子邮件。
+aaron(at).svgashang dot org</p>
+
+<p>Blue ribbon.svg 这个用户支持言论自由。</p>
+
+<blockquote>
+  <p>24Hrs!!    这个用户认为廿四小时并不够用！  Wall clock.png
+羽毛球  这个用户喜欢羽毛球。
+TV  这个用户不喜欢看电视。
+Weiji.png   这个用户喜欢维基百科。
+Newgooglelogo.png   这个用户喜欢浏览Newgooglelogo.png的网页。
+Video-x-generic.svg 这位用户喜欢电影</p>
+</blockquote>
+
+<p>Topographic map example.png 这位用户喜欢看地图。</p>
+
+<p>Sciences exactes.svg    这个用户对科学感兴趣。  Nuvola apps edu science.svg
+Peace symbol.svg    此用户热爱和平，反对暴力。</p>
+
+<p>NO SOPA.svg 本用户支持维基百科对禁止网络盗版法案采取抗议行动与抗议经济部智慧财产局研拟封锁境外侵权网站行动。
+Tree-256x256.png    这个用户喜欢绿色能源。
+容  该用户是一名包容主义维基人。
+Pdnbtn.png  这个用户正在试图做到不伤害新手。</p>
+
+<p>Nuvola apps korganizer.svg  这个用户在生活中奉行五大支柱。</p>
+
+<p>很像新人    该用户虽已加入维基百科一段时间了，但仍觉得自己像个新人一样。
+Wikify logo-2.svg
+Level3  这名用户熟习编辑技巧，能够给初学者提供建议。
+Administrative divisions of Perm (en).svg   此用户喜欢研究各国的行政区划制度。</p>
+
+<p>Hammer and sickle.svg   这个用户关注共产主义学说。
+HanWaHanViet.svg    此用户关注或感兴趣于东亚文化圈。</p>
+
+<p>This is a Wikipedia user page.
+This is not an encyclopedia article. If you find this page on any site other than Wikipedia, you are viewing a mirror site. Be aware that the page may be outdated and that the user to whom this page belongs may have no personal affiliation with any site other than Wikipedia itself. The original page is located at http://en.wikipedia.org/wiki/User:Aaron_shang.
+Wikipedia:Babel
+Timezone+8.png  The time of this user now is:
+UTC+8 2015-01-08 02:23 UTC
+zh  該用戶的母語是中文。
+该用户的母语是中文。
+en-3    This user can contribute with an advanced level of English.
+ru-0    Этот участник не понимает русский язык.
+ko-0    이 사용자는 한국어를 모르거나, 이해하는 데 어려움이 있습니다.
+ja-0    この利用者は日本語がわかりません。
+ipa
+ə-0 This user does not understand the International Phonetic Alphabet.
+Nuvola apps kcmsystem.svg   This user is an engineer.
+js  This user can program in JavaScript.
+bash    This user can program in Bash.
+C-2 This user is an intermediate C programmer.
+C++-1   This user is a beginning C++ programmer.
+css-2   This user is an intermediate Cascading Style Sheets user.
+HTML-3  This user is an advanced HTML user.
+Java-1  This user is a beginning Java programmer.
+php-1   This user is a beginning PHP programmer.
+py-2    This user is an intermediate Python programmer.
+sql-1   This user is a beginning SQL user.
+Search user languages
+Wikimedia logo family complete-2013.svg This user has created a global account. Aaron shang’s main account is on Wikipedia (Chinese).
+@   This user can be reached by email.
+NO SOPA.svg This user hopes that in light of massive media coverage of the blackout that SOPA and PIPA will not become a law.</p>
+
+<p>This blog is where I put things that I think are interesting, or that I want to remember or document. Some posts are lighthearted, while others are kind of heavy. There is no real over-arching theme, as I just add things as I go along. Hope you find something interesting here!</p>
+
+<p>Thank you for stopping by.</p>
+
+<p>Aaron Shang
+Sony Ericsson Australia 33-39 Talavera Road North Ryde
+Sydney, NSW 2113
+Australia
+Phone: 13910531272</p>
+
+<p>Aaron Shang
+Qinghua High School, Yuwen Team
+Beijing, Beijing 100084
+China
+Phone: 13693231045</p>
+
+<h1 id="lang">lang</h1>
+
+<p>C</p>
+
+<p>C++</p>
+
+<p>Python</p>
+
+<p>Perl</p>
+
+<p>SED</p>
+
+<p>AWK</p>
+
+<p>SHELL</p>
+
+<p>Ruby</p>
+
+<p>Lua</p>
+
+<h1 id="phase-out">Phase out</h1>
+
+<h2 id="about-freecode">About Freecode</h2>
+
+<p>The Freecode site has been moved to a static state effective June 18, 2014 due to low traffic levels and so that folks will focus on more useful endeavors than site upkeep.</p>
+
+<p>Support questions regarding this static site may be directed to freecode@slashdotmedia.com.</p>
+
+<p>The site contents have been retained in this static state as a continued path to access the linked software, much of which is on self-hosted servers and would be difficult to find otherwise.</p>
+
+<p>Developers seeking hosting or ability to promote their Open Source software should consider SourceForge, as much of the Freshmeat-listed software currently uses that site.</p>
+
+<p>Freecode has been the Web’s largest index of Linux, Unix and cross-platform software, and mobile applications. Thousands of applications, which are preferably released under an open source license, were meticulously cataloged in the Freecode database, but links to new applications and releases are no longer being added. Each entry provides a description of the software, links to download it and to obtain more information, and a history of the project’s releases.</p>
+
+<h2 id="unarchiver-for-a-variety-of-file-formats">Unarchiver for a variety of file formats</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> The Unarchiver is an archive unpacker program with support for the popular
+ zip, RAR, 7z, tar, gzip, bzip2, LZMA, XZ, CAB, MSI, NSIS, EXE, ISO, BIN, and
+ split file formats, as well as the old Stuffit, Stuffit X, DiskDouble, Compact
+ Pro, Packit, cpio, compress (.Z), ARJ, ARC, PAK, ACE, ZOO, LZH, ADF, DMS, LZX,
+ PowerPacker, LBR, Squeeze, Crunch, and other old formats.
+ .
+ This package contains the lsar tool which lists the contents of archives and
+ the unar tool which extracts those contents.
+Original-Maintainer: Matt Kraai &lt;kraai@debian.org&gt;
+Homepage: http://unarchiver.c3.cx/
+</code></pre></div></div>
+
+<h1 id="中文文件名乱码">中文文件名乱码</h1>
+
+<h2 id="solutions">Solutions</h2>
+
+<h3 id="首选方案-use-7z-instead-of-zip">首选方案 Use 7z instead of zip</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LANG=C 7za x your-zip-file.zip
+</code></pre></div></div>
+
+<h1 id="langc表示以us-ascii编码输出文件名没这个语言设置会输出utf8格式的乱码convmv会忽略这样的乱码">LANG=C表示以US-ASCII编码输出文件名，没这个语言设置，会输出UTF8格式的乱码(convmv会忽略这样的乱码)。</h1>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install p7zip-rar
+</code></pre></div></div>
+
+<h3 id="其他方案">其他方案</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>unzip -O cp936
+
+unzip -O gbk
+
+# 有些发行版的 unzip 没有这个参数，比如 ArchLinux 就需要安装 unzip-iconv
+
+convmv -f GBK -t utf8 --notest -r .
+
+
+# gbk code page 936
+# shift-jis code page 932
+# BIG5-HKSCS
+</code></pre></div></div>
+
+<h3 id="其他">其他</h3>
+
+<p>压缩 ZIP 文件时，使用 -mcu 选项强制使用 UTF-8 作为压缩文件名的编码</p>
+
+<p>把rar卸载 ，装unrar ，解压的乱码问题就解决了</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jar xvf file.zip
+</code></pre></div></div>
+
+<h1 id="sudo-apt-get-install-unar">sudo apt-get install unar</h1>
+<h1 id="lsar--e-gb18030-foozip">lsar -e GB18030 foo.zip</h1>
+<h1 id="unar--e-gb18030-foozip">unar -e GB18030 foo.zip</h1>
+
+<h1 id="unzip">unzip</h1>
+
+<ul>
+  <li>SECURITY UPDATE: heap overflow in charset_to_intern()
+    <ul>
+      <li>debian/patches/20-unzip60-alt-iconv-utf8: updated to fix buffer
+overflow in unix/unix.c.</li>
+      <li>CVE-2015-1315</li>
+    </ul>
+  </li>
+  <li>SECURITY REGRESSION: regression with executable jar files
+    <ul>
+      <li>debian/patches/09-cve-2014-8139-crc-overflow: updated to fix
+regression.</li>
+    </ul>
+  </li>
+  <li>SECURITY REGRESSION: regression with certain compressed data headers
+    <ul>
+      <li>debian/patches/12-cve-2014-9636-test-compr-eb: updated to fix
+regression.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>– Marc Deslauriers <a href="mailto:marc.deslauriers@ubuntu.com">marc.deslauriers@ubuntu.com</a>  Tue, 17 Feb 2015 14:22:58 -0500</p>
+
+<p>unzip (6.0-13ubuntu2) vivid; urgency=medium</p>
+
+<ul>
+  <li>SECURITY UPDATE: heap overflow via mismatched block sizes
+    <ul>
+      <li>debian/patches/12-cve-2014-9636-test-compr-eb: ensure compressed and
+uncompressed block sizes match when using STORED method in extract.c.</li>
+      <li>CVE-2014-9636</li>
+    </ul>
+  </li>
+</ul>
+
+<p>– Marc Deslauriers <a href="mailto:marc.deslauriers@ubuntu.com">marc.deslauriers@ubuntu.com</a>  Thu, 29 Jan 2015 11:16:07 -0500</p>
+
+<p>unzip (6.0-13ubuntu1) vivid; urgency=medium</p>
+
+<ul>
+  <li>Merge with Debian; remaining changes:</li>
+</ul>
+
+<p>– Matthias Klose <a href="mailto:doko@ubuntu.com">doko@ubuntu.com</a>  Thu, 25 Dec 2014 13:34:55 +0100</p>
+
+<p>unzip (6.0-13) unstable; urgency=medium</p>
+
+<ul>
+  <li>Apply upstream fix for three security bugs. Closes: #773722.
+CVE-2014-8139: CRC32 verification heap-based overflow
+CVE-2014-8140: out-of-bounds write issue in test_compr_eb()
+CVE-2014-8141: out-of-bounds read issues in getZip64Data()</li>
+</ul>
+
+<p>– Santiago Vila <a href="mailto:sanvila@debian.org">sanvila@debian.org</a>  Mon, 22 Dec 2014 19:16:10 +0100</p>
+
+<p>unzip (6.0-12ubuntu1) utopic; urgency=medium</p>
+
+<ul>
+  <li>Resynchronise with Debian.  Remaining changes:
+    <ul>
+      <li>Add patch from archlinux which adds the -O option, allowing a charset
+to be specified for the proper unzipping of non-Latin and non-Unicode
+filenames.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>– Colin Watson <a href="mailto:cjwatson@ubuntu.com">cjwatson@ubuntu.com</a>  Thu, 05 Jun 2014 10:03:44 +0100</p>
+
+<p>unzip (6.0-12) unstable; urgency=medium</p>
+
+<ul>
+  <li>Fix zipinfo crash where a value &lt;= 25.5 was printed in a buffer
+having room only for values &lt; 10.0. The integral part is now printed
+at attribs[11] using %2u instead of attribs[12] using %u.
+This way the output is the same as before for values &lt; 10.
+Authors tell me that the next unzip release will have a fix
+like this, at least for the Unix case. Closes: #744212.</li>
+</ul>
+
+<p>– Santiago Vila <a href="mailto:sanvila@debian.org">sanvila@debian.org</a>  Thu, 24 Apr 2014 23:39:38 +0200</p>
+
+<p>unzip (6.0-11) unstable; urgency=medium</p>
+
+<ul>
+  <li>Lowered mime priority to 3, somewhat below 5 which is file-roller
+default value. Closes: #727306.</li>
+  <li>
+    <p>Increase size of cfactorstr array in list.c to avoid a buffer
+overflow problem. Closes: #741384.</p>
+  </li>
+  <li>Added recommended targets build-arch and build-indep.</li>
+  <li>Dropped obsolete Conflicts and Replaces on unzip-crypt, for which
+the last version was a dummy transitional package.</li>
+  <li>The copyright file is generated from copyright.in at build time.
+Added lintian override for no-debian-copyright.</li>
+</ul>
+
+<p>unzip (6.0-9ubuntu1) saucy; urgency=low</p>
+
+<ul>
+  <li>Resynchronise with Debian.  Remaining changes:
+    <ul>
+      <li>Add patch from archlinux which adds the -O option, allowing a charset
+to be specified for the proper unzipping of non-Latin and non-Unicode
+filenames.</li>
+    </ul>
+  </li>
+  <li>Added NO_WORKING_ISPRINT to DEFINES so that UTF8 filenames are
+displayed correctly. Reported by Slavek Banko. Closes: #682682.</li>
+  <li>Use the right strip command when cross-building. Closes: #695141.</li>
+</ul>
+
+
+      </main>
+    <aside class="footer-widgets">
+
+    
+
+    <div id="footer-columns" class="footer-columns">
+        <div class="inner">
+            <div class="grid">
+
+                
+
+                <!-- Create a sorted array of tags -->
+                <div class="one-third">
+                    
+                    
+                    <section class="widget widget-tags">
+                        <!--
+                        <h2 class="widget-title">Tags</h2>
+                        <div class="tagcloud">
+                            
+                            <a href="/tags/#Algorithms">Algorithms</a>
+                            
+                            <a href="/tags/#Apple">Apple</a>
+                            
+                            <a href="/tags/#Boost">Boost</a>
+                            
+                            <a href="/tags/#C%2B%2B">C++</a>
+                            
+                            <a href="/tags/#Cocoa">Cocoa</a>
+                            
+                            <a href="/tags/#Coding">Coding</a>
+                            
+                            <a href="/tags/#Jekyll">Jekyll</a>
+                            
+                            <a href="/tags/#Mac">Mac</a>
+                            
+                            <a href="/tags/#OSX">OSX</a>
+                            
+                            <a href="/tags/#Performance">Performance</a>
+                            
+                            <a href="/tags/#STL">STL</a>
+                            
+                            <a href="/tags/#Threading">Threading</a>
+                            
+                            <a href="/tags/#Unicode">Unicode</a>
+                            
+                            <a href="/tags/#api">api</a>
+                            
+                            <a href="/tags/#c%2B%2B">c++</a>
+                            
+                            <a href="/tags/#c%2B%2B11">c++11</a>
+                            
+                            <a href="/tags/#code+block">code block</a>
+                            
+                            <a href="/tags/#iOS">iOS</a>
+                            
+                            <a href="/tags/#iPhone">iPhone</a>
+                            
+                            <a href="/tags/#iptables">iptables</a>
+                            
+                            <a href="/tags/#markdown">markdown</a>
+                            
+                            <a href="/tags/#nftables">nftables</a>
+                            
+                            <a href="/tags/#openapi">openapi</a>
+                            
+                            <a href="/tags/#programming+language">programming language</a>
+                            
+                            <a href="/tags/#racket">racket</a>
+                            
+                            <a href="/tags/#select">select</a>
+                            
+                            <a href="/tags/#stl">stl</a>
+                            
+                            <a href="/tags/#swagger">swagger</a>
+                            
+                            <a href="/tags/#test">test</a>
+                            
+                            <a href="/tags/#tutorial">tutorial</a>
+                            
+                            <a href="/tags/#webdev">webdev</a>
+                            
+                        </div>
+                        -->
+                    </section><!-- .widget -->
+                </div><!-- .one-third -->
+
+            </div><!-- .grid -->
+        </div><!-- .inner -->
+    </div><!-- .footer-columns -->
+
+</aside><!-- .footer-widgets -->
+
+    </div><!-- .site -->
+    <div class="profile">
+      <a href="http://10.10.50.50:1125"><img src="" class="profile-image"></a>
+      <div class="profile-about">
+        <h2 style="margin-bottom: 0; font-weight: 700;"></h2>
+        
+        
+        
+        <a href="about"><img src="/img/icon/me.svg" class="social-icon"></a>
+        <br>
+        
+        <br>
+        <div class="mode" id="mode-switcher" onclick="toggleNightMode();">
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--
+  
+<footer class="site-footer">
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li><a href="mailto:Kea Wot <hi@ashang.org>">Kea Wot <hi@ashang.org></a></li>
+        </ul>
+      </div>
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/ashang">
+              <span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+
+              </span>
+              <span class="username">ashang
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+      <div class="footer-col footer-col-3">
+        <p>ramblings notes, things I worked through to make sure I understand.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+-->
+</body>
+</html>

@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta name="description" content="The STL makes it easy to create lists, iterate over lists, and apply a function to each member of a list.  So how do you filter a vector according to some cr...">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://10.10.50.50:1125/stl-filtering/zzz">
+  <link rel="alternate" type="application/rss+xml" title="in love we trust" href="http://10.10.50.50:1125/feed.xml">
+  <title>
+    
+      STL: filtering &middot; in love we trust
+    
+  </title>
+
+  
+  <link rel="canonical" href="http://10.10.50.50:1125/stl-filtering/zzz">
+  
+
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/poole.css">
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/syntax.css">
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/lanyon.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <link rel="shortcut icon" href="http://10.10.50.50:1125/favicon.ico">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://10.10.50.50:1125/atom.xml">
+
+  
+</head>
+<body class="fixed-nav"><header class="site-header" >
+    <a class="site-title" href="/">in love we trust</a>
+
+    <nav class="site-nav">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+
+      <div class="trigger">
+        
+          
+        
+          
+          <a class="page-link" href="/404/"> </a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/ansible-examples">Ansible examples</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-guide">Ansible quickstart</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-modules">Ansible modules</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-roles">Ansible roles</a>
+          
+        
+          
+          <a class="page-link" href="/ansible">Ansible</a>
+          
+        
+          
+          <a class="page-link" href="/archive">Archive</a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/cmd-test">cmd Test</a>
+          
+        
+          
+          <a class="page-link" href="/cryptsetup">cryptsetup with LUKS</a>
+          
+        
+          
+          <a class="page-link" href="/cupper-shortcodes--percent-sign">Cupper Shortcodes with percent sign</a>
+          
+        
+          
+          <a class="page-link" href="/curl">curl</a>
+          
+        
+          
+          <a class="page-link" href="/downtime">downtime</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/frontend">front-end</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/notes/">WILT</a>
+          
+        
+          
+          <a class="page-link" href="/p4-lang">p4</a>
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/tags/">Tags</a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/tutorials">Tutorials</a>
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+</header>
+<div class="container">
+    <div id="page" class="site">
+      <main class="page-content" aria-label="Content">
+        <main class="content fade-in-down delay-0_5s">
+  <div class="inner">
+    <article class="post">
+      <div class="entry-box">
+        <header class="entry-header">
+          <h2 class="post-title">STL: filtering</h2>
+          <div class="entry-meta">
+            
+              <time class="post-date" datetime="2009-09-16">September 16, 2009</time>
+            
+            
+          </div><!-- .entry-meta -->
+        </header><!-- .entry-header -->
+        <div class="entry-content">
+            <p>The STL makes it easy to create lists, iterate over lists, and apply a function to each member of a list.  So how do you filter a vector according to some criteria?  It’s not hard, but the obvious solution isn’t <em>quite</em> enough.  Here’s how.</p>
+
+<!--more-->
+
+<p>Say you have a vector of values, and you want to apply a filter to the list.  That is,  remove elements that satisfy some criteria.  It’s quite a common requirement, so you’d think there would be an obvious and simple way to do it.  If you go searching for the word “filter” in the STL documentation, you may not find much relevant in the <code class="language-plaintext highlighter-rouge">std::vector</code> method reference.  If you browse around in STL algorithms, eventually you’ll come across a method called <code class="language-plaintext highlighter-rouge">remove_if</code>.  It takes two iterators to specify the range (first and last) of the operation, and a predicate function.  Sounds perfect!</p>
+
+<p>Let’s use it to filter a list of numbers, removing even numbers.  Given the following input:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1 2 3 4 5 6 7 8 9
+</code></pre></div></div>
+
+<p>we expect to see the result:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1 3 5 7 9
+</code></pre></div></div>
+
+<p>A predicate function is essentially a test for a property, and returns whether or not the parameter has this property.  So our predicate function will take an integer value (matching the element type of our vector) and return a boolean, denoting whether or not to remove the given element.  So we’d have:</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="kt">bool</span> <span class="nf">is_even</span><span class="p">(</span><span class="kt">int</span> <span class="n">N</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="n">N</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>Easy!  Now, to store our numbers, we would start with a simple vector of integers, thus:</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">vector_t</span><span class="p">;</span>
+
+<span class="n">vector_t</span>    <span class="n">numbers</span><span class="p">;</span></code></pre></figure>
+
+<p>We read in the numbers in a loop and save them in the array:</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="k">while</span> <span class="p">(</span><span class="nb">true</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">n</span><span class="p">;</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">n</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">std</span><span class="o">::</span><span class="n">cin</span><span class="p">.</span><span class="n">good</span><span class="p">())</span>
+        <span class="k">break</span><span class="p">;</span>
+
+    <span class="n">numbers</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>This will take care of reading in the data, as it will stop as soon as it reads something that isn’t an integer, or reaches the end of file.  Now we just apply the filter, and then print the result:</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">remove_if</span><span class="p">(</span><span class="n">numbers</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">numbers</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">is_even</span><span class="p">);</span>
+
+<span class="n">vector_t</span><span class="o">::</span><span class="n">iterator</span> <span class="n">it</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">it</span> <span class="o">=</span> <span class="n">numbers</span><span class="p">.</span><span class="n">begin</span><span class="p">();</span> <span class="n">it</span> <span class="o">!=</span> <span class="n">numbers</span><span class="p">.</span><span class="n">end</span><span class="p">();</span> <span class="o">++</span><span class="n">it</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">it</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>There, we’re done!  Now, we just run the completed program, and give it some test data:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ./filter 
+1 2 3 4 5 6 7 8 9 -
+</code></pre></div></div>
+
+<p>But wait, the output we see is wrong!</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1
+3
+5
+7
+9
+6
+7
+8
+9
+</code></pre></div></div>
+
+<p>Oh, no!  There must be a bug in the libraries!  Curses, foiled again!</p>
+
+<p>Actually, no - the sky isn’t falling, and there is no bug.  Now is when we probably should be doing a bit of RTFMing.  Let’s check the docs and see what’s going on.  According to the <a href="http://gcc.gnu.org/onlinedocs/libstdc++/latest-doxygen/">g++ library documentation</a>:</p>
+
+<blockquote>
+  <p>“Elements between the end of the resulting sequence and ‘last’ are still present, but their value is unspecified.”</p>
+</blockquote>
+
+<p>Er, ok… that’s handy - not.  Looking back at the output, we do notice that the first 5 values are correct, but there’s some junk after them.  And sure enough, that’s the documented behaviour - we are just seeing the “unspecified” values left behind.</p>
+
+<p>It is worth pointing out right about now that the fine folk who designed the STL were fairly obsessed with efficiency, and the STL is designed to be low-level, powerful and fast, sometimes at the expense of user friendliness.  It is more efficient to implement filtering as a generic algorithm that can be applied to any container.  And sure enough, that is the intent, as we see in the docs:</p>
+
+<blockquote>
+  <p>“@return   An iterator designating the end of the resulting sequence.”</p>
+</blockquote>
+
+<p>Ah, we were actually supposed to do something with the return value!  The implementation of <code class="language-plaintext highlighter-rouge">remove_if</code> moves (or actually copies) the values to be kept to the head of the list, and returns an iterator pointing to the start of the “junk” (just after the filtered list), in preparation for this tail to be snipped off.  So, let’s use the <code class="language-plaintext highlighter-rouge">erase</code> method to do just that:</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++">    <span class="n">numbers</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">remove_if</span><span class="p">(</span><span class="n">numbers</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">numbers</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">is_even</span><span class="p">),</span> <span class="n">numbers</span><span class="p">.</span><span class="n">end</span><span class="p">());</span></code></pre></figure>
+
+<p>Now, running the test application again, we get the output:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1
+3
+5
+7
+9
+</code></pre></div></div>
+
+<p>Huzzah!  It is really a matter of getting a feel for the design patterns behind the STL, and the very low-level API that it provides.</p>
+
+<p>This process can be visualised thus:</p>
+
+<p><img src="http://antonym.org/images/STLFilteringExample.png" alt="STL Filtering Example" /></p>
+
+<p>It is also worth mentioning at this point that if you are doing a lot of adding and removing of  elements, a <code class="language-plaintext highlighter-rouge">std::list</code> is probably a better choice, as inserting and deleting elements in vectors is very expensive.</p>
+
+<p>Now, you’re probably wondering why <code class="language-plaintext highlighter-rouge">remove_if</code> is a function in the STL <code class="language-plaintext highlighter-rouge">algorithms</code> collection, rather than a method in <code class="language-plaintext highlighter-rouge">std::vector</code> itself.  Well, the folks who designed the STL are very, very clever.  The obvious thing would be to put a <code class="language-plaintext highlighter-rouge">remove_if</code> method in every single container class.  But the implementation would be <em>almost</em> the same, right?  Well, they reasoned, what if all container classes provided a common, minimal interface, we could implement <code class="language-plaintext highlighter-rouge">remove_if</code> just once, and it could apply to almost any container!  It’s even more generic that way.  So there are a whole series of algorithms that apply to a wide variety of different containers, and use informal interfaces to decouple things.</p>
+
+<p>The (platform-neutral) sample code is available below…</p>
+
+<ul>
+  <li>Sample C++ code: <span class="mt-enclosure mt-enclosure-file" style="display: inline;"><a href="http://antonym.org/files/stl_filter.zip">stl_filter.zip</a></span> (4.5kB zip)</li>
+</ul>
+
+        </div><!-- .entry-content -->
+        <footer class="entry-footer">
+          
+            <div class="post-tags">
+              <a href="/tags/" rel="tag">Tags: </a>
+                <a href="/archive/#C%2B%2B" rel="tag">C++</a>, <a href="/archive/#STL" rel="tag">STL</a>
+            </div>
+          
+          <div class="share-post">
+            <!--
+              <span>Share this:</span>
+                <a class="btn-twitter" target="_blank" href="https://twitter.com/intent/tweet?text=STL:%20filtering&amp;url=http://10.10.50.50:1125/stl-filtering/zzz"><i class="fa fa-twitter" aria-hidden="true"></i><span class="screen-reader-text">Twitter</span></a>
+                -->
+          </div><!-- .share-post -->
+        </footer><!-- .entry-footer -->
+      </div><!-- .entry-box -->
+    <div class="post-line"></div>
+    <div class="author-box">
+        <div class="author-info">
+          <!--
+          <h2 class="author-title">About </h2>
+          <p class="author-bio"></p>
+          <p class="author-links">
+              
+              
+            </p>
+            -->
+        </div><!-- .author-info -->
+      </div><!-- .author-box -->
+    </article><!-- .post -->
+    <a href="#" class="top">Top</a>
+  </div><!-- .inner -->
+</main><!-- .content -->
+      </main>
+    <aside class="footer-widgets">
+
+    
+
+    <div id="footer-columns" class="footer-columns">
+        <div class="inner">
+            <div class="grid">
+
+                
+
+                <!-- Create a sorted array of tags -->
+                <div class="one-third">
+                    
+                    
+                    <section class="widget widget-tags">
+                        <!--
+                        <h2 class="widget-title">Tags</h2>
+                        <div class="tagcloud">
+                            
+                            <a href="/tags/#Algorithms">Algorithms</a>
+                            
+                            <a href="/tags/#Apple">Apple</a>
+                            
+                            <a href="/tags/#Boost">Boost</a>
+                            
+                            <a href="/tags/#C%2B%2B">C++</a>
+                            
+                            <a href="/tags/#Cocoa">Cocoa</a>
+                            
+                            <a href="/tags/#Coding">Coding</a>
+                            
+                            <a href="/tags/#Jekyll">Jekyll</a>
+                            
+                            <a href="/tags/#Mac">Mac</a>
+                            
+                            <a href="/tags/#OSX">OSX</a>
+                            
+                            <a href="/tags/#Performance">Performance</a>
+                            
+                            <a href="/tags/#STL">STL</a>
+                            
+                            <a href="/tags/#Threading">Threading</a>
+                            
+                            <a href="/tags/#Unicode">Unicode</a>
+                            
+                            <a href="/tags/#api">api</a>
+                            
+                            <a href="/tags/#c%2B%2B">c++</a>
+                            
+                            <a href="/tags/#c%2B%2B11">c++11</a>
+                            
+                            <a href="/tags/#code+block">code block</a>
+                            
+                            <a href="/tags/#iOS">iOS</a>
+                            
+                            <a href="/tags/#iPhone">iPhone</a>
+                            
+                            <a href="/tags/#iptables">iptables</a>
+                            
+                            <a href="/tags/#markdown">markdown</a>
+                            
+                            <a href="/tags/#nftables">nftables</a>
+                            
+                            <a href="/tags/#openapi">openapi</a>
+                            
+                            <a href="/tags/#programming+language">programming language</a>
+                            
+                            <a href="/tags/#racket">racket</a>
+                            
+                            <a href="/tags/#select">select</a>
+                            
+                            <a href="/tags/#stl">stl</a>
+                            
+                            <a href="/tags/#swagger">swagger</a>
+                            
+                            <a href="/tags/#test">test</a>
+                            
+                            <a href="/tags/#tutorial">tutorial</a>
+                            
+                            <a href="/tags/#webdev">webdev</a>
+                            
+                        </div>
+                        -->
+                    </section><!-- .widget -->
+                </div><!-- .one-third -->
+
+            </div><!-- .grid -->
+        </div><!-- .inner -->
+    </div><!-- .footer-columns -->
+
+</aside><!-- .footer-widgets -->
+
+    </div><!-- .site -->
+    <div class="profile">
+      <a href="http://10.10.50.50:1125"><img src="" class="profile-image"></a>
+      <div class="profile-about">
+        <h2 style="margin-bottom: 0; font-weight: 700;"></h2>
+        
+        
+        
+        <a href="about"><img src="/img/icon/me.svg" class="social-icon"></a>
+        <br>
+        
+        <br>
+        <div class="mode" id="mode-switcher" onclick="toggleNightMode();">
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--
+  
+<footer class="site-footer">
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li><a href="mailto:Kea Wot <hi@ashang.org>">Kea Wot <hi@ashang.org></a></li>
+        </ul>
+      </div>
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/ashang">
+              <span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+
+              </span>
+              <span class="username">ashang
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+      <div class="footer-col footer-col-3">
+        <p>ramblings notes, things I worked through to make sure I understand.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+-->
+</body>
+</html>

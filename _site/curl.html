@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta name="description" content="ramblings notes, things I worked through to make sure I understand.">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://10.10.50.50:1125/curl">
+  <link rel="alternate" type="application/rss+xml" title="in love we trust" href="http://10.10.50.50:1125/feed.xml">
+  <title>
+    
+      curl &middot; in love we trust
+    
+  </title>
+
+  
+  <link rel="canonical" href="http://10.10.50.50:1125/curl">
+  
+
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/poole.css">
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/syntax.css">
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/lanyon.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <link rel="shortcut icon" href="http://10.10.50.50:1125/favicon.ico">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://10.10.50.50:1125/atom.xml">
+
+  
+</head>
+<body class="fixed-nav"><header class="site-header" >
+    <a class="site-title" href="/">in love we trust</a>
+
+    <nav class="site-nav">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+
+      <div class="trigger">
+        
+          
+        
+          
+          <a class="page-link" href="/404/"> </a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/ansible-examples">Ansible examples</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-guide">Ansible quickstart</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-modules">Ansible modules</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-roles">Ansible roles</a>
+          
+        
+          
+          <a class="page-link" href="/ansible">Ansible</a>
+          
+        
+          
+          <a class="page-link" href="/archive">Archive</a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/cmd-test">cmd Test</a>
+          
+        
+          
+          <a class="page-link" href="/cryptsetup">cryptsetup with LUKS</a>
+          
+        
+          
+          <a class="page-link" href="/cupper-shortcodes--percent-sign">Cupper Shortcodes with percent sign</a>
+          
+        
+          
+          <a class="page-link" href="/curl">curl</a>
+          
+        
+          
+          <a class="page-link" href="/downtime">downtime</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/frontend">front-end</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/notes/">WILT</a>
+          
+        
+          
+          <a class="page-link" href="/p4-lang">p4</a>
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/tags/">Tags</a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/tutorials">Tutorials</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+</header>
+<div class="container">
+    <div id="page" class="site">
+      <main class="page-content" aria-label="Content">
+        <p>curl -sSf</p>
+
+<p>curl -# -C - -f -O</p>
+
+<p>curl -X POST -H ‘Content-Type: application/json’ <br />
+    -H ‘Authorization: Bearer ‘$TOKEN’’ <br />
+    -d ‘{“name”:”ubuntu-s-1vcpu-512mb-10gb-sfo3-01”,
+        “size”:”s-1vcpu-512mb-10gb”,
+        “region”:”sfo3”,
+        “image”:”ubuntu-22-10-x64”}’ <br />
+    “https://api.digitalocean.com/v2/droplets”</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>curl <span class="nt">-O</span> https://mirrors/debian/pool/main/g/gdb/gdb_10.1-1.7_armel.deb
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 <span class="nt">--</span>:--:--  0:00:15 <span class="nt">--</span>:--:--     0
+curl: <span class="o">(</span>60<span class="o">)</span> SSL certificate problem: certificate is not yet valid
+More details here: https://curl.se/docs/sslcerts.html
+
+curl failed to verify the legitimacy of the server and therefore could not
+establish a secure connection to it. To learn more about this situation and
+how to fix it, please visit the web page mentioned above.
+</code></pre></div></div>
+
+<p>SSL is the old name. It is called TLS these days.</p>
+
+<p>$ curl -V
+curl 7.74.0 (arm-unknown-linux-gnueabi) libcurl/7.74.0 OpenSSL/1.1.1n zlib/1.2.11 brotli/1.0.9 libidn2/2.3.0 libpsl/0.21.0 (+libidn2/2.3.0) libssh2/1.9.0 nghttp2/1.43.0 librtmp/2.3
+Release-Date: 2020-12-09
+Protocols: dict file ftp ftps gopher http https imap imaps ldap ldaps mqtt pop3 pop3s rtmp rtsp scp sftp smb smbs smtp smtps telnet tftp
+Features: alt-svc AsynchDNS brotli GSS-API HTTP2 HTTPS-proxy IDN IPv6 Kerberos Largefile libz NTLM NTLM_WB PSL SPNEGO SSL TLS-SRP UnixSockets</p>
+
+<p>$ curl –etag-compare etag.txt –etag-save etag.txt –remote-name https://curl.se/ca/cacert.pem</p>
+
+<p>##</p>
+
+<ul>
+  <li>/usr/bin/curl -L -q –retry 5 –retry-delay 10 –retry-max-time 60 -x ‘’ -R -H ‘Cache-Control: no-cache’ -o /tmp/tmp.pNxRLtYRyD/v2ray-linux-64.zip https://github.com/v2fly/v2ray-core/releases/download/v5.1.0/v2ray-linux-64.zip</li>
+</ul>
+
+<h1 id="curl"><a href="https://curl.haxx.se/">cURL</a></h1>
+
+<p>A command line tool and library for transferring data with URLs.</p>
+
+<p>下载文件，内容输出到屏幕</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl www.example.com
+</code></pre></div></div>
+
+<p>下载文件，内容输出到文件</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -o example.html www.example.com
+</code></pre></div></div>
+
+<p>下载文件，内容输出到文件，使用原来的文件名，J 表示使用 Content-Disposition 给的文件名</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -O www.example.com/file.html
+curl -OJ www.example.com/file.html
+</code></pre></div></div>
+
+<p>自动访问重定向后的地址</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -L www.example.com/file.html
+</code></pre></div></div>
+
+<p>断点续传</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -L -O -C - FILE_URL
+</code></pre></div></div>
+
+<p>匹配和下载多个地址的文件，[]指定范围，{}指定列表，可组合起来使用</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -O -O http://example.com/{web,mail}-log[0-6].txt
+</code></pre></div></div>
+
+<p>下载文件，使用 SOCKS5 代理</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl --socks5 127.0.0.1:1080 -O www.example.com/file.html
+</code></pre></div></div>
+
+<p>输出响应消息的状态行、消息报头、空行和响应正文</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -i http://httpbin.org/get
+</code></pre></div></div>
+
+<p>输出请求消息报头，响应消息的状态行、消息报头、空行和响应正文</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -v http://httpbin.org/get
+</code></pre></div></div>
+
+<p>设置请求消息报头</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -i --url http://httpbin.org/get --header "Apikey: ENTER_KEY_HERE"
+</code></pre></div></div>
+
+<p>使用 POST 方法</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -i -X POST --url http://httpbin.org/post --data 'name=value'
+</code></pre></div></div>
+
+<p>发送 JSON 请求</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -i -X POST \
+  --url http://httpbin.org/post \
+  --header "Content-Type: application/json" \
+  --data '{"key1":"value1", "key2":"value2"}'
+</code></pre></div></div>
+
+<p>读取并发送文件内容</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl --data-binary @file.txt https://paste.rs/
+</code></pre></div></div>
+
+<p>提交表单(multipart formpost)</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -F person=anonymous -F secret=@file.txt http://example.com/submit.cgi
+</code></pre></div></div>
+
+<p>记录和发送 cookie</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -c cookies.txt https://paste.rs/
+</code></pre></div></div>
+
+<p>统计用时</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -o /dev/null -s -w 'Establish Connection: %{time_connect}s\nTTFB: %{time_starttransfer}s\nTotal: %{time_total}s\n'  https://www.google.com
+</code></pre></div></div>
+
+<p>查询自己的 IP 地址</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl https://api.myip.com
+wget -qO- https://api.myip.com
+</code></pre></div></div>
+
+<p>在控制台阅读技术文档</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl cheat.sh
+curl cheat.sh/lua/:learn | less -R
+</code></pre></div></div>
+<h2 id="options">Options</h2>
+
+<h3 id="options-1">Options</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">-o</span> &lt;file&gt;    <span class="c"># --output: write to file</span>
+<span class="nt">-u</span> user:pass <span class="c"># --user: Authentication</span>
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">-v</span>           <span class="c"># --verbose</span>
+<span class="nt">-vv</span>          <span class="c"># Even more verbose</span>
+<span class="nt">-s</span>           <span class="c"># --silent: don't show progress meter or errors</span>
+<span class="nt">-S</span>           <span class="c"># --show-error: when used with --silent (-sS), show errors but no progress meter</span>
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">-i</span>           <span class="c"># --include: Include the HTTP-header in the output</span>
+<span class="nt">-I</span>           <span class="c"># --head: headers only</span>
+</code></pre></div></div>
+
+<h3 id="request">Request</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">-X</span> POST          <span class="c"># --request</span>
+<span class="nt">-L</span>               <span class="c"># follow link if page redirects</span>
+<span class="nt">-F</span>               <span class="c"># --form: HTTP POST data for multipart/form-data</span>
+</code></pre></div></div>
+
+<h3 id="data">Data</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">-d</span> <span class="s1">'data'</span>    <span class="c"># --data: HTTP post data, URL encoded (eg, status="Hello")</span>
+<span class="nt">-d</span> @file     <span class="c"># --data via file</span>
+<span class="nt">-G</span>           <span class="c"># --get: send -d data via get</span>
+</code></pre></div></div>
+
+<h3 id="headers">Headers</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">-A</span> &lt;str&gt;         <span class="c"># --user-agent</span>
+<span class="nt">-b</span> <span class="nv">name</span><span class="o">=</span>val      <span class="c"># --cookie</span>
+<span class="nt">-b</span> FILE          <span class="c"># --cookie</span>
+<span class="nt">-H</span> <span class="s2">"X-Foo: y"</span>    <span class="c"># --header</span>
+<span class="nt">--compressed</span>     <span class="c"># use deflate/gzip</span>
+</code></pre></div></div>
+
+<h3 id="ssl">SSL</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nt">--cacert</span> &lt;file&gt;
+    <span class="nt">--capath</span> &lt;<span class="nb">dir</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">-E</span>, <span class="nt">--cert</span> &lt;cert&gt;     <span class="c"># --cert: Client cert file</span>
+    <span class="nt">--cert-type</span>       <span class="c"># der/pem/eng</span>
+<span class="nt">-k</span>, <span class="nt">--insecure</span>        <span class="c"># for self-signed certs</span>
+</code></pre></div></div>
+
+<h2 class="-one-column" id="examples">Examples</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Post data:</span>
+curl <span class="nt">-d</span> <span class="nv">password</span><span class="o">=</span>x http://x.com/y
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Auth/data:</span>
+curl <span class="nt">-u</span> user:pass <span class="nt">-d</span> <span class="nv">status</span><span class="o">=</span><span class="s2">"Hello"</span> http://twitter.com/statuses/update.xml
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># multipart file upload</span>
+curl <span class="nt">-v</span> <span class="nt">-include</span> <span class="nt">--form</span> <span class="nv">key1</span><span class="o">=</span>value1 <span class="nt">--form</span> <span class="nv">upload</span><span class="o">=</span>@localfilename URL
+
+<span class="c"># multipart form: send data from text field and upload file</span>
+curl <span class="nt">-F</span> <span class="nv">person</span><span class="o">=</span>anonymous <span class="nt">-F</span> <span class="nv">secret</span><span class="o">=</span>@file.txt http://example.com/submit.cgi
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Use Curl to Check if a remote resource is available</span>
+<span class="c"># details: https://matthewsetter.com/check-if-file-is-available-with-curl/</span>
+curl <span class="nt">-o</span> /dev/null <span class="nt">--silent</span> <span class="nt">-Iw</span> <span class="s2">"%{http_code}"</span> https://example.com/my.remote.tarball.gz
+</code></pre></div></div>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>curl <span class="nt">-O</span> https://events.prace-ri.eu/event/549/sessions/1683/attachments/473/686/JAN-MEINKE-GPU-CUDATools.pdf
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 <span class="nt">--</span>:--:-- <span class="nt">--</span>:--:-- <span class="nt">--</span>:--:--     0
+curl: <span class="o">(</span>60<span class="o">)</span> SSL certificate problem: unable to get <span class="nb">local </span>issuer certificate
+More details here: https://curl.se/docs/sslcerts.html
+
+curl failed to verify the legitimacy of the server and therefore could not
+establish a secure connection to it. To learn more about this situation and
+how to fix it, please visit the web page mentioned above.
+
+<span class="nv">$ </span>wget https://events.prace-ri.eu/event/549/sessions/1683/attachments/473/686/JAN-MEINKE-GPU-CUDATools.pdf
+<span class="nt">--2022-08-15</span> 14:28:15--  https://events.prace-ri.eu/event/549/sessions/1683/attachments/473/686/JAN-MEINKE-GPU-CUDATools.pdf
+Resolving events.prace-ri.eu <span class="o">(</span>events.prace-ri.eu<span class="o">)</span>... 193.224.0.105, 2001:738:0:51b:f816:3eff:feef:d13
+Connecting to events.prace-ri.eu <span class="o">(</span>events.prace-ri.eu<span class="o">)</span>|193.224.0.105|:443... connected.
+ERROR: cannot verify events.prace-ri.eu<span class="s1">'s certificate, issued by ‘CN=DigiCert TLS RSA SHA256 2020 CA1,O=DigiCert Inc,C=US’:
+  Unable to locally verify the issuer'</span>s authority.
+To connect to events.prace-ri.eu insecurely, use <span class="sb">`</span><span class="nt">--no-check-certificate</span><span class="s1">'.
+
+$ wget --no-check-certificate https://events.prace-ri.eu/event/549/sessions/1683/attachments/473/686/JAN-MEINKE-GPU-CUDATools.pdf
+--2022-08-15 14:28:25--  https://events.prace-ri.eu/event/549/sessions/1683/attachments/473/686/JAN-MEINKE-GPU-CUDATools.pdf
+Resolving events.prace-ri.eu (events.prace-ri.eu)... 193.224.0.105, 2001:738:0:51b:f816:3eff:feef:d13
+Connecting to events.prace-ri.eu (events.prace-ri.eu)|193.224.0.105|:443... connected.
+WARNING: cannot verify events.prace-ri.eu'</span>s certificate, issued by ‘CN<span class="o">=</span>DigiCert TLS RSA SHA256 2020 CA1,O<span class="o">=</span>DigiCert Inc,C<span class="o">=</span>US’:
+  Unable to locally verify the issuer<span class="s1">'s authority.
+HTTP request sent, awaiting response... 400 BAD REQUEST
+2022-08-15 14:28:26 ERROR 400: BAD REQUEST.
+</span></code></pre></div></div>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>curl <span class="nt">-H</span> <span class="s1">'Accept: text/plain'</span> http://godoc.org/?q<span class="o">=</span>sql
+database/sql Package sql provides a generic interface around SQL <span class="o">(</span>or SQL-like<span class="o">)</span> databases.
+github.com/go-sql-driver/mysql Package mysql provides a MySQL driver <span class="k">for </span>Go<span class="s1">'s database/sql package.
+github.com/lib/pq Package pq is a pure Go Postgres driver for the database/sql package.
+database/sql/driver Package driver defines interfaces to be implemented by database drivers as used by package sql.
+github.com/jmoiron/sqlx Package sqlx provides general purpose extensions to database/sql.
+github.com/go-gorp/gorp Package gorp provides a simple way to marshal Go structs to and from SQL databases.
+github.com/coopernurse/gorp Package gorp provides a simple way to marshal Go structs to and from SQL databases.
+github.com/Masterminds/squirrel Package squirrel provides a fluent SQL generator.
+github.com/go-xorm/core Lightweight &amp; Compitable wrapper of database/sql
+github.com/cockroachdb/cockroach/pkg/sql/sem/tree
+github.com/pingcap/parser/ast Package ast is the abstract syntax tree parsed from a SQL statement by parser.
+github.com/cockroachdb/cockroach/pkg/sql Package sql provides the user-facing API for access to a Cockroach datastore.
+github.com/denisenkom/go-mssqldb package mssql implements the TDS protocol used to connect to MS SQL Server (sqlserver) database servers.
+github.com/rubenv/sql-migrate SQL Schema migration tool for Go.
+vitess.io/vitess/go/sqltypes Package sqltypes implements interfaces and types that represent SQL values.
+github.com/cockroachdb/cockroach/pkg/sql/parser
+github.com/cockroachdb/cockroach/pkg/sql/pgwire/pgerror
+github.com/ziutek/mymysql/godrv Package godrv implements database/sql MySQL driver.
+github.com/cloudflare/cfssl/certdb/sql
+github.com/youtube/vitess/go/sqltypes Package sqltypes implements interfaces and types that represent SQL values.
+github.com/cockroachdb/cockroach/pkg/workload Package workload provides an abstraction for generators of sql query loads (and requisite initial data) as well as tools for working with these generators.
+github.com/russross/meddler conversion between sql and structs in go
+github.com/cockroachdb/cockroach/pkg/sql/types
+github.com/cockroachdb/cockroach/pkg/sql/pgwire/pgcode Package pgcode defines the PostgreSQL 5-character support codes used throughout the CockroachDB source tree.
+github.com/guregu/null Package null contains SQL types that consider zero input and null input as separate values, with convenient support for JSON and text marshaling.
+github.com/cockroachdb/cockroach/pkg/sql/catalog/descpb
+gopkg.in/gorp.v1 Package gorp provides a simple way to marshal Go structs to and from SQL databases.
+github.com/pingcap/parser A MySQL Compatible SQL Parser
+gopkg.in/guregu/null.v3 Package null contains SQL types that consider zero input and null input as separate values, with convenient support for JSON and text marshaling.
+github.com/cockroachdb/cockroach/pkg/sql/sqlutil
+github.com/kisielk/sqlstruct Package sqlstruct provides some convenience functions for using structs with the Go standard library'</span>s database/sql package.
+github.com/cockroachdb/cockroach/pkg/sql/privilege
+github.com/jackc/pgx/stdlib Package stdlib is the compatibility layer from pgx to database/sql.
+www.velocidex.com/golang/vfilter The veloci-filter <span class="o">(</span>vfilter<span class="o">)</span> library implements a generic SQL like query language.
+github.com/ory/x/sqlcon Package sqlcon provides helpers <span class="k">for </span>dealing with SQL connectivity.
+github.com/cockroachdb/cockroach/pkg/sql/catalog/colinfo Package colinfo contains <span class="nb">type </span>information and related structures <span class="k">for </span>dealing with columns returned from sql operations.
+github.com/cockroachdb/cockroach/pkg/sql/sessiondata
+gopkg.in/src-d/go-vitess.v1/sqltypes Package sqltypes implements interfaces and types that represent SQL values.
+github.com/cockroachdb/cockroach/pkg/sql/catalog
+github.com/cznic/ql/driver Package driver registers QL sql/drivers named <span class="s2">"ql"</span>, <span class="s2">"ql2"</span> and a memory driver named <span class="s2">"ql-mem"</span><span class="nb">.</span>
+github.com/xo/dburl Package dburl provides a standard, URL style mechanism <span class="k">for </span>parsing and opening SQL database connection strings <span class="k">for </span>Go.
+github.com/gocraft/dbr Package dbr provides additions to Go<span class="s1">'s database/sql for super fast performance and convenience.
+github.com/cockroachdb/cockroach/pkg/sql/rowenc
+github.com/cockroachdb/cockroach/pkg/sql/sem/builtins
+github.com/chrislusf/gleam/sql/util/types
+github.com/go-xorm/builder Package builder is a simple and powerful sql builder for Go.
+github.com/mattermost/gorp Package gorp provides a simple way to marshal Go structs to and from SQL databases.
+github.com/lann/squirrel Package squirrel provides a fluent SQL generator.
+google.golang.org/api/sqladmin/v1beta4 Package sqladmin provides access to the Cloud SQL Admin API.
+github.com/eaigner/hood Package hood provides a database agnostic, transactional ORM for the sql package
+github.com/cockroachdb/cockroach/pkg/sql/lex
+xorm.io/builder Package builder is a simple and powerful sql builder for Go.
+github.com/dolthub/go-mysql-server/sql
+github.com/cockroachdb/cockroach/pkg/sql/execinfra
+github.com/cockroachdb/cockroach/pkg/sql/execinfrapb
+github.com/cockroachdb/cockroach/pkg/sql/catalog/tabledesc Package tabledesc provides concrete implementations of catalog.TableDesc.
+gopkg.in/go-gorp/gorp.v2 Package gorp provides a simple way to marshal Go structs to and from SQL databases.
+github.com/araddon/qlbridge/vm VM implements the virtual machine runtime evaluator for the SQL, FilterQL, and Expression evalutors.
+github.com/cockroachdb/cockroach/pkg/sql/catalog/catalogkv Package catalogkv provides functions for interacting with the system catalog tables using the kv client.
+github.com/gitql/vitess/go/sqltypes Package sqltypes implements interfaces and types that represent SQL values.
+github.com/araddon/qlbridge/lex Package Lex is a Lexer for QLBridge which is more of a lex-toolkit and implements 4 Dialects {SQL, FilterQL, Json, Expressions}.
+github.com/cayleygraph/cayley/graph/sql
+github.com/guregu/null/zero Package zero contains SQL types that consider zero input and null input to be equivalent with convenient support for JSON and text marshaling.
+github.com/lann/squirrel Package squirrel provides a fluent SQL generator.
+github.com/cockroachdb/cockroach/pkg/sql/opt Package opt contains the Cockroach SQL optimizer.
+github.com/cockroachdb/cockroach/pkg/sql/pgwire
+github.com/cockroachdb/cockroach/pkg/sql/catalog/catalogkeys
+github.com/xwb1989/sqlparser SQL Parser implemented in Go
+github.com/cockroachdb/cockroach/pkg/sql/opt/cat Package cat contains interfaces that are used by the query optimizer to avoid including specifics of sqlbase structures in the opt code.
+github.com/knq/dburl Package dburl provides a standard, URL style mechanism for parsing and opening SQL database connection strings for Go.
+github.com/araddon/qlbridge/rel Package rel are the AST Structures and Parsers for the SQL, FilterQL, and Expression dialects.
+github.com/mattn/go-adodb Microsoft ActiveX Object DataBase driver for go that using exp/sql
+github.com/cockroachdb/cockroach/pkg/sql/sqlerrors Package sqlerrors exports errors which can occur in the sql package.
+github.com/cockroachdb/cockroach/pkg/sql/catalog/typedesc Package typedesc contains the concrete implementations of catalog.TypeDescriptor.
+github.com/src-d/go-mysql-server/sql
+github.com/cockroachdb/cockroach/pkg/sql/catalog/descs Package descs provides abstractions for dealing with sets of descriptors.
+upper.io/db.v3/lib/sqlbuilder Package sqlbuilder provides tools for building custom SQL queries.
+github.com/lxc/lxd/lxd/db/query Package query implements helpers around database/sql to execute various kinds of very common SQL queries.
+github.com/cockroachdb/cockroach/pkg/sql/catalog/systemschema
+gopkg.in/gorp.v2 Package gorp provides a simple way to marshal Go structs to and from SQL databases.
+github.com/cockroachdb/cockroach/pkg/sql/stats
+github.com/cockroachdb/cockroach/pkg/sql/sqltelemetry Package sqltelemetry contains telemetry counter definitions for various SQL features.
+github.com/cockroachdb/cockroach/pkg/sql/catalog/lease Package lease provides functionality to create and manage sql schema leases.
+github.com/cockroachdb/cockroach/pkg/sql/row
+github.com/fragmenta/query An SQL query builder for golang
+github.com/cockroachdb/cockroach/pkg/sql/sem/transform
+github.com/daiguadaidai/parser/ast Package ast is the abstract syntax tree parsed from a SQL statement by parser.
+github.com/chrislusf/gleam/sql/util/charset
+github.com/cockroachdb/cockroach/pkg/sql/catalog/schemaexpr Package schemaexpr provides utilities for dealing with expressions with table schemas, such as check constraints, computed columns, and partial index predicates.
+github.com/cube2222/octosql OctoSQL is a query tool that allows you to join, analyse and transform data from multiple databases and file formats using SQL.
+github.com/gobuffalo/nulls A collection of null types for the sql package
+github.com/dolthub/go-mysql-server/sql/expression
+github.com/cockroachdb/cockroach/pkg/sql/catalog/catconstants
+github.com/araddon/qlbridge/exec Package exec contains execution tasks to run each of the separate tasks (Source, Project, Where, Having, etc) of a SQL data of tasks.
+github.com/snowflakedb/gosnowflake Package gosnowflake is a pure Go Snowflake driver for the database/sql package.
+github.com/mattn/go-oci8 Oracle driver for Go using database/sql
+github.com/cznic/ql Package ql implements a pure Go embedded SQL database engine.
+contrib.go.opencensus.io/integrations/ocsql OpenCensus SQL database driver wrapper for Go
+gopkg.in/guregu/null.v4 Package null contains SQL types that consider zero input and null input as separate values, with convenient support for JSON and text marshaling.
+github.com/pydio/cells/common/sql Package sql provides tools and DAOs for speaking SQL as well as managing tables migrations
+</span></code></pre></div></div>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>HTTP/2 200
+server: GitHub.com
+content-type: text/html<span class="p">;</span> <span class="nv">charset</span><span class="o">=</span>utf-8
+last-modified: Wed, 25 May 2022 11:15:24 GMT
+access-control-allow-origin: <span class="k">*</span>
+etag: <span class="s2">"628e0fcc-c92"</span>
+expires: Wed, 27 Jul 2022 02:10:02 GMT
+cache-control: max-age<span class="o">=</span>600
+x-proxy-cache: MISS
+x-github-request-id: B102:08F1:2E908:35135:62E09C22
+accept-ranges: bytes
+<span class="nb">date</span>: Wed, 27 Jul 2022 02:00:02 GMT
+via: 1.1 varnish
+age: 0
+x-served-by: cache-tyo11976-TYO
+x-cache: MISS
+x-cache-hits: 0
+x-timer: S1658887202.035512,VS0,VE151
+vary: Accept-Encoding
+x-fastly-request-id: f2f30d08b9c3d12e7a24bb69d3ea2c832f21c98f
+content-length: 3218
+</code></pre></div></div>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>curl <span class="nt">-I</span> localhost
+HTTP/1.1 302 Found
+Date: Fri, 03 Jul 2015 01:48:39 GMT
+Server: Apache
+x-rack-cache: miss
+cache-control: no-cache
+x-ua-compatible: <span class="nv">IE</span><span class="o">=</span>Edge,chrome<span class="o">=</span>1
+x-runtime: 0.010485
+x-request-id: f11775d32b085917f47372b0be88fa42
+Connection: close
+X-Powered-By: Phusion Passenger 5.0.4
+X-Frame-Options: SAMEORIGIN
+location: http://localhost/login?back_url<span class="o">=</span>http%3A%2F%2Flocalhost%2F
+Status: 302 Found
+Content-Type: text/html<span class="p">;</span> <span class="nv">charset</span><span class="o">=</span>utf-8
+</code></pre></div></div>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>curl <span class="nt">-I</span> 203.100.82.236
+HTTP/1.1 503 Service Unavailable
+Cache-Control: no-cache
+Pragma: no-cache
+Content-Type: text/html<span class="p">;</span> <span class="nv">charset</span><span class="o">=</span>utf-8
+Proxy-Connection: Keep-Alive
+Connection: Keep-Alive
+Content-Length: 778
+
+
+curl <span class="nt">-sSf</span>
+
+curl -# <span class="nt">-C</span> - <span class="nt">-f</span> <span class="nt">-O</span>
+
+<span class="o">(</span><span class="nb">uname</span> <span class="nt">-s</span><span class="p">;</span> <span class="nb">uname</span> <span class="nt">-m</span><span class="p">;</span> <span class="nb">uname</span> <span class="nt">-r</span><span class="p">;</span> <span class="nb">uname</span> <span class="nt">-v</span><span class="o">)</span> | <span class="se">\</span>
+curl https://api-ksplice.oracle.com/api/1/update-list/ <span class="se">\</span>
+<span class="nt">-L</span> <span class="nt">-H</span> <span class="s2">"Accept: text/text"</span> <span class="nt">--data-binary</span> @-
+
+
+curl <span class="o">(</span>7.32.0-1<span class="o">)</span> unstable<span class="p">;</span> <span class="nv">urgency</span><span class="o">=</span>low
+
+  From this version the threaded DNS resolver will be used. This allows <span class="k">for
+  </span>asynchronous DNS queries and also fixes possible issues related to handling
+  <span class="nb">time </span>outs of DNS lookups.
+
+  The threaded resolver was chosen instead of the event-based one <span class="o">(</span>which uses
+  the c-ares library<span class="o">)</span> because c-ares currently lacks somewhat important
+  features, such as support <span class="k">for </span>the Name Service Switch system.
+
+<span class="nv">$ </span>curl <span class="nt">-I</span> localhost
+HTTP/1.1 302 Found
+Date: Fri, 03 Jul 2015 01:48:39 GMT
+Server: Apache
+x-rack-cache: miss
+cache-control: no-cache
+x-ua-compatible: <span class="nv">IE</span><span class="o">=</span>Edge,chrome<span class="o">=</span>1
+x-runtime: 0.010485
+x-request-id: f11775d32b085917f47372b0be88fa42
+Connection: close
+X-Powered-By: Phusion Passenger 5.0.4
+X-Frame-Options: SAMEORIGIN
+location: http://localhost/login?back_url<span class="o">=</span>http%3A%2F%2Flocalhost%2F
+Status: 302 Found
+Content-Type: text/html<span class="p">;</span> <span class="nv">charset</span><span class="o">=</span>utf-8
+
+
+<span class="nv">$ </span>curl <span class="nt">-I</span> 203.100.82.236
+HTTP/1.1 503 Service Unavailable
+Cache-Control: no-cache
+Pragma: no-cache
+Content-Type: text/html<span class="p">;</span> <span class="nv">charset</span><span class="o">=</span>utf-8
+Proxy-Connection: Keep-Alive
+Connection: Keep-Alive
+Content-Length: 778
+
+
+
+
+<span class="o">(</span><span class="nb">uname</span> <span class="nt">-s</span><span class="p">;</span> <span class="nb">uname</span> <span class="nt">-m</span><span class="p">;</span> <span class="nb">uname</span> <span class="nt">-r</span><span class="p">;</span> <span class="nb">uname</span> <span class="nt">-v</span><span class="o">)</span> | <span class="se">\</span>
+curl https://api-ksplice.oracle.com/api/1/update-list/ <span class="se">\</span>
+<span class="nt">-L</span> <span class="nt">-H</span> <span class="s2">"Accept: text/text"</span> <span class="nt">--data-binary</span> @-
+
+
+curl <span class="o">(</span>7.32.0-1<span class="o">)</span> unstable<span class="p">;</span> <span class="nv">urgency</span><span class="o">=</span>low
+
+  From this version the threaded DNS resolver will be used. This allows <span class="k">for
+  </span>asynchronous DNS queries and also fixes possible issues related to handling
+  <span class="nb">time </span>outs of DNS lookups.
+
+  The threaded resolver was chosen instead of the event-based one <span class="o">(</span>which uses
+  the c-ares library<span class="o">)</span> because c-ares currently lacks somewhat important
+  features, such as support <span class="k">for </span>the Name Service Switch system.
+
+</code></pre></div></div>
+<p>$ curl -I git
+HTTP/1.1 200 OK
+Date: Wed, 24 May 2017 13:04:19 GMT
+Server: Httpd
+Cache-control: no-cache=”set-cookie”
+Content-type: text/html; charset=UTF-8
+ETag: “90e-2888-56726263”
+Content-length: 9094
+Connection: close
+Set-Cookie: <em>WebSessionId</em>=95b2387921278ff58e65053c2014b722; path=/;</p>
+
+<p>curl -I http://www.frob.com/~roland/
+HTTP/1.1 200 OK
+Date: Fri, 29 Sep 2017 09:22:01 GMT
+Server: Apache/2.2.15 (CentOS)
+Last-Modified: Sun, 04 Jan 1998 01:18:16 GMT
+ETag: “2a2583-f7c-323e1947d8600”
+Accept-Ranges: bytes
+Content-Length: 3964
+Connection: close
+Content-Type: text/html; charset=UTF-8</p>
+
+<p>$ curl -I git:55555
+HTTP/1.1 302 Found
+Server: nginx
+Date: Wed, 24 May 2017 05:12:28 GMT
+Content-Type: text/html; charset=utf-8
+Connection: keep-alive
+Cache-Control: no-cache
+Location: http://code
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-Request-Id: 7117aed1-0bdc-4fa1-8ffc-f5d7cf2c3e9e
+X-Runtime: 0.031390
+X-Ua-Compatible: IE=edge
+X-Xss-Protection: 1; mode=block
+Strict-Transport-Security: max-age=31536000</p>
+
+<p>HTTP/1.1 302 Found
+Server: nginx
+Date: Wed, 24 May 2017 05:12:28 GMT
+Content-Type: text/html; charset=utf-8
+Connection: keep-alive
+Cache-Control: no-cache
+Location: http://code/users/sign_in
+Set-Cookie: _gitlab_session=34303e41cc65e4000f3714215c343a7f; path=/; HttpOnly
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Request-Id: ead746cb-4d6e-4158-bd2c-f4feff694b65
+X-Runtime: 0.037874
+X-Xss-Protection: 1; mode=block
+Strict-Transport-Security: max-age=31536000</p>
+
+<p>HTTP/1.1 200 OK
+Server: nginx
+Date: Wed, 24 May 2017 05:12:28 GMT
+Content-Type: text/html; charset=utf-8
+Connection: keep-alive
+Cache-Control: max-age=0, private, must-revalidate
+Etag: W/”4a91c6d242d0cb6a61847955ccab2c02”
+Set-Cookie: _gitlab_session=71b3979aa05bbbc558e845e90fc147ef; path=/; HttpOnly
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-Request-Id: a4bbb3fe-0798-40a3-9350-f5d22508a2c4
+X-Runtime: 0.125638
+X-Ua-Compatible: IE=edge
+X-Xss-Protection: 1; mode=block
+Strict-Transport-Security: max-age=31536000</p>
+
+<p>$ curl -I localhost
+HTTP/1.1 302 Found
+Date: Fri, 03 Jul 2015 01:48:39 GMT
+Server: Apache
+x-rack-cache: miss
+cache-control: no-cache
+x-ua-compatible: IE=Edge,chrome=1
+x-runtime: 0.010485
+x-request-id: f11775d32b085917f47372b0be88fa42
+Connection: close
+X-Powered-By: Phusion Passenger 5.0.4
+X-Frame-Options: SAMEORIGIN
+location: http://localhost/login?back_url=http%3A%2F%2Flocalhost%2F
+Status: 302 Found
+Content-Type: text/html; charset=utf-8</p>
+
+<p>$ curl -I 203.100.82.236
+HTTP/1.1 503 Service Unavailable
+Cache-Control: no-cache
+Pragma: no-cache
+Content-Type: text/html; charset=utf-8
+Proxy-Connection: Keep-Alive
+Connection: Keep-Alive
+Content-Length: 778</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+
+curl -fLo /home/as/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+If you're behind an HTTP proxy, you may need to add --insecure option to the curl command. In that case, you also need to set  to true.
+
+
+
+
+# make
+
+</code></pre></div></div>
+<p>curl version:     7.47.0
+  Host setup:       x86_64-pc-linux-gnu
+  Install prefix:   /usr/local
+  Compiler:         gcc
+  SSL support:      enabled (OpenSSL)
+  SSH support:      no      (–with-libssh2)
+  zlib support:     enabled
+  GSS-API support:  no      (–with-gssapi)
+  TLS-SRP support:  enabled
+  resolver:         default (–enable-ares / –enable-threaded-resolver)
+  IPv6 support:     enabled
+  Unix sockets support: enabled
+  IDN support:      enabled
+  Build libcurl:    Shared=yes, Static=yes
+  Built-in manual:  enabled
+  –libcurl option: enabled (–disable-libcurl-option)
+  Verbose errors:   enabled (–disable-verbose)
+  SSPI support:     no      (–enable-sspi)
+  ca cert bundle:   /etc/ssl/certs/ca-certificates.crt
+  ca cert path:     no
+  LDAP support:     enabled (OpenLDAP)
+  LDAPS support:    enabled
+  RTSP support:     enabled
+  RTMP support:     no      (–with-librtmp)
+  metalink support: no      (–with-libmetalink)
+  PSL support:      no      (libpsl not found)
+  HTTP2 support:    disabled (–with-nghttp2)
+  Protocols:        DICT FILE FTP FTPS GOPHER HTTP HTTPS IMAP IMAPS LDAP LDAPS POP3 POP3S RTSP SMB SMBS SMTP SMTPS TELNET TFTP</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code></code></pre></div></div>
+<p>$ curl -I http://dev/notes
+HTTP/1.1 301 Moved Permanently
+Date: Tue, 23 May 2017 11:07:53 GMT
+Server: Apache/2.4.18 (Ubuntu) PHP/5.4.45 OpenSSL/1.0.2g mod_wsgi/4.3.0 Python/2.7.12+ mod_perl/2.0.9 Perl/v5.22.2
+Location: http://dev/notes/
+Content-Type: text/html; charset=iso-8859-1</p>
+
+<p>HTTP/1.1 200 OK
+Date: Tue, 23 May 2017 11:07:53 GMT
+Server: Apache/2.4.18 (Ubuntu) PHP/5.4.45 OpenSSL/1.0.2g mod_wsgi/4.3.0 Python/2.7.12+ mod_perl/2.0.9 Perl/v5.22.2
+X-Powered-By: PHP/5.4.45
+X-Content-Type-Options: nosniff
+X-Frame-Options: sameorigin
+Content-Type: text/html</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+</code></pre></div></div>
+<p>$ curl -I http://dev/bugs
+HTTP/1.1 301 Moved Permanently
+Date: Tue, 23 May 2017 11:08:06 GMT
+Server: Apache/2.4.18 (Ubuntu) PHP/5.4.45 OpenSSL/1.0.2g mod_wsgi/4.3.0 Python/2.7.12+ mod_perl/2.0.9 Perl/v5.22.2
+Location: http://dev/bugs/
+Content-Type: text/html; charset=iso-8859-1</p>
+
+<p>HTTP/1.1 200 OK
+Date: Tue, 23 May 2017 11:08:06 GMT
+Server: Apache/2.4.18 (Ubuntu) PHP/5.4.45 OpenSSL/1.0.2g mod_wsgi/4.3.0 Python/2.7.12+ mod_perl/2.0.9 Perl/v5.22.2
+Content-security-policy: default-src ‘self’; script-src ‘self’ ‘unsafe-inline’ ‘unsafe-eval’; style-src ‘self’ ‘unsafe-inline’
+X-content-security-policy: default-src ‘self’; script-src ‘self’ ‘unsafe-inline’ ‘unsafe-eval’; style-src ‘self’ ‘unsafe-inline’
+X-content-type-options: nosniff
+X-frame-options: SAMEORIGIN
+X-webkit-csp: default-src ‘self’; script-src ‘self’ ‘unsafe-inline’ ‘unsafe-eval’; style-src ‘self’ ‘unsafe-inline’
+X-xss-protection: 1; mode=block
+Set-Cookie: Bugzilla_login_request_cookie=jvleqicLgi; domain=dev; path=/bugs/; HttpOnly
+X-Content-Type-Options: nosniff
+X-Frame-Options: sameorigin
+Content-Type: text/html; charset=UTF-8</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+
+</code></pre></div></div>
+<p>$ curl -I http://dev/cloud
+HTTP/1.1 301 Moved Permanently
+Date: Tue, 23 May 2017 11:09:17 GMT
+Server: Apache/2.4.18 (Ubuntu) PHP/5.4.45 OpenSSL/1.0.2g mod_wsgi/4.3.0 Python/2.7.12+ mod_perl/2.0.9 Perl/v5.22.2
+Location: http://dev/cloud/
+Content-Type: text/html; charset=iso-8859-1</p>
+
+<p>HTTP/1.1 503 Service Unavailable
+Date: Tue, 23 May 2017 11:09:17 GMT
+Server: Apache/2.4.18 (Ubuntu) PHP/5.4.45 OpenSSL/1.0.2g mod_wsgi/4.3.0 Python/2.7.12+ mod_perl/2.0.9 Perl/v5.22.2
+X-Powered-By: PHP/5.4.45
+Set-Cookie: ock4r7zs06g4=d0301b8e6c1452e733e574db5ac273c9; path=/cloud; HttpOnly
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Set-Cookie: oc_sessionPassphrase=RG5%2Fm5V1fU2sGy9KEjKWMWBdhCWycK8SEl8vDfN4HJPi1pYMgqoDrq9g9lw4%2Bp10az7%2BCt0sK339sTGuTuRHXbYsjDyQ39AjopbAqaVk0H%2BBJ18O70GPBm%2FIxSpN3ujy; path=/cloud; httponly
+Content-Security-Policy: default-src ‘self’; script-src ‘self’ ‘unsafe-eval’; style-src ‘self’ ‘unsafe-inline’; frame-src *; img-src * data: blob:; font-src ‘self’ data:; media-src *; connect-src *
+Set-Cookie: nc_sameSiteCookielax=true; path=/cloud; httponly;expires=Fri, 31-Dec-2100 23:59:59 GMT; SameSite=lax
+Set-Cookie: nc_sameSiteCookiestrict=true; path=/cloud; httponly;expires=Fri, 31-Dec-2100 23:59:59 GMT; SameSite=strict
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-XSS-Protection: 1; mode=block
+X-Robots-Tag: none
+X-Download-Options: noopen
+X-Permitted-Cross-Domain-Policies: none
+Connection: close
+Content-Type: text/html; charset=UTF-8</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+## curl vs. wget
+
+$ wget 'https://github-production-release-asset-2e65be.s3.amazonaws.com/45055693/4f5bd210-493f-11e8-9d67-d4a7ed067d4e?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20180802%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20180802T152154Z&amp;X-Amz-Expires=300&amp;X-Amz-Signature=3a49b1fc8060ea0e876e083c7d5623829f98ebbcb8d08fa610a56d35660ad49f&amp;X-Amz-SignedHeaders=host&amp;actor_id=0&amp;response-content-disposition=attachment%3B%20filename%3Detcher-electron-1.4.4-linux-x64.zip&amp;response-content-type=application%2Foctet-stream'
+--2018-08-02 23:25:21--  https://github-production-release-asset-2e65be.s3.amazonaws.com/45055693/4f5bd210-493f-11e8-9d67-d4a7ed067d4e?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20180802%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20180802T152154Z&amp;X-Amz-Expires=300&amp;X-Amz-Signature=3a49b1fc8060ea0e876e083c7d5623829f98ebbcb8d08fa610a56d35660ad49f&amp;X-Amz-SignedHeaders=host&amp;actor_id=0&amp;response-content-disposition=attachment%3B%20filename%3Detcher-electron-1.4.4-linux-x64.zip&amp;response-content-type=application%2Foctet-stream
+Resolving github-production-release-asset-2e65be.s3.amazonaws.com (github-production-release-asset-2e65be.s3.amazonaws.com)... 54.231.82.138
+Connecting to github-production-release-asset-2e65be.s3.amazonaws.com (github-production-release-asset-2e65be.s3.amazonaws.com)|54.231.82.138|:443...
+
+$ wget https://github.com/resin-io/etcher/releases/download/v1.4.4/etcher-electron-1.4.4-linux-x64.zip
+--2018-08-02 23:26:08--  https://github.com/resin-io/etcher/releases/download/v1.4.4/etcher-electron-1.4.4-linux-x64.zip
+Resolving github.com (github.com)... 13.229.188.59, 13.250.177.223, 52.74.223.119
+Connecting to github.com (github.com)|13.229.188.59|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://github-production-release-asset-2e65be.s3.amazonaws.com/45055693/4f5bd210-493f-11e8-9d67-d4a7ed067d4e?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20180802%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20180802T152613Z&amp;X-Amz-Expires=300&amp;X-Amz-Signature=72daf80e921bd157bec5fd8373f849eed41c95ebf8046852c82296a812f00c97&amp;X-Amz-SignedHeaders=host&amp;actor_id=0&amp;response-content-disposition=attachment%3B%20filename%3Detcher-electron-1.4.4-linux-x64.zip&amp;response-content-type=application%2Foctet-stream [following]
+--2018-08-02 23:26:14--  https://github-production-release-asset-2e65be.s3.amazonaws.com/45055693/4f5bd210-493f-11e8-9d67-d4a7ed067d4e?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20180802%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20180802T152613Z&amp;X-Amz-Expires=300&amp;X-Amz-Signature=72daf80e921bd157bec5fd8373f849eed41c95ebf8046852c82296a812f00c97&amp;X-Amz-SignedHeaders=host&amp;actor_id=0&amp;response-content-disposition=attachment%3B%20filename%3Detcher-electron-1.4.4-linux-x64.zip&amp;response-content-type=application%2Foctet-stream
+Resolving github-production-release-asset-2e65be.s3.amazonaws.com (github-production-release-asset-2e65be.s3.amazonaws.com)... 54.231.121.75
+Connecting to github-production-release-asset-2e65be.s3.amazonaws.com (github-production-release-asset-2e65be.s3.amazonaws.com)|54.231.121.75|:443... connected.
+HTTP request sent, awaiting response... 403 Forbidden
+The name is too long, 454 chars total.
+Trying to shorten...
+New name is 4f5bd210-493f-11e8-9d67-d4a7ed067d4e?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Credential=AKIAIWNJYAX4CSVEH53A%2F20180802%2Fus-east-1%2Fs3%2Faws4_request&amp;X-Amz-Date=20180802T152613Z&amp;X-Amz-Expires=300&amp;X-Amz-Signature=72daf80e921bd157bec5fd8.
+2018-08-02 23:26:15 ERROR 403: Forbidden.
+
+alias wget='wget -U User-Agent -c --content-disposition'
+
+$ curl -O https://github.com/resin-io/etcher/releases/download/v1.4.4/etcher-electron-1.4.4-linux-x64.zip
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   625    0   625    0     0    264      0 --:--:--  0:00:02 --:--:--   264
+  1 80.3M    1  866k    0     0   9239      0  2:32:02  0:01:36  2:30:26  3570
+
+alias curl='curl -L -C -'
+
+&gt; -f, --fail
+&gt;        (HTTP)  Fail  silently (no output at all) on server errors. This is mostly done to better
+&gt;        enable scripts etc to better deal with failed attempts. In  normal  cases  when  an  HTTP
+&gt;        server  fails  to deliver a document, it returns an HTML document stating so (which often
+&gt;        also describes why and more). This flag will prevent curl from outputting that and return
+&gt;        error 22.
+&gt;
+&gt;        This  method is not fail-safe and there are occasions where non-successful response codes
+&gt;        will slip through, especially when authentication is involved  (response  codes  401  and
+&gt;        407).
+
+
+
+#
+(uname -s; uname -m; uname -r; uname -v) | \
+curl https://api-ksplice.oracle.com/api/1/update-list/ \
+-L -H "Accept: text/text" --data-binary @-
+
+
+curl (7.32.0-1) unstable; urgency=low
+
+  From this version the threaded DNS resolver will be used. This allows for
+  asynchronous DNS queries and also fixes possible issues related to handling
+  time outs of DNS lookups.
+
+  The threaded resolver was chosen instead of the event-based one (which uses
+  the c-ares library) because c-ares currently lacks somewhat important
+  features, such as support for the Name Service Switch system.
+
+
+
+
+curl -H 'Accept: text/plain' http://godoc.org/?q=sql
+
+
+</code></pre></div></div>
+<p>$ curl -I git
+HTTP/1.1 200 OK
+Date: Wed, 24 May 2017 13:04:19 GMT
+Server: Httpd
+Cache-control: no-cache=”set-cookie”
+Content-type: text/html; charset=UTF-8
+ETag: “90e-2888-56726263”
+Content-length: 9094
+Connection: close
+Set-Cookie: <em>WebSessionId</em>=95b2387921278ff58e65053c2014b722; path=/;</p>
+
+<p>curl -I http://www.frob.com/~roland/
+HTTP/1.1 200 OK
+Date: Fri, 29 Sep 2017 09:22:01 GMT
+Server: Apache/2.2.15 (CentOS)
+Last-Modified: Sun, 04 Jan 1998 01:18:16 GMT
+ETag: “2a2583-f7c-323e1947d8600”
+Accept-Ranges: bytes
+Content-Length: 3964
+Connection: close
+Content-Type: text/html; charset=UTF-8</p>
+
+<p>$ curl -I git:55555
+HTTP/1.1 302 Found
+Server: nginx
+Date: Wed, 24 May 2017 05:12:28 GMT
+Content-Type: text/html; charset=utf-8
+Connection: keep-alive
+Cache-Control: no-cache
+Location: http://code/repo/apex/boards
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-Request-Id: 7117aed1-0bdc-4fa1-8ffc-f5d7cf2c3e9e
+X-Runtime: 0.031390
+X-Ua-Compatible: IE=edge
+X-Xss-Protection: 1; mode=block
+Strict-Transport-Security: max-age=31536000</p>
+
+<p>HTTP/1.1 302 Found
+Server: nginx
+Date: Wed, 24 May 2017 05:12:28 GMT
+Content-Type: text/html; charset=utf-8
+Connection: keep-alive
+Cache-Control: no-cache
+Location: http://code/users/sign_in
+Set-Cookie: _gitlab_session=34303e41cc65e4000f3714215c343a7f; path=/; HttpOnly
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+X-Request-Id: ead746cb-4d6e-4158-bd2c-f4feff694b65
+X-Runtime: 0.037874
+X-Xss-Protection: 1; mode=block
+Strict-Transport-Security: max-age=31536000</p>
+
+<p>HTTP/1.1 200 OK
+Server: nginx
+Date: Wed, 24 May 2017 05:12:28 GMT
+Content-Type: text/html; charset=utf-8
+Connection: keep-alive
+Cache-Control: max-age=0, private, must-revalidate
+Etag: W/”4a91c6d242d0cb6a61847955ccab2c02”
+Set-Cookie: _gitlab_session=71b3979aa05bbbc558e845e90fc147ef; path=/; HttpOnly
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+X-Request-Id: a4bbb3fe-0798-40a3-9350-f5d22508a2c4
+X-Runtime: 0.125638
+X-Ua-Compatible: IE=edge
+X-Xss-Protection: 1; mode=block
+Strict-Transport-Security: max-age=31536000</p>
+
+<p>$ curl -I localhost
+HTTP/1.1 302 Found
+Date: Fri, 03 Jul 2015 01:48:39 GMT
+Server: Apache
+x-rack-cache: miss
+cache-control: no-cache
+x-ua-compatible: IE=Edge,chrome=1
+x-runtime: 0.010485
+x-request-id: f11775d32b085917f47372b0be88fa42
+Connection: close
+X-Powered-By: Phusion Passenger 5.0.4
+X-Frame-Options: SAMEORIGIN
+location: http://localhost/login?back_url=http%3A%2F%2Flocalhost%2F
+Status: 302 Found
+Content-Type: text/html; charset=utf-8</p>
+
+<p>$ curl -I 203.100.82.236
+HTTP/1.1 503 Service Unavailable
+Cache-Control: no-cache
+Pragma: no-cache
+Content-Type: text/html; charset=utf-8
+Proxy-Connection: Keep-Alive
+Connection: Keep-Alive
+Content-Length: 778</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+
+curl -fLo /home/as/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+If you're behind an HTTP proxy, you may need to add --insecure option to the curl command. In that case, you also need to set  to true.
+
+
+
+
+# make
+
+</code></pre></div></div>
+<p>curl version:     7.47.0
+  Host setup:       x86_64-pc-linux-gnu
+  Install prefix:   /usr/local
+  Compiler:         gcc
+  SSL support:      enabled (OpenSSL)
+  SSH support:      no      (–with-libssh2)
+  zlib support:     enabled
+  GSS-API support:  no      (–with-gssapi)
+  TLS-SRP support:  enabled
+  resolver:         default (–enable-ares / –enable-threaded-resolver)
+  IPv6 support:     enabled
+  Unix sockets support: enabled
+  IDN support:      enabled
+  Build libcurl:    Shared=yes, Static=yes
+  Built-in manual:  enabled
+  –libcurl option: enabled (–disable-libcurl-option)
+  Verbose errors:   enabled (–disable-verbose)
+  SSPI support:     no      (–enable-sspi)
+  ca cert bundle:   /etc/ssl/certs/ca-certificates.crt
+  ca cert path:     no
+  LDAP support:     enabled (OpenLDAP)
+  LDAPS support:    enabled
+  RTSP support:     enabled
+  RTMP support:     no      (–with-librtmp)
+  metalink support: no      (–with-libmetalink)
+  PSL support:      no      (libpsl not found)
+  HTTP2 support:    disabled (–with-nghttp2)
+  Protocols:        DICT FILE FTP FTPS GOPHER HTTP HTTPS IMAP IMAPS LDAP LDAPS POP3 POP3S RTSP SMB SMBS SMTP SMTPS TELNET TFTP</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+
+
+```sh
+$ curl -I http://u.sb/ -A Mozilla
+HTTP/1.1 301 Moved Permanently
+Date: Thu, 01 Sep 2022 05:48:37 GMT
+Content-Type: text/html
+Content-Length: 162
+Connection: keep-alive
+Location: https://u.sb/
+Server: Windows 11
+
+HTTP/1.1 200 OK
+Date: Thu, 01 Sep 2022 05:48:37 GMT
+Content-Type: text/html; charset=UTF-8
+Connection: keep-alive
+Vary: Accept-Encoding
+Server: u.sb
+Referrer-Policy: strict-origin-when-cross-origin
+Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+X-Frame-Options: SAMEORIGIN
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Report-To: {"group":"default","max_age":31536000,"endpoints":[{"url":"https://showfom.report-uri.com/a/d/g"}],"include_subdomains":true}
+NEL: {"report_to":"default","max_age":31536000,"include_subdomains":true}
+Permissions-Policy: accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()
+Expect-CT: max-age=604800, report-uri="https://showfom.report-uri.com/r/d/ct/enforce"
+Feature-Policy: accelerometer 'none'; camera 'none'; geolocation 'none'; gyroscope 'none'; magnetometer 'none'; microphone 'none'; payment 'none'; usb 'none'
+Content-Security-Policy: default-src 'self' data: 'unsafe-inline' https://*.u.sb https://*.rsb.net https://shou.si; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.u.sb https://*.rsb.net https://shou.si; style-src 'self' data: 'unsafe-inline' https://*.u.sb https://*.rsb.net https://shou.si; img-src 'self' data: https://*.u.sb https://*.rsb.net https://shou.si; font-src 'self' data: https://*.u.sb https://*.rsb.net https://shou.si; connect-src 'self' https://*.u.sb https://*.rsb.net https://shou.si; media-src 'self' https://*.u.sb https://*.rsb.net https://shou.si; object-src 'self' https://*.u.sb https://*.rsb.net https://shou.si; prefetch-src 'self'; frame-src 'self'; worker-src 'self'; frame-ancestors 'self'; form-action 'self' https://*.u.sb https://*.rsb.net https://shou.si; upgrade-insecure-requests; block-all-mixed-content; manifest-src 'self' https://*.u.sb https://*.rsb.net https://shou.si; report-uri https://showfom.report-uri.com/r/d/csp/enforce
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>root@git:/var/opt/gitlab/backups# curl -I https://grapheneos.org/install/cli
+HTTP/2 200
+server: nginx
+date: Mon, 05 Sep 2022 05:21:26 GMT
+content-type: text/html; charset=utf-8
+content-length: 25815
+last-modified: Mon, 05 Sep 2022 05:15:54 GMT
+vary: Accept-Encoding
+etag: "6315860a-64d7"
+strict-transport-security: max-age=63072000; includeSubDomains; preload
+x-content-type-options: nosniff
+referrer-policy: no-referrer
+cross-origin-opener-policy: same-origin
+cross-origin-embedder-policy: require-corp
+origin-agent-cluster: ?1
+x-frame-options: DENY
+x-xss-protection: 0
+content-security-policy: default-src 'none'; connect-src 'self' https://releases.grapheneos.org/; font-src 'self'; img-src 'self'; manifest-src 'self'; script-src 'self'; style-src 'self'; form-action 'none'; frame-ancestors 'none'; block-all-mixed-content; base-uri 'none'; require-trusted-types-for 'script'; trusted-types 'none'
+permissions-policy: accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), clipboard-read=(), clipboard-write=(), display-capture=(), document-domain=(), encrypted-media=(), fullscreen=(), gamepad=(), geolocation=(), gyroscope=(), hid=(), idle-detection=(), interest-cohort=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(), serial=(), speaker-selection=(), sync-xhr=(), usb=(), xr-spatial-tracking=()
+cross-origin-resource-policy: same-origin
+cache-control: public, no-cache
+link: &lt;/4ed2f591.main.css&gt;; rel=preload; as=style; integrity=sha256-TtL1kYPxBwG8TuDFejy69lt7uYjWhwZ1tikoAkVRDQM=, &lt;/fonts/roboto-v29-regular-latin.woff2&gt;; rel=preload; as=font; crossorigin, &lt;/fonts/roboto-v29-bold-latin.woff2&gt;; rel=preload; as=font; crossorigin, &lt;/780febcc.mask-icon.svg&gt;; rel=preload; as=image, &lt;/js/f2319062.redirect.js&gt;; rel=modulepreload; integrity=sha256-8jGQYn8UcJbAw8WFbVaUeFb37Tul+R5rbSiUJqZUGtg=
+set-cookie: __Host-push=1; HttpOnly; Secure; SameSite=Lax; Path=/
+accept-ranges: bytes
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl -L -O "https://github.com/yous/whiteglass/raw/master/{index.html,about.md,archives.md,feed.xml,robots.txt}"
+curl -L --create-dirs -o _data/#1 "https://github.com/yous/whiteglass/raw/master/_data/{navigation.yml,i18n.yml}
+</code></pre></div></div>
+
+      </main>
+    <aside class="footer-widgets">
+
+    
+
+    <div id="footer-columns" class="footer-columns">
+        <div class="inner">
+            <div class="grid">
+
+                
+
+                <!-- Create a sorted array of tags -->
+                <div class="one-third">
+                    
+                    
+                    <section class="widget widget-tags">
+                        <!--
+                        <h2 class="widget-title">Tags</h2>
+                        <div class="tagcloud">
+                            
+                            <a href="/tags/#Algorithms">Algorithms</a>
+                            
+                            <a href="/tags/#Apple">Apple</a>
+                            
+                            <a href="/tags/#Boost">Boost</a>
+                            
+                            <a href="/tags/#C%2B%2B">C++</a>
+                            
+                            <a href="/tags/#Cocoa">Cocoa</a>
+                            
+                            <a href="/tags/#Coding">Coding</a>
+                            
+                            <a href="/tags/#Jekyll">Jekyll</a>
+                            
+                            <a href="/tags/#Mac">Mac</a>
+                            
+                            <a href="/tags/#OSX">OSX</a>
+                            
+                            <a href="/tags/#Performance">Performance</a>
+                            
+                            <a href="/tags/#STL">STL</a>
+                            
+                            <a href="/tags/#Threading">Threading</a>
+                            
+                            <a href="/tags/#Unicode">Unicode</a>
+                            
+                            <a href="/tags/#api">api</a>
+                            
+                            <a href="/tags/#c%2B%2B">c++</a>
+                            
+                            <a href="/tags/#c%2B%2B11">c++11</a>
+                            
+                            <a href="/tags/#code+block">code block</a>
+                            
+                            <a href="/tags/#iOS">iOS</a>
+                            
+                            <a href="/tags/#iPhone">iPhone</a>
+                            
+                            <a href="/tags/#iptables">iptables</a>
+                            
+                            <a href="/tags/#markdown">markdown</a>
+                            
+                            <a href="/tags/#nftables">nftables</a>
+                            
+                            <a href="/tags/#openapi">openapi</a>
+                            
+                            <a href="/tags/#programming+language">programming language</a>
+                            
+                            <a href="/tags/#racket">racket</a>
+                            
+                            <a href="/tags/#select">select</a>
+                            
+                            <a href="/tags/#stl">stl</a>
+                            
+                            <a href="/tags/#swagger">swagger</a>
+                            
+                            <a href="/tags/#test">test</a>
+                            
+                            <a href="/tags/#tutorial">tutorial</a>
+                            
+                            <a href="/tags/#webdev">webdev</a>
+                            
+                        </div>
+                        -->
+                    </section><!-- .widget -->
+                </div><!-- .one-third -->
+
+            </div><!-- .grid -->
+        </div><!-- .inner -->
+    </div><!-- .footer-columns -->
+
+</aside><!-- .footer-widgets -->
+
+    </div><!-- .site -->
+    <div class="profile">
+      <a href="http://10.10.50.50:1125"><img src="" class="profile-image"></a>
+      <div class="profile-about">
+        <h2 style="margin-bottom: 0; font-weight: 700;"></h2>
+        
+        
+        
+        <a href="about"><img src="/img/icon/me.svg" class="social-icon"></a>
+        <br>
+        
+        <br>
+        <div class="mode" id="mode-switcher" onclick="toggleNightMode();">
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--
+  
+<footer class="site-footer">
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li><a href="mailto:Kea Wot <hi@ashang.org>">Kea Wot <hi@ashang.org></a></li>
+        </ul>
+      </div>
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/ashang">
+              <span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+
+              </span>
+              <span class="username">ashang
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+      <div class="footer-col footer-col-3">
+        <p>ramblings notes, things I worked through to make sure I understand.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+-->
+</body>
+</html>

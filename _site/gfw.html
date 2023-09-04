@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta name="description" content="$ git clone https://github.com/cmouse/yahttpCloning into 'yahttp'...fatal: unable to access 'https://github.com/cmouse/yahttp/': HTTP/2 stream 1 was not clos...">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://10.10.50.50:1125/gfw">
+  <link rel="alternate" type="application/rss+xml" title="in love we trust" href="http://10.10.50.50:1125/feed.xml">
+  <title>
+    
+      gfw &middot; in love we trust
+    
+  </title>
+
+  
+  <link rel="canonical" href="http://10.10.50.50:1125/gfw">
+  
+
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/poole.css">
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/syntax.css">
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/lanyon.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <link rel="shortcut icon" href="http://10.10.50.50:1125/favicon.ico">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://10.10.50.50:1125/atom.xml">
+
+  
+</head>
+<body class="fixed-nav"><header class="site-header" >
+    <a class="site-title" href="/">in love we trust</a>
+
+    <nav class="site-nav">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+
+      <div class="trigger">
+        
+          
+        
+          
+          <a class="page-link" href="/404/"> </a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/ansible-examples">Ansible examples</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-guide">Ansible quickstart</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-modules">Ansible modules</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-roles">Ansible roles</a>
+          
+        
+          
+          <a class="page-link" href="/ansible">Ansible</a>
+          
+        
+          
+          <a class="page-link" href="/archive">Archive</a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/cmd-test">cmd Test</a>
+          
+        
+          
+          <a class="page-link" href="/cryptsetup">cryptsetup with LUKS</a>
+          
+        
+          
+          <a class="page-link" href="/cupper-shortcodes--percent-sign">Cupper Shortcodes with percent sign</a>
+          
+        
+          
+          <a class="page-link" href="/curl">curl</a>
+          
+        
+          
+          <a class="page-link" href="/downtime">downtime</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/frontend">front-end</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/notes/">WILT</a>
+          
+        
+          
+          <a class="page-link" href="/p4-lang">p4</a>
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/tags/">Tags</a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/tutorials">Tutorials</a>
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+</header>
+<div class="container">
+    <div id="page" class="site">
+      <main class="page-content" aria-label="Content">
+        <main class="content fade-in-down delay-0_5s">
+  <div class="inner">
+    <article class="post">
+      <div class="entry-box">
+        <header class="entry-header">
+          <h2 class="post-title">gfw</h2>
+          <div class="entry-meta">
+            
+              <time class="post-date" datetime="2017-11-05">November 5, 2017</time>
+            
+            
+          </div><!-- .entry-meta -->
+        </header><!-- .entry-header -->
+        <div class="entry-content">
+            <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git clone https://github.com/cmouse/yahttp
+Cloning into <span class="s1">'yahttp'</span>...
+fatal: unable to access <span class="s1">'https://github.com/cmouse/yahttp/'</span>: HTTP/2 stream 1 was not closed cleanly before end of the underlying stream
+</code></pre></div></div>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>./src/ss-local <span class="nt">-c</span> ~/gfw/config-v2ray-client.json
+ 2022-07-16 00:18:11 INFO: plugin <span class="s2">"/bin/v2ray-plugin"</span> enabled
+ 2022-07-16 00:18:11 INFO: initializing ciphers... chacha20-ietf-poly1305
+ 2022-07-16 00:18:11 INFO: listening at 127.0.0.1:10080
+2022/07/16 00:18:11 V2Ray 5.0.2 <span class="o">(</span>V2Fly, a community-driven edition of V2Ray.<span class="o">)</span> Custom <span class="o">(</span>go1.17.7 linux/amd64<span class="o">)</span>
+2022/07/16 00:18:11 A unified platform <span class="k">for </span>anti-censorship.
+2022/07/16 00:18:11 <span class="o">[</span>Warning] V2Ray 5.0.2 started
+2022/07/16 00:37:15 127.0.0.1:58306 accepted tcp:127.0.0.1:0
+2022/07/16 00:37:15 <span class="o">[</span>Warning] <span class="o">[</span>3818441701] app/dispatcher: default route <span class="k">for </span>tcp:127.0.0.1:0
+2022/07/16 00:37:16 <span class="o">[</span>Warning] <span class="o">[</span>1428538179] app/dispatcher: default route <span class="k">for </span>tcp:127.0.0.1:0
+2022/07/16 00:37:16 127.0.0.1:58320 accepted tcp:127.0.0.1:0
+2022/07/16 00:37:25 <span class="o">[</span>Warning] <span class="o">[</span>2109922117] app/dispatcher: default route <span class="k">for </span>tcp:127.0.0.1:0
+2022/07/16 00:37:25 127.0.0.1:54760 accepted tcp:127.0.0.1:0
+2022/07/16 00:37:25 127.0.0.1:54770 accepted tcp:127.0.0.1:0
+2022/07/15 17:19:32 <span class="o">[</span>Warning] v2ray.com/core/transport/internet/websocket: failed to serve http <span class="k">for </span>WebSocket <span class="o">&gt;</span> accept tcp 65.20.115.4:18388: use of closed network connection
+
+
+<span class="nv">$ </span>proxychains git clone https://github.com/cyfdecyf/cow
+ProxyChains-3.1 <span class="o">(</span>http://proxychains.sf.net<span class="o">)</span>
+Cloning into <span class="s1">'cow'</span>...
+fatal: unable to access <span class="s1">'https://github.com/cyfdecyf/cow/'</span>: Could not resolve host: github.com
+
+<span class="nv">$ </span>ping github.com
+PING github.com <span class="o">(</span>20.205.243.166<span class="o">)</span> 56<span class="o">(</span>84<span class="o">)</span> bytes of data.
+
+<span class="nv">$ </span><span class="nb">sudo </span>vi /etc/hosts
+
+<span class="nv">$ </span>proxychains git clone https://github.com/cyfdecyf/cow
+ProxyChains-3.1 <span class="o">(</span>http://proxychains.sf.net<span class="o">)</span>
+Cloning into <span class="s1">'cow'</span>...
+fatal: unable to access <span class="s1">'https://github.com/cyfdecyf/cow/'</span>: gnutls_handshake<span class="o">()</span> failed: The TLS connection was non-properly terminated.
+
+<span class="c"># proxychains4</span>
+
+<span class="nv">$ </span>proxychains git clone https://github.com/cyfdecyf/cow
+<span class="o">[</span>proxychains] config file found: /home/aaron/.proxychains/proxychains.conf
+<span class="o">[</span>proxychains] preloading /usr/lib/x86_64-linux-gnu/libproxychains.so.4
+Cloning into <span class="s1">'cow'</span>...
+
+fatal: unable to access <span class="s1">'https://github.com/cyfdecyf/cow/'</span>: gnutls_handshake<span class="o">()</span> failed: The TLS connection was non-properly terminated.
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ gcl https://github.com/zonyitoo/rust-ini
+Cloning into 'rust-ini'...
+fatal: unable to access 'https://github.com/zonyitoo/rust-ini/': HTTP/2 stream 1 was not closed cleanly before end of the underlying stream
+# W28.6 0716 00:48:53  aaron@i54:~/gfw
+$ gcl https://github.com/zonyitoo/rust-ini
+Cloning into 'rust-ini'...
+POST git-upload-pack (175 bytes)
+POST git-upload-pack (1002 bytes)
+remote: Enumerating objects: 859, done.
+remote: Counting objects: 100% (92/92), done.
+remote: Compressing objects: 100% (31/31), done.
+remote: Total 859 (delta 47), reused 82 (delta 47), pack-reused 767
+Receiving objects: 100% (859/859), 244.55 KiB | 854.00 KiB/s, done.
+Resolving deltas: 100% (427/427), done.
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Something went wrong.
+Please try again later.
+Refresh the page
+Fewer Details
+UTC Date: 2022-07-18T10:27:45.672Z
+Client Id: B3489D5829C1411CB98B5047C73E4B74
+Session Id: 45d1d593-a744-4d01-8c7f-fd00ad5e5e29
+Client Version: 20220708002.17
+BootResult: cdnError
+Failed resource: https://res-2.cdn.office.net/owamail/20220708002.17/scripts/owa.ven.extframework.js
+err: Error: Failed to load javascript.
+esrc: Script
+et: ClientError
+estack: Error: Failed to load javascript.
+    at b.onLoadFailed (https://outlook.office.com/mail/?bO=1&amp;sessionId=45d1d593-a744-4d01-8c7f-fd00ad5e5e29:300:94103)
+    at https://outlook.office.com/mail/?bO=1&amp;sessionId=45d1d593-a744-4d01-8c7f-fd00ad5e5e29:300:93016
+</code></pre></div></div>
+
+<h2 id="about-youtube">About YouTube</h2>
+
+<p>Our mission is to give everyone a voice and show them the world.</p>
+
+<p>We believe that everyone deserves to have a voice, and that the world is a better place when we listen, share and build community through our stories.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   19  apt-get <span class="nb">install </span>docker.io
+   20  curl <span class="nt">-L</span> <span class="s2">"https://github.com/docker/compose/releases/download/1.25.0/docker-compose-</span><span class="si">$(</span><span class="nb">uname</span> <span class="nt">-s</span><span class="si">)</span><span class="s2">-</span><span class="si">$(</span><span class="nb">uname</span> <span class="nt">-m</span><span class="si">)</span><span class="s2">"</span> <span class="nt">-o</span> /usr/local/bin/docker-compose
+   21  <span class="nb">chmod</span> +x /usr/local/bin/docker-compose
+   22  wget https://github.com/robcowart/elastiflow/archive/v4.0.1.zip
+   23  apt-get <span class="nb">install </span>unzip
+   24  unzip v4.0.1.zip
+   25  <span class="nb">cd </span>elastiflow-4.0.1/
+   26  <span class="nb">mkdir</span> /var/lib/elastiflow_es
+   27  <span class="nb">chown</span> <span class="nt">-R</span> 1000:1000 /var/lib/elastiflow_es
+   28  vi logstash.service.d/elastiflow.conf
+   29  docker-compose up <span class="nt">-d</span>
+   30  netstat <span class="nt">-pln</span>
+   31  docker ps
+   32  <span class="nb">ls</span> <span class="nt">-ltr</span>
+   33  vi logstash.service.d/elastiflow.conf
+   34  ifconfig
+   35  tcpdump <span class="nt">-i</span> em1 host 172.16.1.198
+   36  tcpdump <span class="nt">-i</span> em1 host 172.16.1.198 port 9200
+   37  tcpdump <span class="nt">-i</span> em1 port 9200
+   38  ps <span class="nt">-aux</span> | <span class="nb">grep </span>log
+   39  ps <span class="nt">-aux</span> | <span class="nb">grep </span>logs
+   40  netstat <span class="nt">-nap</span>
+   41  docker ps
+   42  docker cli bcc6fe46f5f2
+   43  docker attach bcc6fe46f5f2
+   44  docker-compose up <span class="nt">-d</span>
+   45  docker ps
+   46  docker <span class="nb">exec</span> <span class="nt">-it</span> bcc6fe46f5f2 bash
+   47  <span class="nb">ls</span> <span class="nt">-ltr</span>
+   48  vi docker-compose.yml
+   49  docker ps
+   50  docker <span class="nb">kill </span>bcc6fe46f5f2
+   51  docker-compose up <span class="nt">-d</span>
+   52  docker ps
+   53  docker <span class="nb">exec</span> <span class="nt">-it</span> 47b45f4be82a bash
+   54  tcpdump <span class="nt">-i</span> em1 port 9200
+   55  vi docker-compose.yml
+   56  telnet 172.16.1.198 9200
+   57  tcpdump <span class="nt">-i</span> em1 port 6343
+   58  docker ps
+   59  docker <span class="nb">exec </span>47b45f4be82a bash
+   60  docker <span class="nb">exec</span> <span class="nt">-it</span> 47b45f4be82a bash
+   61  docker ps
+   62  docker <span class="nb">kill </span>47b45f4be82a
+   63  vi docker-compose.yml
+   64  docker-compose up <span class="nt">-d</span>
+   65  netstat <span class="nt">-nap</span> | <span class="nb">grep </span>6343
+   66  netstat <span class="nt">-nap</span> | <span class="nb">grep </span>63
+   67  netstat <span class="nt">-nal</span> | <span class="nb">grep </span>63
+   68  netstat <span class="nt">-pln</span>
+   69  <span class="nb">tail</span> <span class="nt">-f</span> /var/log/syslog
+   70  reboot
+   71  vi /etc/network/interfaces
+   72  dhclient em1
+   73  ifconfig
+   74  vi /etc/network/interfaces
+   75  ifconfig
+   76  apt-get <span class="nb">install </span>docker
+   77  <span class="nb">cd </span>elastiflow-4.0.1/
+   78  docker ps
+   79  docker-compose up <span class="nt">-d</span>
+   80  netstat <span class="nt">-nal</span>
+   81  netstat <span class="nt">-pln</span>
+   82  docker ps
+   83  netstat <span class="nt">-pln</span>
+   84  vi docker-compose.yml
+   85  netstat <span class="nt">-pln</span>
+   86  netstat <span class="nt">-nap</span>
+   87  netstat <span class="nt">-pln</span>
+   88  docker  ps
+   89  docker <span class="nb">kill  </span>faa
+   90  docker  ps
+   91  docker <span class="nb">exec</span>  <span class="nt">-it</span> 0b6200c46e96 bash
+   92  docker  ps
+   93  docker restart 0b6200c46e96
+   94  docker <span class="nb">exec</span>  <span class="nt">-it</span> 0b6200c46e96 bash
+   95  netstat <span class="nt">-nap</span>
+   96  docker  ps
+   97  netstat <span class="nt">-nap</span>
+   98  docker logs <span class="nt">-f</span> <span class="nt">-t</span> <span class="nt">--tail</span> 10
+   99  docker  ps
+  100  docker logs <span class="nt">-f</span> <span class="nt">-t</span> <span class="nt">--tail</span> 100 0b6200c46e96
+  101  curl http://10.0.4.22:9200/
+  102  docker  ps
+  103  docker <span class="nb">exec</span> <span class="nt">-it</span> 350f3e3b1be6 bash
+  104  docker  ps
+  105  docker restart 350f3e3b1be6
+  106  docker   ps
+  107  docker <span class="nb">exec</span> <span class="nt">-it</span> 3d71cd5d8797 bash
+  108  docker   ps
+  109  iptables <span class="nt">-F</span>
+  110  docker <span class="nb">exec</span>  <span class="nt">-it</span> 0b6200c46e96 bash
+  111  docker   ps
+  112  docker <span class="nb">exec</span>  <span class="nt">-it</span> 995 bash
+  113  docker network
+  114  docker network  inspect
+  115  docker network  inspect  host
+  116  docker network <span class="nb">ls
+  </span>117  dddddddddddddddddddddddddddddddddddddddd
+  118  docker <span class="nb">exec</span> <span class="nt">-it</span> 350f3e3b1be6 bash
+  119  docker   ps
+  120  docker <span class="nb">exec</span> <span class="nt">-it</span> 995 bash
+  121  docker ps
+  122  docker <span class="nb">kill </span>995
+  123  docker <span class="nb">rm </span>995
+  124  <span class="nb">cd  </span>elastiflow-4.0.1/
+  125  <span class="nb">ls
+  </span>126  vi docker-compose.yml
+  127  docker-compose up <span class="nt">-d</span>
+  128  docker ps
+  129  docker <span class="nb">kill  </span>ac85
+  130  docker <span class="nb">kill </span>c136
+  131  docker restart 314
+  132  docker <span class="nb">exec</span> <span class="nt">-it</span> 314 bash
+  133  docker ps
+  134  <span class="nb">cd  </span>elastiflow-4.0.1/
+  135  <span class="nb">ls
+  </span>136  vi docker-compose.yml
+  137  netstat <span class="nt">-nap</span>
+  138  docker ps
+  139  ifconfig
+  140  tcpdump <span class="nt">-i</span> em1  port 6343
+  141  docker ps
+  142  docker
+  143  docker inspect 42242103df0e
+  144  docker ps
+  145  docker inspect ac8
+  146  docker ps
+  147  vi /var/lib/docker/containers/42242103df0e818b417e8ca28b5f1ed7de75a38e378db4c92e874ffbb6776bce/hostconfig.json
+  148  vim /var/lib/docker/containers/42242103df0e818b417e8ca28b5f1ed7de75a38e378db4c92e874ffbb6776bce/hostconfig.json
+  149  vim /var/lib/docker/containers/42242103df0e818b417e8ca28b5f1ed7de75a38e378db4c92e874ffbb6776bce/config.v2.json
+  150  docker ps
+  151  docker restart  robcowart/elastiflow-logstash:4.0.1
+  152  docker restart 42242103df0e
+  153  docker ps
+  154  netstat <span class="nt">-nap</span>
+  155  netstat <span class="nt">-nap</span>  |  <span class="nb">grep </span>6343
+  156  tcpdump <span class="nt">-i</span> em1  <span class="nt">-vv</span>  port 6343
+  157  netstat <span class="nt">-nap</span>  |  <span class="nb">grep </span>6343
+  158  docker ps
+  159  vim /var/lib/docker/containers/42242103df0e818b417e8ca28b5f1ed7de75a38e378db4c92e874ffbb6776bce/config.v2.json
+  160  vi docker-compose.yml
+  161  vim /var/lib/docker/containers/42242103df0e818b417e8ca28b5f1ed7de75a38e378db4c92e874ffbb6776bce/config.v2.json
+  162  vi docker-compose.yml
+  163  docker ps
+  164  docker <span class="nb">kill </span>42242103df0e
+  165  docker-compose up <span class="nt">-d</span>
+  166  docker ps
+  167  vim /var/lib/docker/containers/2ef2b98a29099bd382824a37e6c3df40551c393563ed6a202364268efff7c440/config.v2.json
+  168  docker ps
+  169  vim /var/lib/docker/containers/2ef2b98a29099bd382824a37e6c3df40551c393563ed6a202364268efff7c440/config.v2.json
+  170  vi  docker-compose.yml
+  171  docker <span class="nb">kill </span>2ef
+  172  docker-compose up <span class="nt">-d</span>
+  173  vim /var/lib/docker/containers/faff6882ae1727196960c50c9db5f6b1d5447e41c5c39657db99add0ad4fce78/config.v2.json
+  174  docker ps
+  175  docker <span class="nb">kill </span>faff
+  176  vi  docker-compose.yml
+  177  docker-compose up <span class="nt">-d</span>
+  178  docker ps
+  179  vim /var/lib/docker/containers/6855ed3aeed58c1edaa97047473c9ff5e0dd4e5b0aa3ed7636b11a90e15fbaeb/config.v2.json
+  180  netstat <span class="nt">-nal</span>
+  181  netstat <span class="nt">-nal</span>  | <span class="nb">grep </span>6343
+  182  netstat <span class="nt">-npl</span>  | <span class="nb">grep </span>6343
+  183  netstat <span class="nt">-npl</span>
+  184  vim /var/lib/docker/containers/6855ed3aeed58c1edaa97047473c9ff5e0dd4e5b0aa3ed7636b11a90e15fbaeb/config.v2.json
+  185  docker ps
+  186  vim /var/lib/docker/containers/ac85b12f56704198f8410a25443204a8e055f3cce09915eb15704ea2cdb078b4/config.v2.json
+  187  netstat <span class="nt">-nap</span>
+  188  docker  <span class="nt">-ps</span>
+  189  docker ps
+  190  docker <span class="nb">kill </span>685
+  191  docker <span class="nb">kill </span>ac8
+  192  docker <span class="nb">kill </span>c136
+  193  docker ps
+  194  docker-compose up <span class="nt">-d</span>
+  195  vi  docker-compose.yml
+  196  tcpdump <span class="nt">-i</span> em1 port 6343
+  197  iptables <span class="nt">-F</span>
+  198  vi  docker-compose.yml
+  199  ping 10.0.4.22
+  200  tracepath  10.0.4.22
+  201  tcpdump <span class="nt">-i</span> em1
+  202  tcpdump <span class="nt">-i</span> em1 icmp
+  203  tracepath  10.0.4.22
+  204  ping  10.0.4.22
+  205  docker ps
+  206  docker <span class="nb">kill  </span>685
+  207  docker <span class="nb">kill </span>ac8
+  208  docker <span class="nb">kill </span>c136
+  209  docker ps
+  210  vi  docker-compose.yml
+  211  docker-compose up <span class="nt">-d</span>
+  212  netstat <span class="nt">-nap</span>
+  213  netstat <span class="nt">-npl</span>
+  214  netstat <span class="nt">-nap</span>
+  215  docker ps
+  216  docker <span class="nb">kill </span>all
+  217  docker <span class="nb">kill</span> <span class="k">*</span>
+  218  docker <span class="nb">kill </span>b77
+  219  docker <span class="nb">kill </span>ac85
+  220  docker <span class="nb">kill </span>c136
+  221  <span class="nb">cd</span>  ../
+  222  docker pull robcowart/elastiflow-logstash
+  223  docker pull robcowart/elastiflow-logstash:4.0.1
+  224  docker images
+  225  docker run <span class="nt">--name</span><span class="o">=</span>elastiflow-logstash <span class="nt">--env</span> <span class="nv">ELASTIFLOW_ES_HOST</span><span class="o">=</span><span class="s1">'10.0.4.22:9200'</span> <span class="nt">-p</span> 6343:6343/udp <span class="nt">-p</span> 2055:2055/udp <span class="nt">-p</span> 4739:4739/udp robcowart/elastiflow-logstash:4.0.1
+  226  docker ps
+  227  docker ps  <span class="nt">-a</span>
+  228  docker <span class="nb">rm </span>b777c7fb82da
+  229  docker ps  <span class="nt">-a</span>
+  230  docker run <span class="nt">--name</span><span class="o">=</span>elastiflow-logstash <span class="nt">--env</span> <span class="nv">ELASTIFLOW_ES_HOST</span><span class="o">=</span><span class="s1">'10.0.4.22:9200'</span> <span class="nt">-p</span> 6343:6343/udp <span class="nt">-p</span> 2055:2055/udp <span class="nt">-p</span> 4739:4739/udp robcowart/elastiflow-logstash:4.0.1
+  231  docker ps  <span class="nt">-a</span>
+  232  docker <span class="nb">rm </span>faa703f4c3e3
+  233  docker run <span class="nt">--name</span><span class="o">=</span>elastiflow-logstash <span class="nt">--env</span> <span class="nv">ELASTIFLOW_ES_HOST</span><span class="o">=</span><span class="s1">'10.0.4.22:9200'</span> <span class="nt">-p</span> 6343:6343/udp <span class="nt">-p</span> 2055:2055/udp <span class="nt">-p</span> 4739:4739/udp robcowart/elastiflow-logstash:4.0.1
+  234  docker ps
+  235  docker <span class="nb">kill  </span>0b6200c46e96
+  236  docker <span class="nb">rm  </span>0b6200c46e96
+  237  docker ps <span class="nt">-a</span>
+  238  docker run <span class="nt">--name</span><span class="o">=</span>elastiflow-logstash <span class="nt">--env</span> <span class="nv">ELASTIFLOW_ES_HOST</span><span class="o">=</span><span class="s1">'172.16.0.207:9200'</span> <span class="nt">-p</span> 6343:6343/udp <span class="nt">-p</span> 2055:2055/udp <span class="nt">-p</span> 4739:4739/udp robcowart/elastiflow-logstash:4.0.1
+  239  docker  logs  <span class="nt">-f</span> <span class="nt">-t</span> <span class="nt">--tail</span>  100
+  240  docker ps
+  241  docker  logs  <span class="nt">-f</span> <span class="nt">-t</span> <span class="nt">--tail</span>  100   350f3e3b1be6
+  242  docker <span class="nb">exec</span> <span class="nt">-it</span>  350f3e3b1be6  bash
+  243  docker ps
+  244  docker restart 350f3e3b1be6
+  245  docker  logs  <span class="nt">-f</span> <span class="nt">-t</span> <span class="nt">--tail</span>  100   350f3e3b1be6
+  246  docker restart 350f3e3b1be6
+  247  docker <span class="nb">exec</span> <span class="nt">-it</span>  350f3e3b1be6  bash
+  248  docker restart 350f3e3b1be6
+  249  docker  logs  <span class="nt">-f</span> <span class="nt">-t</span> <span class="nt">--tail</span>  100   350f3e3b1be6
+  250  docker ps
+  251  docker ps  <span class="nt">-a</span>
+  252  <span class="nb">ls
+  </span>253  <span class="nb">cd </span>elastiflow-4.0.1/
+  254  <span class="nb">ls
+  </span>255  vi docker-compose.yml
+  256  docker-compose up <span class="nt">-d</span>
+  257  docker ps <span class="nt">-a</span>
+  258  docker <span class="nb">rm  </span>350f3e3b1be6
+  259  docker-compose up <span class="nt">-d</span>
+  260  docker <span class="nb">kill </span>ac85b12f5670
+  261  docker <span class="nb">kill </span>c136a61aa176
+  262  docker ps
+  263  docker  logs  <span class="nt">-f</span> <span class="nt">-t</span> <span class="nt">--tail</span>  100   995
+  264  docker ps
+  265  netstat <span class="nt">-nap</span>
+  266  ifconfig
+  267  sh <span class="nt">-c</span> <span class="s1">'echo 1 &gt; /proc/sys/net/ipv6/conf/all/disable_ipv6'</span>
+  268  <span class="nb">cat</span> /proc/sys/net/ipv6/conf/all/disable_ipv6
+  269  netstat <span class="nt">-nap</span>
+  270  ifconfig em1 del
+  271  docker ps
+  272  docker restart  9951b1e0fd91
+  273  docker  logs  <span class="nt">-f</span> <span class="nt">-t</span> <span class="nt">--tail</span>  100   995
+  274  netstat <span class="nt">-nap</span>
+  275  docker  logs  <span class="nt">-f</span> <span class="nt">-t</span> <span class="nt">--tail</span>  100   995
+  276  ifconfig
+  277  tcpdump <span class="nt">-i</span> em1 host 10.0.4.22
+  278  docker ps <span class="nt">-a</span>
+  279  docker inspect 9951b1e0fd91
+  280  docker  logs  <span class="nt">-f</span> <span class="nt">-t</span> <span class="nt">--tail</span>  100   995
+  281  docker ps
+  282  docker  <span class="nb">exec</span> <span class="nt">-it</span> 9951b1e0fd91  bash
+  283  vi  /var/lib/docker/containers/9951b1e0fd9198815870cfb4a9b6b179d1b73275d857c9265a2ce0a954386e68/hostconfig.json
+  284  vi  /var/lib/docker/containers/9951b1e0fd9198815870cfb4a9b6b179d1b73275d857c9265a2ce0a954386e68/config.v2.json
+  285  docker restart 9951b1e0fd91
+  286  docker  logs  <span class="nt">-f</span> <span class="nt">-t</span> <span class="nt">--tail</span>  100   995
+  287  docker ps
+  288  docker commit 9951b1e0fd91 robcowart/elastiflow-logstash:4.0.1.test
+  289  docker  logs  <span class="nt">-f</span> <span class="nt">-t</span> <span class="nt">--tail</span>  100   995
+  290  tcpdump <span class="nt">-i</span> em1 host 10.0.4.22
+  291  docker ps
+  292  docker <span class="nb">kill </span>9951b1e0fd91
+  293  docker images
+  294  docker run <span class="nt">--name</span><span class="o">=</span>elastiflow-logstash-1 <span class="nt">-p</span> 6343:6343 robcowart/elastiflow-logstash:4.0.1.test
+  295  docker run <span class="nt">--name</span><span class="o">=</span>elastiflow-logstash-1 <span class="nt">-p</span> 6343:6343/udp robcowart/elastiflow-logstash:4.0.1.test
+  296  docker ps
+  297  docker ps <span class="nt">-a</span>
+  298  docker  <span class="nb">rm </span>66b03a20088e
+  299  docker run <span class="nt">--name</span><span class="o">=</span>elastiflow-logstash-1 <span class="nt">-p</span> 6343:6343/udp robcowart/elastiflow-logstash:4.0.1.test
+  300  docker  ps   <span class="nt">-a</span>
+  301  docker restart 3d71cd5d8797
+  302  docker  logs  <span class="nt">-f</span> <span class="nt">-t</span> <span class="nt">--tail</span>  100  3d7
+  303  tcpdump <span class="nt">-i</span> em1 host 10.0.4.22
+  304  tcpdump <span class="nt">-i</span> em1 port 6343
+  305  tcpdump <span class="nt">-i</span> em1 host 10.0.4.22
+  306  docker  logs  <span class="nt">-f</span> <span class="nt">-t</span> <span class="nt">--tail</span>  100  3d7
+  307  docker ps
+  308  docker ps <span class="nt">-a</span>
+  309  docker inspect  9951b1e0fd91
+  310  docker ps <span class="nt">-a</span>
+  311  docker inspect 3d71cd5d8797
+  312  docker ps <span class="nt">-a</span>
+  313  docker <span class="nb">kill </span>3d71cd5d8797
+  314  docker <span class="nb">rm </span>3d71cd5d8797
+  315  docker start 9951b1e0fd91
+  316  docker  logs  <span class="nt">-f</span> <span class="nt">-t</span> <span class="nt">--tail</span>  100 995
+  317  docker ps
+  318  docker  logs  <span class="nt">-f</span> <span class="nt">-t</span> <span class="nt">--tail</span>  100  314
+  319  tcpdump <span class="nt">-i</span> em1 port 6343
+  320  vi /var/lib/docker/containers/314a109468d222adf2f17f085cdf4590288deaa91799774a433352cfd7c248d9/config.v2.json
+  321  vi /var/lib/docker/containers/314a109468d222adf2f17f085cdf4590288deaa91799774a433352cfd7c248d9/hostconfig.json
+  322  docker  logs  <span class="nt">-f</span> <span class="nt">-t</span> <span class="nt">--tail</span>  100 314
+  323  tcpdump <span class="nt">-i</span> em1 port 6343
+  324  docker  logs  <span class="nt">-f</span> <span class="nt">-t</span> <span class="nt">--tail</span>  100 314
+  325  docker ps
+  326  docker <span class="nb">exec</span> <span class="nt">-it</span>  343 bash
+  327  curl
+  328  curl http://10.0.4.22:9200
+  329  docker ps
+  330  docker <span class="nb">exec</span> <span class="nt">-it</span>  b49   bash
+  331  docker ps
+  332  <span class="nb">ls</span>   <span class="nt">-ltr</span>
+  333  <span class="nb">cd </span>elastiflow-4.0.1/
+  334  <span class="nb">ls</span> <span class="nt">-lt</span>
+  335  <span class="nb">pwd
+  </span>336  <span class="nb">ls</span> <span class="nt">-ltr</span>
+  337  vi docker-compose.yml
+  338  <span class="nb">cp </span>docker-compose.yml /home/sharad/
+  339  vi docker-compose.yml
+  340  docker network <span class="nb">ls
+  </span>341  vi docker-compose.yml
+  342  docker ps
+  343  docker <span class="nb">kill </span>314
+  344  docker <span class="nb">rm </span>314
+  345  docker-compose up <span class="nt">-d</span>
+  346  docker  p
+  347  docker  logs  <span class="nt">-f</span> <span class="nt">-t</span> <span class="nt">--tail</span>  100 343
+  348  docker ps
+  349  docker  logs  <span class="nt">-f</span> <span class="nt">-t</span> <span class="nt">--tail</span>  100 343
+  350  docker restart 343
+  351  docker  logs  <span class="nt">-f</span> <span class="nt">-t</span> <span class="nt">--tail</span>  100 343
+  352  docker restart 343
+  353  docker  logs  <span class="nt">-f</span> <span class="nt">-t</span> <span class="nt">--tail</span>  100 343
+  354  ping  10.0.4.22
+  355  telnet  10.0.4.22 9200
+  356  vi docker-compose.yml
+  357  docker  ps
+  358  docker <span class="nb">rm </span>343
+  359  docker <span class="nb">kill </span>343
+  360  docker <span class="nb">rm </span>343
+  361  docker-compose up <span class="nt">-d</span>
+  362  docker  logs  <span class="nt">-f</span> <span class="nt">-t</span> <span class="nt">--tail</span>  100 b49
+  363  netstat <span class="nt">-nap</span>
+  364  tcpdump <span class="nt">-i</span> em1 port 6343
+  365  tcpdump <span class="nt">-i</span> em1 port 2055
+  366  tcpdump <span class="nt">-i</span> em1 host  10.0.4.22
+  367  docker ps
+  368  ifconfig
+  369  tcpdump <span class="nt">-i</span> em1 6343
+  370  tcpdump <span class="nt">-i</span> em1 port 6343
+  371  docker ps
+  372  docker <span class="nb">exec</span> <span class="nt">-it</span> b49c2823c109 bash
+  373  docker <span class="nb">kill </span>b49c2823c109
+  374  <span class="nb">history</span> | <span class="nb">grep </span>docker
+  375  docker images
+  376  <span class="nb">cd
+  </span>377  <span class="nb">ls
+  </span>378  <span class="nb">cd</span> /home/sharad/elastiflow-4.0.1/
+  379  <span class="nb">ls
+  </span>380  <span class="nb">cat </span>docker-compose.yml
+  381  vi docker-compose.yml
+  382  <span class="nb">history</span> | <span class="nb">grep </span>docker
+  383  docker-compose up <span class="nt">-d</span>
+  384  <span class="nb">exit
+  </span>385  ps <span class="nt">-aux</span> | <span class="nb">grep </span>flow
+  386  ps <span class="nt">-aux</span>
+  387  <span class="nb">ls
+  </span>388  vi elastiflow-4.0.1/logstash/elastiflow/conf.d/30_output_10_single.logstash.co
+  389  <span class="nb">history</span> | <span class="nb">grep </span>docker
+  390  <span class="nb">cd </span>elastiflow-4.0.1/
+  391  <span class="nb">ls
+  </span>392  vi docker-compose.yml
+  393  docker-compose up <span class="nt">-d</span>
+  394  docker ps
+  395  docker <span class="nb">exec</span> <span class="nt">-it</span> 1b88ccbd977a bash
+  396  docker ps
+  397  docker  restart 1b88
+  398  docker ps
+  399  docker  restart 1b88
+  400  docker ps
+  401  docker-compose up <span class="nt">-d</span>
+  402  docker  restart 1b88
+  403  docker <span class="nb">exec</span> <span class="nt">-it</span> 1b88ccbd977a bash
+  404  docker  restart 1b88
+  405  docker <span class="nb">exec</span> <span class="nt">-it</span> 1b88ccbd977a bash
+  406  docker ps
+  407  docker  restart 1b88
+  408  docker ps
+  409  docker  restart 1b88
+  410  docker <span class="nb">exec</span> <span class="nt">-it</span> 1b88ccbd977a bash
+  411  docker  restart 1b88
+  412  docker ps
+  413  netstat <span class="nt">-nap</span>
+  414  netstat <span class="nt">-nap</span> | <span class="nb">grep </span>66
+  415  netstat <span class="nt">-nap</span> | <span class="nb">grep </span>36
+  416  <span class="nb">history
+  </span>417  docker list
+  418  docker ps
+  419  <span class="nb">history</span> | <span class="nb">grep </span>docker
+  420  systemctl docker restart
+  421  systemctl restart docker
+  422  docker ps
+  423  docker list
+  424  docker ps <span class="nt">-a</span>
+  425  docker  restart 1b88
+  426  docker ps <span class="nt">-a</span>
+  427  <span class="nb">exit
+  </span>428  apt-get <span class="nb">install </span>scapy
+  429  vi /etc/resolv.conf
+  430  ping 8.8.8.8
+  431  ping 114.114.114.114
+  432  vi /etc/resolv.conf
+  433  apt-get <span class="nb">install </span>scapy
+  434  scapy
+  435  ifconfig
+  436  scapy
+  437  ifconfig em2 up
+  438  ifconfig
+  439  tcpdump <span class="nt">-i</span> em2
+  440  ifconfig
+  441  <span class="nb">df
+  </span>442  pimg 172.16.0.20
+  443  ping 172.16.0.20
+  444  ping 172.16.0.1
+  445  ifconfig
+  446  ifconfig /renew
+  447  service network restart
+  448  service net
+  449  service ip
+  450  ifconfig
+  451  ifconfig /help
+  452  ifconfig <span class="nt">--help</span>
+  453  <span class="nb">cd</span> /etc
+  454  ks
+  455  <span class="nb">ls
+  </span>456  <span class="nb">cd </span>networks
+  457  service networks status
+  458  service
+  459  service <span class="nt">--status-all</span>
+  460  service networking status
+  461  service networking restart
+  462  ifconfig
+  463  ifconfig em2
+  464  ifconfig em2 192.168.0.223
+  465  ping 192.168.0.1
+  466  ifconfig
+  467  ifconfig em2  down
+  468  ifconfig
+  469  ifconfig em1 192.168.0.223
+  470  ping 192.168.0.1
+  471  ifconfig
+  472  ping 192.168.0.221
+  473  ifconfig
+  474  <span class="nb">cd</span> /etc
+  475  <span class="nb">ls
+  </span>476  <span class="nb">grep </span>172.16 <span class="k">*</span>
+  477  <span class="nb">grep </span>172.16 <span class="k">*</span>/<span class="k">*</span>
+  478  <span class="nb">cd </span>network
+  479  <span class="nb">ls
+  </span>480  <span class="nb">cd </span>interfaces
+  481  <span class="nb">ls
+  </span>482  <span class="nb">grep </span>address <span class="k">*</span>
+  483  more interfaces
+  484  ifconfig
+  485  vi interfaces
+  486  <span class="nb">cat </span>interfaces
+  487  service networking restart
+  488  ifconfig
+  489  reboot
+  490  <span class="nb">exit
+  </span>491  ifconfig
+  492  ifconfig em2 172.17.0.200/24
+  493  ping 172.17.0.1
+  494  ping 172.17.0.100
+  495  ping 172.17.0.1
+  496  ssh 172.17.0.1
+  497  ssh admin@172.17.0.1
+  498  ping 172.17.0.1 <span class="nt">-l</span> 1200
+  499  ping 172.17.0.1 <span class="nt">-s</span> 1200
+  500  arp
+  501  tracepath 172.17.0.1
+  502  ifconfig
+  503  docker ps
+  504  sysctl docker stop
+  505  systemctl docker stop
+  506  systemctl  stop docker
+  507  ifconfig
+  508  ifconfig docker0 down
+  509  ifconfig
+  510  route <span class="nt">-n</span>
+  511  tracepath 172.17.0.1
+  512  ping 172.17.0.1
+  513  ping 172.17.0.1 <span class="nt">-a</span>
+  514  ifconfig <span class="nt">-a</span>
+  515  brctl delbr docker0
+  516  ifconfig <span class="nt">-a</span>
+  517  ping 172.17.0.1
+  518  arp <span class="nt">-s</span> 172.17.0.1 22:22:22:22:22:22
+  519  ping 172.17.0.1
+  520  arp <span class="nt">-d</span> 172.17.0.1
+  521  ping 172.17.0.200
+  522  ping 172.17.0.1
+  523  ping 172.17.0.2
+  524  ping 172.17.0.3
+  525  ping 172.17.0.1
+  526  brctl show docker0
+  527  brctl show
+  528  brctl <span class="nb">ls
+  </span>529  brctl show
+  530  bridge
+  531  brctl show
+  532  reboot
+  533  ifconfig 192.168.42.219
+  534  ifconfig em1 192.168.42.219
+  535  ping 192.168.42.1
+  536  rebootcd /etc
+  537  <span class="nb">ls
+  </span>538  <span class="nb">cd </span>etc
+  539  <span class="nb">ls
+  </span>540  <span class="nb">cd</span> /etc
+  541  <span class="nb">ls
+  </span>542  find <span class="nb">.</span> | <span class="nb">grep </span>192
+  543  <span class="nb">grep </span>192 <span class="k">*</span>/<span class="k">*</span>
+  544  <span class="nb">ls
+  </span>545  <span class="nb">cd </span>networking
+  546  vi network/interfaces
+  547  ifconfig <span class="nt">-a</span>
+  548  tcpdump <span class="nt">-i</span> em1
+  549  ping 192.168.42.1
+  550  tcpdump <span class="nt">-i</span> em1
+  551  <span class="nb">uname</span> <span class="nt">-a</span>
+  552  <span class="nb">df
+  </span>553  disk
+  554  disk <span class="nt">-f</span>
+  555  disk <span class="nt">-u</span>
+  556  ifconfig
+  557  tcpdump <span class="nt">-i</span> em1
+  558  ifconfig
+  559  tcpdump <span class="nt">-i</span> em1
+  560  ifconfig em1
+  561  tcpdump <span class="nt">-i</span> em1
+  562  tcpdump <span class="nt">-i</span> em0
+  563  tcpdump <span class="nt">-i</span> em1
+  564  ifconfig
+  565  tcpdump <span class="nt">-i</span> em1
+  566  ifconfig em1 0
+  567  ifconfig em1 down
+  568  ifconfig em1 up
+  569  tcpdump <span class="nt">-i</span> em1
+  570  ifconfig
+  571  ifconfig em1 down
+  572  ifconfig em1 dup
+  573  ifconfig em1 up
+  574  tcpdump <span class="nt">-i</span> em1
+  575  tcpdump <span class="nt">-i</span> em1 <span class="nt">-e</span>
+  576  tcpdump <span class="nt">-i</span> em1
+  577  ifconfig <span class="nt">-a</span>
+  578  tcpdump <span class="nt">-i</span> em2
+  579  ifconfig em2 up
+  580  tcpdump <span class="nt">-i</span> em2
+  581  ssh root@172.16.0.125
+  582  ssh root@172.16.0.5
+  583  dhclient em2
+  584  ssh root@172.16.0.125
+  585  ssh root@172.16.0.5
+  586  ssh pica8@172.16.0.5
+  587  ssh admin@172.16.0.5
+  588  tcpdump <span class="nt">-i</span> em2
+  589  ps <span class="nt">-aux</span>
+  590  ps <span class="nt">-aux</span> | <span class="nb">grep </span>tcp
+  591  <span class="nb">kill</span> <span class="nt">-9</span> 9471
+  592  ps <span class="nt">-aux</span> | <span class="nb">grep </span>tcp
+  593  ifconfig
+  594  tcpdump <span class="nt">-i</span> em2 dhcp
+  595  tcpdump <span class="nt">-i</span> em2 port 67
+  596  tcpdump <span class="nt">-i</span> em2 | <span class="nb">grep </span>dh
+  597  <span class="nb">cat</span> /var/lib/dhcp/dhclient.leases
+  598  <span class="nb">cat</span> /etc/resolv.conf
+  599  ifconfig
+  600  ping 172.16.0.1
+  601  ifconfig em2 0
+  602  ifconfig em2
+  603  ifconfig em1
+  604  dhclient em1
+  605  ifconfig
+  606  ssh pica8@172.16.0.125
+  607  ssh root@172.16.0.125
+  608  ssh pica8@172.16.0.125
+  609  passwd pica8
+  610  passwd
+  611  ssh root@172.16.0.125
+  612  vi /etc/ssh/sshd_config
+  613  vi /etc/ssh/ssh_config
+  614  vi /etc/ssh/sshd_config
+  615  service ssh restart
+  616  ssh root@172.16.0.125
+  617  ssh sharad@172.16.0.125
+  618  passwd sharad
+  619  ssh sharad@172.16.0.125
+  620  ifconfig
+  621  tcpdump <span class="nt">-i</span> em2
+  622  tcpdump <span class="nt">-i</span> em2 <span class="nt">-vv</span>
+  623  tcpdump <span class="nt">-i</span> em2
+  624  ifconfig em2
+  625  ifconfig em2 172.17.0.200/24
+  626  ifconfig
+  627  <span class="nb">history</span> | <span class="nb">grep </span>stop
+  628  systemctl  stop dock
+  629  <span class="nb">history</span> | <span class="nb">grep </span>del
+  630  <span class="nb">history</span> | <span class="nb">grep </span>down
+  631  ifconfig docker0 down
+  632  brctl delbr docker0
+  633  ifconfig
+  634  ping 172.17.0.1
+  635  ping 172.17.0.2
+  636  ping 172.17.0.1
+  637  ifconfig em2 0
+  638  ifconfig em2 down
+  639  ifconfig em2 172.17.0.200/24
+  640  ping 172.17.0.1
+  641  ping 172.17.0.199
+  642  ping 172.17.0.1
+  643  arp <span class="nt">-s</span> 172.17.0.1 22:22:22:22:22:22
+  644  ping 172.17.0.1
+  645  ifconfig
+  646  arp <span class="nt">-d</span> 172.17.0.1
+  647  ping 172.17.0.1
+  648  ping 172.17.0.2
+  649  apt-get <span class="nb">install </span>iperf3
+  650  iperf3 <span class="nt">-s</span>
+  651  tcpdump <span class="nt">-i</span> em2 <span class="nt">-vv</span>
+  652  tcpdump <span class="nt">-i</span> em2
+  653  apt-get <span class="nb">install </span>gnome-shell
+  654  apt-get <span class="nb">install </span>VIRTUALBOX
+  655  apt-get <span class="nb">install </span>virtua<span class="p">;</span><span class="nt">-box</span>
+  656  apt-get <span class="nb">install </span>virtual-box
+  657  apt-get <span class="nb">install </span>virtualbox
+  658  apt-get <span class="nb">install </span>vncserver
+  659  apt-get <span class="nb">install </span>vnc-server
+  660  apt-get <span class="nb">install </span>vnc4server
+  661  vncserver
+  662  top
+  663  vir
+  664  virtualbox
+  665  vi /etc/network/interfaces
+  666  service  networking restart
+  667  ifconfig
+  668  virtualbox
+  669  gnome-session
+  670  gnome-shell
+  671  reboot
+  672  vncserver
+  673  <span class="nb">exit
+  </span>674  virtualbox
+  675  vncserver
+  676  <span class="nb">exit
+  </span>677  <span class="nb">cat</span> /proc/cpuinfo
+  678  <span class="nb">exit
+  </span>679  ps <span class="nt">-aux</span> | <span class="nb">grep </span>vir
+  680  <span class="nb">kill</span> <span class="nt">-9</span> 11107
+  681  ps <span class="nt">-aux</span> | <span class="nb">grep </span>vir
+  682  <span class="nb">kill</span> <span class="nt">-9</span> 11473
+  683  ps <span class="nt">-aux</span> | <span class="nb">grep </span>vir
+  684  <span class="nb">kill</span> <span class="nt">-9</span> 10999
+  685  ps <span class="nt">-aux</span> | <span class="nb">grep </span>vir
+  686  <span class="nb">kill</span> <span class="nt">-9</span> 11604
+  687  <span class="nb">exit
+  </span>688  vboxmanage list vms
+  689  vboxmanage modifyvm <span class="s2">"ampcon-1.6.0-dev-40ac5650d6"</span> <span class="nt">--nested-hw-virt</span> on
+  690  ps <span class="nt">-aux</span> | <span class="nb">grep </span>vir
+  691  <span class="nb">kill</span> <span class="nt">-9</span> 11666
+  692  vboxmanage modifyvm <span class="s2">"ampcon-1.6.0-dev-40ac5650d6"</span> <span class="nt">--nested-hw-virt</span> on
+  693  vboxmanage modifyvm <span class="s2">"ampcon-1.6.0-dev-40ac5650d6"</span> <span class="nt">--hwvirtex</span> on
+  694  vboxmanage modifyvm <span class="s2">"ampcon-1.6.0-dev-40ac5650d6"</span> <span class="nt">--nested-hw-virt</span> on
+  695  <span class="nb">exit
+  </span>696  vboxmanage list vms
+  697  vboxmanage modifyvm <span class="s2">"ampcon-1.6.0-dev-40ac5650d6"</span> <span class="nt">--nested-hw-virt</span> on
+  698  vboxmanage controlvm <span class="s2">"ampcon-1.6.0-dev-40ac5650d6"</span> poweroff
+  699  vboxmanage modifyvm <span class="s2">"ampcon-1.6.0-dev-40ac5650d6"</span> -
+  700  vboxmanage modifyvm ampcon-1.6.0-dev-40ac5650d6 <span class="nt">--nested-hw-virt</span> on
+  701  vboxmanage modifyvm <span class="s2">"ampcon-1.6.0-dev-40ac5650d6"</span> | <span class="nb">grep </span>ne
+  702  vboxmanage modifyvm ampcon-1.6.0-dev-40ac5650d6 <span class="nt">--nested-hw-virt</span> on
+  703  vboxmanage startvm ampcon-1.6.0-dev-40ac5650d6
+  704  <span class="nb">sudo
+  </span>705  vboxmanage startvm <span class="s2">"ampcon-1.6.0-dev-40ac5650d6"</span>
+  706  signal 6code NS_ERROR_FAILURE <span class="o">(</span>0x80004005<span class="o">)</span>, component MachineWrap, interface IMachine
+  707  vncserver
+  708  ps <span class="nt">-ef</span> | <span class="nb">grep </span>vnc
+  709  <span class="nb">kill</span> <span class="nt">-9</span> 11917 12088
+  710  ps <span class="nt">-ef</span> | <span class="nb">grep </span>vnc
+  711  vncserver
+  712  <span class="se">\</span>
+  713  ps <span class="nt">-ef</span> | <span class="nb">grep </span>vnc
+  714  <span class="nb">kill</span> <span class="nt">-9</span> 12128
+  715  vboxmanage startvm <span class="s2">"ampcon-1.6.0-dev-40ac5650d6"</span>
+  716  <span class="nb">cd</span> ~。/
+  717  <span class="nb">cd</span> ~./
+  718  find / <span class="nt">-name</span> VirtualBox.xml
+  719  /root/.config/VirtualBox/VirtualBox.xml
+  720  <span class="nb">sudo rm</span> <span class="nt">-rf</span> /root/.config/VirtualBox/VirtualBox.xml
+  721  vboxmanage startvm <span class="s2">"ampcon-1.6.0-dev-40ac5650d6"</span>
+  722  vboxmanage list vms
+  723  <span class="nb">ls
+  </span>724  <span class="nb">cd</span> ..
+  725  <span class="nb">ls
+  </span>726  <span class="nb">cd </span>sharad/
+  727  <span class="nb">ls
+  </span>728  qt
+  729  virtualbox
+  730  virtualboxvm
+  731  <span class="nb">sudo </span>VBoxManage createvm <span class="nt">--name</span> ampcon <span class="nt">--register</span>
+  732  <span class="nb">cd </span>OVF/ampcon-1.6.0-dev-40ac5650d6
+  733  <span class="nb">cd </span>OVF
+  734  <span class="nb">ls
+  </span>735  <span class="nb">cd</span> ..
+  736  <span class="nb">cd </span>sharad/
+  737  <span class="nb">ls
+  </span>738  <span class="nb">cd </span>Downloads/
+  739  <span class="nb">ls
+  </span>740  <span class="nb">cd</span> ..
+  741  <span class="nb">cd </span>vmware/
+  742  <span class="nb">ls
+  </span>743  <span class="nb">cd</span> ..
+  744  <span class="nb">cd </span>virbox_upgrade/
+  745  <span class="nb">ls
+  </span>746  <span class="nb">cd</span> ..
+  747  <span class="nb">cd </span>OVF/
+  748  <span class="nb">ls
+  </span>749  <span class="nb">tar</span> <span class="nt">-cf</span> ampcon-1.6.0-dev-40ac5650d6.ova ampcon-1.6.0-dev-40ac5650d6.ovf ampcon-1.6.0-dev-40ac5650d6-0.vmdk ampcon-1.6.0-dev-40ac5650d6.mf
+  750  vboxmanage import ampcon-1.6.0-dev-40ac5650d6.ova
+  751  vboxmanage list vms
+  752  <span class="nb">mv</span> /root/VirtualBox VMs/ampcon-1.6.0-dev-40ac5650d6/ampcon-1.6.0-dev-40ac5650d6.vbox /root/VirtualBox VMs/ampcon-1.6.0-dev-40ac5650d6/ampcon-1.6.0-dev-40ac5650d6.vbox1
+  753  <span class="nb">mv</span> /root/VirtualBox VMs/ampcon-1.6.0-dev-40ac5650d6/ampcon-1.6.0-dev-40ac5650d6.vbox /tmp/
+  754  <span class="nb">sudo mv</span> /root/VirtualBox VMs/ampcon-1.6.0-dev-40ac5650d6/ampcon-1.6.0-dev-40ac5650d6.vbox /tmp/
+  755  <span class="nb">mv</span> /root/VirtualBox<span class="se">\ </span>VMs/ampcon-1.6.0-dev-40ac5650d6/ampcon-1.6.0-dev-40ac5650d6.vbox /tmp/
+  756  vboxmanage import ampcon-1.6.0-dev-40ac5650d6.ova
+  757  vboxmanage modifyvm ampcon-1.6.0-dev-40ac5650d6 <span class="nt">--nested-hw-virt</span> on
+  758  vboxmanage startvm ampcon-1.6.0-dev-40ac5650d6
+  759  Waiting <span class="k">for </span>VM <span class="s2">"ampcon-1.6.0-dev-40ac5650d6"</span> to power on...
+  760  VBoxManage: error: The virtual machine <span class="s1">'ampcon-1.6.0-dev-40ac5650d6'</span> has terminated unexpectedly during startup because of signal 6
+  761  VBoxManage: error: Details: code NS_ERROR_FAILURE <span class="o">(</span>0x80004005<span class="o">)</span>, component MachineWrap, interface IMachine
+  762  <span class="nb">cd</span> /usr
+  763  ll
+  764  vboxmanage modifyvm ampcon-1.6.0-dev-40ac5650d6 <span class="nt">--nested-hw-virt</span> off
+  765  vboxmanage startvm ampcon-1.6.0-dev-40ac5650d6
+  766  vboxmanage modifyvm ampcon-1.6.0-dev-40ac5650d6 <span class="nt">--nested-hw-virt</span> on
+  767  vboxmanage startvm ampcon-1.6.0-dev-40ac5650d6 <span class="nt">--type</span> headlesvboxmanage startvm ampcon-1.6.0-dev-40ac5650d6 s
+  768  vboxmanage modifyvm ampcon-1.6.0-dev-40ac5650d6 <span class="nt">--nested-hw-virt</span> on
+  769  vboxmanage modifyvm <span class="s2">"ampcon-1.6.0-dev-40ac5650d6"</span> <span class="nt">--nested-hw-virt</span> on
+  770  vboxmanage list vms
+  771  vboxmanage remvevm <span class="s2">"ampcon-1.6.0-dev-40ac5650d6"</span>
+  772  vboxmanage removevm <span class="s2">"ampcon-1.6.0-dev-40ac5650d6"</span>
+  773  VBoxManage list runningvm
+  774  VBoxManage list runningvms
+  775  vboxmanage delete <span class="s2">"ampcon-1.6.0-dev-40ac5650d6"</span>
+  776  vboxmanage <span class="s2">"ampcon-1.6.0-dev-40ac5650d6"</span> delete
+  777  vboxmanage <span class="s2">"ampcon-1.6.0-dev-40ac5650d6"</span>
+  778  VBoxManage list runningvm
+  779  VBoxManage list runningvms
+  780  VBoxManage list vms
+  781  vboxmanage modifyvm <span class="s2">"ampcon-1.6.0-dev-40ac5650d61"</span> <span class="nt">--nested-hw-virt</span> on
+  782  vboxmanage modifyvm <span class="s2">"ampcon-1.6.0-dev-40ac5650d61"</span> <span class="nt">--nested-hw-virt</span> onvboxmanage modifyvm <span class="s2">"ampcon-1.6.0-dev-40ac5650d61"</span> <span class="nt">--nested-hw-virt</span> on
+  783  systemctl status automation
+  784  vboxmanager list vms
+  785  vboxmanage list vms
+  786  vboxmanage modifyvm ampcon-1.6.0-dev-40ac5650d6 <span class="nt">--nested-hw-virt</span> on
+  787  ssh root@172.16.0.117
+</code></pre></div></div>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>POST git-upload-pack <span class="o">(</span>164 bytes<span class="o">)</span>
+POST git-upload-pack <span class="o">(</span><span class="nb">gzip </span>3802 to 1921 bytes<span class="o">)</span>
+remote: Enumerating objects: 11366, <span class="k">done</span><span class="nb">.</span>
+remote: Counting objects: 100% <span class="o">(</span>69/69<span class="o">)</span>, <span class="k">done</span><span class="nb">.</span>
+remote: Compressing objects: 100% <span class="o">(</span>41/41<span class="o">)</span>, <span class="k">done</span><span class="nb">.</span>
+error: RPC failed<span class="p">;</span> curl 56 GnuTLS recv error <span class="o">(</span><span class="nt">-54</span><span class="o">)</span>: Error <span class="k">in </span>the pull <span class="k">function</span><span class="nb">.</span>
+error: 8101 bytes of body are still expected
+fetch-pack: unexpected disconnect <span class="k">while </span>reading sideband packet
+fatal: early EOF
+fatal: index-pack failed
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fatal: unable to access 'https://github.com/.../': GnuTLS recv error (-110): The TLS connection was non-properly terminated.
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fatal: unable to connect to github.com:
+github.com[0: 20.205.243.166]: errno=Connection timed out
+</code></pre></div></div>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>...
+remote: Enumerating objects: 38806, <span class="k">done</span><span class="nb">.</span>
+remote: Counting objects: 100% <span class="o">(</span>510/510<span class="o">)</span>, <span class="k">done</span><span class="nb">.</span>
+remote: Compressing objects: 100% <span class="o">(</span>267/267<span class="o">)</span>, <span class="k">done</span><span class="nb">.</span>
+error: RPC failed<span class="p">;</span> curl 56 GnuTLS recv error <span class="o">(</span><span class="nt">-54</span><span class="o">)</span>: Error <span class="k">in </span>the pull <span class="k">function</span><span class="nb">.</span>
+error: 7688 bytes of body are still expected
+fetch-pack: unexpected disconnect <span class="k">while </span>reading sideband packet
+fatal: early EOF
+fatal: index-pack failed
+</code></pre></div></div>
+
+        </div><!-- .entry-content -->
+        <footer class="entry-footer">
+          
+          <div class="share-post">
+            <!--
+              <span>Share this:</span>
+                <a class="btn-twitter" target="_blank" href="https://twitter.com/intent/tweet?text=gfw&amp;url=http://10.10.50.50:1125/gfw"><i class="fa fa-twitter" aria-hidden="true"></i><span class="screen-reader-text">Twitter</span></a>
+                -->
+          </div><!-- .share-post -->
+        </footer><!-- .entry-footer -->
+      </div><!-- .entry-box -->
+    <div class="post-line"></div>
+    <div class="author-box">
+        <div class="author-info">
+          <!--
+          <h2 class="author-title">About </h2>
+          <p class="author-bio"></p>
+          <p class="author-links">
+              
+              
+            </p>
+            -->
+        </div><!-- .author-info -->
+      </div><!-- .author-box -->
+    </article><!-- .post -->
+    <a href="#" class="top">Top</a>
+  </div><!-- .inner -->
+</main><!-- .content -->
+      </main>
+    <aside class="footer-widgets">
+
+    
+
+    <div id="footer-columns" class="footer-columns">
+        <div class="inner">
+            <div class="grid">
+
+                
+
+                <!-- Create a sorted array of tags -->
+                <div class="one-third">
+                    
+                    
+                    <section class="widget widget-tags">
+                        <!--
+                        <h2 class="widget-title">Tags</h2>
+                        <div class="tagcloud">
+                            
+                            <a href="/tags/#Algorithms">Algorithms</a>
+                            
+                            <a href="/tags/#Apple">Apple</a>
+                            
+                            <a href="/tags/#Boost">Boost</a>
+                            
+                            <a href="/tags/#C%2B%2B">C++</a>
+                            
+                            <a href="/tags/#Cocoa">Cocoa</a>
+                            
+                            <a href="/tags/#Coding">Coding</a>
+                            
+                            <a href="/tags/#Jekyll">Jekyll</a>
+                            
+                            <a href="/tags/#Mac">Mac</a>
+                            
+                            <a href="/tags/#OSX">OSX</a>
+                            
+                            <a href="/tags/#Performance">Performance</a>
+                            
+                            <a href="/tags/#STL">STL</a>
+                            
+                            <a href="/tags/#Threading">Threading</a>
+                            
+                            <a href="/tags/#Unicode">Unicode</a>
+                            
+                            <a href="/tags/#api">api</a>
+                            
+                            <a href="/tags/#c%2B%2B">c++</a>
+                            
+                            <a href="/tags/#c%2B%2B11">c++11</a>
+                            
+                            <a href="/tags/#code+block">code block</a>
+                            
+                            <a href="/tags/#iOS">iOS</a>
+                            
+                            <a href="/tags/#iPhone">iPhone</a>
+                            
+                            <a href="/tags/#iptables">iptables</a>
+                            
+                            <a href="/tags/#markdown">markdown</a>
+                            
+                            <a href="/tags/#nftables">nftables</a>
+                            
+                            <a href="/tags/#openapi">openapi</a>
+                            
+                            <a href="/tags/#programming+language">programming language</a>
+                            
+                            <a href="/tags/#racket">racket</a>
+                            
+                            <a href="/tags/#select">select</a>
+                            
+                            <a href="/tags/#stl">stl</a>
+                            
+                            <a href="/tags/#swagger">swagger</a>
+                            
+                            <a href="/tags/#test">test</a>
+                            
+                            <a href="/tags/#tutorial">tutorial</a>
+                            
+                            <a href="/tags/#webdev">webdev</a>
+                            
+                        </div>
+                        -->
+                    </section><!-- .widget -->
+                </div><!-- .one-third -->
+
+            </div><!-- .grid -->
+        </div><!-- .inner -->
+    </div><!-- .footer-columns -->
+
+</aside><!-- .footer-widgets -->
+
+    </div><!-- .site -->
+    <div class="profile">
+      <a href="http://10.10.50.50:1125"><img src="" class="profile-image"></a>
+      <div class="profile-about">
+        <h2 style="margin-bottom: 0; font-weight: 700;"></h2>
+        
+        
+        
+        <a href="about"><img src="/img/icon/me.svg" class="social-icon"></a>
+        <br>
+        
+        <br>
+        <div class="mode" id="mode-switcher" onclick="toggleNightMode();">
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--
+  
+<footer class="site-footer">
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li><a href="mailto:Kea Wot <hi@ashang.org>">Kea Wot <hi@ashang.org></a></li>
+        </ul>
+      </div>
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/ashang">
+              <span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+
+              </span>
+              <span class="username">ashang
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+      <div class="footer-col footer-col-3">
+        <p>ramblings notes, things I worked through to make sure I understand.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+-->
+</body>
+</html>

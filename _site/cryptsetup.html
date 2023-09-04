@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta name="description" content="ramblings notes, things I worked through to make sure I understand.">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://10.10.50.50:1125/cryptsetup">
+  <link rel="alternate" type="application/rss+xml" title="in love we trust" href="http://10.10.50.50:1125/feed.xml">
+  <title>
+    
+      cryptsetup with LUKS &middot; in love we trust
+    
+  </title>
+
+  
+  <link rel="canonical" href="http://10.10.50.50:1125/cryptsetup">
+  
+
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/poole.css">
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/syntax.css">
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/lanyon.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <link rel="shortcut icon" href="http://10.10.50.50:1125/favicon.ico">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://10.10.50.50:1125/atom.xml">
+
+  
+</head>
+<body class="fixed-nav"><header class="site-header" >
+    <a class="site-title" href="/">in love we trust</a>
+
+    <nav class="site-nav">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+
+      <div class="trigger">
+        
+          
+        
+          
+          <a class="page-link" href="/404/"> </a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/ansible-examples">Ansible examples</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-guide">Ansible quickstart</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-modules">Ansible modules</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-roles">Ansible roles</a>
+          
+        
+          
+          <a class="page-link" href="/ansible">Ansible</a>
+          
+        
+          
+          <a class="page-link" href="/archive">Archive</a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/cmd-test">cmd Test</a>
+          
+        
+          
+          <a class="page-link" href="/cryptsetup">cryptsetup with LUKS</a>
+          
+        
+          
+          <a class="page-link" href="/cupper-shortcodes--percent-sign">Cupper Shortcodes with percent sign</a>
+          
+        
+          
+          <a class="page-link" href="/curl">curl</a>
+          
+        
+          
+          <a class="page-link" href="/downtime">downtime</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/frontend">front-end</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/notes/">WILT</a>
+          
+        
+          
+          <a class="page-link" href="/p4-lang">p4</a>
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/tags/">Tags</a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/tutorials">Tutorials</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+</header>
+<div class="container">
+    <div id="page" class="site">
+      <main class="page-content" aria-label="Content">
+        <ul>
+  <li>Initialize a LUKS volume (overwrites all data on the partition):</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">cryptsetup luksFormat </code></p>
+
+<ul>
+  <li>Open a LUKS volume and create a decrypted mapping at <code class="language-plaintext highlighter-rouge">/dev/mapper/</code>:</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">cryptsetup luksOpen  </code></p>
+
+<ul>
+  <li>Remove an existing mapping:</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">cryptsetup luksClose </code></p>
+
+<ul>
+  <li>Change the LUKS volume’s passphrase:</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">cryptsetup luksChangeKey </code></p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># aaron@code:~/4t</span>
+<span class="nv">$ </span><span class="nb">sudo </span>cryptsetup luksFormat /dev/sdb
+WARNING: Device /dev/sdb already contains a <span class="s1">'gpt'</span> partition signature.
+
+WARNING!
+<span class="o">========</span>
+This will overwrite data on /dev/sdb irrevocably.
+
+Are you sure? <span class="o">(</span>Type <span class="s1">'yes'</span> <span class="k">in </span>capital letters<span class="o">)</span>: <span class="nb">yes
+</span>Operation aborted.
+
+<span class="c"># aaron@code:~/4t</span>
+<span class="nv">$ </span><span class="nb">sudo </span>cryptsetup luksFormat /dev/sdb
+WARNING: Device /dev/sdb already contains a <span class="s1">'gpt'</span> partition signature.
+
+WARNING!
+<span class="o">========</span>
+This will overwrite data on /dev/sdb irrevocably.
+
+Are you sure? <span class="o">(</span>Type <span class="s1">'yes'</span> <span class="k">in </span>capital letters<span class="o">)</span>: YES
+Enter passphrase <span class="k">for</span> /dev/sdb:
+Verify passphrase:
+Cannot exclusively open /dev/sdb, device <span class="k">in </span>use.
+<span class="c"># aaron@code:~/4t</span>
+<span class="nv">$ </span><span class="nb">df
+</span>Filesystem     Type   1K-blocks        Used Available Use% Mounted on
+/dev/sdb3      ext4 13530436560 11957490104 890976588  94% /
+/dev/sdb4      vfat      466680         320    466360   1% /boot/efi
+<span class="c"># aaron@code:~/4t</span>
+<span class="nv">$ </span><span class="nb">sudo </span>cryptsetup luksFormat /dev/sda
+WARNING: Device /dev/sda already contains a <span class="s1">'gpt'</span> partition signature.
+
+WARNING!
+<span class="o">========</span>
+This will overwrite data on /dev/sda irrevocably.
+
+Are you sure? <span class="o">(</span>Type <span class="s1">'yes'</span> <span class="k">in </span>capital letters<span class="o">)</span>: YES
+Enter passphrase <span class="k">for</span> /dev/sda:
+Verify passphrase:
+<span class="c"># aaron@code:~/4t</span>
+<span class="nv">$ </span><span class="nb">sudo </span>cryptsetup luksOpen /dev/sda oooo
+Enter passphrase <span class="k">for</span> /dev/sda:
+<span class="c"># aaron@code:~/4t</span>
+<span class="nv">$ </span><span class="nb">df
+</span>Filesystem     Type   1K-blocks        Used Available Use% Mounted on
+/dev/sdb3      ext4 13530436560 11957490248 890976444  94% /
+/dev/sdb4      vfat      466680         320    466360   1% /boot/efi
+<span class="c"># aaron@code:~/4t</span>
+<span class="nv">$ </span><span class="nb">sudo </span>moun
+mount             mount.fuse        mount.lowntfs-3g  mount.ntfs-3g
+mount.exfat-fuse  mount.fuse3       mount.ntfs        mountpoint
+<span class="c"># aaron@code:~/4t</span>
+<span class="nv">$ </span><span class="nb">sudo </span>mount /dev/mapper/oooo /mnt/
+mount: /mnt: wrong fs <span class="nb">type</span>, bad option, bad superblock on /dev/mapper/oooo, missing codepage or helper program, or other error.
+       dmesg<span class="o">(</span>1<span class="o">)</span> may have more information after failed mount system call.
+<span class="c"># aaron@code:~/4t</span>
+<span class="nv">$ </span><span class="nb">sudo </span>mkfs.e /dev/mapper/oooo
+mkfs.exfat  mkfs.ext2   mkfs.ext3   mkfs.ext4
+<span class="c"># aaron@code:~/4t</span>
+<span class="nv">$ </span><span class="nb">sudo </span>mkfs.ext4 /dev/mapper/oooo
+mke2fs 1.47.0 <span class="o">(</span>5-Feb-2023<span class="o">)</span>
+Creating filesystem with 976750549 4k blocks and 244195328 inodes
+Filesystem UUID: 620766af-8e55-4d68-a70b-0c2dd6ef5c76
+Superblock backups stored on blocks:
+        32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208,
+        4096000, 7962624, 11239424, 20480000, 23887872, 71663616, 78675968,
+        102400000, 214990848, 512000000, 550731776, 644972544
+
+Allocating group tables: <span class="k">done
+</span>Writing inode tables: <span class="k">done
+</span>Creating journal <span class="o">(</span>262144 blocks<span class="o">)</span>: <span class="k">done
+</span>Writing superblocks and filesystem accounting information: <span class="k">done</span>
+
+<span class="c"># aaron@code:~/4t</span>
+<span class="nv">$ </span><span class="nb">sudo </span>mount /dev/mapper/oooo /mnt/
+<span class="c"># aaron@code:~/4t</span>
+<span class="nv">$ </span><span class="nb">sudo </span>rsyn
+rsync      rsync-ssl
+<span class="c"># aaron@code:~/4t</span>
+<span class="nv">$ </span><span class="nb">sudo </span>rsync <span class="nt">-av</span> <span class="nb">.</span> /mnt/
+sending incremental file list
+./
+pix/00.jpg
+...
+</code></pre></div></div>
+
+<p>6.2 How do I backup a LUKS header?</p>
+
+<p>While you could just copy the appropriate number of bytes from the start
+of the LUKS partition, the best way is to use command option
+“luksHeaderBackup” of cryptsetup.  This protects also against errors
+when non-standard parameters have been used in LUKS partition creation.
+Example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cryptsetup luksHeaderBackup --header-backup-file &lt;file&gt; &lt;device&gt; To restore, use the inverse command, i.e.
+
+cryptsetup luksHeaderRestore --header-backup-file &lt;file&gt; &lt;device&gt; If you are unsure about a header to be restored, make a backup of the current one first!  You can also test the header-file without restoring it by using the --header option for a detached header like this:
+
+cryptsetup --header &lt;file&gt; luksOpen &lt;device&gt; &lt;/dev/mapper/name&gt; If that unlocks your key-slot, you are good. Do not forget to close the device again. Under some circumstances (damaged header), this fails.  Then use the following steps in case it is LUKS1: First determine the volume (volume) key size:
+
+cryptsetup luksDump &lt;device&gt; gives a line of the form
+
+MK bits:        &lt;bits&gt; with bits equal to 256 for the old defaults and 512 for the new defaults.  256 bits equals a total header size of 1'052'672 Bytes and 512 bits one of 2MiB.  (See also Item 6.12) If luksDump fails, assume 2MiB, but be aware that if you restore that, you may also restore the first 1M or so of the filesystem.  Do not change the filesystem if you were unable to determine the header size!  With that, restoring a too-large header backup is still safe. Second, dump the header to file. There are many ways to do it, I prefer the following:
+
+head -c 1052672 &lt;device&gt;  &gt;  header_backup.dmp or
+
+head -c 2M &lt;device&gt;  &gt;  header_backup.dmp for a 2MiB header. Verify the size of the dump-file to be sure. To restore such a backup, you can try luksHeaderRestore or do a more basic
+
+cat header_backup.dmp  &gt;  &lt;device&gt;
+</code></pre></div></div>
+
+<p>6.3 How do I test for a LUKS header?</p>
+
+<p>Use</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cryptsetup -v isLuks &lt;device&gt; on the device.  Without the "-v" it just signals its result via exit-status.  You can also use the more general test
+
+blkid -p &lt;device&gt; which will also detect other types and give some more info.  Omit "-p" for old versions of blkid that do not support it.
+</code></pre></div></div>
+
+<p>6.4 How do I backup a LUKS or dm-crypt partition?</p>
+
+<p>There are two options, a sector-image and a plain file or filesystem
+backup of the contents of the partition.  The sector image is already
+encrypted, but cannot be compressed and contains all empty space.  The
+filesystem backup can be compressed, can contain only part of the
+encrypted device, but needs to be encrypted separately if so desired.
+A sector-image will contain the whole partition in encrypted form, for
+LUKS the LUKS header, the keys-slots and the data area.  It can be done
+under Linux e.g.  with dd_rescue (for a direct image copy) and with
+“cat” or “dd”.  Examples:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat /dev/sdx80 &gt; sdx80.img
+dd_rescue /dev/sdx80 sdx80.img You can also use any other backup software that is capable of making a sector image of a partition.  Note that compression is ineffective for encrypted data, hence it does not make sense to use it. For a filesystem backup, you decrypt and mount the encrypted partition and back it up as you would a normal filesystem.  In this case the backup is not encrypted, unless your encryption method does that.  For example you can encrypt a backup with "tar" as follows with GnuPG:
+
+tar cjf - &lt;path&gt; | gpg --cipher-algo AES -c - &gt; backup.tbz2.gpg And verify the backup like this if you are at "path":
+
+cat backup.tbz2.gpg | gpg - | tar djf - Note: Always verify backups, especially encrypted ones! There is one problem with verifying like this: The kernel may still have some files cached and in fact verify them against RAM or may even verify RAM against RAM, which defeats the purpose of the exercise.  The following command empties the kernel caches:
+
+echo 3 &gt; /proc/sys/vm/drop_caches Run it after backup and before verify. In both cases GnuPG will ask you interactively for your symmetric key. The verify will only output errors.  Use "tar dvjf -" to get all comparison results.  To make sure no data is written to disk unencrypted, turn off swap if it is not encrypted before doing the backup. Restore works like certification with the 'd' ('difference') replaced by 'x' ('eXtract').  Refer to the man-page of tar for more explanations and instructions.  Note that with default options tar will overwrite already existing files without warning.  If you are unsure about how to use tar, experiment with it in a location where you cannot do damage. You can of course use different or no compression and you can use an asymmetric key if you have one and have a backup of the secret key that belongs to it. A second option for a filesystem-level backup that can be used when the backup is also on local disk (e.g.  an external USB drive) is to use a LUKS container there and copy the files to be backed up between both mounted containers.  Also see next item.
+</code></pre></div></div>
+
+<h2 id="104--why-use-argon2-in-luks-2-instead-of-pbkdf2">10.4  Why use Argon2 in LUKS 2 instead of PBKDF2?</h2>
+
+<p>LUKS tries to be secure with not-so-good passwords.  Bad passwords need to
+be protected in some way against an attacker that just tries all possible
+combinations.  (For good passwords, you can just wait for the attacker to
+die of old age…) The situation with LUKS is not quite the same as with a
+password stored in a database, but there are similarities.
+LUKS does not store passwords on disk.  Instead, the passwords are used to
+decrypt the volume-key with it and that one is stored on disk in encrypted
+form.  If you have a good password, with, say, more than 80 bits of
+entropy, you could just put the password through a single crypto-hash (to
+turn it into something that can be used as a key) and that would be secure.
+This is what plain dm-crypt does.
+If the password has lower entropy, you want to make this process cost some
+effort, so that each try takes time and resources and slows the attacker
+down.  LUKS1 uses PBKDF2 for that, adding an iteration count and a salt.
+The iteration count is per default set to that it takes 1 second per try on
+the CPU of the device where the respective passphrase was set.  The salt is
+there to prevent precomputation.
+The problem with that is that if you use a graphics card, you can massively
+speed up these computations as PBKDF2 needs very little memory to compute
+it.  A graphics card is (grossly simplified) a mass of small CPUs with some
+small very fast local memory per CPU and a large slow memory (the 4/6/8 GB
+a current card may have).  If you can keep a computation in the small,
+CPU-local memory, you can gain a speed factor of 1000 or more when trying
+passwords with PBKDF2.
+Argon2 was created to address this problem.  It adds a “large memory
+property” where computing the result with less memory than the memory
+parameter requires is massively (exponentially) slowed down.  That means,
+if you set, for example, 4GB of memory, computing Argon2 on a graphics card
+with around 100kB of memory per “CPU” makes no sense at all because it is
+far too slow.  An attacker has hence to use real CPUs and furthermore is
+limited by main memory bandwidth.
+Hence the large amount of memory used is a security feature and should not
+be turned off or reduced.  If you really (!) understand what you are doing
+and can assure good passwords, you can either go back to PBKDF2 or set a
+low amount of memory used for Argon2 when creating the header.</p>
+
+<p>10.5 LUKS2 is insecure! It uses less memory than the Argon2 RFC say!</p>
+
+<p>Well, not really.  The RFC recommends 6GiB of memory for use with disk
+encryption.  That is a bit insane and something clearly went wrong in the
+standardization process here.  First, that makes Argon2 unusable on any 32
+bit Linux and that is clearly a bad thing.  Second, there are many small
+Linux devices around that do not have 6GiB of RAM in the first place.  For
+example, the current Raspberry Pi has 1GB, 2GB or 4GB of RAM, and with the
+RFC recommendations, none of these could compute Argon2 hashes.
+Hence LUKS2 uses a more real-world approach.  Iteration is set to a
+minimum of 4 because there are some theoretical attacks that work up to an
+iteration count of 3.  The thread parameter is set to 4.  To achieve 2
+second/slot unlock time, LUKS2 adjusts the memory parameter down if
+needed.  In the other direction, it will respect available memory and not
+exceed it.  On a current PC, the memory parameter will be somewhere around
+1GB, which should be quite generous.  The minimum I was able to set in an
+experiment with “-i 1” was 400kB of memory and that is too low to be
+secure.  A Raspberry Pi would probably end up somewhere around 50MB (have
+not tried it) and that should still be plenty.
+That said, if you have a good, high-entropy passphrase, LUKS2 is secure
+with any memory parameter</p>
+
+<hr />
+
+<p>cryptsetup -s 512 –batch-mode –force-password –type luks2 luksFormat /dev/md126p2
+cryptsetup -s 512 –batch-mode –force-password –type luks2 luksFormat /dev/md126p2
+cryptsetup -s 512 –batch-mode –force-password –type luks2 luksFormat /dev/md126p2
+cryptsetup -s 512 –batch-mode –force-password –type luks2 luksFormat /dev/md126p2</p>
+
+<p>cryptsetup luksFormat /dev/sdc3</p>
+
+<p>cryptsetup open /dev/sdc3 lilybackup</p>
+
+<p>最后的参数是一个名字，它会是解密后的设备在 /dev/mapper 下的文件名。</p>
+
+<p>如果一切完毕，要记得（在卸载文件系统之后）关闭该设备：</p>
+
+<p>cryptsetup luksClose lilybackup</p>
+
+<p>dm-crypt 是块设备级的加密。我们还要在其上建立文件系统：</p>
+
+<p>mkfs.btrfs /dev/mapper/lilybackup</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># cryptsetup luksOpen /dev/sda barn
+Enter passphrase for /dev/sda:
+device-mapper: reload ioctl on barn (254:1) failed: No such file or directory
+
+# pacman -S device-mapper
+resolving dependencies...
+looking for conflicting packages...
+
+Packages (1) device-mapper-2.03.14-2
+
+Total Installed Size:  0.83 MiB
+Net Upgrade Size:      0.00 MiB
+
+:: Proceed with installation? [Y/n]
+(1/1) checking keys in keyring                                                                  [########################################################] 100%
+(1/1) checking package integrity                                                                [########################################################] 100%
+(1/1) loading package files                                                                     [########################################################] 100%
+(1/1) checking for file conflicts                                                               [########################################################] 100%
+(1/1) checking available disk space                                                             [########################################################] 100%
+:: Processing package changes...
+(1/1) reinstalling device-mapper                                                                [########################################################] 100%
+:: Running post-transaction hooks...
+(1/4) Reloading system manager configuration...
+(2/4) Reloading device manager configuration...
+(3/4) Arming ConditionNeedsUpdate...
+(4/4) Updating linux initcpios...
+==&gt; Building image from preset: /etc/mkinitcpio.d/linux510.preset: 'default'
+  -&gt; -k /boot/vmlinuz-5.10-x86_64 -c /etc/mkinitcpio.conf -g /boot/initramfs-5.10-x86_64.img
+==&gt; Starting build: 5.10.86-1-MANJARO
+  -&gt; Running build hook: [base]
+  -&gt; Running build hook: [udev]
+  -&gt; Running build hook: [autodetect]
+  -&gt; Running build hook: [modconf]
+  -&gt; Running build hook: [block]
+  -&gt; Running build hook: [keyboard]
+  -&gt; Running build hook: [keymap]
+  -&gt; Running build hook: [encrypt]
+  -&gt; Running build hook: [filesystems]
+  -&gt; Running build hook: [fsck]
+==&gt; Generating module dependencies
+==&gt; Creating gzip-compressed initcpio image: /boot/initramfs-5.10-x86_64.img
+==&gt; Image generation successful
+==&gt; Building image from preset: /etc/mkinitcpio.d/linux510.preset: 'fallback'
+  -&gt; -k /boot/vmlinuz-5.10-x86_64 -c /etc/mkinitcpio.conf -g /boot/initramfs-5.10-x86_64-fallback.img -S autodetect
+==&gt; Starting build: 5.10.86-1-MANJARO
+  -&gt; Running build hook: [base]
+  -&gt; Running build hook: [udev]
+  -&gt; Running build hook: [modconf]
+  -&gt; Running build hook: [block]
+  -&gt; Running build hook: [keyboard]
+  -&gt; Running build hook: [keymap]
+  -&gt; Running build hook: [encrypt]
+  -&gt; Running build hook: [filesystems]
+  -&gt; Running build hook: [fsck]
+==&gt; Generating module dependencies
+==&gt; Creating gzip-compressed initcpio image: /boot/initramfs-5.10-x86_64-fallback.img
+==&gt; Image generation successful
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># cryptsetup luksOpen /dev/sda barn
+ Enter passphrase for /dev/sda:
+ device-mapper: reload ioctl on barn (254:1) failed: No such file or directory
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Default compiled-in metadata format is LUKS2 (for luksFormat action).
+
+LUKS2 external token plugin support is compiled-in.
+LUKS2 external token plugin path: /usr/lib/cryptsetup.
+
+Default compiled-in key and passphrase parameters:
+        Maximum keyfile size: 8192kB, Maximum interactive passphrase length 512 (characters)
+Default PBKDF for LUKS1: pbkdf2, iteration time: 2000 (ms)
+Default PBKDF for LUKS2: argon2id
+        Iteration time: 2000, Memory required: 1048576kB, Parallel threads: 4
+
+Default compiled-in device cipher parameters:
+        loop-AES: aes, Key 256 bits
+        plain: aes-cbc-essiv:sha256, Key: 256 bits, Password hashing: ripemd160
+        LUKS: aes-xts-plain64, Key: 256 bits, LUKS header hashing: sha256, RNG: /dev/urandom
+        LUKS: Default keysize with XTS mode (two internal keys) will be doubled.
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Copy NOS rootfs and NOS kernel and initrd to flash inside the switch;
+Create NOS partitions in USB drive;
+Start NOS kernel and mount initrd;
+Encrypt NOS partitions in USB driver by using cryptsetup with the unique ID as passphrase;
+Mount encrypted NOS partitions;
+Extract NOS rootfs tarball to NOS partitions;
+Change root to NOS rootfs;
+</code></pre></div></div>
+
+<p>Keep the passphrase key in a separate partition on the internal flash</p>
+
+<p>This way the key stays constant across active and standby partitions on the usb and upgrade workflows.</p>
+
+<p>My recommendation is to not generate it using any algorithm, that is akin to a system with default login password. Use a random 256 byte passphrase.</p>
+
+<h2 id="cryptsetup">cryptsetup</h2>
+
+<p>: cryptsetup-luks</p>
+
+<p>/etc/default/cryptdisks 756141f7eacf1a272a2f6e51646b3aa4
+ /etc/init.d/cryptdisks 20b58baefc1aed5021a28e2fb9439edd
+ /etc/init.d/cryptdisks-early 9c58f4b1314fe50c79ec0caff22bf298
+ /etc/init/cryptdisks-udev.conf ed789690d1770e3f3a2682c11e359bb6
+ /etc/init/cryptdisks.conf e5527ceb5c020174a6464b81126bb5f7</p>
+
+<p>Cryptsetup provides an interface for configuring encryption on block
+ devices (such as /home or swap partitions), using the Linux kernel
+ device mapper target dm-crypt. It features integrated Linux Unified Key
+ Setup (LUKS) support.
+ .
+ Cryptsetup is backwards compatible with the on-disk format of cryptoloop,
+ but also supports more secure formats. This package includes support for
+ automatically configuring encrypted devices at boot time via the config
+ file /etc/crypttab. Additional features are cryptoroot support through
+ initramfs-tools and several supported ways to read a passphrase or key.
+Homepage: http://code.google.com/p/cryptsetup/
+Original-Maintainer: Debian Cryptsetup Team <a href="mailto:pkg-cryptsetup-devel@lists.alioth.debian.org">pkg-cryptsetup-devel@lists.alioth.debian.org</a></p>
+
+      </main>
+    <aside class="footer-widgets">
+
+    
+
+    <div id="footer-columns" class="footer-columns">
+        <div class="inner">
+            <div class="grid">
+
+                
+
+                <!-- Create a sorted array of tags -->
+                <div class="one-third">
+                    
+                    
+                    <section class="widget widget-tags">
+                        <!--
+                        <h2 class="widget-title">Tags</h2>
+                        <div class="tagcloud">
+                            
+                            <a href="/tags/#Algorithms">Algorithms</a>
+                            
+                            <a href="/tags/#Apple">Apple</a>
+                            
+                            <a href="/tags/#Boost">Boost</a>
+                            
+                            <a href="/tags/#C%2B%2B">C++</a>
+                            
+                            <a href="/tags/#Cocoa">Cocoa</a>
+                            
+                            <a href="/tags/#Coding">Coding</a>
+                            
+                            <a href="/tags/#Jekyll">Jekyll</a>
+                            
+                            <a href="/tags/#Mac">Mac</a>
+                            
+                            <a href="/tags/#OSX">OSX</a>
+                            
+                            <a href="/tags/#Performance">Performance</a>
+                            
+                            <a href="/tags/#STL">STL</a>
+                            
+                            <a href="/tags/#Threading">Threading</a>
+                            
+                            <a href="/tags/#Unicode">Unicode</a>
+                            
+                            <a href="/tags/#api">api</a>
+                            
+                            <a href="/tags/#c%2B%2B">c++</a>
+                            
+                            <a href="/tags/#c%2B%2B11">c++11</a>
+                            
+                            <a href="/tags/#code+block">code block</a>
+                            
+                            <a href="/tags/#iOS">iOS</a>
+                            
+                            <a href="/tags/#iPhone">iPhone</a>
+                            
+                            <a href="/tags/#iptables">iptables</a>
+                            
+                            <a href="/tags/#markdown">markdown</a>
+                            
+                            <a href="/tags/#nftables">nftables</a>
+                            
+                            <a href="/tags/#openapi">openapi</a>
+                            
+                            <a href="/tags/#programming+language">programming language</a>
+                            
+                            <a href="/tags/#racket">racket</a>
+                            
+                            <a href="/tags/#select">select</a>
+                            
+                            <a href="/tags/#stl">stl</a>
+                            
+                            <a href="/tags/#swagger">swagger</a>
+                            
+                            <a href="/tags/#test">test</a>
+                            
+                            <a href="/tags/#tutorial">tutorial</a>
+                            
+                            <a href="/tags/#webdev">webdev</a>
+                            
+                        </div>
+                        -->
+                    </section><!-- .widget -->
+                </div><!-- .one-third -->
+
+            </div><!-- .grid -->
+        </div><!-- .inner -->
+    </div><!-- .footer-columns -->
+
+</aside><!-- .footer-widgets -->
+
+    </div><!-- .site -->
+    <div class="profile">
+      <a href="http://10.10.50.50:1125"><img src="" class="profile-image"></a>
+      <div class="profile-about">
+        <h2 style="margin-bottom: 0; font-weight: 700;"></h2>
+        
+        
+        
+        <a href="about"><img src="/img/icon/me.svg" class="social-icon"></a>
+        <br>
+        
+        <br>
+        <div class="mode" id="mode-switcher" onclick="toggleNightMode();">
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--
+  
+<footer class="site-footer">
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li><a href="mailto:Kea Wot <hi@ashang.org>">Kea Wot <hi@ashang.org></a></li>
+        </ul>
+      </div>
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/ashang">
+              <span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+
+              </span>
+              <span class="username">ashang
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+      <div class="footer-col footer-col-3">
+        <p>ramblings notes, things I worked through to make sure I understand.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+-->
+</body>
+</html>

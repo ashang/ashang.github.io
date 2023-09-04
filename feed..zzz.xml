@@ -2,16 +2,12 @@
 layout: null
 ---
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/css" href="{{ "/assets/css/rss.css" | prepend: site.baseurl }}" ?>
+<?xml-stylesheet type="text/css" href="{{ "/css/rss.css" | prepend: site.baseurl }}" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>{{ site.title | xml_escape }}</title>
     <description>{{ site.description | xml_escape }}</description>
     <atom:link href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}" rel="self" type="application/rss+xml"/>
-
-    <link>{{ site.url }}{{ site.baseurl }}/</link>
-    <pubDate>{{ site.time | date_to_rfc822 }}</pubDate>
-    <lastBuildDate>{{ site.time | date_to_rfc822 }}</lastBuildDate>
 
     {% for post in site.note limit:42 %}
       <item>

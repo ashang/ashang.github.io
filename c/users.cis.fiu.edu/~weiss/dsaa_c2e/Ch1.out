@@ -1,0 +1,198 @@
+
+
+Aug 12 15:27 1996  fig1_2.c Page 1
+
+
+#include <stdio.h>
+
+/* START: fig1_2.txt */
+        int
+        F( int X )
+        {
+/* 1*/      if( X == 0 )
+/* 2*/          return 0;
+            else
+/* 3*/          return 2 * F( X - 1 ) + X * X;
+        }
+/* END */
+
+main( )
+{
+    printf( "F(5) = %d\n", F( 5 ) );
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Aug 12 15:27 1996  fig1_3.c Page 1
+
+
+#include <stdio.h>
+
+/* START: fig1_3.txt */
+        int
+        Bad( unsigned int N )
+        {
+/* 1*/      if( N == 0 )
+/* 2*/          return 0;
+            else
+/* 3*/          return Bad( N / 3 + 1 ) + N - 1;
+        }
+/* END */
+
+main( )
+{
+    printf( "Bad is infinite recursion\n" );
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Aug 12 15:27 1996  fig1_4.c Page 1
+
+
+#include <stdio.h>
+
+#define PrintDigit( Ch )      ( putchar( ( Ch ) + '0' ) )
+
+/* START: fig1_4.txt */
+        void
+        PrintOut( unsigned int N )  /* Print nonnegative N */
+        {
+            if( N >= 10 )
+                PrintOut( N / 10 );
+            PrintDigit( N % 10 );
+        }
+/* END */
+
+main( )
+{
+    PrintOut( 1369 );
+    putchar( '\n' );
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

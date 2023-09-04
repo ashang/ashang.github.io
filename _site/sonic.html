@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta name="description" content="The SONiC image install can be from HTTP since the image is a standard ONIE image.">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://10.10.50.50:1125/sonic">
+  <link rel="alternate" type="application/rss+xml" title="in love we trust" href="http://10.10.50.50:1125/feed.xml">
+  <title>
+    
+      Sonic &middot; in love we trust
+    
+  </title>
+
+  
+  <link rel="canonical" href="http://10.10.50.50:1125/sonic">
+  
+
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/poole.css">
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/syntax.css">
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/lanyon.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <link rel="shortcut icon" href="http://10.10.50.50:1125/favicon.ico">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://10.10.50.50:1125/atom.xml">
+
+  
+</head>
+<body class="fixed-nav"><header class="site-header" >
+    <a class="site-title" href="/">in love we trust</a>
+
+    <nav class="site-nav">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+
+      <div class="trigger">
+        
+          
+        
+          
+          <a class="page-link" href="/404/"> </a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/ansible-examples">Ansible examples</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-guide">Ansible quickstart</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-modules">Ansible modules</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-roles">Ansible roles</a>
+          
+        
+          
+          <a class="page-link" href="/ansible">Ansible</a>
+          
+        
+          
+          <a class="page-link" href="/archive">Archive</a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/cmd-test">cmd Test</a>
+          
+        
+          
+          <a class="page-link" href="/cryptsetup">cryptsetup with LUKS</a>
+          
+        
+          
+          <a class="page-link" href="/cupper-shortcodes--percent-sign">Cupper Shortcodes with percent sign</a>
+          
+        
+          
+          <a class="page-link" href="/curl">curl</a>
+          
+        
+          
+          <a class="page-link" href="/downtime">downtime</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/frontend">front-end</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/notes/">WILT</a>
+          
+        
+          
+          <a class="page-link" href="/p4-lang">p4</a>
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/tags/">Tags</a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/tutorials">Tutorials</a>
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+</header>
+<div class="container">
+    <div id="page" class="site">
+      <main class="page-content" aria-label="Content">
+        <main class="content fade-in-down delay-0_5s">
+  <div class="inner">
+    <article class="post">
+      <div class="entry-box">
+        <header class="entry-header">
+          <h2 class="post-title">Sonic</h2>
+          <div class="entry-meta">
+            
+              <time class="post-date" datetime="2022-07-21">July 21, 2022</time>
+            
+            
+          </div><!-- .entry-meta -->
+        </header><!-- .entry-header -->
+        <div class="entry-content">
+            <p>The SONiC image install can be from HTTP since the image is a standard ONIE image.</p>
+
+<p>To speed up testing in case of failures, download a master image to local access for install.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ONIE:/ <span class="c"># onie-nos-install http://10.10.50.22/build/sonic-broadcom-master.bin</span>
+discover: Rescue mode detected. No discover stopped.
+Info: Attempting http://10.10.50.22/build/sonic-broadcom-master.bin ...
+Connecting to 10.10.50.22 <span class="o">(</span>10.10.50.22:80<span class="o">)</span>
+installer      100% |<span class="k">*******************************</span>|  1010M  0:00:00 ETA
+ONIE: Executing installer: http://10.10.50.22/build/sonic-broadcom-master.bin
+Verifying image checksum ... OK.
+Preparing image archive ... OK.
+Installing SONiC <span class="k">in </span>ONIE
+ONIE Installer: platform: x86_64-broadcom-r0
+onie_platform: x86_64-accton_as5712_54x-r0
+Partition <span class="c">#1 is in use.</span>
+Partition <span class="c">#2 is in use.</span>
+Partition <span class="c">#3 is in use.</span>
+Partition <span class="c">#4 is in use.</span>
+Partition <span class="c">#5 is in use.</span>
+Partition <span class="c">#6 is in use.</span>
+Partition <span class="c">#7 is available</span>
+Creating new SONiC-OS partition /dev/sda7 ...
+Could not create partition 7 from 34 to 67108897
+Unable to <span class="nb">set </span>partition 7<span class="s1">'s name to '</span>SONiC-OS<span class="s1">'!
+Error encountered; not saving changes.
+Warning: The first trial of creating partition failed, trying the largest aligned available block of sectors on the disk
+Warning: The kernel is still using the old partition table.
+The new table will be used at the next reboot.
+The operation has completed successfully.
+mke2fs 1.42.13 (17-May-2015)
+
+Filesystem too small for a journal
+Creating filesystem with 1004 1k blocks and 128 inodes
+
+Allocating group tables: done
+Writing inode tables: done
+Writing superblocks and filesystem accounting information: done
+
+Installing SONiC to /tmp/tmp.DtgLhF/image-master.115998-e2396b46e
+Archive:  fs.zip
+   creating: boot/
+  inflating: boot/config-5.10.0-12-2-amd64
+  inflating: boot/System.map-5.10.0-12-2-amd64
+  inflating: boot/vmlinuz-5.10.0-12-2-amd64
+unzip: write: No space left on device
+unzip: inflate error
+Failure: Unable to install image: http://10.10.50.22/build/sonic-broadcom-master.bin
+</span></code></pre></div></div>
+
+<p>Adjust partitions to meet the storage and install again.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ONIE:/ <span class="c"># fdisk /dev/sda</span>
+
+Command <span class="o">(</span>m <span class="k">for </span><span class="nb">help</span><span class="o">)</span>: p
+
+Disk /dev/sda: 8048 MB, 8048869376 bytes
+255 heads, 63 sectors/track, 978 cylinders
+Units <span class="o">=</span> cylinders of 16065 <span class="k">*</span> 512 <span class="o">=</span> 8225280 bytes
+
+   Device Boot  Start       End      Blocks  Id System
+/dev/sda1         1         979     7860223+ ee EFI GPT
+Partition 1 has different physical/logical beginnings <span class="o">(</span>non-Linux?<span class="o">)</span>:
+   <span class="nv">phys</span><span class="o">=(</span>0, 0, 1<span class="o">)</span> <span class="nv">logical</span><span class="o">=(</span>0, 0, 2<span class="o">)</span>
+Partition 1 has different physical/logical endings:
+   <span class="nv">phys</span><span class="o">=(</span>1023, 254, 63<span class="o">)</span> <span class="nv">logical</span><span class="o">=(</span>978, 140, 58<span class="o">)</span>
+
+Command <span class="o">(</span>m <span class="k">for </span><span class="nb">help</span><span class="o">)</span>: q
+
+ONIE:/ <span class="c"># gdisk /dev/sda</span>
+GPT fdisk <span class="o">(</span>gdisk<span class="o">)</span> version 0.8.8
+
+Partition table scan:
+  MBR: protective
+  BSD: not present
+  APM: not present
+  GPT: present
+
+Found valid GPT with protective MBR<span class="p">;</span> using GPT.
+
+Command <span class="o">(</span>? <span class="k">for </span><span class="nb">help</span><span class="o">)</span>: p
+Disk /dev/sda: 15720448 sectors, 7.5 GiB
+Logical sector size: 512 bytes
+Disk identifier <span class="o">(</span>GUID<span class="o">)</span>: 9B20D3A5-9453-4713-AA02-D865DF54E8DE
+Partition table holds up to 128 entries
+First usable sector is 34, last usable sector is 15720414
+Partitions will be aligned on 2-sector boundaries
+Total free space is 0 sectors <span class="o">(</span>0 bytes<span class="o">)</span>
+
+Number  Start <span class="o">(</span>sector<span class="o">)</span>  End <span class="o">(</span>sector<span class="o">)</span>  Size   Code  Name
+   1      2048            6143   2.0 MiB     EF02  GRUB-BOOT
+   2      6144          268287   128.0 MiB   3000  ONIE-BOOT
+   3    268288          301055   16.0 MiB    8300  PICOS
+   4    301056         4495359   2.0 GiB     8300  PICOS
+   5   4495360         8689663   2.0 GiB     8300  PICOS
+   6   8689664        15720414   3.4 GiB     8300  Linux filesystem
+   7        34            2047   1007.0 KiB  8300  SONiC-OS
+
+Command <span class="o">(</span>? <span class="k">for </span><span class="nb">help</span><span class="o">)</span>: d
+Partition number <span class="o">(</span>1-7<span class="o">)</span>:
+Partition number <span class="o">(</span>1-7<span class="o">)</span>: 3
+
+Command <span class="o">(</span>? <span class="k">for </span><span class="nb">help</span><span class="o">)</span>: d
+Partition number <span class="o">(</span>1-7<span class="o">)</span>: 4
+
+Command <span class="o">(</span>? <span class="k">for </span><span class="nb">help</span><span class="o">)</span>: p
+Disk /dev/sda: 15720448 sectors, 7.5 GiB
+Logical sector size: 512 bytes
+Disk identifier <span class="o">(</span>GUID<span class="o">)</span>: 9B20D3A5-9453-4713-AA02-D865DF54E8DE
+Partition table holds up to 128 entries
+First usable sector is 34, last usable sector is 15720414
+Partitions will be aligned on 2-sector boundaries
+Total free space is 4227072 sectors <span class="o">(</span>2.0 GiB<span class="o">)</span>
+
+Number  Start <span class="o">(</span>sector<span class="o">)</span>  End <span class="o">(</span>sector<span class="o">)</span>  Size   Code  Name
+   1      2048            6143   2.0 MiB     EF02  GRUB-BOOT
+   2      6144          268287   128.0 MiB   3000  ONIE-BOOT
+   5   4495360         8689663   2.0 GiB     8300  PICOS
+   6   8689664        15720414   3.4 GiB     8300  Linux filesystem
+   7        34            2047   1007.0 KiB  8300  SONiC-OS
+
+Command <span class="o">(</span>? <span class="k">for </span><span class="nb">help</span><span class="o">)</span>: d
+Partition number <span class="o">(</span>1-7<span class="o">)</span>: 5
+
+Command <span class="o">(</span>? <span class="k">for </span><span class="nb">help</span><span class="o">)</span>: d
+Partition number <span class="o">(</span>1-7<span class="o">)</span>: 6
+
+Command <span class="o">(</span>? <span class="k">for </span><span class="nb">help</span><span class="o">)</span>: d
+Partition number <span class="o">(</span>1-7<span class="o">)</span>: 7
+
+Command <span class="o">(</span>? <span class="k">for </span><span class="nb">help</span><span class="o">)</span>: p
+Disk /dev/sda: 15720448 sectors, 7.5 GiB
+Logical sector size: 512 bytes
+Disk identifier <span class="o">(</span>GUID<span class="o">)</span>: 9B20D3A5-9453-4713-AA02-D865DF54E8DE
+Partition table holds up to 128 entries
+First usable sector is 34, last usable sector is 15720414
+Partitions will be aligned on 2-sector boundaries
+Total free space is 15454141 sectors <span class="o">(</span>7.4 GiB<span class="o">)</span>
+
+Number  Start <span class="o">(</span>sector<span class="o">)</span>  End <span class="o">(</span>sector<span class="o">)</span>  Size   Code  Name
+   1      2048            6143   2.0 MiB     EF02  GRUB-BOOT
+   2      6144          268287   128.0 MiB   3000  ONIE-BOOT
+
+Command <span class="o">(</span>? <span class="k">for </span><span class="nb">help</span><span class="o">)</span>: w
+
+Final checks complete. About to write GPT data. THIS WILL OVERWRITE EXISTING
+PARTITIONS!!
+
+Do you want to proceed? <span class="o">(</span>Y/N<span class="o">)</span>: y
+OK<span class="p">;</span> writing new GUID partition table <span class="o">(</span>GPT<span class="o">)</span> to /dev/sda.
+Warning: The kernel is still using the old partition table.
+The new table will be used at the next reboot.
+The operation has completed successfully.
+ONIE:/ <span class="c"># partprobe</span>
+ONIE:/ <span class="c"># fdisk -l /dev/sda</span>
+
+Disk /dev/sda: 8048 MB, 8048869376 bytes
+255 heads, 63 sectors/track, 978 cylinders
+Units <span class="o">=</span> cylinders of 16065 <span class="k">*</span> 512 <span class="o">=</span> 8225280 bytes
+
+   Device Boot  Start       End      Blocks  Id System
+/dev/sda1         1         979     7860223+ ee EFI GPT
+Partition 1 has different physical/logical beginnings <span class="o">(</span>non-Linux?<span class="o">)</span>:
+   <span class="nv">phys</span><span class="o">=(</span>0, 0, 1<span class="o">)</span> <span class="nv">logical</span><span class="o">=(</span>0, 0, 2<span class="o">)</span>
+Partition 1 has different physical/logical endings:
+   <span class="nv">phys</span><span class="o">=(</span>1023, 254, 63<span class="o">)</span> <span class="nv">logical</span><span class="o">=(</span>978, 140, 58<span class="o">)</span>
+ONIE:/ <span class="c"># gdisk -l /dev/sda</span>
+GPT fdisk <span class="o">(</span>gdisk<span class="o">)</span> version 0.8.8
+
+Partition table scan:
+  MBR: protective
+  BSD: not present
+  APM: not present
+  GPT: present
+
+Found valid GPT with protective MBR<span class="p">;</span> using GPT.
+Disk /dev/sda: 15720448 sectors, 7.5 GiB
+Logical sector size: 512 bytes
+Disk identifier <span class="o">(</span>GUID<span class="o">)</span>: 9B20D3A5-9453-4713-AA02-D865DF54E8DE
+Partition table holds up to 128 entries
+First usable sector is 34, last usable sector is 15720414
+Partitions will be aligned on 2048-sector boundaries
+Total free space is 15454141 sectors <span class="o">(</span>7.4 GiB<span class="o">)</span>
+
+Number  Start <span class="o">(</span>sector<span class="o">)</span>  End <span class="o">(</span>sector<span class="o">)</span>  Size   Code  Name
+   1      2048            6143   2.0 MiB     EF02  GRUB-BOOT
+   2      6144          268287   128.0 MiB   3000  ONIE-BOOT
+ONIE:/ <span class="c"># onie-nos-install http://10.10.50.22/build/sonic-broadcom-master.bin</span>
+discover: Rescue mode detected. No discover stopped.
+Info: Attempting http://10.10.50.22/build/sonic-broadcom-master.bin ...
+Connecting to 10.10.50.22 <span class="o">(</span>10.10.50.22:80<span class="o">)</span>
+installer      100% |<span class="k">*******************************</span>|  1010M  0:00:00 ETA
+ONIE: Executing installer: http://10.10.50.22/build/sonic-broadcom-master.bin
+Verifying image checksum ... OK.
+Preparing image archive ... OK.
+Installing SONiC <span class="k">in </span>ONIE
+ONIE Installer: platform: x86_64-broadcom-r0
+onie_platform: x86_64-accton_as5712_54x-r0
+Partition <span class="c">#1 is in use.</span>
+Partition <span class="c">#2 is in use.</span>
+Partition <span class="c">#3 is available</span>
+Creating new SONiC-OS partition /dev/sda3 ...
+Could not create partition 3 from 268288 to 67377151
+Unable to <span class="nb">set </span>partition 3<span class="s1">'s name to '</span>SONiC-OS<span class="s1">'!
+Error encountered; not saving changes.
+Warning: The first trial of creating partition failed, trying the largest aligned available block of sectors on the disk
+Warning: The kernel is still using the old partition table.
+The new table will be used at the next reboot.
+The operation has completed successfully.
+mke2fs 1.42.13 (17-May-2015)
+Creating filesystem with 1931515 4k blocks and 483328 inodes
+Filesystem UUID: c2c1aa7f-923e-477e-a5fb-7b1c9c9e0d85
+Superblock backups stored on blocks:
+  32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632
+
+Allocating group tables: done
+Writing inode tables: done
+Creating journal (32768 blocks): done
+Writing superblocks and filesystem accounting information: done
+
+Installing SONiC to /tmp/tmp.6RCqUh/image-master.115998-e2396b46e
+</span></code></pre></div></div>
+
+<p>This install needs some time, we can check some status from another terminal.</p>
+
+<p>Such as the temp mount point of the new partition.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="se">\s</span>sh root@10.10.51.186
+The authenticity of host <span class="s1">'10.10.51.186 (10.10.51.186)'</span> can<span class="s1">'t be established.
+RSA key fingerprint is SHA256:SxaUcEBJKNK35XSZFgw/YYN/JTCNnlwLFLnWRskdEKw.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '</span>10.10.51.186<span class="s1">' (RSA) to the list of known hosts.
+ONIE:~ # df
+Filesystem     1K-blocks      Used Available Use% Mounted on
+tmpfs              10240        20     10220   0% /run
+tmpfs              10240         0     10240   0% /run/lock
+tmpfs            4078664         4   4078660   0% /tmp
+tmpfs            4078664   1034744   3043920  25% /var/tmp
+tmpfs            4078664         0   4078664   0% /run/shm
+/dev/sda2         122835     12638    101023  11% /mnt/onie-boot
+tmpfs-installer  4078664   1035092   3043572  25% /tmp/tmp.NCEfNm
+/dev/sda3        7473612   1465168   5605760  21% /tmp/tmp.6RCqUh
+</span></code></pre></div></div>
+
+<p>Install finished, system booted.</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Initializing Intel<span class="o">(</span>R<span class="o">)</span> Boot Agent GE v1.5.43
+PXE 2.1 Build 092 <span class="o">(</span>WfM 2.0<span class="o">)</span>
+Press Ctrl+S to enter the Setup Menu..
+
+...
+Sent SIGKILL toreboot: Restarting system                               B2
+reboot: machine restart
+
+Version 2.16.1242. Copyright <span class="o">(</span>C<span class="o">)</span> 2013 American Megatrends, Inc.
+BIOS Date: 11/20/2014 10:55:31 Ver:
+Press  &lt;ESC&gt; to enter setup.
+
+                    GNU GRUB  version 2.02~beta3
+ <span class="k">******************************************************************************</span>
+ <span class="k">**</span>SONiC-OS-master.115998-e2396b46e                                     <span class="k">*</span>
+ <span class="k">*</span> ONIE                                                                 <span class="k">*</span>
+ <span class="k">*</span>                                                                      <span class="k">*</span>
+ <span class="k">*</span>                                                                      <span class="k">*</span>
+ <span class="k">*</span>                                                                      <span class="k">*</span>
+ <span class="k">******************************************************************************</span>
+
+  Use the <span class="k">*</span> and <span class="k">*</span> keys to <span class="k">select </span>which entry is highlighted.
+  Press enter to boot the selected OS, <span class="sb">`</span>e<span class="s1">' to edit the commands
+  before booting or `c'</span> <span class="k">for </span>a command-line.
+   The highlighted entry will be executed automatically <span class="k">in </span>0s.
+
+  Booting <span class="sb">`</span>SONiC-OS-master.115998-e2396b46e<span class="s1">'
+Loading SONiC-OS OS kernel ...
+Loading SONiC-OS OS initial ramdisk ...
+tune2fs 1.46.2 (28-Feb-2021)
+Setting reserved blocks percentage to 0% (0 blocks)
+Setting reserved blocks count to 0
+[   15.377355] pstore: crypto_comp_decompress failed, ret = -22!
+[   19.550812] rc.local[472]: + cat /etc/sonic/sonic_version.yml
+[   19.569952] rc.local[473]: + grep build_version
+[   19.594555] rc.local[477]: + sed -e s/build_version: //g;s/'</span>//g
+<span class="o">[</span>   19.620272] rc.local[466]: + <span class="nv">SONIC_VERSION</span><span class="o">=</span>master.115998-e2396b46e
+<span class="o">[</span>   19.637344] rc.local[466]: + <span class="nv">FIRST_BOOT_FILE</span><span class="o">=</span>/host/image-master.115998-e2396b46e/platform/firsttime
+<span class="o">[</span>   19.657287] rc.local[466]: + <span class="nv">SONIC_CONFIG_DIR</span><span class="o">=</span>/host/image-master.115998-e2396b46e/sonic-configOS initial ramdisk ...
+<span class="o">[</span>   19.677362] rc.local[466]: + <span class="nv">SONIC_ENV_FILE</span><span class="o">=</span>/host/image-master.115998-e2396b46e/sonic-config/sonic-environment
+<span class="o">[</span>   19.697494] rc.local[466]: + <span class="o">[</span> <span class="nt">-d</span> /host/image-master.115998-e2396b46e/sonic-config <span class="nt">-a</span> <span class="nt">-f</span> /host/image-master.115998-e2396b46e/sonic-config/sonic-environment <span class="o">]</span>
+<span class="o">[</span>   19.725299] rc.local[466]: + logger SONiC version master.115998-e2396b46e starting up...
+<span class="o">[</span>   19.822461] rc.local[466]: + <span class="nv">grub_installation_needed</span><span class="o">=</span>
+<span class="o">[</span>   19.839238] rc.local[466]: + <span class="o">[</span> <span class="o">!</span> <span class="nt">-e</span> /host/machine.conf <span class="o">]</span>
+<span class="o">[</span>   19.858222] rc.local[466]: + <span class="nb">.</span> /host/machine.conf
+<span class="o">[</span>   19.865300] rc.local[466]: + <span class="nv">onie_version</span><span class="o">=</span>2017.05.00.08
+<span class="o">[</span>   19.881409] rc.local[466]: + <span class="nv">onie_vendor_id</span><span class="o">=</span>259
+<span class="o">[</span>   19.903524] rc.local[466]: + <span class="nv">onie_platform</span><span class="o">=</span>x86_64-accton_as5712_54x-r0
+<span class="o">[</span>   19.922043] rc.local[466]: + <span class="nv">onie_machine</span><span class="o">=</span>accton_as5712_54x
+<span class="o">[</span>   19.937392] rc.local[466]: + <span class="nv">onie_machine_rev</span><span class="o">=</span>0
+<span class="o">[</span>   19.953335] rc.local[466]: + <span class="nv">onie_arch</span><span class="o">=</span>x86_64
+<span class="o">[</span>   19.959582] rc.local[466]: + <span class="nv">onie_config_version</span><span class="o">=</span>1
+<span class="o">[</span>   19.973354] rc.local[466]: + <span class="nv">onie_build_date</span><span class="o">=</span>2017-08-22T11:01+0800
+<span class="o">[</span>   19.985981] rc.local[466]: + <span class="nv">onie_partition_type</span><span class="o">=</span>gpt
+<span class="o">[</span>   19.994635] rc.local[466]: + <span class="nv">onie_kernel_version</span><span class="o">=</span>4.1.23
+<span class="o">[</span>   20.009377] rc.local[466]: + <span class="nv">onie_firmware</span><span class="o">=</span>bios
+<span class="o">[</span>   20.016919] rc.local[466]: + <span class="nv">onie_switch_asic</span><span class="o">=</span>bcm
+<span class="o">[</span>   20.033296] rc.local[466]: + <span class="nv">onie_skip_ethmgmt_macs</span><span class="o">=</span>no
+<span class="o">[</span>   20.041298] rc.local[466]: + <span class="nv">onie_grub_image_name</span><span class="o">=</span>grubx64.efi
+<span class="o">[</span>   20.073654] rc.local[466]: + program_console_speed
+<span class="o">[</span>   20.100544] rc.local[507]: + <span class="nb">grep</span> <span class="nt">-Eo</span> <span class="nv">console</span><span class="o">=</span>ttyS[0-9]+,[0-9]+
+<span class="o">[</span>   20.121906] kdump-tools[452]: Starting kdump-tools:
+<span class="o">[</span>   20.139713] rc.local[506]: + <span class="nb">cat</span> /proc/cmdline
+<span class="o">[</span>   20.153571] kdump-tools[515]: no <span class="nv">crashkernel</span><span class="o">=</span> parameter <span class="k">in </span>the kernel cmdline ...
+<span class="o">[</span>   20.173668] kdump-tools[541]:  failed!
+<span class="o">[</span>   20.185817] rc.local[522]: + <span class="nb">cut</span> <span class="nt">-d</span> , <span class="nt">-f2</span>
+<span class="o">[</span>   20.198222] rc.local[466]: + <span class="nv">speed</span><span class="o">=</span>115200
+<span class="o">[</span>   20.217970] rc.local[466]: + <span class="o">[</span> <span class="nt">-z</span> 115200 <span class="o">]</span>
+<span class="o">[</span>   20.237336] rc.local[466]: + <span class="nv">CONSOLE_SPEED</span><span class="o">=</span>115200
+<span class="o">[</span>   20.254500] rc.local[531]: + <span class="nb">grep </span>agetty /lib/systemd/system/serial-getty@.service
+<span class="o">[</span>   20.279617] rc.local[532]: + <span class="nb">grep </span>keep-baud
+<span class="o">[</span>   20.293301] rc.local[532]: <span class="nv">ExecStart</span><span class="o">=</span>-/sbin/agetty <span class="nt">-o</span> <span class="s1">'-p -- \\u'</span> <span class="nt">--keep-baud</span> 115200,57600,38400,9600 %I <span class="nv">$TERM</span>
+<span class="o">[</span>   20.313866] rc.local[466]: + <span class="o">[</span> 0 <span class="o">=</span> 0 <span class="o">]</span>
+<span class="o">[</span>   20.329349] rc.local[466]: + <span class="nb">sed</span> <span class="nt">-i</span> s|<span class="se">\-\-</span>keep<span class="se">\-</span>baud .<span class="k">*</span> %I| 115200 %I|g /lib/systemd/system/serial-getty@.service
+<span class="o">[</span>   20.350160] rc.local[466]: + systemctl daemon-reload
+<span class="o">[</span>   20.662966] rc.local[466]: + <span class="o">[</span> <span class="nt">-f</span> /host/image-master.115998-e2396b46e/platform/firsttime <span class="o">]</span>
+<span class="o">[</span>   20.682346] rc.local[466]: + <span class="nb">echo </span>First boot detected. Performing first boot tasks...
+<span class="o">[</span>   20.701354] rc.local[466]: First boot detected. Performing first boot tasks...
+<span class="o">[</span>   20.722212] rc.local[466]: + <span class="o">[</span> <span class="nt">-n</span>  <span class="o">]</span>
+<span class="o">[</span>   20.737363] rc.local[466]: + <span class="o">[</span> <span class="nt">-n</span> x86_64-accton_as5712_54x-r0 <span class="o">]</span>
+<span class="o">[</span>   20.746894] rc.local[466]: + <span class="nv">platform</span><span class="o">=</span>x86_64-accton_as5712_54x-r0
+<span class="o">[</span>   20.765343] rc.local[466]: + <span class="o">[</span> <span class="nt">-d</span> /host/old_config <span class="o">]</span>
+<span class="o">[</span>   20.781318] rc.local[466]: + <span class="o">[</span> <span class="nt">-f</span> /host/minigraph.xml <span class="o">]</span>
+<span class="o">[</span>   20.797399] rc.local[466]: + <span class="o">[</span> <span class="nt">-n</span>  <span class="o">]</span>
+<span class="o">[</span>   20.809317] rc.local[466]: + <span class="nb">touch</span> /tmp/pending_config_initialization
+<span class="o">[</span>   20.819812] rc.local[466]: + <span class="nb">touch</span> /tmp/notify_firstboot_to_platform
+<span class="o">[</span>   20.837314] rc.local[466]: + <span class="o">[</span> <span class="o">!</span> <span class="nt">-d</span> /host/reboot-cause/platform <span class="o">]</span>
+<span class="o">[</span>   20.853413] rc.local[466]: + <span class="nb">mkdir</span> <span class="nt">-p</span> /host/reboot-cause/platform
+<span class="o">[</span>   20.860808] rc.local[466]: + <span class="o">[</span> <span class="nt">-d</span> /host/image-master.115998-e2396b46e/platform/x86_64-accton_as5712_54x-r0 <span class="o">]</span>
+<span class="o">[</span>   20.881311] rc.local[466]: + dpkg <span class="nt">-i</span> /host/image-master.115998-e2396b46e/platform/x86_64-accton_as5712_54x-r0/sonic-platform-accton-as5712-54x_1.1_amd64.deb
+<span class="o">[</span>   21.670500] rc.local[568]: Selecting previously unselected package sonic-platform-accton-as5712-54x.
+<span class="o">[</span>   22.892010] rc.local[568]: <span class="o">(</span>Reading database ... 34554 files and directories currently installed.<span class="o">)</span>
+<span class="o">[</span>   22.913344] rc.local[568]: Preparing to unpack .../sonic-platform-accton-as5712-54x_1.1_amd64.deb ...
+<span class="o">[</span>   22.933304] rc.local[568]: Unpacking sonic-platform-accton-as5712-54x <span class="o">(</span>1.1<span class="o">)</span> ...
+<span class="o">[</span>   32.305752] rc.local[568]: Setting up sonic-platform-accton-as5712-54x <span class="o">(</span>1.1<span class="o">)</span> ...
+<span class="o">[</span>   32.872907] rc.local[605]: Created symlink /etc/systemd/system/multi-user.target.wants/as5712-platform-monitor.service → /lib/systemd/system/as5712-platform-monitor.service.
+<span class="o">[</span>   48.209853] rc.local[466]: + <span class="nb">sync</span>
+<span class="o">[</span>   52.806791] rc.local[466]: + <span class="o">[</span> <span class="nt">-n</span> x86_64-accton_as5712_54x-r0 <span class="o">]</span>
+<span class="o">[</span>   52.829671] rc.local[466]: + <span class="o">[</span> <span class="nt">-n</span>  <span class="o">]</span>
+<span class="o">[</span>   52.841303] rc.local[466]: + <span class="nb">mkdir</span> <span class="nt">-p</span> /var/platform
+<span class="o">[</span>   52.857340] rc.local[466]: + <span class="o">[</span> <span class="nt">-f</span> /etc/default/kdump-tools <span class="o">]</span>
+<span class="o">[</span>   52.873276] rc.local[466]: + <span class="nb">sed</span> <span class="nt">-i</span> <span class="nt">-e</span> s/__PLATFORM__/x86_64-accton_as5712_54x-r0/g /etc/default/kdump-tools
+<span class="o">[</span>   52.893263] rc.local[466]: + firsttime_exit
+<span class="o">[</span>   52.905247] rc.local[466]: + <span class="nb">rm</span> <span class="nt">-rf</span> /host/image-master.115998-e2396b46e/platform/firsttime
+<span class="o">[</span>   52.921273] rc.local[466]: + <span class="nb">exit </span>0
+
+Debian GNU/Linux 11 sonic ttyS1
+
+sonic login:
+</code></pre></div></div>
+
+<h2 id="sonic-architecture">SONiC Architecture</h2>
+
+<p>SONiC places each module in independent docker containers to keep high cohesion among semantically-affine components, while reducing coupling between disjointed ones. Each of these components are written to be entirely independent of the platform-specific details required to interact with lower-layer abstractions.</p>
+
+<p>SONiC breaks its main functional components into the following docker containers:</p>
+
+<ul>
+  <li>Dhcp-relay</li>
+  <li>Pmon</li>
+  <li>Snmp</li>
+  <li>Lldp</li>
+  <li>Bgp</li>
+  <li>Teamd</li>
+  <li>Database</li>
+  <li>Swss</li>
+  <li>Syncd</li>
+</ul>
+
+<p>The following diagram displays a high-level view of the functionality enclosed within each docker-container, and how these containers interact among themselves. Notice that not all SONiC applications interact with other SONiC components, as some of these collect their state from external entities. We are making use of blue-arrows to represent the interactions with the centralized redis-engine, and black-arrows for all the others (netlink, /sys file-system, etc).</p>
+
+<p>Even though most of SONiC’s main components are held within docker containers, there are some key modules seating within the linux-host system itself. That is the case of SONiC’s configuration module (sonic-cfggen) and SONiC’s CLI.</p>
+
+<h3 id="platform-monitor-container---pmon">Platform Monitor container - pmon</h3>
+
+<ul>
+  <li>
+    <p>Sensord</p>
+
+    <p>– Log sensor readings from hardware components</p>
+
+    <p>– Alert when an alarm is signaled</p>
+  </li>
+  <li>
+    <p>Fancontrol</p>
+
+    <p>– Collect temperature stats from platform sensors</p>
+
+    <p>– React on that by increasing/decreasing fan speed</p>
+  </li>
+</ul>
+
+<h3 id="database-container">Database container</h3>
+
+<p>redis-database engine: a key-value database to provide a language independent interface, a method for data persistence, replication and multi-process communication among all SONiC subsystems.</p>
+
+<p>By relying on the publisher/subscriber messaging paradigm offered by the redis-engine infrastructure, applications can subscribe only to the data-views that they require, and avoid implementation details that are irrelevant to their functionality.</p>
+
+<ul>
+  <li>
+    <p>APPL_DB</p>
+
+    <p>– Stores the state generated by all application containers</p>
+
+    <p>– EX: routes, next-hops, neighbors, interfaces</p>
+  </li>
+  <li>
+    <p>CONFIG_DB</p>
+
+    <p>– Stores the configuration created by SONiC applications</p>
+
+    <p>– EX: port configurations, interfaces, vlans</p>
+  </li>
+  <li>
+    <p>STATE_DB</p>
+
+    <p>– stores all the state resolve cross-modular dependencies between
+subsystems</p>
+  </li>
+  <li>
+    <p>ASIC_DB</p>
+
+    <p>– Stores the necessary state of ASIC configuration and operation</p>
+  </li>
+</ul>
+
+<h3 id="swss-switch-state-services-container">SWSS Switch State Services container</h3>
+
+<ul>
+  <li>
+    <p>Orchagent</p>
+
+    <p>– The most critical component in the SwSS
+subsystem</p>
+
+    <p>– As consumer for state coming from APPL_DB</p>
+
+    <p>– As producer for state being pushed into ASIC_DB</p>
+  </li>
+  <li>
+    <p>intfMgrd</p>
+
+    <p>– Configure interfaces in the linux kernel</p>
+  </li>
+  <li>
+    <p>vlanMgrd</p>
+
+    <p>– Configure vlan-interfaces in the linux kernel</p>
+  </li>
+</ul>
+
+<h3 id="syncd-container">Syncd container</h3>
+
+<ul>
+  <li>
+    <p>Syncd</p>
+
+    <p>– Links with the ASIC SDK library provided by the hardware-vendor</p>
+
+    <p>– Injects state to the ASIC by invoking the interfaces provided for such effect</p>
+  </li>
+  <li>
+    <p>SAI API</p>
+
+    <p>– Defines the API to provide a vendor-independent forwarding elements control</p>
+  </li>
+  <li>
+    <p>ASIC SDK</p>
+
+    <p>– A SAI-friendly implementation</p>
+
+    <p>– Typically provided in the form of a dynamic-linked-library which hooks up to a driving process</p>
+  </li>
+</ul>
+
+<h2 id="sai-switch-abstraction-interface">SAI: Switch Abstraction Interface</h2>
+
+<p>• Standardized C API to program ASICs</p>
+
+<p>https://github.com/opencomputeproject/SAI/inc</p>
+
+<h3 id="hardware-elements-for-pmon">Hardware elements for PMON</h3>
+
+<ul>
+  <li>https://github.com/Azure/sonic-buildimage</li>
+  <li>device/{vendor}/{model}/</li>
+  <li>pmon_daemon_control.json</li>
+  <li>plugins</li>
+</ul>
+
+<h3 id="sdk--platform-for-syncd">Sdk &amp; Platform for Syncd</h3>
+
+<p>https://github.com/Azure/sonic-buildimage/tree/master/platform/barefoot</p>
+
+<ul>
+  <li>bfn-platform.mk</li>
+  <li>bfn-sai.mk</li>
+</ul>
+
+<p>https://github.com/barefootnetworks/sonic-release-pkgs/tree/dev</p>
+
+<ol>
+  <li>Modify bfn-platform.mk &amp; bfn-sai.mk</li>
+  <li>$ make target/docker-syncd-bfn.gz</li>
+  <li>Upload new container to SONiC</li>
+</ol>
+
+<p>Upgrade SONiC syncd</p>
+
+<ol>
+  <li>$ docker load &lt; docker-syncd-bfn.gz</li>
+  <li>Tag the image as latest</li>
+  <li>$ sudo systemctl restart swss</li>
+</ol>
+
+<ul>
+  <li>docker ps</li>
+  <li>docker images</li>
+</ul>
+
+<h3 id="switchp4">Switch.p4</h3>
+
+<ul>
+  <li>https://github.com/p4lang/switch</li>
+  <li>p4src</li>
+</ul>
+
+<h3 id="pipeline-selection-from-configuration">Pipeline selection from configuration</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ vim /etc/sonic/config_db.json
+
+"DEVICE_METADATA": {
+"localhost": {
+"hostname": "sonic",
+"p4_profile": ”xxx_profile",
+……
+$ sudo config reload -y
+
+lIlIn syncd docker image 
+/opt/bfn
+</code></pre></div></div>
+
+<h2 id="possible-way-to-add-new-feature-in-sonic-12">Possible way to add new feature in SONiC (1/2)</h2>
+
+<ul>
+  <li>Add new container with new feature</li>
+  <li>Add new api, in syncd</li>
+  <li>Compile and apply new pipeline</li>
+</ul>
+
+<h2 id="docker-sonic-vsgz-and-docker-sonic-p4gz">docker-sonic-vs.gz and docker-sonic-p4.gz</h2>
+
+<ul>
+  <li>Docker image for all-in-one software virtual switch and p4 software switch (gzip tar archive)</li>
+  <li>Run gns3 for emulation</li>
+</ul>
+
+<h2 id="how-to-configure-sonic">How to configure SONiC?</h2>
+
+<ul>
+  <li>
+    <p>Configuration Database</p>
+
+    <p>– https://github.com/Azure/sonic-swss/blob/master/doc/Configuration.md</p>
+  </li>
+  <li>
+    <p>Command Line Interface (CLI)</p>
+
+    <p>– https://github.com/Azure/sonic-utilities/blob/master/doc/Command-Reference.md</p>
+  </li>
+</ul>
+
+<h2 id="sonic-p4-software-switch">SONIC-P4 SOFTWARE SWITCH</h2>
+
+<p>SONiC-P4 is a software switch that runs on the P4-emulated SAI behavioral model software switch ASIC.</p>
+
+<p>Code for this maintained by Mellanox under https://github.com/Mellanox/SAI-P4-BM.</p>
+
+<p>It uses the sai_bm.p4 to program the P4-emulated switch ASIC to emulate the data plane behavior.</p>
+
+<p>On top of that, it runs the real SONiC network stack.</p>
+
+<p>The current SONiC-P4 is released as a docker image.</p>
+
+<h2 id="sonic-with-frr">Sonic with FRR</h2>
+
+<h2 id="links">Links</h2>
+
+<ul>
+  <li><a href="https://github.com/sonic-net/SONiC/blob/master/doc/SONiC-User-Manual.md">https://github.com/sonic-net/SONiC/blob/master/doc/SONiC-User-Manual.md</a></li>
+</ul>
+
+        </div><!-- .entry-content -->
+        <footer class="entry-footer">
+          
+          <div class="share-post">
+            <!--
+              <span>Share this:</span>
+                <a class="btn-twitter" target="_blank" href="https://twitter.com/intent/tweet?text=Sonic&amp;url=http://10.10.50.50:1125/sonic"><i class="fa fa-twitter" aria-hidden="true"></i><span class="screen-reader-text">Twitter</span></a>
+                -->
+          </div><!-- .share-post -->
+        </footer><!-- .entry-footer -->
+      </div><!-- .entry-box -->
+    <div class="post-line"></div>
+    <div class="author-box">
+        <div class="author-info">
+          <!--
+          <h2 class="author-title">About </h2>
+          <p class="author-bio"></p>
+          <p class="author-links">
+              
+              
+            </p>
+            -->
+        </div><!-- .author-info -->
+      </div><!-- .author-box -->
+    </article><!-- .post -->
+    <a href="#" class="top">Top</a>
+  </div><!-- .inner -->
+</main><!-- .content -->
+      </main>
+    <aside class="footer-widgets">
+
+    
+
+    <div id="footer-columns" class="footer-columns">
+        <div class="inner">
+            <div class="grid">
+
+                
+
+                <!-- Create a sorted array of tags -->
+                <div class="one-third">
+                    
+                    
+                    <section class="widget widget-tags">
+                        <!--
+                        <h2 class="widget-title">Tags</h2>
+                        <div class="tagcloud">
+                            
+                            <a href="/tags/#Algorithms">Algorithms</a>
+                            
+                            <a href="/tags/#Apple">Apple</a>
+                            
+                            <a href="/tags/#Boost">Boost</a>
+                            
+                            <a href="/tags/#C%2B%2B">C++</a>
+                            
+                            <a href="/tags/#Cocoa">Cocoa</a>
+                            
+                            <a href="/tags/#Coding">Coding</a>
+                            
+                            <a href="/tags/#Jekyll">Jekyll</a>
+                            
+                            <a href="/tags/#Mac">Mac</a>
+                            
+                            <a href="/tags/#OSX">OSX</a>
+                            
+                            <a href="/tags/#Performance">Performance</a>
+                            
+                            <a href="/tags/#STL">STL</a>
+                            
+                            <a href="/tags/#Threading">Threading</a>
+                            
+                            <a href="/tags/#Unicode">Unicode</a>
+                            
+                            <a href="/tags/#api">api</a>
+                            
+                            <a href="/tags/#c%2B%2B">c++</a>
+                            
+                            <a href="/tags/#c%2B%2B11">c++11</a>
+                            
+                            <a href="/tags/#code+block">code block</a>
+                            
+                            <a href="/tags/#iOS">iOS</a>
+                            
+                            <a href="/tags/#iPhone">iPhone</a>
+                            
+                            <a href="/tags/#iptables">iptables</a>
+                            
+                            <a href="/tags/#markdown">markdown</a>
+                            
+                            <a href="/tags/#nftables">nftables</a>
+                            
+                            <a href="/tags/#openapi">openapi</a>
+                            
+                            <a href="/tags/#programming+language">programming language</a>
+                            
+                            <a href="/tags/#racket">racket</a>
+                            
+                            <a href="/tags/#select">select</a>
+                            
+                            <a href="/tags/#stl">stl</a>
+                            
+                            <a href="/tags/#swagger">swagger</a>
+                            
+                            <a href="/tags/#test">test</a>
+                            
+                            <a href="/tags/#tutorial">tutorial</a>
+                            
+                            <a href="/tags/#webdev">webdev</a>
+                            
+                        </div>
+                        -->
+                    </section><!-- .widget -->
+                </div><!-- .one-third -->
+
+            </div><!-- .grid -->
+        </div><!-- .inner -->
+    </div><!-- .footer-columns -->
+
+</aside><!-- .footer-widgets -->
+
+    </div><!-- .site -->
+    <div class="profile">
+      <a href="http://10.10.50.50:1125"><img src="" class="profile-image"></a>
+      <div class="profile-about">
+        <h2 style="margin-bottom: 0; font-weight: 700;"></h2>
+        
+        
+        
+        <a href="about"><img src="/img/icon/me.svg" class="social-icon"></a>
+        <br>
+        
+        <br>
+        <div class="mode" id="mode-switcher" onclick="toggleNightMode();">
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--
+  
+<footer class="site-footer">
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li><a href="mailto:Kea Wot <hi@ashang.org>">Kea Wot <hi@ashang.org></a></li>
+        </ul>
+      </div>
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/ashang">
+              <span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+
+              </span>
+              <span class="username">ashang
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+      <div class="footer-col footer-col-3">
+        <p>ramblings notes, things I worked through to make sure I understand.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+-->
+</body>
+</html>

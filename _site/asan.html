@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta name="description" content="AddressSanitizer is a fast memory error detector. It consists of a compiler instrumentation module and a run-time library. The tool can detect the following ...">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://10.10.50.50:1125/asan">
+  <link rel="alternate" type="application/rss+xml" title="in love we trust" href="http://10.10.50.50:1125/feed.xml">
+  <title>
+    
+      Asan &middot; in love we trust
+    
+  </title>
+
+  
+  <link rel="canonical" href="http://10.10.50.50:1125/asan">
+  
+
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/poole.css">
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/syntax.css">
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/lanyon.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <link rel="shortcut icon" href="http://10.10.50.50:1125/favicon.ico">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://10.10.50.50:1125/atom.xml">
+
+  
+</head>
+<body class="fixed-nav"><header class="site-header" >
+    <a class="site-title" href="/">in love we trust</a>
+
+    <nav class="site-nav">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+
+      <div class="trigger">
+        
+          
+        
+          
+          <a class="page-link" href="/404/"> </a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/ansible-examples">Ansible examples</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-guide">Ansible quickstart</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-modules">Ansible modules</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-roles">Ansible roles</a>
+          
+        
+          
+          <a class="page-link" href="/ansible">Ansible</a>
+          
+        
+          
+          <a class="page-link" href="/archive">Archive</a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/cmd-test">cmd Test</a>
+          
+        
+          
+          <a class="page-link" href="/cryptsetup">cryptsetup with LUKS</a>
+          
+        
+          
+          <a class="page-link" href="/cupper-shortcodes--percent-sign">Cupper Shortcodes with percent sign</a>
+          
+        
+          
+          <a class="page-link" href="/curl">curl</a>
+          
+        
+          
+          <a class="page-link" href="/downtime">downtime</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/frontend">front-end</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/notes/">WILT</a>
+          
+        
+          
+          <a class="page-link" href="/p4-lang">p4</a>
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/tags/">Tags</a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/tutorials">Tutorials</a>
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+</header>
+<div class="container">
+    <div id="page" class="site">
+      <main class="page-content" aria-label="Content">
+        <main class="content fade-in-down delay-0_5s">
+  <div class="inner">
+    <article class="post">
+      <div class="entry-box">
+        <header class="entry-header">
+          <h2 class="post-title">Asan</h2>
+          <div class="entry-meta">
+            
+              <time class="post-date" datetime="2015-12-05">December 5, 2015</time>
+            
+            
+          </div><!-- .entry-meta -->
+        </header><!-- .entry-header -->
+        <div class="entry-content">
+            <h1 id="addresssanitizer-is-a-fast-memory-error-detector-it-consists-of-a-compiler-instrumentation-module-and-a-run-time-library-the-tool-can-detect-the-following-types-of-bugs">AddressSanitizer is a fast memory error detector. It consists of a compiler instrumentation module and a run-time library. The tool can detect the following types of bugs:</h1>
+<p>Out-of-bounds accesses to heap, stack and globals
+Use-after-free
+Use-after-return (to some extent)
+Double-free, invalid free
+Typical slowdown introduced by AddressSanitizer is 2x.
+How to build
+Follow the clang build instructions.
+Note: CMake build does not work yet. See bug 12272.
+Usage
+Simply compile and link your program with -faddress-sanitizer flag.
+To get a reasonable performance add -O1 or higher.
+To get nicer stack traces in error messages add -fno-omit-frame-pointer.
+To get perfect stack traces you may need to disable inlining (just use -O1) and tail call elimination (-fno-optimize-sibling-calls).
+% cat example_UseAfterFree.cc
+int main(int argc, char **argv) {
+  int *array = new int[100];
+  delete [] array;
+  return array[argc];  // BOOM
+}
+% clang -O1 -g -faddress-sanitizer -fno-omit-frame-pointer example_UseAfterFree.cc
+If a bug is detected, the program will print an error message to stderr and exit with a non-zero exit code. Currently, AddressSanitizer does not symbolize its output, so you may need to use a separate script to symbolize the result offline (this will be fixed in future).
+% ./a.out 2&gt; log
+% projects/compiler-rt/lib/asan/scripts/asan_symbolize.py / &lt; log | c++filt
+==9442== ERROR: AddressSanitizer heap-use-after-free on address 0x7f7ddab8c084 at pc 0x403c8c bp 0x7fff87fb82d0 sp 0x7fff87fb82c8
+READ of size 4 at 0x7f7ddab8c084 thread T0
+    #0 0x403c8c in main example_UseAfterFree.cc:4
+    #1 0x7f7ddabcac4d in __libc_start_main ??:0
+0x7f7ddab8c084 is located 4 bytes inside of 400-byte region [0x7f7ddab8c080,0x7f7ddab8c210)
+freed by thread T0 here:
+    #0 0x404704 in operator delete<a href="void*"></a> ??:0
+    #1 0x403c53 in main example_UseAfterFree.cc:4
+    #2 0x7f7ddabcac4d in __libc_start_main ??:0
+previously allocated by thread T0 here:
+    #0 0x404544 in operator new<a href="unsigned long"></a> ??:0
+    #1 0x403c43 in main example_UseAfterFree.cc:2
+    #2 0x7f7ddabcac4d in __libc_start_main ??:0
+==9442== ABORTING
+__has_feature(address_sanitizer)
+In some cases one may need to execute different code depending on whether AddressSanitizer is enabled. __has_feature can be used for this purpose.
+#if defined(__has_feature) &amp;&amp; __has_feature(address_sanitizer)
+  code that runs only under AddressSanitizer
+#else
+  code that does not run under AddressSanitizer
+#endif
+Supported Platforms
+AddressSanitizer is supported on
+Linux x86_64 (tested on Ubuntu 10.04).
+MacOS 10.6 i386/x86_64.
+Support for Linux i386/ARM and MacOS 10.7 is in progress (it may work, but is not guaranteed too).</p>
+
+<h1 id="asan">ASan</h1>
+<p>● Dynamic testing tool, finds memory bugs
+○ Buffer overflows, use-after-free
+Compiler instrumentation + run-time library</p>
+
+<p>● Every 8 bytes of application memory are
+associated with 1 byte of “shadow” memory
+● Redzones are created around buffers;
+freed memory is put into quarantine
+● Shadow of redzones and freed memory is
+“poisoned”
+● On every memory access compiler-injected
+code checks if shadow is poisoned</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    '-fsanitize=address -lasan',
+    '-fsanitize=cfi',
+    '-fsanitize=integer',
+    '-fsanitize=memory',
+    '-fsanitize=thread',
+    '-fsanitize=undefined',
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    CPPFLAGS = $(AC_CPPFLAGS) -fsanitize=address -fno-stack-protector -fno-omit-frame-pointer -fno-var-tracking
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// clang -fsanitize=address a.c -O -c  &amp;&amp; nm a.o | grep asan_stack_malloc
+// clang -fsanitize=address a.c -O -c -mllvm -asan-stack=0 &amp;&amp; nm a.o | grep asan_stack_malloc
+
+int foo(int a, int b) {
+  int x[10];
+  x[b] = 1;
+  return x[a];
+}
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#include &lt;stdio.h&gt;
+
+void print(int *pBuf, int size) {
+    for (int i = 0; i &lt; size; ++i) {
+        printf("%d ", pBuf[i]);
+    }
+    printf("\n");
+}
+
+//set -x
+//#PASS
+//clang++ -shared -fPIC libtest.cpp -o libtest.so
+//#PASS
+//clang++ -shared -fPIC libtest.cpp -o libtest.so -fsanitize=address
+//#FAIL
+//clang++ -shared -fPIC libtest.cpp -o libtest.so -fsanitize=address -Wl,--no-undefined
+//
+//#PASS
+//g++ -shared -fPIC libtest.cpp -o libtest.so
+//#PASS
+//g++ -shared -fPIC libtest.cpp -o libtest.so -fsanitize=address
+//#FAIL
+//g++ -shared -fPIC libtest.cpp -o libtest.so -fsanitize=address -Wl,--no-undefined
+//
+//#PASS
+//clang++ -shared -fPIC libtest.cpp -o libtest.so -Wl,--no-undefined
+//#PASS
+//g++ -shared -fPIC libtest.cpp -o libtest.so -Wl,--no-undefined
+
+</code></pre></div></div>
+
+<h1 id="deallocation-of-nonallocated-memory">Deallocation of Nonallocated Memory</h1>
+
+<p>Attempting to deallocate nonallocated memory can result in a crash.</p>
+
+<p>In the following example, the value variable is allocated on the stack and deallocated when the function exits, therefore calling free on it is incorrect.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>int value = 42;
+free(&amp;value); // Error: free called on stack allocated variable
+</code></pre></div></div>
+
+<h1 id="how-asan-works">How ASan Works</h1>
+<p>The Address Sanitizer replaces the malloc and free functions with custom implementations that allow regions surrounding the requested memory to be checked for invalid access.</p>
+
+<p>When the malloc function is called, it allocates the requested amount of memory and marks the surrounding regions as off-limits. When the free function is called, it marks the region as off-limits and adds it to a quarantine queue, which delays when that memory can be reused by the malloc function. All memory accesses in the code are transformed by the compiler according to Listing 1.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Before
+*address = ...;  // or: ... = *address;
+
+// After
+if (IsMarkedAsOffLimits(address)) {
+  ReportError(address);
+}
+*address = ...;  // or: ... = *address;
+</code></pre></div></div>
+
+<p>When code is run with ASan enabled, any access to a memory region that’s off-limits results in an error reported by the Address Sanitizer.</p>
+
+<h1 id="performance-impact">Performance Impact</h1>
+<p>Running your code with Address Sanitizer checks enabled typically results in CPU slowdown of 2⨉ to 5⨉, and an increase in memory usage by 2⨉ to 3⨉. You can improve memory utilization by compiling at the -O1 optimization level.</p>
+
+<p>For most use cases, the overhead introduced by the Address Sanitizer should be acceptable for daily use during development—in fact, you may not even notice any slowdown.</p>
+
+<p>https://llvm.org/devmtg/2013-11/slides/Serebryany-ASAN.pdf
+● ~2x slowdown</p>
+
+<ul>
+  <li>https://developer.apple.com/documentation/code_diagnostics/address_sanitizer/</li>
+</ul>
+
+<h1 id="limitations">Limitations</h1>
+<p>AddressSanitizer uses more real memory than a native run. How much – depends on the allocations sizes. The smaller the allocations you make the bigger the overhead.
+On 64-bit platforms AddressSanitizer maps (but not reserves) 16+ Terabytes of virtual address space. This means that tools like ulimit may not work as usually expected.
+Static linking is not supported.</p>
+
+<p>As a runtime diagnostic, the Address Sanitizer can only detect memory errors that are encountered during program execution. To exercise the full extent of your code, incorporate comprehensive unit tests.</p>
+
+<p>The Address Sanitizer cannot detect memory leaks, access to uninitialized memory, or integer overflow. However, you can use ASan in addition to TSan, UBSan, and Instruments to find additional issues.</p>
+
+<p>Sanitization is performed on heap and stack buffers as well as on global variables. Buffer overflow and underflow can result in a crash or other unpredictable behavior.</p>
+
+<p>Global, Heap, and Stack Overflows in C
+In the following example, the global_array, heap_buffer, and stack_buffer variables each have valid indexes in the range [0, 9], but are accessed at index 10, causing an overflow.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>int global_array[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+void foo() {
+    int idx = 10;
+    global_array[idx] = 42; // Error: out of bounds access of global variable
+    char *heap_buffer = malloc(10);
+    heap_buffer[idx] = 'x'; // Error: out of bounds access of heap allocated variable
+    char stack_buffer[10];
+    stack_buffer[idx] = 'x'; // Error: out of bounds access of stack allocated variable
+}
+</code></pre></div></div>
+<p>Add a bounds check before attempting to access a buffer at an index.</p>
+
+<h1 id="overflow-of-c-containers">Overflow of C++ Containers</h1>
+
+<p>This check detects when a libc++ container is accessed beyond the region [container.begin(), container.end()) — even when the accessed memory is in a heap-allocated buffer used internally by a container.</p>
+
+<p>This check is disabled by default, because it requires that all statically linked libraries using std::vector are built with Address Sanitizer enabled.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>std::vector&lt;int&gt; vector;vector.push_back(0);vector.push_back(1);vector.push_back(2);
+auto *pointer = &amp;vector[0];
+return pointer[3]; // Error: out of bounds access for vector
+</code></pre></div></div>
+
+<h1 id="siblings">Siblings:</h1>
+<ul>
+  <li>ThreadSanitizer (TSan): data races</li>
+  <li>
+    <p>MemorySanitizer (MSan): uses of uninitialized memory</p>
+  </li>
+  <li>ASan: stack unwinding with frame pointers</li>
+  <li>TSan: catching synchronization via atomics</li>
+  <li>MSan: avoid false positives</li>
+</ul>
+
+<p>vim中搜索能不带括号？</p>
+
+<h1 id="heap-use-after-free">heap use after free</h1>
+
+<p>When you have multiple copies of the same pointer, e.g.</p>
+
+<p>int *p1 = malloc(sizeof (int));
+int *p2 = p1;
+int *p3 = p2;
+then freeing any of them invalidates all of them:</p>
+
+<p>free(p2);
+// Now p1, p2, p3 have invalid values.
+// The C standard calls these “indeterminate values”; accessing them has undefined behavior
+You can manually set p2 to NULL after freeing, but that still leaves p1 and p3 dangling. You cannot automatically find all copies of a pointer value that may exist anywhere in your program’s memory.</p>
+
+<h1 id="asan-report-example-heap-use-after-free">ASan report example: heap-use-after-free</h1>
+<p>int main(int argc, char **argv) {
+ int *array = new int[100];
+ delete [] array;
+ return array[argc]; // BOOM
+}</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>clang++ -O1 -g -fsanitize=address a.cc
+</code></pre></div></div>
+
+<h1 id="leaksanitizer-asans-leak-detector">LeakSanitizer (ASan’s leak detector)</h1>
+<ul>
+  <li>Similar to other tools: tcmalloc, valgrind, etc</li>
+  <li>Faster than any of those
+○ No extra overhead on top of ASan at run-time
+○ Small overhead at shutdown</li>
+  <li>Based on the ASan/MSan/TSan allocator</li>
+  <li>Can be bundled with ASan/MSan/TSan or used as a standalone tool
+○ Currently, supported only in ASan or standalone</li>
+  <li>Requires StopTheWorld() – today Linux only</li>
+</ul>
+
+<p>[1] ASAN_OPTIONS=check_initialization_order=true
+[2] ASAN_OPTIONS=strict_init_order=true (has false positives).</p>
+
+<h1 id="asan-report-example-stack-use-after-scope">ASan report example: stack-use-after-scope</h1>
+<p>int main() {
+ int *p;
+ { int x = 0; p = &amp;x; }
+ return *p;
+}
+% clang -g -fsanitize=address,use-after-scope a.cc ; ./a.
+out
+==15839==ERROR: AddressSanitizer: stack-use-after-scope
+READ of size 4 at 0x7fffe06c20a0 thread T0
+ #0 0x46103d in main a.cc:4
+Address is located in stack of thread T0 at offset 160 in
+frame
+ #0 0x460daf in main a.cc:1
+ This frame has 4 object(s):
+ [96, 104) ‘p’
+ [160, 164) ‘x’ &lt;== Memory access at offset 160 is
+inside this variable</p>
+
+<h1 id="asan-report-example-stack-use-after-return">ASan report example: stack-use-after-return</h1>
+
+<p>int *g;
+void LeakLocal() {
+ int local;
+ g = &amp;local;
+}</p>
+
+<p>int main() {
+ LeakLocal();
+ return *g;
+}</p>
+
+<p>% clang -g -fsanitize=address a.cc
+% ASAN_OPTIONS=detect_stack_use_after_return=1 ./a.out
+==19177==ERROR: AddressSanitizer: stack-use-after-return
+READ of size 4 at 0x7f473d0000a0 thread T0
+ #0 0x461ccf in main a.cc:8
+Address is located in stack of thread T0 at offset 32 in frame
+ #0 0x461a5f in LeakLocal() a.cc:2
+ This frame has 1 object(s):
+ [32, 36) ‘local’ &lt;== Memory access at offset 32</p>
+
+<h1 id="asan-report-example-memory-leak">ASan report example: memory leak</h1>
+
+<p>int *g = new int;
+int main() {
+  g = 0; // Lost the pointer.
+}</p>
+
+<p>% clang -g -fsanitize=address a.cc
+% ASAN_OPTIONS=detect_leaks=1 ./a.out
+==19894==ERROR: AddressSanitizer: detected memory leaks
+Direct leak of 4 byte(s) in 1 object(s) allocated from:
+ #0 0x44a3b1 in operator new(unsigned long)
+ #1 0x414f66 in __cxx_global_var_init leak.cc:</p>
+
+<h1 id="cat-testsuse-after-freec">cat tests/use-after-free.c</h1>
+<p>#include <stdlib.h>
+int main() {
+  char *x = (char*)malloc(10 * sizeof(char*));
+  free(x);
+  return x[5];
+}
+% ../clang_build_Linux/Release+Asserts/bin/clang -fsanitize=address -O1 -fno-omit-frame-pointer -g   tests/use-after-free.c
+Now, run the</stdlib.h></p>
+
+<h1 id="qa">QA</h1>
+
+<p>Q: Can AddressSanitizer continue running after reporting first error?</p>
+
+<p>A: Yes it can, AddressSanitizer has recently got continue-after-error mode. This is somewhat experimental so may not yet be as reliable as default setting (and not as timely supported). Also keep in mind that errors after the first one may actually be spurious. To enable continue-after-error, compile with -fsanitize-recover=address and then run your code with ASAN_OPTIONS=halt_on_error=0.</p>
+
+<p>Q: Why didn’t ASan report an obviously invalid memory access in my code?</p>
+
+<p>A1: If your errors is too obvious, compiler might have already optimized it out by the time Asan runs.</p>
+
+<p>A2: Another, C-only option is accesses to global common symbols which are not protected by Asan (you can use -fno-common to disable generation of common symbols and hopefully detect more bugs).</p>
+
+<p>A3: If _FORTIFY_SOURCE is enabled, ASan may have false positives, see next question.</p>
+
+<p>Q: I’ve compiled my code with -D_FORTIFY_SOURCE flag and ASan, or -D_FORTIFY_SOURCE is enabled by default in my distribution (most modern distributions). Now ASan misbehaves (either produces false warnings, or does not find some bugs).</p>
+
+<p>A: Currently ASan (and other sanitizers) doesn’t support source fortification, see https://github.com/google/sanitizers/issues/247. The fix should most likely be on the glibc side, see the (stalled) discussion here.</p>
+
+<p>Q: When I link my shared library with -fsanitize=address, it fails due to some undefined ASan symbols (e.g. asan_init_v4)?</p>
+
+<p>A: Most probably you link with -Wl,-z,defs or -Wl,–no-undefined. These flags don’t work with ASan unless you also use -shared-libasan (which is the default mode for GCC, but not for Clang).</p>
+
+<p>Q: My malloc stacktraces are too short or do not make sense?</p>
+
+<p>A: Try to compile your code with -fno-omit-frame-pointer or set ASAN_OPTIONS=fast_unwind_on_malloc=0 (the latter would be a performance killer though unless you also specify malloc_context_size=2 or lower). Note that frame-pointer-based unwinding does not work on Thumb.</p>
+
+<p>Q: My new() and delete() stacktraces are too short or do not make sense?</p>
+
+<p>A: This may happen when the C++ standard library is linked statically. Prebuilt libstdc++/libc++ often do not use frame pointers, and it breaks fast (frame-pointer-based) unwinding. Either switch to the shared library with the -shared-libstdc++ flag, or use ASAN_OPTIONS=fast_unwind_on_malloc=0. The latter could be very slow.</p>
+
+<p>Q: I’m using dynamic ASan runtime and my program crashes at start with “Shadow memory range interleaves with an existing memory mapping. ASan cannot proceed correctly.”.</p>
+
+<p>A1: If you are using shared ASan DSO, try LD_PRELOAD’ing Asan runtime into your program.</p>
+
+<p>A2: Otherwise you are probably hitting a known limitation of dynamic runtime. Libasan is initialized at the end of program startup so if some preceeding library initializer did lots of memory allocations memory region required for ASan shadow memory could be occupied by unrelated mappings.</p>
+
+<p>Q: The PC printed in ASan stack traces is consistently off by 1?</p>
+
+<p>A: This is not a bug but rather a design choice. It is hard to compute exact size of preceding instruction on CISC platforms. So ASan just decrements 1 which is enough for tools like addr2line or readelf to symbolize addresses.</p>
+
+<p>Q: I’ve ran with ASAN_OPTIONS=verbosity=1 and ASan tells something like</p>
+
+<p>==30654== Parsed ASAN_OPTIONS: verbosity=1
+ ==30654== AddressSanitizer: failed to intercept ‘memcpy’
+A: This warning is false (see https://gcc.gnu.org/bugzilla/show_bug.cgi?id=58680 for details).</p>
+
+<p>Q: I’ve built my main executable with ASan. Do I also need to build shared libraries?</p>
+
+<p>A: ASan will work even if you rebuild just part of your program. But you’ll have to rebuild all components to detect all errors.</p>
+
+<p>Q: I’ve built my shared library with ASan. Can I run it with unsanitized executable?</p>
+
+<p>A: Yes! You’ll need to build your library with dynamic version of ASan and then run executable with LD_PRELOAD=path/to/asan/runtime/lib.</p>
+
+<p>Q: On Linux I am seeings a crash at startup with something like this</p>
+
+<p>ERROR: AddressSanitizer failed to allocate 0x400000000 (17179869184) bytes at address 67fff8000 (errno: 12)
+A: Make sure you don’t have 2 in /proc/sys/vm/overcommit_memory</p>
+
+<p>Q: I’m working on a project that uses bare-metal OS with no pthread (TLS) support and no POSIX syscalls and want to use ASan, but its code depends on some stuff (e.g. dlsym) that is unavailable on my platform. Does ASan support bare-metal targets?</p>
+
+<p>A: Out of the box we don’t have support for your use case. The easiest for you would be to rip off everything you don’t have and rebuild the ASan run-time. However, there have been many attempts in applying ASan to bare-metal and at least some were successful. E.g. http://events.linuxfoundation.org/sites/events/files/slides/Alexander_Popov-KASan_in_a_Bare-Metal_Hypervisor_0.pdf and also grep for “bare-metal” and similar stuff in https://groups.google.com/forum/#!forum/address-sanitizer group.</p>
+
+<p>Q: Can I run AddressSanitizer with more aggressive diagnostics enabled?</p>
+
+<p>A: Yes! In particular you may want to enable</p>
+
+<p>CFLAGS += -fsanitize-address-use-after-scope
+ ASAN_OPTIONS=strict_string_checks=1:detect_stack_use_after_return=1:check_initialization_order=1:strict_init_order=1
+check [Flags wiki] (https://github.com/google/sanitizers/wiki/AddressSanitizerFlags ) for more details on this.</p>
+
+<p>Q: My library crashes with SIGABRT while calling free. What’s going wrong?</p>
+
+<p>A: Most probably you are dlopening your library with RTLD_DEEPBIND flag. ASan doesn’t support RTLD_DEEPBIND, see issue #611 for details.</p>
+
+<p>Q: I’m getting following error when building my code: gcc: error: cannot specify -static with -fsanitize=address.</p>
+
+<p>A: ASan doesn’t work with static linkage. You need to disable static linkage in order to use ASan on your code.</p>
+
+<p>Q: What do 0xbebebebebebebebe and 0xbebebebe mean?</p>
+
+<p>A: ASan, by default, writes 0xbe to newly allocated memory (see malloc_fill_byte). 0xbebebebebebebebe is (possibly) a 64-bit value that was allocated but not initialized. Similarly for 0xbebebebe.</p>
+
+<p>Q: Can I mix code instrumented by Clang with code instrumented by GCC? Or can I at least compile code with Clang and link against GCC ASan runtime and vice versa?</p>
+
+<p>A: No, you cannot, Clang and GCC have completely incompatible ASan implementations, you cannot mix them in any way.</p>
+
+<h1 id="httpsgithubcomgooglesanitizerswikiaddresssanitizercomparisonofmemorytools">https://github.com/google/sanitizers/wiki/AddressSanitizerComparisonOfMemoryTools</h1>
+
+<p>DBI: dynamic binary instrumentation
+CTI: compile-time instrumentation
+UMR: uninitialized memory reads
+UAF: use-after-free (aka dangling pointer)
+UAR: use-after-return
+OOB: out-of-bounds
+x86: includes 32- and 64-bit.
+mudflap was removed in GCC 4.9, as it has been superseded by AddressSanitizer.
+Guard Page: a family of memory error detectors (Electric fence or DUMA on Linux, Page Heap on Windows, libgmalloc on OS X)
+gperftools: various performance tools/error detectors bundled with TCMalloc. Heap checker (leak detector) is only available on Linux. Debug allocator provides both guard pages and canary values for more precise detection of OOB writes, so it’s better than guard page-only detectors.</p>
+
+<h1 id="memorysanitizer-msan-is-a-detector-of-uninitialized-memory-reads-in-cc-programs">MemorySanitizer (MSan) is a detector of uninitialized memory reads in C/C++ programs.</h1>
+
+<p>Uninitialized values occur when stack- or heap-allocated memory is read before it is written. MSan detects cases where such values affect program execution.</p>
+
+<p>MSan is bit-exact: it can track uninitialized bits in a bitfield. It will tolerate copying of uninitialized memory, and also simple logic and arithmetic operations with it. In general, MSan silently tracks the spread of uninitialized data in memory, and reports a warning when a code branch is taken (or not taken) depending on an uninitialized value.</p>
+
+<p>MSan implements a subset of functionality found in Valgrind (Memcheck tool). It is significantly faster than Memcheck (TODO:benchmark).</p>
+
+<h2 id="getting-memorysanitizer">Getting MemorySanitizer</h2>
+<p>MemorySanitizer is part of LLVM trunk and has been widely available as a compile-time option in clang since version 4.0.</p>
+
+<p>At this time, MSan supports x86_64, AArch64, PPC64, and MIPS64.</p>
+
+<h2 id="using-memorysanitizer">Using MemorySanitizer</h2>
+<p>To use MSan, compile and link your program with -fsanitize=memory -fPIE -pie.</p>
+
+<p>To get any stack traces, add -fno-omit-frame-pointer.</p>
+
+<p>% cat umr.cc
+#include <stdio.h></stdio.h></p>
+
+<p>int main(int argc, char** argv) {
+  int* a = new int[10];
+  a[5] = 0;
+  if (a[argc])
+    printf(“xx\n”);
+  return 0;
+}</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>clang -fsanitize=memory -fPIE -pie -fno-omit-frame-pointer -g -O2 umr.cc
+
+
+./a.out
+        ==6726==  WARNING: MemorySanitizer: UMR (uninitialized-memory-read)
+            #0 0x7fd1c2944171 in main umr.cc:6
+                #1 0x7fd1c1d4676c in __libc_start_main /build/buildd/eglibc-2.15/csu/libc-start.c:226
+                Origins tracking
+                MemorySanitizer can track back each uninitialized value to the memory allocation where it was created, and use this information in reports. This behaviour is enabled with the -fsanitize-memory-track-origins flag. It comes with additional 1.5x-2.5x slowdown, and makes the report from the previous example look like this:
+
+                %clang -fsanitize=memory -fsanitize-memory-track-origins -fPIE -pie -fno-omit-frame-pointer -g -O2 umr.cc
+                % ./a.out
+                ==6726==  WARNING: MemorySanitizer: UMR (uninitialized-memory-read)
+                    #0 0x7fd1c2944171 in main umr.cc:6
+                        #1 0x7fd1c1d4676c in __libc_start_main /build/buildd/eglibc-2.15/csu/libc-start.c:226
+                          ORIGIN: heap allocation:
+                              #0 0x7f5872b6a31b in operator new[](unsigned long) msan_new_delete.cc:39
+                                  #1 0x7f5872b62151 in main umr.cc:4
+                                      #2 0x7f5871f6476c in __libc_start_main /build/buildd/eglibc-2.15/csu/libc-start.c:226
+                                      Symbolization
+                                      Set MSAN_SYMBOLIZER_PATH environment variable to the path to llvm-symbolizer binary (normally built with LLVM), or just put llvm-symbolizer somewhere in your $PATH. MemorySanitizer will use it to symbolize reports on-the-fly.
+</code></pre></div></div>
+
+        </div><!-- .entry-content -->
+        <footer class="entry-footer">
+          
+          <div class="share-post">
+            <!--
+              <span>Share this:</span>
+                <a class="btn-twitter" target="_blank" href="https://twitter.com/intent/tweet?text=Asan&amp;url=http://10.10.50.50:1125/asan"><i class="fa fa-twitter" aria-hidden="true"></i><span class="screen-reader-text">Twitter</span></a>
+                -->
+          </div><!-- .share-post -->
+        </footer><!-- .entry-footer -->
+      </div><!-- .entry-box -->
+    <div class="post-line"></div>
+    <div class="author-box">
+        <div class="author-info">
+          <!--
+          <h2 class="author-title">About </h2>
+          <p class="author-bio"></p>
+          <p class="author-links">
+              
+              
+            </p>
+            -->
+        </div><!-- .author-info -->
+      </div><!-- .author-box -->
+    </article><!-- .post -->
+    <a href="#" class="top">Top</a>
+  </div><!-- .inner -->
+</main><!-- .content -->
+      </main>
+    <aside class="footer-widgets">
+
+    
+
+    <div id="footer-columns" class="footer-columns">
+        <div class="inner">
+            <div class="grid">
+
+                
+
+                <!-- Create a sorted array of tags -->
+                <div class="one-third">
+                    
+                    
+                    <section class="widget widget-tags">
+                        <!--
+                        <h2 class="widget-title">Tags</h2>
+                        <div class="tagcloud">
+                            
+                            <a href="/tags/#Algorithms">Algorithms</a>
+                            
+                            <a href="/tags/#Apple">Apple</a>
+                            
+                            <a href="/tags/#Boost">Boost</a>
+                            
+                            <a href="/tags/#C%2B%2B">C++</a>
+                            
+                            <a href="/tags/#Cocoa">Cocoa</a>
+                            
+                            <a href="/tags/#Coding">Coding</a>
+                            
+                            <a href="/tags/#Jekyll">Jekyll</a>
+                            
+                            <a href="/tags/#Mac">Mac</a>
+                            
+                            <a href="/tags/#OSX">OSX</a>
+                            
+                            <a href="/tags/#Performance">Performance</a>
+                            
+                            <a href="/tags/#STL">STL</a>
+                            
+                            <a href="/tags/#Threading">Threading</a>
+                            
+                            <a href="/tags/#Unicode">Unicode</a>
+                            
+                            <a href="/tags/#api">api</a>
+                            
+                            <a href="/tags/#c%2B%2B">c++</a>
+                            
+                            <a href="/tags/#c%2B%2B11">c++11</a>
+                            
+                            <a href="/tags/#code+block">code block</a>
+                            
+                            <a href="/tags/#iOS">iOS</a>
+                            
+                            <a href="/tags/#iPhone">iPhone</a>
+                            
+                            <a href="/tags/#iptables">iptables</a>
+                            
+                            <a href="/tags/#markdown">markdown</a>
+                            
+                            <a href="/tags/#nftables">nftables</a>
+                            
+                            <a href="/tags/#openapi">openapi</a>
+                            
+                            <a href="/tags/#programming+language">programming language</a>
+                            
+                            <a href="/tags/#racket">racket</a>
+                            
+                            <a href="/tags/#select">select</a>
+                            
+                            <a href="/tags/#stl">stl</a>
+                            
+                            <a href="/tags/#swagger">swagger</a>
+                            
+                            <a href="/tags/#test">test</a>
+                            
+                            <a href="/tags/#tutorial">tutorial</a>
+                            
+                            <a href="/tags/#webdev">webdev</a>
+                            
+                        </div>
+                        -->
+                    </section><!-- .widget -->
+                </div><!-- .one-third -->
+
+            </div><!-- .grid -->
+        </div><!-- .inner -->
+    </div><!-- .footer-columns -->
+
+</aside><!-- .footer-widgets -->
+
+    </div><!-- .site -->
+    <div class="profile">
+      <a href="http://10.10.50.50:1125"><img src="" class="profile-image"></a>
+      <div class="profile-about">
+        <h2 style="margin-bottom: 0; font-weight: 700;"></h2>
+        
+        
+        
+        <a href="about"><img src="/img/icon/me.svg" class="social-icon"></a>
+        <br>
+        
+        <br>
+        <div class="mode" id="mode-switcher" onclick="toggleNightMode();">
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--
+  
+<footer class="site-footer">
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li><a href="mailto:Kea Wot <hi@ashang.org>">Kea Wot <hi@ashang.org></a></li>
+        </ul>
+      </div>
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/ashang">
+              <span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+
+              </span>
+              <span class="username">ashang
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+      <div class="footer-col footer-col-3">
+        <p>ramblings notes, things I worked through to make sure I understand.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+-->
+</body>
+</html>

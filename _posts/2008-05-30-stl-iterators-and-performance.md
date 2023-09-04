@@ -3,7 +3,7 @@ layout: post
 title: "STL Iterators and Performance"
 date: 2008-05-30 11:02
 comments: true
-categories: [c++,stl]
+tags: [C++, STL, Performance]
 ---
 
 The Standard Template Library (STL) for C++ provides a set of powerful and flexible templated container classes.  Never again will you have to hand-craft a doubly-linked list (and get your pointer arithmetic mixed up) -- just use `std::list<T>`.

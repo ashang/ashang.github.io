@@ -1,57 +1,63 @@
-# frozen_string_literal: true
-
 source "https://rubygems.org"
-
-gem "jekyll", "~> 3.9.0"
-#gem "jekyll", "~> 4.3.2"
-gem "webrick"
-
 ruby RUBY_VERSION
 
-#gemspec
-#Deprecation: You appear to have pagination turned on, but you haven't included the `jekyll-paginate` gem. Ensure you have `plugins: [jekyll-paginate]` in your configuration file.
-#gemspec
+# Hello! This is where you manage which Jekyll version is used to run.
+# When you want to use a different version, change it below, save the
+# file and run `bundle install`. Run Jekyll with `bundle exec`, like so:
+#
+#     bundle exec jekyll serve
+#
+# This will help ensure the proper Jekyll version is running.
+# Happy Jekylling!
+gem "jekyll"
+#gem "jekyll", "~> 4.2.1"
+#gem "jekyll", "~> 4.2.1"
+
+# This is the default theme for new Jekyll sites. You may change this to anything you like.
+#gem "minima", "~> 2.5"
+
+gem "webrick"
+
+## Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+## and associated library.
+##install_if -> { RUBY_PLATFORM =~ %r!mingw|mswin|java! } do
+##install_if -> { RUBY_PLATFORM =~ %r!mingw|mswin|java! } do
+#platforms :mingw, :x64_mingw, :mswin, :jruby do
+#  gem "tzinfo", "~> 1.2"
+#  gem "tzinfo-data"
+#end
+
+## Performance-booster for watching directories on Windows
+##gem "wdm", "~> 0.1.0", :install_if => Gem.win_platform?
+##gem "wdm", "~> 0.1.0", :install_if => Gem.win_platform?
+#gem "wdm", "~> 0.1.1", :platforms => [:mingw, :x64_mingw, :mswin]
+
+# kramdown v2 ships without the gfm parser by default. If you're using
+# kramdown v1, comment out this line.
+gem "kramdown-parser-gfm"
+
 
 # If you want to use GitHub Pages, remove the "gem "jekyll"" above and
 # uncomment the line below. To upgrade, run `bundle update github-pages`.
 # gem "github-pages", group: :jekyll_plugins
-#gem 'github-pages', '>=104', group: :jekyll_plugins
-#gem 'type-on-strap', ">= 2.3.3", "< 3.0"
-#gem 'asciidoctor-revealjs', git: 'https://github.com/asciidoctor/asciidoctor-reveal.js.git', tag: 'v5.0.0-rc.1'
 
-# Lock `http_parser.rb` gem to `v0.6.x` on JRuby builds since newer versions of the gem
-# do not have a Java counterpart.
-#gem "http_parser.rb", "~> 0.6.0", :platforms => [:jruby]
-
-# Built-in
-#gem 'jekyll-sass-converter'
-
+# If you have any plugins, put them here!
 group :jekyll_plugins do
-  gem 'jekyll-archives'
+  # gem 'jekyll-archives'
   gem 'jekyll-babel'
+  # gem 'jekyll-feed'                 # automatically generate an Atom feed at /feed.xml
+  ##gem "jekyll-feed", "~> 0.12"
 # Feed had been built in; From 4.4??
-  #gem 'jekyll-feed'                 # automatically generate an Atom feed at /feed.xml
-  #- jekyll-html-pipeline
-  gem 'kramdown-parser-gfm'
-  #- jekyll-paginate
-  gem 'jekyll-relative-links'
+# Feed had been built in; From 4.4??
+# Feed had been built in; From 4.4??
+  gem 'jekyll-gist'
+  # jekyll-html-pipeline
+
+  # jekyll-paginate
+  # gem 'jekyll-relative-links'
   gem 'jekyll-redirect-from'
   gem 'jekyll-seo-tag'
   gem 'jekyll-sitemap'
-  gem 'jemoji'
-  gem "just-the-docs"
+  # gem 'jemoji'
+  # gem "just-the-docs"
 end
-
-# kramdown v2 ships without the gfm parser by default. If you're using
-# kramdown v1, comment out this line.
-#gem "kramdown-parser-gfm"
-
-## Windows and JRuby does not include zoneinfo files, so bundle the tzinfo-data gem
-## and associated library.
-#platforms :mingw, :x64_mingw, :mswin, :jruby do
-  #gem "tzinfo", ">= 1", "< 3"
-  #gem "tzinfo-data"
-#end
-
-### Performance-booster for watching directories on Windows
-##gem "wdm", "~> 0.1.1", :platforms => [:mingw, :x64_mingw, :mswin]

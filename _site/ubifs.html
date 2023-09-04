@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta name="description" content="Boot">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://10.10.50.50:1125/ubifs">
+  <link rel="alternate" type="application/rss+xml" title="in love we trust" href="http://10.10.50.50:1125/feed.xml">
+  <title>
+    
+      UBI, UBIFS, MTD &middot; in love we trust
+    
+  </title>
+
+  
+  <link rel="canonical" href="http://10.10.50.50:1125/ubifs">
+  
+
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/poole.css">
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/syntax.css">
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/lanyon.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <link rel="shortcut icon" href="http://10.10.50.50:1125/favicon.ico">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://10.10.50.50:1125/atom.xml">
+
+  
+</head>
+<body class="fixed-nav"><header class="site-header" >
+    <a class="site-title" href="/">in love we trust</a>
+
+    <nav class="site-nav">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+
+      <div class="trigger">
+        
+          
+        
+          
+          <a class="page-link" href="/404/"> </a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/ansible-examples">Ansible examples</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-guide">Ansible quickstart</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-modules">Ansible modules</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-roles">Ansible roles</a>
+          
+        
+          
+          <a class="page-link" href="/ansible">Ansible</a>
+          
+        
+          
+          <a class="page-link" href="/archive">Archive</a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/cmd-test">cmd Test</a>
+          
+        
+          
+          <a class="page-link" href="/cryptsetup">cryptsetup with LUKS</a>
+          
+        
+          
+          <a class="page-link" href="/cupper-shortcodes--percent-sign">Cupper Shortcodes with percent sign</a>
+          
+        
+          
+          <a class="page-link" href="/curl">curl</a>
+          
+        
+          
+          <a class="page-link" href="/downtime">downtime</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/frontend">front-end</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/notes/">WILT</a>
+          
+        
+          
+          <a class="page-link" href="/p4-lang">p4</a>
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/tags/">Tags</a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/tutorials">Tutorials</a>
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+</header>
+<div class="container">
+    <div id="page" class="site">
+      <main class="page-content" aria-label="Content">
+        <main class="content fade-in-down delay-0_5s">
+  <div class="inner">
+    <article class="post">
+      <div class="entry-box">
+        <header class="entry-header">
+          <h2 class="post-title">UBI, UBIFS, MTD</h2>
+          <div class="entry-meta">
+            
+              <time class="post-date" datetime="2022-06-09">June 9, 2022</time>
+            
+            
+          </div><!-- .entry-meta -->
+        </header><!-- .entry-header -->
+        <div class="entry-content">
+            <h2 id="boot">Boot</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>UBI device number 0, total 4011 LEBs (4140122112 bytes, 3.9 GiB), available 1853 LEBs
+(1912651776 bytes, 1.8 GiB), LEB size 1032192 bytes (1008.0 KiB)
+</code></pre></div></div>
+
+<h2 id="trouble-shooting">Trouble shooting</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ubi: mtd6 is already attached to ubi0ubi0 error: ubi_open_volume: cannot open device 0, volume 0, error -16
+ubirmvol: UBI_IOCRMVOL: Device or resource busy
+ubi0 error: ubi_create_volume: volume "open" exists (ID 0)
+ubi0 error: ubi_create_volume: cannot create volume 1, error -17
+ubimkvol: UBI_IOCMKVOL: File exists
+Fail to creubi0 error: ubi_create_volume: volume "open" exists (ID 0)
+ate open partitiubi0 error: ubi_create_volume: cannot create volume 1, error -17
+on with 2147483647 bytes, try minimum requested size 838860800 bytes.
+ubimkvol: UBI_IOCMKVOL: File exists
+</code></pre></div></div>
+
+<p>The output is due to re-mount a mount point.</p>
+
+<h2 id="notes-from-slides-by-адриан-хантер-and-артём-битюцкий">Notes from slides by Адриан Хантер and Артём Битюцкий</h2>
+
+<ul>
+  <li>
+    <p>http://www.linux-mtd.infradead.org/doc/ubifs.pdf</p>
+  </li>
+  <li>UBIFS is designed for raw flash devices
+    <ul>
+      <li>E.g. NAND, NOR, OneNAND, etc</li>
+    </ul>
+  </li>
+  <li>UBIFS is not designed for SSD, MMC, SD, Compact Flash, USB sticks, and so on
+    <ul>
+      <li>I call them <strong>FTL devices</strong>
+        <ul>
+          <li>FTL stands for Flash Translation Layer</li>
+          <li>FTL devices have raw flash plus a controller</li>
+          <li>Controller runs FTL firmware</li>
+          <li>FTL firmware emulates block device</li>
+        </ul>
+      </li>
+      <li>They have raw flash inside, but they are block devices</li>
+      <li>They are very different to raw flash devices</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="ubifs-goals">UBIFS goals</h2>
+<ul>
+  <li>Fix JFFS2 scalability issues
+    <ul>
+      <li>Faster mount</li>
+      <li>Fast opening of big files</li>
+      <li>Faster write speed</li>
+    </ul>
+  </li>
+  <li>But preserve cool JFFS2 features
+    <ul>
+      <li>On-the-flight compression</li>
+      <li>Tolerance to power cuts</li>
+      <li>Recoverability</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h1 id="ftldevicevsrawflash">FTL device vs. Raw flash</h1>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Block I/O interface
+(USB mass storage, MMC, etc)
+        |
+       FTL
+        |
+    NAND array
+</code></pre></div></div>
+
+<ul>
+  <li>FTL device
+    <ul>
+      <li>Consists of sectors, typically 512 bytes</li>
+      <li>Has 2 main operations:
+        <ol>
+          <li>read sector</li>
+          <li>write sector</li>
+        </ol>
+      </li>
+      <li>Bad sectors are hidden and remapped by hardware</li>
+      <li>Sectors do not wear out</li>
+    </ul>
+  </li>
+  <li>Raw Flash
+  -Consists of eraseblocks, typically 128KiB
+    <ul>
+      <li>Has 3 main operations:
+        <ol>
+          <li>read from eraseblock</li>
+          <li>write to eraseblock</li>
+          <li>erase the eraseblock</li>
+        </ol>
+      </li>
+      <li>Hardware does not manage bad eraseblocks</li>
+      <li>Eraseblocks wear out after 10^3 - 10^5 erase operations</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="ftl-devices---cons-and-pros">FTL devices - cons and pros</h2>
+<ul>
+  <li>One may run trusted traditional software (e.g., ext3)</li>
+  <li>Standardized</li>
+  <li>Black box, FTL algorithms are trade secrets</li>
+  <li>Fast wear­out and death reports</li>
+  <li>Data corruption reports</li>
+  <li>Historically designed for FAT FS</li>
+  <li>Optimized for FAT</li>
+</ul>
+
+<hr />
+
+<h1 id="ubiubifs-stack">UBI/UBIFS stack</h1>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>UBIFS (fs/ubifs)
+    |
+UBI (drivers/mtd/ubi)
+    |
+MTD (drivers/mtd)
+NAND NOR OneNAND
+    |
+Flash hardware
+(NAND, NOR, etc)
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="mtd">MTD</h2>
+<ul>
+  <li>MTD stands for Memory Technology Devices</li>
+  <li>Provides an abstraction of MTD device</li>
+  <li>Hides many aspects specific to particular flash</li>
+  <li>Provides uniform API to access various types of flashes</li>
+  <li>E.g., MTD supports NAND, NOR, ECC­ed NOR, DataFlash, OneNAND, etc</li>
+  <li>Provides partitioning capabilities</li>
+</ul>
+
+<hr />
+
+<h2 id="mtd-api">MTD API</h2>
+<ul>
+  <li>In kernel API (struct API mdt_device) and user space (/dev/mtd0)
+    <ul>
+      <li>Information (device size, min. I/O unit size, etc)</li>
+      <li>Read from and write to eraseblocks</li>
+      <li>Erase an eraseblock</li>
+      <li>Mark an eraseblock as bad</li>
+      <li>Check if an eraseblock is bad</li>
+    </ul>
+  </li>
+  <li>Does not hide bad eraseblocks</li>
+  <li>Does not do any wear leveling</li>
+</ul>
+
+<hr />
+
+<h2 id="ubi">UBI</h2>
+<ul>
+  <li>Stands for Unsorted Block Images</li>
+  <li>Provides an abstraction of UBI volume</li>
+  <li>Has kernel API (include/mtd/ubi-user.h) and user space API ( /dev/ubi0 )</li>
+  <li>Provides wear leveling</li>
+  <li>Hides bad eraseblocks</li>
+  <li>Allows run-time volume creation, deletion, and resize</li>
+  <li>Is somewhat similar to LVM, but for MTD devices</li>
+</ul>
+
+<hr />
+
+<h2 id="ubi-volume-vs-mtd-device">UBI volume vs. MTD device</h2>
+<p>| MTD device | UBI volume |
+| — | — |
+|Consists of physical eraseblocks (PEB), typically 128KiB | Consists of logical eraseblocks (LEB), slightly smaller than PEB (e.g., 126KiB)|
+| Has 3 main operations:</p>
+<ol>
+  <li>read from PEB</li>
+  <li>write to PEB</li>
+  <li>erase PEB
+|Has 3 main operations:</li>
+  <li>read from LEB</li>
+  <li>write to LEB</li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>erase LEB</td>
+          <td> </td>
+          <td> </td>
+        </tr>
+        <tr>
+          <td> </td>
+          <td>May have bad PEBs</td>
+          <td>Does not have bad LEBs - UBI transparently handles bad PEBs</td>
+        </tr>
+        <tr>
+          <td> </td>
+          <td>PEBs wear out</td>
+          <td>LEBs do not wear out - UBI spreads the I/O load evenly across whole flash device (transparent wear-leveling)</td>
+        </tr>
+        <tr>
+          <td> </td>
+          <td>MTD devices are static: cannot be created/deleted/resized run-time</td>
+          <td>UBI volumes are dynamic - can be created, deleted and resized run-time</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+</ol>
+
+<hr />
+
+<h2 id="main-idea-behind-ubi">Main idea behind UBI</h2>
+<ul>
+  <li>Maps LEBs to PEBs</li>
+  <li>Any LEB may be mapped to any PEB</li>
+  <li>Eraseblock headers store mapping information and erase count</li>
+  <li>When requested to erase LEB, first Un-map LEB, then erase mapped PEB in background</li>
+</ul>
+
+<hr />
+
+<h2 id="ubi-bad-eraseblock-handling">UBI bad eraseblock handling</h2>
+<ul>
+  <li>1% of PEBs are reserved for bad eraseblock handling</li>
+  <li>If a PEB becomes bad, corresponding LEB is re-mapped to a good PEB</li>
+  <li>I/O errors are handled transparently</li>
+  <li>Write error handling
+    <ul>
+      <li>Select a good PEB to recover the data by copying it to new mapped good PEB</li>
+      <li>Re-map LEB to the new mapped PEB</li>
+      <li>Write new data again</li>
+      <li>Recovery is done! Return from UBI</li>
+      <li>Erase, torture and check the bad PEB in background … and mark it as bad</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="other">Other</h2>
+<ul>
+  <li>Handle bit-flips by moving data to a different PEB</li>
+  <li>Configurable wear­leveling threshold</li>
+  <li>Volume update operation</li>
+  <li>Volume rename operation</li>
+  <li>Suitable for MLC NAND</li>
+  <li>Performs operations in background</li>
+  <li>Works on NAND, NOR and other flash types</li>
+  <li>Tolerant to power cuts</li>
+  <li>Simple and robust design</li>
+  <li>Atomic LEB change</li>
+</ul>
+
+<hr />
+
+<h2 id="ubi-scalability-issue">UBI Scalability issue</h2>
+<ul>
+  <li>Unfortunately, UBI scales linearly</li>
+  <li>UBI reads all eraseblock headers on initialization</li>
+  <li>Initialization time grows with growing flash size</li>
+  <li>But it scales considerably better than JFFS2</li>
+  <li>May be improved</li>
+  <li>UBI2 may be created, UBIFS would not change</li>
+  <li>Suitable for 1-16GiB flashes, depending on I/O speed and requirements</li>
+</ul>
+
+<hr />
+
+<h1 id="ubifs">UBIFS</h1>
+<h2 id="ubifs-relies-on-ubi">UBIFS relies on UBI</h2>
+<ul>
+  <li>UBIFS does not care about bad eraseblocks and relies on UBI</li>
+  <li>UBIFS does not care about wear-leveling and relies on UBI</li>
+  <li>UBIFS exploits the atomic LEB change feature</li>
+</ul>
+
+<hr />
+
+<h2 id="requirements">Requirements</h2>
+<ul>
+  <li>Good scalability</li>
+  <li>High performance</li>
+  <li>On-the-flight compression</li>
+  <li>Power-cut tolerance</li>
+  <li>High reliability</li>
+  <li>Recoverability</li>
+</ul>
+
+<hr />
+
+<h2 id="ubifs-index">UBIFS index</h2>
+<ul>
+  <li>Index allows to look-up physical address for any piece of FS data</li>
+  <li>Maps FS to UBI volume, then UBI maps to MTD</li>
+  <li>UBIFS index is a B+ tree</li>
+  <li>Leaf level contains data</li>
+  <li>Tree fanout is configurable, default is 8</li>
+  <li>UBIFS index is stored and maintained on flash</li>
+  <li>Full flash media scanning is not needed</li>
+  <li>Only the journal is scanned in case of power cut</li>
+  <li>Journal is small, has fixed and configurable size</li>
+  <li>Thus, UBIS mounts fast</li>
+</ul>
+
+<h2 id="jffs2-index">JFFS2 index</h2>
+<ul>
+  <li>JFFS2 does not store the index on flash</li>
+  <li>On mount JFFS2 fully scans the flash media</li>
+  <li>Node headers are read to build the index in RAM</li>
+</ul>
+
+<h2 id="out-of-place-updates">Out-of-place updates</h2>
+
+<ul>
+  <li>Flash technology and power-cut-tolerance require out-of-place updates</li>
+  <li>But how about the index?
+Change “foo” (overwrite A, B, C)
+File “/foo”: A B C
+    <ol>
+      <li>Write “A” to a free space</li>
+      <li>Old “A” becomes obsolete</li>
+      <li>Write “B” to free space</li>
+      <li>Old “B” becomes obsolete</li>
+      <li>Write “C” to free space</li>
+      <li>Old “C” becomes obsolete</li>
+    </ol>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="master-node">Master node</h2>
+<ul>
+  <li>Stored at the master area (LEBs 1 and 2)</li>
+  <li>Points to the root index node</li>
+  <li>2 copies of master node exist for recoverability</li>
+  <li>Master area may be quickly found on mount</li>
+  <li>Valid master node is found by scanning master area</li>
+</ul>
+
+<hr />
+
+<h2 id="superblock">Superblock</h2>
+<ul>
+  <li>Situated at LEB0</li>
+  <li>Read­only for UBIFS</li>
+  <li>May be changed by user­space tools</li>
+  <li>Stores configuration information like indexing tree fanout, default compression type (zlib or LZO), etc</li>
+  <li>Superblock is read on mount</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>Superblock</th>
+      <th>Master area</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>LEB0</td>
+      <td>LEB1+LEB2</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h2 id="journal">Journal</h2>
+<ul>
+  <li>All FS changes go to the journal</li>
+  <li>Indexing information is changed in RAM, but not on the flash</li>
+  <li>Journal greatly increases FS write performance</li>
+  <li>When mounting, journal is scanned and re-played</li>
+  <li>Journal is roughly like a small JFFS2 inside UBIFS</li>
+  <li>Journal size is configurable and is stored in superblock</li>
+</ul>
+
+<hr />
+
+<h2 id="tnc">TNC</h2>
+<ul>
+  <li>Stands for Tree Node Cache</li>
+  <li>Caches indexing nodes</li>
+  <li>Is also a B+ tree, but in RAM</li>
+  <li>Speeds up indexing tree lookup</li>
+  <li>May be shrunk in case of memory pressure</li>
+</ul>
+
+<hr />
+
+<h2 id="journal-is-also-wandering">Journal is also wandering</h2>
+<ul>
+  <li>After the commit we pick different LEBs for the journal</li>
+  <li>Do not move data out of the journal</li>
+  <li>Instead, we move the journal</li>
+  <li>
+    <p>Journal changes the position all the time</p>
+  </li>
+  <li>Journal has multiple heads
+    <ul>
+      <li>This improves performance</li>
+    </ul>
+  </li>
+  <li>Journal does not have to be continuous
+    <ul>
+      <li>Journal LEBs may have random addresses</li>
+      <li>LEBs do not have to be empty to be used for journal</li>
+      <li>This makes journal very flexible and efficient</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="garbage-collection">Garbage collection</h2>
+<ul>
+  <li>At some point UBIFS runs out of free space</li>
+  <li>Garbage Collector (GC) is responsible to turn dirty space to free space</li>
+  <li>One empty LEB is always reserved for GC</li>
+  <li>How GC works
+    <ul>
+      <li>GC copies valid data to the journal (GC head)</li>
+    </ul>
+  </li>
+  <li>How about the index?
+    <ul>
+      <li>Indexing nodes are just marked as dirty in TNC</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="commit">Commit</h2>
+<ul>
+  <li>Commit operation is always guaranteed to succeed</li>
+  <li>For the index UBIFS reserves 3x as much space</li>
+  <li>In­the­gaps commit method is used</li>
+  <li>Atomic LEB change UBI feature is used</li>
+</ul>
+
+<hr />
+
+<h2 id="leb-properties">LEB properties</h2>
+<ul>
+  <li>UBIFS stores per LEB-information of flash
+    <ul>
+      <li>LEB type (indexing or data)</li>
+      <li>Amount of free and dirty space</li>
+    </ul>
+  </li>
+  <li>Overall space accounting information is maintained on the media
+    <ul>
+      <li>Total amount of free space</li>
+      <li>Total amount of dirty space</li>
+      <li>Etc</li>
+    </ul>
+  </li>
+  <li>Used e.g., when
+    <ul>
+      <li>A free LEB should be found for new data</li>
+      <li>A dirty LEB should be found for GC</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h2 id="lpt">LPT</h2>
+<ul>
+  <li>Stands for LEB Properties Tree</li>
+  <li>Is a B+ tree</li>
+  <li>Has fixed size</li>
+  <li>Is much smaller than the main indexing tree</li>
+  <li>Managed similarly to the main indexing tree</li>
+</ul>
+
+<hr />
+
+<h2 id="requirements-1">Requirements</h2>
+<ul>
+  <li>Good scalability
+    <ul>
+      <li>Data structures are trees</li>
+      <li>Only journal has to be replayed</li>
+    </ul>
+  </li>
+  <li>High performance
+    <ul>
+      <li>Write-back</li>
+      <li>Background commit</li>
+      <li>Read/write is allowed during commit</li>
+      <li>Multi­head journal minimizes amount of GC</li>
+      <li>TNC makes look-ups fast</li>
+      <li>LPT caches make LEB searches fast</li>
+    </ul>
+  </li>
+  <li>On-the-flight compression</li>
+  <li>Power-cut tolerance
+    <ul>
+      <li>All updates are out-of-place</li>
+      <li>Was extensively tested</li>
+    </ul>
+  </li>
+  <li>High reliability
+    <ul>
+      <li>All data is protected by CRC32 checksum</li>
+      <li>Checksum may be disabled for data</li>
+    </ul>
+  </li>
+  <li>Recoverability
+    <ul>
+      <li>All nodes have a header which fully describes the node</li>
+      <li>The index may be fully re-constructed from the headers</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="more-info">More info</h2>
+
+<ul>
+  <li><a href="http://www.linux-mtd.infradead.org/doc/ubi.html">http://www.linux-mtd.infradead.org/doc/ubi.html</a></li>
+  <li><a href="http://www.linux-mtd.infradead.org/faq/ubifs.html">http://www.linux-mtd.infradead.org/faq/ubifs.html</a></li>
+  <li><a href="http://www.linux-mtd.infradead.org/faq/ubi.html">http://www.linux-mtd.infradead.org/faq/ubi.html</a></li>
+</ul>
+
+
+        </div><!-- .entry-content -->
+        <footer class="entry-footer">
+          
+          <div class="share-post">
+            <!--
+              <span>Share this:</span>
+                <a class="btn-twitter" target="_blank" href="https://twitter.com/intent/tweet?text=UBI,%20UBIFS,%20MTD&amp;url=http://10.10.50.50:1125/ubifs"><i class="fa fa-twitter" aria-hidden="true"></i><span class="screen-reader-text">Twitter</span></a>
+                -->
+          </div><!-- .share-post -->
+        </footer><!-- .entry-footer -->
+      </div><!-- .entry-box -->
+    <div class="post-line"></div>
+    <div class="author-box">
+        <div class="author-info">
+          <!--
+          <h2 class="author-title">About </h2>
+          <p class="author-bio"></p>
+          <p class="author-links">
+              
+              
+            </p>
+            -->
+        </div><!-- .author-info -->
+      </div><!-- .author-box -->
+    </article><!-- .post -->
+    <a href="#" class="top">Top</a>
+  </div><!-- .inner -->
+</main><!-- .content -->
+      </main>
+    <aside class="footer-widgets">
+
+    
+
+    <div id="footer-columns" class="footer-columns">
+        <div class="inner">
+            <div class="grid">
+
+                
+
+                <!-- Create a sorted array of tags -->
+                <div class="one-third">
+                    
+                    
+                    <section class="widget widget-tags">
+                        <!--
+                        <h2 class="widget-title">Tags</h2>
+                        <div class="tagcloud">
+                            
+                            <a href="/tags/#Algorithms">Algorithms</a>
+                            
+                            <a href="/tags/#Apple">Apple</a>
+                            
+                            <a href="/tags/#Boost">Boost</a>
+                            
+                            <a href="/tags/#C%2B%2B">C++</a>
+                            
+                            <a href="/tags/#Cocoa">Cocoa</a>
+                            
+                            <a href="/tags/#Coding">Coding</a>
+                            
+                            <a href="/tags/#Jekyll">Jekyll</a>
+                            
+                            <a href="/tags/#Mac">Mac</a>
+                            
+                            <a href="/tags/#OSX">OSX</a>
+                            
+                            <a href="/tags/#Performance">Performance</a>
+                            
+                            <a href="/tags/#STL">STL</a>
+                            
+                            <a href="/tags/#Threading">Threading</a>
+                            
+                            <a href="/tags/#Unicode">Unicode</a>
+                            
+                            <a href="/tags/#api">api</a>
+                            
+                            <a href="/tags/#c%2B%2B">c++</a>
+                            
+                            <a href="/tags/#c%2B%2B11">c++11</a>
+                            
+                            <a href="/tags/#code+block">code block</a>
+                            
+                            <a href="/tags/#iOS">iOS</a>
+                            
+                            <a href="/tags/#iPhone">iPhone</a>
+                            
+                            <a href="/tags/#iptables">iptables</a>
+                            
+                            <a href="/tags/#markdown">markdown</a>
+                            
+                            <a href="/tags/#nftables">nftables</a>
+                            
+                            <a href="/tags/#openapi">openapi</a>
+                            
+                            <a href="/tags/#programming+language">programming language</a>
+                            
+                            <a href="/tags/#racket">racket</a>
+                            
+                            <a href="/tags/#select">select</a>
+                            
+                            <a href="/tags/#stl">stl</a>
+                            
+                            <a href="/tags/#swagger">swagger</a>
+                            
+                            <a href="/tags/#test">test</a>
+                            
+                            <a href="/tags/#tutorial">tutorial</a>
+                            
+                            <a href="/tags/#webdev">webdev</a>
+                            
+                        </div>
+                        -->
+                    </section><!-- .widget -->
+                </div><!-- .one-third -->
+
+            </div><!-- .grid -->
+        </div><!-- .inner -->
+    </div><!-- .footer-columns -->
+
+</aside><!-- .footer-widgets -->
+
+    </div><!-- .site -->
+    <div class="profile">
+      <a href="http://10.10.50.50:1125"><img src="" class="profile-image"></a>
+      <div class="profile-about">
+        <h2 style="margin-bottom: 0; font-weight: 700;"></h2>
+        
+        
+        
+        <a href="about"><img src="/img/icon/me.svg" class="social-icon"></a>
+        <br>
+        
+        <br>
+        <div class="mode" id="mode-switcher" onclick="toggleNightMode();">
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--
+  
+<footer class="site-footer">
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li><a href="mailto:Kea Wot <hi@ashang.org>">Kea Wot <hi@ashang.org></a></li>
+        </ul>
+      </div>
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/ashang">
+              <span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+
+              </span>
+              <span class="username">ashang
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+      <div class="footer-col footer-col-3">
+        <p>ramblings notes, things I worked through to make sure I understand.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+-->
+</body>
+</html>

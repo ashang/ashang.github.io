@@ -1,0 +1,1914 @@
+
+
+Aug 12 15:27 1996  fatal.h Page 1
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#define Error( Str )        FatalError( Str )
+#define FatalError( Str )   fprintf( stderr, "%s\n", Str ), exit( 1 )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Aug 12 15:27 1996  list.c Page 1
+
+
+        #include "list.h"
+        #include <stdlib.h>
+        #include "fatal.h"
+
+        /* Place in the interface file */
+        struct Node
+        {
+            ElementType Element;
+            Position    Next;
+        };
+
+        List
+        MakeEmpty( List L )
+        {
+            if( L != NULL )
+                DeleteList( L );
+            L = malloc( sizeof( struct Node ) );
+            if( L == NULL )
+                FatalError( "Out of memory!" );
+            L->Next = NULL;
+            return L;
+        }
+
+/* START: fig3_8.txt */
+        /* Return true if L is empty */
+
+        int
+        IsEmpty( List L )
+        {
+            return L->Next == NULL;
+        }
+/* END */
+
+/* START: fig3_9.txt */
+        /* Return true if P is the last position in list L */
+        /* Parameter L is unused in this implementation */
+
+        int IsLast( Position P, List L )
+        {
+            return P->Next == NULL;
+        }
+/* END */
+
+/* START: fig3_10.txt */
+        /* Return Position of X in L; NULL if not found */
+
+        Position
+        Find( ElementType X, List L )
+        {
+            Position P;
+
+/* 1*/      P = L->Next;
+/* 2*/      while( P != NULL && P->Element != X )
+/* 3*/          P = P->Next;
+
+/* 4*/      return P;
+
+
+
+
+
+
+
+Aug 12 15:27 1996  list.c Page 2
+
+
+        }
+/* END */
+
+/* START: fig3_11.txt */
+        /* Delete from a list */
+        /* Cell pointed to by P->Next is wiped out */
+        /* Assume that the position is legal */
+        /* Assume use of a header node */
+
+        void
+        Delete( ElementType X, List L )
+        {
+            Position P, TmpCell;
+
+            P = FindPrevious( X, L );
+
+            if( !IsLast( P, L ) )  /* Assumption of header use */
+            {                      /* X is found; delete it */
+                TmpCell = P->Next;
+                P->Next = TmpCell->Next;  /* Bypass deleted cell */
+                free( TmpCell );
+            }
+        }
+/* END */
+
+/* START: fig3_12.txt */
+        /* If X is not found, then Next field of returned value is NULL */
+        /* Assumes a header */
+
+        Position
+        FindPrevious( ElementType X, List L )
+        {
+            Position P;
+
+/* 1*/      P = L;
+/* 2*/      while( P->Next != NULL && P->Next->Element != X )
+/* 3*/          P = P->Next;
+
+/* 4*/      return P;
+        }
+/* END */
+
+/* START: fig3_13.txt */
+        /* Insert (after legal position P) */
+        /* Header implementation assumed */
+        /* Parameter L is unused in this implementation */
+
+        void
+        Insert( ElementType X, List L, Position P )
+        {
+            Position TmpCell;
+
+/* 1*/      TmpCell = malloc( sizeof( struct Node ) );
+/* 2*/      if( TmpCell == NULL )
+/* 3*/          FatalError( "Out of space!!!" );
+
+
+
+
+
+
+
+
+Aug 12 15:27 1996  list.c Page 3
+
+
+/* 4*/      TmpCell->Element = X;
+/* 5*/      TmpCell->Next = P->Next;
+/* 6*/      P->Next = TmpCell;
+        }
+/* END */
+
+#if 0
+/* START: fig3_14.txt */
+        /* Incorrect DeleteList algorithm */
+
+        void
+        DeleteList( List L )
+        {
+            Position P;
+
+/* 1*/      P = L->Next;  /* Header assumed */
+/* 2*/      L->Next = NULL;
+/* 3*/      while( P != NULL )
+            {
+/* 4*/          free( P );
+/* 5*/          P = P->Next;
+            }
+        }
+/* END */
+#endif
+
+/* START: fig3_15.txt */
+        /* Correct DeleteList algorithm */
+
+        void
+        DeleteList( List L )
+        {
+            Position P, Tmp;
+
+/* 1*/      P = L->Next;  /* Header assumed */
+/* 2*/      L->Next = NULL;
+/* 3*/      while( P != NULL )
+            {
+/* 4*/          Tmp = P->Next;
+/* 5*/          free( P );
+/* 6*/          P = Tmp;
+            }
+        }
+/* END */
+
+        Position
+        Header( List L )
+        {
+            return L;
+        }
+
+        Position
+        First( List L )
+        {
+            return L->Next;
+        }
+
+
+
+
+
+
+
+Aug 12 15:27 1996  list.c Page 4
+
+
+
+        Position
+        Advance( Position P )
+        {
+            return P->Next;
+        }
+
+        ElementType
+        Retrieve( Position P )
+        {
+            return P->Element;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Nov  4 20:37 1997  list.h Page 1
+
+
+        typedef int ElementType;
+
+/* START: fig3_6.txt */
+        #ifndef _List_H
+        #define _List_H
+
+        struct Node;
+        typedef struct Node *PtrToNode;
+        typedef PtrToNode List;
+        typedef PtrToNode Position;
+
+        List MakeEmpty( List L );
+        int IsEmpty( List L );
+        int IsLast( Position P, List L );
+        Position Find( ElementType X, List L );
+        void Delete( ElementType X, List L );
+        Position FindPrevious( ElementType X, List L );
+        void Insert( ElementType X, List L, Position P );
+        void DeleteList( List L );
+        Position Header( List L );
+        Position First( List L );
+        Position Advance( Position P );
+        ElementType Retrieve( Position P );
+
+        #endif    /* _List_H */
+/* END */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Aug 12 15:27 1996  testlist.c Page 1
+
+
+#include <stdio.h>
+#include "list.h"
+
+void
+PrintList( const List L )
+{
+    Position P = Header( L );
+
+    if( IsEmpty( L ) )
+        printf( "Empty list\n" );
+    else
+    {
+        do
+        {
+            P = Advance( P );
+            printf( "%d ", Retrieve( P ) );
+        } while( !IsLast( P, L ) );
+        printf( "\n" );
+    }
+}
+
+main( )
+{
+    List L;
+    Position P;
+    int i;
+
+    L = MakeEmpty( NULL );
+    P = Header( L );
+    PrintList( L );
+
+    for( i = 0; i < 10; i++ )
+    {
+        Insert( i, L, P );
+        PrintList( L );
+        P = Advance( P );
+    }
+    for( i = 0; i < 10; i+= 2 )
+        Delete( i, L );
+
+    for( i = 0; i < 10; i++ )
+        if( ( i % 2 == 0 ) == ( Find( i, L ) != NULL ) )
+            printf( "Find fails\n" );
+
+    printf( "Finished deletions\n" );
+
+    PrintList( L );
+
+    DeleteList( L );
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+Aug 12 15:27 1996  poly.c Page 1
+
+
+/* This code doesn't really do much */
+/* Thus I haven't bothered testing it */
+
+#include "fatal.h"
+
+#define MaxDegree 100
+
+static int
+Max( int A, int B )
+{
+    return A > B ? A : B;
+}
+
+/* START: fig3_18.txt */
+        typedef struct
+        {
+            int CoeffArray[ MaxDegree + 1 ];
+            int HighPower;
+        } *Polynomial;
+/* END */
+
+/* START: fig3_19.txt */
+        void
+        ZeroPolynomial( Polynomial Poly )
+        {
+            int i;
+
+            for( i = 0; i <= MaxDegree; i++ )
+                Poly->CoeffArray[ i ] = 0;
+            Poly->HighPower = 0;
+        }
+/* END */
+
+/* START: fig3_20.txt */
+        void
+        AddPolynomial( const Polynomial Poly1, const Polynomial Poly2,
+                       Polynomial PolySum )
+        {
+            int i;
+
+            ZeroPolynomial( PolySum );
+            PolySum->HighPower = Max( Poly1->HighPower,
+                                      Poly2->HighPower );
+
+            for( i = PolySum->HighPower; i >= 0; i-- )
+                PolySum->CoeffArray[ i ] = Poly1->CoeffArray[ i ]
+                                               + Poly2->CoeffArray[ i ];
+        }
+/* END */
+
+/* START: fig3_21.txt */
+        void
+        MultPolynomial( const Polynomial Poly1,
+                        const Polynomial Poly2, Polynomial PolyProd )
+        {
+            int i, j;
+
+
+
+
+
+
+
+Aug 12 15:27 1996  poly.c Page 2
+
+
+
+            ZeroPolynomial( PolyProd );
+            PolyProd->HighPower = Poly1->HighPower + Poly2->HighPower;
+
+            if( PolyProd->HighPower > MaxDegree )
+                Error( "Exceeded array size" );
+            else
+                for( i = 0; i <= Poly1->HighPower; i++ )
+                    for( j = 0; j <= Poly2->HighPower; j++ )
+                        PolyProd->CoeffArray[ i + j ] +=
+                                Poly1->CoeffArray[ i ] *
+                                Poly2->CoeffArray[ j ];
+        }
+/* END */
+
+#if 0
+/* START: fig3_23.txt */
+        typedef struct Node *PtrToNode;
+
+        struct Node
+        {
+            int Coefficient;
+            int Exponent;
+            PtrToNode Next;
+        };
+
+        typedef PtrToNode Polynomial;  /* Nodes sorted by exponent */
+/* END */
+#endif
+
+void
+PrintPoly( const Polynomial Q )
+{
+    int i;
+
+    for( i = Q->HighPower; i > 0; i-- )
+        printf( "%dx^%d + ", Q->CoeffArray[ i ], i );
+    printf( "%d\n", Q->CoeffArray[ 0 ] );
+}
+
+main( )
+{
+    Polynomial P, Q;
+
+    P = malloc( sizeof( *P ) );
+    Q = malloc( sizeof( *Q ) );
+
+    P->HighPower = 1; P->CoeffArray[ 0 ] = 1; P->CoeffArray[ 1 ] = 1;
+    MultPolynomial( P, P, Q );
+    MultPolynomial( Q, Q, P );
+    AddPolynomial( P, P, Q );
+    PrintPoly( Q );
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+Aug 12 15:27 1996  cursor.c Page 1
+
+
+        #include "cursor.h"
+        #include <stdlib.h>
+        #include "fatal.h"
+
+        /* Place in the interface file */
+        struct Node
+        {
+            ElementType Element;
+            Position    Next;
+        };
+
+        struct Node CursorSpace[ SpaceSize ];
+
+/* START: fig3_31.txt */
+        static Position
+        CursorAlloc( void )
+        {
+            Position P;
+
+            P = CursorSpace[ 0 ].Next;
+            CursorSpace[ 0 ].Next = CursorSpace[ P ].Next;
+
+            return P;
+        }
+
+        static void
+        CursorFree( Position P )
+        {
+            CursorSpace[ P ].Next = CursorSpace[ 0 ].Next;
+            CursorSpace[ 0 ].Next = P;
+        }
+/* END */
+
+        void
+        InitializeCursorSpace( void )
+        {
+            int i;
+
+            for( i = 0; i < SpaceSize; i++ )
+                CursorSpace[ i ].Next = i + 1;
+            CursorSpace[ SpaceSize - 1 ].Next = 0;
+        }
+
+        List
+        MakeEmpty( List L )
+        {
+            if( L != NULL )
+                DeleteList( L );
+            L = CursorAlloc( );
+            if( L == 0 )
+                FatalError( "Out of memory!" );
+            CursorSpace[ L ].Next = 0;
+            return L;
+        }
+
+/* START: fig3_32.txt */
+
+
+
+
+
+
+
+Aug 12 15:27 1996  cursor.c Page 2
+
+
+        /* Return true if L is empty */
+
+        int
+        IsEmpty( List L )
+        {
+            return CursorSpace[ L ].Next == 0;
+        }
+/* END */
+
+/* START: fig3_33.txt */
+        /* Return true if P is the last position in list L */
+        /* Parameter L is unused in this implementation */
+
+        int IsLast( Position P, List L )
+        {
+            return CursorSpace[ P ].Next == 0;
+        }
+/* END */
+
+/* START: fig3_34.txt */
+        /* Return Position of X in L; 0 if not found */
+        /* Uses a header node */
+
+        Position
+        Find( ElementType X, List L )
+        {
+            Position P;
+
+/* 1*/      P = CursorSpace[ L ].Next;
+/* 2*/      while( P && CursorSpace[ P ].Element != X )
+/* 3*/          P = CursorSpace[ P ].Next;
+
+/* 4*/      return P;
+        }
+/* END */
+
+/* START: fig3_35.txt */
+        /* Delete from a list */
+        /* Assume that the position is legal */
+        /* Assume use of a header node */
+
+        void
+        Delete( ElementType X, List L )
+        {
+            Position P, TmpCell;
+
+            P = FindPrevious( X, L );
+
+            if( !IsLast( P, L ) )  /* Assumption of header use */
+            {                      /* X is found; delete it */
+                TmpCell = CursorSpace[ P ].Next;
+                CursorSpace[ P ].Next = CursorSpace[ TmpCell ].Next;
+                CursorFree( TmpCell );
+            }
+        }
+/* END */
+
+
+
+
+
+
+
+Aug 12 15:27 1996  cursor.c Page 3
+
+
+
+        /* If X is not found, then Next field of returned value is 0 */
+        /* Assumes a header */
+
+        Position
+        FindPrevious( ElementType X, List L )
+        {
+            Position P;
+
+/* 1*/      P = L;
+/* 2*/      while( CursorSpace[ P ].Next &&
+                    CursorSpace[ CursorSpace[ P ].Next ].Element != X )
+/* 3*/          P = CursorSpace[ P ].Next;
+
+/* 4*/      return P;
+        }
+
+/* START: fig3_36.txt */
+        /* Insert (after legal position P) */
+        /* Header implementation assumed */
+        /* Parameter L is unused in this implementation */
+
+        void
+        Insert( ElementType X, List L, Position P )
+        {
+            Position TmpCell;
+
+/* 1*/      TmpCell = CursorAlloc( );
+/* 2*/      if( TmpCell == 0 )
+/* 3*/          FatalError( "Out of space!!!" );
+
+/* 4*/      CursorSpace[ TmpCell ].Element = X;
+/* 5*/      CursorSpace[ TmpCell ].Next = CursorSpace[ P ].Next;
+/* 6*/      CursorSpace[ P ].Next = TmpCell;
+        }
+/* END */
+
+
+        /* Correct DeleteList algorithm */
+
+        void
+        DeleteList( List L )
+        {
+            Position P, Tmp;
+
+/* 1*/      P = CursorSpace[ L ].Next;  /* Header assumed */
+/* 2*/      CursorSpace[ L ].Next = 0;
+/* 3*/      while( P != 0 )
+            {
+/* 4*/          Tmp = CursorSpace[ P ].Next;
+/* 5*/          CursorFree( P );
+/* 6*/          P = Tmp;
+            }
+        }
+
+        Position
+
+
+
+
+
+
+
+Aug 12 15:27 1996  cursor.c Page 4
+
+
+        Header( List L )
+        {
+            return L;
+        }
+
+        Position
+        First( List L )
+        {
+            return CursorSpace[ L ].Next;
+        }
+
+        Position
+        Advance( Position P )
+        {
+            return CursorSpace[ P ].Next;
+        }
+
+        ElementType
+        Retrieve( Position P )
+        {
+            return CursorSpace[ P ].Element;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Nov  4 20:35 1997  cursor.h Page 1
+
+
+        typedef int ElementType;
+        #define SpaceSize 100
+
+/* START: fig3_28.txt */
+        #ifndef _Cursor_H
+        #define _Cursor_H
+
+        typedef int PtrToNode;
+        typedef PtrToNode List;
+        typedef PtrToNode Position;
+
+        void InitializeCursorSpace( void );
+
+        List MakeEmpty( List L );
+        int IsEmpty( const List L );
+        int IsLast( const Position P, const List L );
+        Position Find( ElementType X, const List L );
+        void Delete( ElementType X, List L );
+        Position FindPrevious( ElementType X, const List L );
+        void Insert( ElementType X, List L, Position P );
+        void DeleteList( List L );
+        Position Header( const List L );
+        Position First( const List L );
+        Position Advance( const Position P );
+        ElementType Retrieve( const Position P );
+
+        #endif    /* _Cursor_H */
+
+/* END */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Aug 12 15:27 1996  testcurs.c Page 1
+
+
+#include <stdio.h>
+#include "cursor.h"
+
+void
+PrintList( const List L )
+{
+    Position P = Header( L );
+
+    if( IsEmpty( L ) )
+        printf( "Empty list\n" );
+    else
+    {
+        do
+        {
+            P = Advance( P );
+            printf( "%d ", Retrieve( P ) );
+        } while( !IsLast( P, L ) );
+        printf( "\n" );
+    }
+}
+
+main( )
+{
+    List L;
+    Position P;
+    int i;
+
+    InitializeCursorSpace( );
+    L = MakeEmpty( NULL );
+    P = Header( L );
+    PrintList( L );
+
+    for( i = 0; i < 10; i++ )
+    {
+        Insert( i, L, P );
+        PrintList( L );
+        P = Advance( P );
+    }
+    for( i = 0; i < 10; i+= 2 )
+        Delete( i, L );
+
+    for( i = 0; i < 10; i++ )
+        if( ( i % 2 == 0 ) == ( Find( i, L ) != NULL ) )
+            printf( "Find fails\n" );
+
+    printf( "Finished deletions\n" );
+
+    PrintList( L );
+
+    DeleteList( L );
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+Nov  4 20:38 1997  stackar.h Page 1
+
+
+        typedef int ElementType;
+/* START: fig3_45.txt */
+        #ifndef _Stack_h
+        #define _Stack_h
+
+        struct StackRecord;
+        typedef struct StackRecord *Stack;
+
+        int IsEmpty( Stack S );
+        int IsFull( Stack S );
+        Stack CreateStack( int MaxElements );
+        void DisposeStack( Stack S );
+        void MakeEmpty( Stack S );
+        void Push( ElementType X, Stack S );
+        ElementType Top( Stack S );
+        void Pop( Stack S );
+        ElementType TopAndPop( Stack S );
+
+        #endif  /* _Stack_h */
+
+/* END */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Aug 12 15:27 1996  stackar.c Page 1
+
+
+        #include "stackar.h"
+        #include "fatal.h"
+        #include <stdlib.h>
+
+        #define EmptyTOS ( -1 )
+        #define MinStackSize ( 5 )
+
+        struct StackRecord
+        {
+            int Capacity;
+            int TopOfStack;
+            ElementType *Array;
+        };
+
+/* START: fig3_48.txt */
+        int
+        IsEmpty( Stack S )
+        {
+            return S->TopOfStack == EmptyTOS;
+        }
+/* END */
+
+        int
+        IsFull( Stack S )
+        {
+            return S->TopOfStack == S->Capacity - 1;
+        }
+
+/* START: fig3_46.txt */
+        Stack
+        CreateStack( int MaxElements )
+        {
+            Stack S;
+
+/* 1*/      if( MaxElements < MinStackSize )
+/* 2*/          Error( "Stack size is too small" );
+
+/* 3*/      S = malloc( sizeof( struct StackRecord ) );
+/* 4*/      if( S == NULL )
+/* 5*/          FatalError( "Out of space!!!" );
+
+/* 6*/      S->Array = malloc( sizeof( ElementType ) * MaxElements );
+/* 7*/      if( S->Array == NULL )
+/* 8*/          FatalError( "Out of space!!!" );
+/* 9*/      S->Capacity = MaxElements;
+/*10*/      MakeEmpty( S );
+
+/*11*/      return S;
+        }
+/* END */
+
+/* START: fig3_49.txt */
+        void
+        MakeEmpty( Stack S )
+        {
+            S->TopOfStack = EmptyTOS;
+
+
+
+
+
+
+
+Aug 12 15:27 1996  stackar.c Page 2
+
+
+        }
+/* END */
+
+/* START: fig3_47.txt */
+        void
+        DisposeStack( Stack S )
+        {
+            if( S != NULL )
+            {
+                free( S->Array );
+                free( S );
+            }
+        }
+/* END */
+
+/* START: fig3_50.txt */
+        void
+        Push( ElementType X, Stack S )
+        {
+            if( IsFull( S ) )
+                Error( "Full stack" );
+            else
+                S->Array[ ++S->TopOfStack ] = X;
+        }
+/* END */
+
+
+/* START: fig3_51.txt */
+        ElementType
+        Top( Stack S )
+        {
+            if( !IsEmpty( S ) )
+                return S->Array[ S->TopOfStack ];
+            Error( "Empty stack" );
+            return 0;  /* Return value used to avoid warning */
+        }
+/* END */
+
+/* START: fig3_52.txt */
+        void
+        Pop( Stack S )
+        {
+            if( IsEmpty( S ) )
+                Error( "Empty stack" );
+            else
+                S->TopOfStack--;
+        }
+/* END */
+
+/* START: fig3_53.txt */
+        ElementType
+        TopAndPop( Stack S )
+        {
+            if( !IsEmpty( S ) )
+                return S->Array[ S->TopOfStack-- ];
+            Error( "Empty stack" );
+
+
+
+
+
+
+
+Aug 12 15:27 1996  stackar.c Page 3
+
+
+            return 0;  /* Return value used to avoid warning */
+        }
+/* END */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Aug 12 15:27 1996  teststka.c Page 1
+
+
+#include <stdio.h>
+#include "stackar.h"
+
+main( )
+{
+    Stack S;
+    int i;
+
+    S = CreateStack( 12 );
+    for( i = 0; i < 10; i++ )
+        Push( i, S );
+
+    while( !IsEmpty( S ) )
+    {
+        printf( "%d\n", Top( S ) );
+        Pop( S );
+    }
+
+    DisposeStack( S );
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Nov  4 20:38 1997  stackli.h Page 1
+
+
+        typedef int ElementType;
+/* START: fig3_39.txt */
+        #ifndef _Stack_h
+        #define _Stack_h
+
+        struct Node;
+        typedef struct Node *PtrToNode;
+        typedef PtrToNode Stack;
+
+        int IsEmpty( Stack S );
+        Stack CreateStack( void );
+        void DisposeStack( Stack S );
+        void MakeEmpty( Stack S );
+        void Push( ElementType X, Stack S );
+        ElementType Top( Stack S );
+        void Pop( Stack S );
+
+        #endif  /* _Stack_h */
+
+/* END */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Aug 12 15:27 1996  stackli.c Page 1
+
+
+        #include "stackli.h"
+        #include "fatal.h"
+        #include <stdlib.h>
+
+        struct Node
+        {
+            ElementType Element;
+            PtrToNode   Next;
+        };
+
+/* START: fig3_40.txt */
+        int
+        IsEmpty( Stack S )
+        {
+            return S->Next == NULL;
+        }
+/* END */
+
+/* START: fig3_41.txt */
+        Stack
+        CreateStack( void )
+        {
+            Stack S;
+
+            S = malloc( sizeof( struct Node ) );
+            if( S == NULL )
+                FatalError( "Out of space!!!" );
+            MakeEmpty( S );
+            return S;
+        }
+
+        void
+        MakeEmpty( Stack S )
+        {
+            if( S== NULL )
+                Error( "Must use CreateStack first" );
+            else
+                while( !IsEmpty( S ) )
+                    Pop( S );
+        }
+/* END */
+
+        void
+        DisposeStack( Stack S )
+        {
+            MakeEmpty( S );
+            free( S );
+        }
+
+/* START: fig3_42.txt */
+        void
+        Push( ElementType X, Stack S )
+        {
+            PtrToNode TmpCell;
+
+            TmpCell = malloc( sizeof( struct Node ) );
+
+
+
+
+
+
+
+Aug 12 15:27 1996  stackli.c Page 2
+
+
+            if( TmpCell == NULL )
+                FatalError( "Out of space!!!" );
+            else
+            {
+                TmpCell->Element = X;
+                TmpCell->Next = S->Next;
+                S->Next = TmpCell;
+            }
+        }
+/* END */
+
+/* START: fig3_43.txt */
+        ElementType
+        Top( Stack S )
+        {
+            if( !IsEmpty( S ) )
+                return S->Next->Element;
+            Error( "Empty stack" );
+            return 0;  /* Return value used to avoid warning */
+        }
+/* END */
+
+/* START: fig3_44.txt */
+        void
+        Pop( Stack S )
+        {
+            PtrToNode FirstCell;
+
+            if( IsEmpty( S ) )
+                Error( "Empty stack" );
+            else
+            {
+                FirstCell = S->Next;
+                S->Next = S->Next->Next;
+                free( FirstCell );
+            }
+        }
+/* END */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Aug 12 15:27 1996  teststkl.c Page 1
+
+
+#include <stdio.h>
+#include "stackli.h"
+
+main( )
+{
+    Stack S;
+    int i;
+
+    S = CreateStack( );
+    for( i = 0; i < 10; i++ )
+        Push( i, S );
+
+    while( !IsEmpty( S ) )
+    {
+        printf( "%d\n", Top( S ) );
+        Pop( S );
+    }
+
+    DisposeStack( S );
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Nov  4 20:37 1997  queue.h Page 1
+
+
+        typedef int ElementType;
+/* START: fig3_57.txt */
+        #ifndef _Queue_h
+        #define _Queue_h
+
+        struct QueueRecord;
+        typedef struct QueueRecord *Queue;
+
+        int IsEmpty( Queue Q );
+        int IsFull( Queue Q );
+        Queue CreateQueue( int MaxElements );
+        void DisposeQueue( Queue Q );
+        void MakeEmpty( Queue Q );
+        void Enqueue( ElementType X, Queue Q );
+        ElementType Front( Queue Q );
+        void Dequeue( Queue Q );
+        ElementType FrontAndDequeue( Queue Q );
+
+        #endif  /* _Queue_h */
+/* END */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Aug 12 15:27 1996  queue.c Page 1
+
+
+        #include "queue.h"
+        #include "fatal.h"
+        #include <stdlib.h>
+
+        #define MinQueueSize ( 5 )
+
+        struct QueueRecord
+        {
+            int Capacity;
+            int Front;
+            int Rear;
+            int Size;
+            ElementType *Array;
+        };
+
+/* START: fig3_58.txt */
+        int
+        IsEmpty( Queue Q )
+        {
+            return Q->Size == 0;
+        }
+/* END */
+
+        int
+        IsFull( Queue Q )
+        {
+            return Q->Size == Q->Capacity;
+        }
+
+        Queue
+        CreateQueue( int MaxElements )
+        {
+            Queue Q;
+
+/* 1*/      if( MaxElements < MinQueueSize )
+/* 2*/          Error( "Queue size is too small" );
+
+/* 3*/      Q = malloc( sizeof( struct QueueRecord ) );
+/* 4*/      if( Q == NULL )
+/* 5*/          FatalError( "Out of space!!!" );
+
+/* 6*/      Q->Array = malloc( sizeof( ElementType ) * MaxElements );
+/* 7*/      if( Q->Array == NULL )
+/* 8*/          FatalError( "Out of space!!!" );
+/* 9*/      Q->Capacity = MaxElements;
+/*10*/      MakeEmpty( Q );
+
+/*11*/      return Q;
+        }
+
+/* START: fig3_59.txt */
+        void
+        MakeEmpty( Queue Q )
+        {
+            Q->Size = 0;
+            Q->Front = 1;
+
+
+
+
+
+
+
+Aug 12 15:27 1996  queue.c Page 2
+
+
+            Q->Rear = 0;
+        }
+/* END */
+
+        void
+        DisposeQueue( Queue Q )
+        {
+            if( Q != NULL )
+            {
+                free( Q->Array );
+                free( Q );
+            }
+        }
+
+/* START: fig3_60.txt */
+
+        static int
+        Succ( int Value, Queue Q )
+        {
+            if( ++Value == Q->Capacity )
+                Value = 0;
+            return Value;
+        }
+
+        void
+        Enqueue( ElementType X, Queue Q )
+        {
+            if( IsFull( Q ) )
+                Error( "Full queue" );
+            else
+            {
+                Q->Size++;
+                Q->Rear = Succ( Q->Rear, Q );
+                Q->Array[ Q->Rear ] = X;
+            }
+        }
+/* END */
+
+
+
+        ElementType
+        Front( Queue Q )
+        {
+            if( !IsEmpty( Q ) )
+                return Q->Array[ Q->Front ];
+            Error( "Empty queue" );
+            return 0;  /* Return value used to avoid warning */
+        }
+
+        void
+        Dequeue( Queue Q )
+        {
+            if( IsEmpty( Q ) )
+                Error( "Empty queue" );
+            else
+            {
+
+
+
+
+
+
+
+Aug 12 15:27 1996  queue.c Page 3
+
+
+                Q->Size--;
+                Q->Front = Succ( Q->Front, Q );
+            }
+        }
+
+        ElementType
+        FrontAndDequeue( Queue Q )
+        {
+            ElementType X = 0;
+
+            if( IsEmpty( Q ) )
+                Error( "Empty queue" );
+            else
+            {
+                Q->Size--;
+                X = Q->Array[ Q->Front ];
+                Q->Front = Succ( Q->Front, Q );
+            }
+            return X;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Aug 12 15:27 1996  testque.c Page 1
+
+
+#include <stdio.h>
+#include "queue.h"
+
+main( )
+{
+    Queue Q;
+    int i;
+
+    Q = CreateQueue( 12 );
+
+    for( i = 0; i < 10; i++ )
+        Enqueue( i, Q );
+
+    while( !IsEmpty( Q ) )
+    {
+        printf( "%d\n", Front( Q ) );
+        Dequeue( Q );
+    }
+    for( i = 0; i < 10; i++ )
+        Enqueue( i, Q );
+
+    while( !IsEmpty( Q ) )
+    {
+        printf( "%d\n", Front( Q ) );
+        Dequeue( Q );
+    }
+
+    DisposeQueue( Q );
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

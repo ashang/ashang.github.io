@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta name="description" content="  single owner smart pointer  shared pointers  weak pointers">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://10.10.50.50:1125/c-plus-plus-11-unique-pointer">
+  <link rel="alternate" type="application/rss+xml" title="in love we trust" href="http://10.10.50.50:1125/feed.xml">
+  <title>
+    
+      C++11 Smart Pointers: Unique Pointer &middot; in love we trust
+    
+  </title>
+
+  
+  <link rel="canonical" href="http://10.10.50.50:1125/c-plus-plus-11-unique-pointer">
+  
+
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/poole.css">
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/syntax.css">
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/lanyon.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <link rel="shortcut icon" href="http://10.10.50.50:1125/favicon.ico">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://10.10.50.50:1125/atom.xml">
+
+  
+</head>
+<body class="fixed-nav"><header class="site-header" >
+    <a class="site-title" href="/">in love we trust</a>
+
+    <nav class="site-nav">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+
+      <div class="trigger">
+        
+          
+        
+          
+          <a class="page-link" href="/404/"> </a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/ansible-examples">Ansible examples</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-guide">Ansible quickstart</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-modules">Ansible modules</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-roles">Ansible roles</a>
+          
+        
+          
+          <a class="page-link" href="/ansible">Ansible</a>
+          
+        
+          
+          <a class="page-link" href="/archive">Archive</a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/cmd-test">cmd Test</a>
+          
+        
+          
+          <a class="page-link" href="/cryptsetup">cryptsetup with LUKS</a>
+          
+        
+          
+          <a class="page-link" href="/cupper-shortcodes--percent-sign">Cupper Shortcodes with percent sign</a>
+          
+        
+          
+          <a class="page-link" href="/curl">curl</a>
+          
+        
+          
+          <a class="page-link" href="/downtime">downtime</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/frontend">front-end</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/notes/">WILT</a>
+          
+        
+          
+          <a class="page-link" href="/p4-lang">p4</a>
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/tags/">Tags</a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/tutorials">Tutorials</a>
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+</header>
+<div class="container">
+    <div id="page" class="site">
+      <main class="page-content" aria-label="Content">
+        <main class="content fade-in-down delay-0_5s">
+  <div class="inner">
+    <article class="post">
+      <div class="entry-box">
+        <header class="entry-header">
+          <h2 class="post-title">C++11 Smart Pointers: Unique Pointer</h2>
+          <div class="entry-meta">
+            
+              <time class="post-date" datetime="2014-01-31">January 31, 2014</time>
+            
+            
+          </div><!-- .entry-meta -->
+        </header><!-- .entry-header -->
+        <div class="entry-content">
+            <ul>
+  <li>single owner smart pointer</li>
+  <li>shared pointers</li>
+  <li>weak pointers</li>
+</ul>
+
+<p>C++11 introduces many significant improvements to the language and runtime. One
+of the most important is to do with memory management - specifically, smart
+pointers.  The <code class="language-plaintext highlighter-rouge">unique_ptr</code> makes managing dynamically allocated memory safe and
+simple.</p>
+
+<!--more-->
+
+<p>Instead of using a bare pointer type in C++, the modern C++11 style is now to
+use <code class="language-plaintext highlighter-rouge">std::unique_ptr</code>.  This class will automatically free the allocated memory
+once the variable goes out of scope.  This is the simplest of the new smart
+pointer types in C++11.</p>
+
+<p>Whereas before, you might write:</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">Foo</span><span class="o">*</span> <span class="n">obj</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Foo</span><span class="p">;</span>
+
+<span class="n">obj</span><span class="o">-&gt;</span><span class="n">process</span><span class="p">();</span>
+
+<span class="k">delete</span> <span class="n">obj</span><span class="p">;</span></code></pre></figure>
+
+<p>you can now write:</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Foo</span><span class="o">&gt;</span> <span class="n">obj</span><span class="p">(</span><span class="k">new</span> <span class="n">Foo</span><span class="p">);</span>
+
+<span class="n">obj</span><span class="o">-&gt;</span><span class="n">process</span><span class="p">();</span>
+
+<span class="c1">// obj will be automatically deleted</span></code></pre></figure>
+
+<h2 id="properties">Properties</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">std::unique_ptr</code> class enforces several useful properties:</p>
+
+<ul>
+  <li>only a single reference to the allocated object can be active at any given time</li>
+  <li>the object will be deleted when the smart pointer goes out of scope</li>
+  <li>the object will be deleted if an exception is thrown</li>
+</ul>
+
+<p>It bears spelling this out: when used correctly, <code class="language-plaintext highlighter-rouge">std::unique_ptr</code> can virtually
+eliminate memory leaks.  This makes the cost of the conversion process
+worthwhile!</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">unique_ptr</code> type is templated over the pointer type, and its constructor
+takes the allocated pointer returned from the <code class="language-plaintext highlighter-rouge">new</code> operator.  And because the
+pointer <code class="language-plaintext highlighter-rouge">operator-&gt;()</code> is overloaded, the smart pointer object can be used just
+like a regular pointer.</p>
+
+<p><strong>Note 1:</strong> For Boost users, this is almost the same as the <code class="language-plaintext highlighter-rouge">boost::scoped_ptr</code>
+class.</p>
+
+<p><strong>Note 2:</strong> This class supercedes the <code class="language-plaintext highlighter-rouge">std::auto_ptr</code>, which was deprecated in C++11.</p>
+
+<p><strong>Note 3:</strong> When invoking <code class="language-plaintext highlighter-rouge">std::unique_ptr</code> methods on the smart pointer itself,
+remember to use the dot <code class="language-plaintext highlighter-rouge">.</code> operator. When invoking methods on the object pointer,
+use the arrow <code class="language-plaintext highlighter-rouge">-&gt;</code> operator as you normally would (since it is overloaded to return the underlying object pointer).</p>
+
+<h2 id="sample">Sample</h2>
+
+<p>Once the variable goes out of scope, <code class="language-plaintext highlighter-rouge">delete</code> will be called to release the memory,
+and the destructor will be invoked as usual, as this simple example shows:</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="cp">#include</span> <span class="cpf">&lt;memory&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span>
+<span class="k">class</span> <span class="nc">Foo</span>
+<span class="p">{</span>
+<span class="nl">public:</span>
+    <span class="n">Foo</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"+++ Foo::Foo()</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+    <span class="o">~</span><span class="n">Foo</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"--- Foo::~Foo()</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+    <span class="kt">void</span> <span class="nf">process</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"... Foo::process()</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span>
+<span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"+++ main()</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Foo</span><span class="o">&gt;</span> <span class="n">obj</span><span class="p">(</span><span class="k">new</span> <span class="n">Foo</span><span class="p">);</span>
+    <span class="n">obj</span><span class="o">-&gt;</span><span class="n">process</span><span class="p">();</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"--- main()</span><span class="se">\n</span><span class="s">"</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>The output is:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>+++ main()
++++ Foo::Foo()
+... Foo::process()
+--- main()
+--- Foo::~Foo()
+</code></pre></div></div>
+
+<h2 id="explcit-release">Explcit release</h2>
+
+<p>If you wish to delete the object before the holding pointer goes out of scope,
+you can use the <code class="language-plaintext highlighter-rouge">reset()</code> method on the smart pointer:</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Foo</span><span class="o">&gt;</span> <span class="n">obj</span><span class="p">(</span><span class="k">new</span> <span class="n">Foo</span><span class="p">);</span>
+
+<span class="n">obj</span><span class="o">-&gt;</span><span class="n">process</span><span class="p">();</span>
+<span class="n">obj</span><span class="p">.</span><span class="n">reset</span><span class="p">();</span></code></pre></figure>
+
+<p>(Notice that methods invoked on the smart pointer itself use <code class="language-plaintext highlighter-rouge">.</code> whereas
+methods on the target object use the overloaded dereference operator <code class="language-plaintext highlighter-rouge">-&gt;</code>).</p>
+
+<p>This results in the trace:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>+++ main()
++++ Foo::Foo()
+... Foo::process()
+... obj: 0x7fb733c047c0
+--- Foo::~Foo()
+--- main()
+</code></pre></div></div>
+
+<p>The simple difference here is that the object’s destructor is called <em>before</em>
+the end of <code class="language-plaintext highlighter-rouge">main</code>, since we invoke <code class="language-plaintext highlighter-rouge">reset()</code> explicitly.  Above, the destructor
+is invoked <em>after</em> the end of <code class="language-plaintext highlighter-rouge">main</code>, since the smart pointer is going out of
+scope.  This is a subtle but important point.</p>
+
+<h2 id="uniqueness">Uniqueness</h2>
+
+<p>What happens if we try to assign this pointer to another smart pointer?</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Foo</span><span class="o">&gt;</span> <span class="n">obj</span><span class="p">(</span><span class="k">new</span> <span class="n">Foo</span><span class="p">);</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Foo</span><span class="o">&gt;</span> <span class="n">obj2</span><span class="p">;</span>
+
+<span class="n">obj2</span> <span class="o">=</span> <span class="n">obj</span><span class="p">;</span></code></pre></figure>
+
+<p>We get a meaningful compiler error:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cpp11_unique_ptr_ex2.cpp:27:10: error: object of type 'std::__1::unique_ptr&lt;Foo,
+      std::__1::default_delete&lt;Foo&gt; &gt;' cannot be assigned because its copy
+      assignment operator is implicitly deleted
+    obj2 = obj;
+</code></pre></div></div>
+
+<p>The compiler is enforcing the unique ownership semantics, so we can’t
+accidentally do the wrong thing.</p>
+
+<p>But if we can’t assign these unique pointers, how do we move them around? Using
+the new explicit <em>move</em> support in C++11 (which is itself a large and complex
+topic). This transfers ownership of the pointer from one <code class="language-plaintext highlighter-rouge">unique_ptr</code> instance
+to another:</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Foo</span><span class="o">&gt;</span> <span class="n">obj1</span><span class="p">(</span><span class="k">new</span> <span class="n">Foo</span><span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Foo</span><span class="o">&gt;</span> <span class="n">obj2</span><span class="p">;</span>
+
+<span class="n">obj2</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">obj1</span><span class="p">);</span></code></pre></figure>
+
+<p>The output of the test program shows the result (we can access the enclosed pointer
+using the <code class="language-plaintext highlighter-rouge">get()</code> method):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>+++ main()
++++ Foo::Foo()
+Before move:
+     obj1:0x7fa8b9d00000
+     obj2:0x0
+After move:
+     obj1:0x0
+     obj2:0x7fa8b9d00000
+--- main()
+--- Foo::~Foo()
+</code></pre></div></div>
+
+<p>Notice how only one <code class="language-plaintext highlighter-rouge">Foo</code> instance was created, and that its pointer value moved
+from <code class="language-plaintext highlighter-rouge">obj1</code> to <code class="language-plaintext highlighter-rouge">obj2</code>? After the <code class="language-plaintext highlighter-rouge">move</code> operation, the pointer in <code class="language-plaintext highlighter-rouge">obj1</code> is null.
+Thus move semantics preserve the single owner invariant.</p>
+
+<h2 id="arrays">Arrays</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">std::unique_ptr</code> class also has explicit support for handling arrays of
+pointers. It is not a replacement for <code class="language-plaintext highlighter-rouge">std::vector</code>, but depending on your
+requirements, this array support can be very useful.</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="k">const</span> <span class="kt">unsigned</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Foo</span><span class="p">[]</span><span class="o">&gt;</span> <span class="n">objarray</span><span class="p">(</span><span class="k">new</span> <span class="n">Foo</span> <span class="p">[</span><span class="n">N</span><span class="p">]);</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">i</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+    <span class="n">objarray</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">process</span><span class="p">();</span>
+<span class="p">}</span></code></pre></figure>
+
+<h2 id="returning-objects-from-functions">Returning objects from functions</h2>
+
+<p>The <code class="language-plaintext highlighter-rouge">unique_ptr</code> idiom is especially useful when you need to return an allocated
+resource from a function or method, but don’t want to worry about having to free
+the object later.  This sample function returns a unique pointer to the caller,
+transferring ownership by implicitly moving the result:</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Foo</span><span class="o">&gt;</span> <span class="n">make_foo</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Foo</span><span class="o">&gt;</span> <span class="n">obj</span><span class="p">(</span><span class="k">new</span> <span class="n">Foo</span><span class="p">);</span>
+
+    <span class="c1">// prepare obj</span>
+
+    <span class="k">return</span> <span class="n">obj</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>The object will be freed when the caller stops referencing it.</p>
+
+<h2 id="containers">Containers</h2>
+
+<p>The <em>move</em> support enables efficient storage of <code class="language-plaintext highlighter-rouge">unique_ptr</code> managed objects in
+containers (one of the limitations of the deprecated <code class="language-plaintext highlighter-rouge">std::auto_ptr</code>).  If you
+have a vector of pointers to objects, you need to carefully manage ownership
+(eg. does the creator or the container own the allocations?) and manually free
+them. But with <code class="language-plaintext highlighter-rouge">unique_ptr</code>, instead of:</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Foo</span><span class="o">*&gt;</span> <span class="n">v</span><span class="p">;</span></code></pre></figure>
+
+<p>we can write:</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Foo</span><span class="o">&gt;</span> <span class="o">&gt;</span> <span class="n">v</span><span class="p">;</span></code></pre></figure>
+
+<p>then when creating the object, we use the explicit <em>move</em> support to pass
+ownership of the object to the container (and avoid any reallocations or
+temporaries):</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Foo</span><span class="o">&gt;</span> <span class="n">q</span><span class="p">(</span><span class="k">new</span> <span class="nf">Foo</span><span class="p">(</span><span class="n">i</span><span class="p">));</span>
+<span class="n">v</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">q</span><span class="p">));</span></code></pre></figure>
+
+<p>When the <code class="language-plaintext highlighter-rouge">vector</code> goes out of scope, its destructor will in turn release all
+the <code class="language-plaintext highlighter-rouge">unique_ptr</code> instances it owns.  This automatic releasing of resources
+can save a great deal of debugging pain and potential memory leaks.</p>
+
+<h2 id="overhead">Overhead</h2>
+
+<p>The benefits of using <code class="language-plaintext highlighter-rouge">std::unique_ptr</code> are many.  And fortunately, the cost of
+using this support is minimal (though for embedded systems, needs to be
+carefully considered).  The is a memory overhead of one word per instance (eg. 8
+bytes on a 64-bit architecture).</p>
+
+<p>The code generated for a method invocation involves an extra pointer
+indirection, the overhead which seems to be in the order of 2-3% (based on some
+simplistic tests; see the repo for full source).</p>
+
+<h2 id="upgrading">Upgrading</h2>
+
+<p>The process to convert existing code which uses manual memory management to
+using smart pointers may not be trivial, but the long-term benefits of more
+maintainable and reliable code are frequently worth the investment of time.
+Going through the process may well highlight complex memory management
+strategies or error-prone code, and eliminate even more problems.</p>
+
+<ul>
+  <li>Search for allocations using <code class="language-plaintext highlighter-rouge">new</code></li>
+  <li>Remove calls to <code class="language-plaintext highlighter-rouge">delete</code></li>
+</ul>
+
+
+        </div><!-- .entry-content -->
+        <footer class="entry-footer">
+          
+          <div class="share-post">
+            <!--
+              <span>Share this:</span>
+                <a class="btn-twitter" target="_blank" href="https://twitter.com/intent/tweet?text=C++11%20Smart%20Pointers:%20Unique%20Pointer&amp;url=http://10.10.50.50:1125/c-plus-plus-11-unique-pointer"><i class="fa fa-twitter" aria-hidden="true"></i><span class="screen-reader-text">Twitter</span></a>
+                -->
+          </div><!-- .share-post -->
+        </footer><!-- .entry-footer -->
+      </div><!-- .entry-box -->
+    <div class="post-line"></div>
+    <div class="author-box">
+        <div class="author-info">
+          <!--
+          <h2 class="author-title">About </h2>
+          <p class="author-bio"></p>
+          <p class="author-links">
+              
+              
+            </p>
+            -->
+        </div><!-- .author-info -->
+      </div><!-- .author-box -->
+    </article><!-- .post -->
+    <a href="#" class="top">Top</a>
+  </div><!-- .inner -->
+</main><!-- .content -->
+      </main>
+    <aside class="footer-widgets">
+
+    
+
+    <div id="footer-columns" class="footer-columns">
+        <div class="inner">
+            <div class="grid">
+
+                
+
+                <!-- Create a sorted array of tags -->
+                <div class="one-third">
+                    
+                    
+                    <section class="widget widget-tags">
+                        <!--
+                        <h2 class="widget-title">Tags</h2>
+                        <div class="tagcloud">
+                            
+                            <a href="/tags/#Algorithms">Algorithms</a>
+                            
+                            <a href="/tags/#Apple">Apple</a>
+                            
+                            <a href="/tags/#Boost">Boost</a>
+                            
+                            <a href="/tags/#C%2B%2B">C++</a>
+                            
+                            <a href="/tags/#Cocoa">Cocoa</a>
+                            
+                            <a href="/tags/#Coding">Coding</a>
+                            
+                            <a href="/tags/#Jekyll">Jekyll</a>
+                            
+                            <a href="/tags/#Mac">Mac</a>
+                            
+                            <a href="/tags/#OSX">OSX</a>
+                            
+                            <a href="/tags/#Performance">Performance</a>
+                            
+                            <a href="/tags/#STL">STL</a>
+                            
+                            <a href="/tags/#Threading">Threading</a>
+                            
+                            <a href="/tags/#Unicode">Unicode</a>
+                            
+                            <a href="/tags/#api">api</a>
+                            
+                            <a href="/tags/#c%2B%2B">c++</a>
+                            
+                            <a href="/tags/#c%2B%2B11">c++11</a>
+                            
+                            <a href="/tags/#code+block">code block</a>
+                            
+                            <a href="/tags/#iOS">iOS</a>
+                            
+                            <a href="/tags/#iPhone">iPhone</a>
+                            
+                            <a href="/tags/#iptables">iptables</a>
+                            
+                            <a href="/tags/#markdown">markdown</a>
+                            
+                            <a href="/tags/#nftables">nftables</a>
+                            
+                            <a href="/tags/#openapi">openapi</a>
+                            
+                            <a href="/tags/#programming+language">programming language</a>
+                            
+                            <a href="/tags/#racket">racket</a>
+                            
+                            <a href="/tags/#select">select</a>
+                            
+                            <a href="/tags/#stl">stl</a>
+                            
+                            <a href="/tags/#swagger">swagger</a>
+                            
+                            <a href="/tags/#test">test</a>
+                            
+                            <a href="/tags/#tutorial">tutorial</a>
+                            
+                            <a href="/tags/#webdev">webdev</a>
+                            
+                        </div>
+                        -->
+                    </section><!-- .widget -->
+                </div><!-- .one-third -->
+
+            </div><!-- .grid -->
+        </div><!-- .inner -->
+    </div><!-- .footer-columns -->
+
+</aside><!-- .footer-widgets -->
+
+    </div><!-- .site -->
+    <div class="profile">
+      <a href="http://10.10.50.50:1125"><img src="" class="profile-image"></a>
+      <div class="profile-about">
+        <h2 style="margin-bottom: 0; font-weight: 700;"></h2>
+        
+        
+        
+        <a href="about"><img src="/img/icon/me.svg" class="social-icon"></a>
+        <br>
+        
+        <br>
+        <div class="mode" id="mode-switcher" onclick="toggleNightMode();">
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--
+  
+<footer class="site-footer">
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li><a href="mailto:Kea Wot <hi@ashang.org>">Kea Wot <hi@ashang.org></a></li>
+        </ul>
+      </div>
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/ashang">
+              <span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+
+              </span>
+              <span class="username">ashang
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+      <div class="footer-col footer-col-3">
+        <p>ramblings notes, things I worked through to make sure I understand.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+-->
+</body>
+</html>

@@ -1,0 +1,18 @@
+
+$ \curl -fsSL https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg     | gpg --dearmor     | sudo dd of=/usr/share/keyrings/vscodium
+-archive-keyring.gpg
+gpg: WARNING: unsafe permissions on homedir '/home/aaron/.gnupg'
+4+1 records in
+4+1 records out
+2256 bytes (2.3 kB, 2.2 KiB) copied, 1.16729 s, 1.9 kB/s
+
+
+echo 'deb [ signed-by=/usr/share/keyrings/vscodium-archive-keyring.gpg ] https://download.vscodium.com/debs vscodium main' \
+    | sudo tee /etc/apt/sources.list.d/vscodium.list
+
+
+
+    sudo aura -A vscodium-bin
+
+    yay -S vscodium-bin
+

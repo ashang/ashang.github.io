@@ -24,7 +24,7 @@ title: Archive
                 <li><a href="{{ site.baseurl }}{{ post.url }}" rel="bookmark">{{ post.title }}</a> <span class="archive-meta"> — <time class="published" datetime="{{ post.date | date: "%Y-%m-%d" }}">{{ post.date | date: "%B %-d, %Y" }}</time></span></li>
               {% endfor %}
             </ul>
-            <p><a href="#page" class="archive-top-link">Return to top <i class="fa fa-angle-up" aria-hidden="true"></i></a></p>
+            <p><a href="#page" class="archive-top-link">To TOP <i class="fa fa-angle-up" aria-hidden="true"></i></a></p>
           {% endfor %}
         </div><!-- .entry-content -->
       </div><!-- .entry-box -->

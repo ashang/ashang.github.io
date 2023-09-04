@@ -1,0 +1,957 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="/css/rss.css" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>in love we trust</title>
+    <description>ramblings notes, things I worked through to make sure I understand.</description>
+    <atom:link href="http://10.10.50.50:1125/feed.xml" rel="self" type="application/rss+xml"/>
+
+    
+      <item>
+        <title>See ya 2022 C++ x86-64 Linux TCP</title>
+        <description>&lt;p&gt;https://www.cnblogs.com/Solstice/p/3195397.html&lt;/p&gt;
+&lt;blockquote&gt;
+
+  &lt;p&gt;“本书主要讲述采用现代 C++ 在 x86-64 Linux 上编写多线程 TCP 网络服务程序的主流常规技术”，封面印着“示范在多核时代采用现代 C++ 编写多线程 TCP 网络服务器的正规做法”。&lt;/p&gt;
+
+  &lt;p&gt;很多教科书上介绍的一些做法是过时的（signal），一些是不推荐使用的（从外部终止线程、TCP OOB数据），一些是大多数情况下没必要使用的（内存池、lock-free 编程）。&lt;/p&gt;
+
+  &lt;p&gt;多线程程序不要使用signal作为IPC。并且，在muduo-protorpc的示例中给出了Linux专有的signalfd(2)的用法，可以避免传统signal handler的常见陷阱，也更符合UNIX的“everything is a file”哲学。第4.4节说明不要从外部终止线程，因此也就不必去细究Pthreads cancellation point了。多线程程序最好不要fork()&lt;/p&gt;
+
+  &lt;p&gt;daemon是过时的做法。因为daemon进程的父进程是init(1)，配置文件在本机，不便于多机统一监控与管理（第9.8节）。（注：如果是第三方标准的服务程序，又不需要经常升级或改配置重启，并且一旦崩溃，重启就能继续服务，那么做成 daemon 让init(1)接管是可以的，比如ntpd、sshd等。本书谈的是自己开发维护的服务程序。）另外，Java/Python/Go写的服务程序似乎也没有做成daemon的习惯，C++程序没有理由要特殊对待。补充一点，Linux的进程管理机制很落后（从UNIX继承而来），子进程退出的事件只能被父进程以SIGCHLD信号的方式收到（而且这个signal可能丢失），kill(pid) 也存在很多race condition（你怎么保证pid在kill之前的一瞬间还代表你想kill的那个进程，而不是一个新启动的进程？close(fd)就不会有这种 race condition。）。这些困难在用户态无法克服，只能修改内核，引入新的系统调用才能治本。例如 FreeBSD 9.0 引入了 pdfork()/pdkill() 等，将子进程变成文件描述符，这样就能用IO事件框架统一处理了，也符合UNIX的“everything is a file”哲学。但愿Linux内核也能尽快引入类似的系统调用，减轻程序员的负担。
+这本书没有讲内存池，而是说明不是每个程序都要自己写内存池（§12.2.8）。这本书也没有把“避免内存碎片”挂在嘴边，而是论证为什么一般的程序不必在意它（§A.1.8）；
+这本书只关注Linux，不考虑移植性。它推荐使用Linux专有的gettid()系统调用作为线程标识（第4.3节），而不是用pthread_self()。
+这本书不讲POSIX中五花八门的定时函数，而专讲用Linux特有的timerfd来实现高精度定时（§7.8.2），因为它能方便地融入IO事件处理框架。&lt;/p&gt;
+
+  &lt;p&gt;这本书只讲mutex和condition variable作为最基础的线程同步手段（第2章），并且我认为一个C++多线程程序代码里不应该直接出现pthread_mutex_lock之类的基本Pthreads调用。本书进一步建议只使用非递归的mutex（§2.1.1），这与某些网上文章的推荐正好相反。这本书第2.3节甚至建议不要使用读写锁和信号量（semaphore），因为一是容易用错，二是不见得能提高性能。mutex和condition variable是完备的，能实现多种更易用的同步设施，例如CountDownLatch和BlockingQueue。§12.8.3的代码展示了用BlockingQueue和ThreadPool控制并发度的手法，做到了“No locks. No condition variables. No callbacks.”
+这本书不讲lock-free编程，因为编写可靠的lock-free代码并分析验证其正确性的难度远大于编写普通的使用mutex和condition variable的多线程代码，后者已经有了相当成熟的理论和工具。我认为lock-free不是每个多线程程序员应该掌握的技术，它投入高而用处少，可以适当了解，但不值得每个人都去深究。只需要少数人用它实现封装好的数据结构，像我这样的普通人就可以受益。
+这本书只讲BSD Sockets作为进程间通信的手段，并且只用TCP长连接（§3.4）。这样就砍掉了pipe、FIFO、POSIX message queue、shared memory、STREAMS、UNIX domain socket等等内容，因为它们都只限本机进程间通信，无法扩展到多机。
+网络编程方面（第6、7章），这本书不讲Sockets API的基本用法，而且代码中也不会直接使用它们。我认为在程序中直接使用 Sockets API是初学者的做法，当写一个新网络服务程序，如果一开始考虑的是怎么组织accept、read、epoll_wait等调用，这种做法无异于用铅笔刀锯大树，事倍功半，也不利于将来的功能扩展和维护。稍微像样点的公司都会用成熟的网络库（不一定开源），把网络编程的复杂性封装进去，暴露出良好易用的接口，让开发人员使用更高层的building blocks（消息传递或RPC）从功能的角度去设计程序，避免一次次反复掉到TCP网络编程的坑里。多个服务程序共享相同的基础库和事件处理框架的益处是显而易见的，一方面把网络编程的复杂性集中到一起，避免每个团队都去踏一遍坑；另一方面，基础库的bug修复与性能优化能惠及用到它的全部服务程序；最后，程序结构上的相似性让编程经验更加通用，多个服务程序在功能、性能、正确性等方面具有共性，能举一反三触类旁通，降低将来开发维护的成本。应该避免每个程序都另起炉灶，单独设计其IO事件处理结构。
+这本书只讲非阻塞IO结合IO复用（IO-Multiplexing）这一种并发风格（归纳为三个半事件），并介绍在多线程下的扩展（one loop per thread）。IO复用方面，本书只讲level-trigger，不讲edge-trigger。一方面目前没有up to date的测试表明ET更快，相反，我认为LT在读取数据时可以节约一次read()调用（§8.7.2）；另一方面，LT模式更容易与其他第三方库结合（§7.15）。多线程程序管理并发socket fd有很多风格可供选择，例如epoll fd是多个线程共享一个（多对一）还是每个线程有自己的epoll fd（一对一），每个socket fd是只属于一个epoll fd（多对一）还是可以同时属于多个 epoll fd（多对多），每个socket fd是只能被固定的一个线程读写还是可以被多个线程读写（如果是后者，那么读写的时候是加锁还是使用ONESHOT）。以上不是每种都可行，本书也没有一一加以分析，而是建议使用one loop per thread这种适用性较强的风格，首先是正确性容易验证，其次是性能也能满足要求。
+本书不讲IPv6，因为目前世界上最大的公司的服务机群也用不完一个私有A类地址（10.0.0.0/8）。本书不讲UDP，因为《Unix网络编程》已经讲得很好了。
+这本书举的网络编程的例子不再是简单的echo服务，而是有格式（因此引入codec）、多连接之间会交换数据的网络程序，更接近业务场景，也借机讲解如何避免TCP网络编程的常见陷阱。并且在示例代码中给出了分布式单词计数、多机求中位数等稍微复杂一点的程序。
+在C++方面，这本书没有介绍动态链接库热更新这种“高级”技术，而是说明，在分布式系统中，为了部署方便，应该从源码编译全部的库，与主程序链接为一个standalone的可执行文件，以减小对运行环境的依赖&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;https://www.boost.org/doc/libs/1_80_0/more/getting_started/unix-variants.html
+https://www.boost.org/doc/libs/&lt;/p&gt;
+
+</description>
+        
+        <pubDate>Sat, 05 Aug 2023 00:00:00 +0800</pubDate>
+        <link>http://10.10.50.50:1125/note/2023-08-05-wil/</link>
+        <guid isPermaLink="true">http://10.10.50.50:1125/note/2023-08-05-wil/</guid>
+
+        
+      </item>
+    
+      <item>
+        <title>NIX</title>
+        <description>&lt;p&gt;https://keivan.io/telegram-not-as-secure-as-you-might-think/&lt;/p&gt;
+
+&lt;p&gt;https://github.com/appget/appget&lt;/p&gt;
+
+&lt;p&gt;https://keivan.io/the-day-appget-died/&lt;/p&gt;
+
+&lt;p&gt;https://github.com/microsoft/winget-cli/tree/master/doc/specs&lt;/p&gt;
+
+&lt;p&gt;https://github.com/microsoft/winget-cli/tree/master/doc/windows/package-manager&lt;/p&gt;
+
+&lt;p&gt;https://github.com/microsoft/winget-cli/blob/master/doc/windows-package-manager-release-roadmap.md&lt;/p&gt;
+
+&lt;p&gt;https://github.com/microsoft/winget-cli/blob/master/doc/Settings.md&lt;/p&gt;
+
+&lt;p&gt;https://github.com/microsoft/winget-cli/blob/master/doc/ManifestSpecv1.0.md&lt;/p&gt;
+
+&lt;p&gt;https://docs.docker.com/network/overlay/&lt;/p&gt;
+
+&lt;p&gt;https://docs.docker.com/storage/storagedriver/overlayfs-driver/&lt;/p&gt;
+
+&lt;p&gt;https://blog.nathanv.me/posts/quay-registry/#what-is-a-registry&lt;/p&gt;
+</description>
+        
+        <pubDate>Sat, 19 Aug 2023 00:00:00 +0800</pubDate>
+        <link>http://10.10.50.50:1125/note/2023-08-19-wil/</link>
+        <guid isPermaLink="true">http://10.10.50.50:1125/note/2023-08-19-wil/</guid>
+
+        
+          <category>api</category>
+        
+          <category>openapi</category>
+        
+          <category>webdev</category>
+        
+          <category>tutorial</category>
+        
+          <category>swagger</category>
+        
+      </item>
+    
+      <item>
+        <title>AUGUST</title>
+        <description>&lt;p&gt;From aaldhahe at ciena.com  Wed Aug 17 15:48:24 2016
+From: aaldhahe at ciena.com (Al-Dhaher, Ali)
+Date: Wed, 17 Aug 2016 11:48:24 -0400
+Subject: [Opencompute-onie] ONIE UEFI Secure Boot
+Message-ID: &amp;lt;D3D9FF88.58D7%aaldhahe@ciena.com&amp;gt;&lt;/p&gt;
+
+&lt;p&gt;Hi there,&lt;/p&gt;
+
+&lt;p&gt;I was wondering if there has been any progress made on enabling secure boot in UEFI for ONIE? Is there an expected timeline for when this feature will become available?&lt;/p&gt;
+
+&lt;p&gt;Thanks!
+Ali
+————– next part ————–
+An HTML attachment was scrubbed…
+URL: &lt;a href=&quot;http://lists.opencompute.org/pipermail/opencompute-onie/attachments/20160817/7c74ed58/attachment.html&quot;&gt;http://lists.opencompute.org/pipermail/opencompute-onie/attachments/20160817/7c74ed58/attachment.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;From carlos at cumulusnetworks.com  Wed Aug 17 16:00:36 2016
+From: carlos at cumulusnetworks.com (Carlos Cardenas)
+Date: Wed, 17 Aug 2016 09:00:36 -0700
+Subject: [Opencompute-onie] ONIE UEFI Secure Boot
+In-Reply-To: &amp;lt;D3D9FF88.58D7%aaldhahe@ciena.com&amp;gt;
+References: &amp;lt;D3D9FF88.58D7%aaldhahe@ciena.com&amp;gt;
+Message-ID: &amp;lt;CAMgwifxeRq1whKG8Fe+qjA5KDDWFC-zHF_vW2dAsRS7MEe6Pzw@mail.gmail.com&amp;gt;&lt;/p&gt;
+
+&lt;p&gt;Hi Ali,&lt;/p&gt;
+
+&lt;p&gt;In order for UEFI Secure Boot to be an option, hardware vendors must
+include a TPM (preferably 2.0 or higher).  At the moment, there are only a
+couple of devices that have a TPM present.&lt;/p&gt;
+
+&lt;p&gt;+–+
+Carlos&lt;/p&gt;
+
+&lt;p&gt;On Wed, Aug 17, 2016 at 8:48 AM, Al-Dhaher, Ali &lt;aaldhahe at=&quot;&quot; ciena.com=&quot;&quot;&gt; wrote:&lt;/aaldhahe&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Hi there,&lt;/p&gt;
+
+  &lt;p&gt;I was wondering if there has been any progress made on enabling secure
+boot in UEFI for ONIE? Is there an expected timeline for when this feature
+will become available?&lt;/p&gt;
+
+  &lt;p&gt;Thanks!
+Ali&lt;/p&gt;
+
+  &lt;hr /&gt;
+  &lt;p&gt;Opencompute-onie mailing list
+Unsubscribe: http://lists.opencompute.org/mailman/options/opencompute-onie&lt;/p&gt;
+
+  &lt;p&gt;Opencompute-onie at lists.opencompute.org
+http://lists.opencompute.org/mailman/listinfo/opencompute-onie&lt;/p&gt;
+
+  &lt;p&gt;————– next part ————–
+An HTML attachment was scrubbed…
+URL: &lt;a href=&quot;http://lists.opencompute.org/pipermail/opencompute-onie/attachments/20160817/6508bd2d/attachment.html&quot;&gt;http://lists.opencompute.org/pipermail/opencompute-onie/attachments/20160817/6508bd2d/attachment.html&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;From aaldhahe at ciena.com  Wed Aug 17 20:05:52 2016
+From: aaldhahe at ciena.com (Al-Dhaher, Ali)
+Date: Wed, 17 Aug 2016 16:05:52 -0400
+Subject: [Opencompute-onie] ONIE UEFI Secure Boot
+In-Reply-To: &amp;lt;CAMgwifxeRq1whKG8Fe+qjA5KDDWFC-zHF_vW2dAsRS7MEe6Pzw@mail.gmail.com&amp;gt;
+References: &amp;lt;D3D9FF88.58D7%aaldhahe@ciena.com&amp;gt;
+ &amp;lt;CAMgwifxeRq1whKG8Fe+qjA5KDDWFC-zHF_vW2dAsRS7MEe6Pzw@mail.gmail.com&amp;gt;
+Message-ID: &amp;lt;D3DA3B34.58E0%aaldhahe@ciena.com&amp;gt;&lt;/p&gt;
+
+&lt;p&gt;Thanks for the reply Carlos.&lt;/p&gt;
+
+&lt;p&gt;I have a switch which does contain a TPM running v.2.2. How would one go about building an ONIE image containing a GRUB UEFI application which uses the secure boot capability?&lt;/p&gt;
+
+&lt;p&gt;From: Carlos Cardenas &amp;lt;carlos at cumulusnetworks.com&lt;a href=&quot;mailto:carlos at cumulusnetworks.com&quot;&gt;carlos at cumulusnetworks.com&lt;/a&gt;&amp;gt;
+Date: Wednesday, August 17, 2016 at 12:00 PM
+To: Al-Dhaher Ali &amp;lt;aaldhahe at ciena.com&lt;a href=&quot;mailto:aaldhahe at ciena.com&quot;&gt;aaldhahe at ciena.com&lt;/a&gt;&amp;gt;
+Cc: “opencompute-onie at lists.opencompute.org&lt;a href=&quot;mailto:opencompute-onie at lists.opencompute.org&quot;&gt;opencompute-onie at lists.opencompute.org&lt;/a&gt;” &amp;lt;opencompute-onie at lists.opencompute.org&lt;a href=&quot;mailto:opencompute-onie at lists.opencompute.org&quot;&gt;opencompute-onie at lists.opencompute.org&lt;/a&gt;&amp;gt;
+Subject: Re: [Opencompute-onie] ONIE UEFI Secure Boot&lt;/p&gt;
+
+&lt;p&gt;Hi Ali,&lt;/p&gt;
+
+&lt;p&gt;In order for UEFI Secure Boot to be an option, hardware vendors must include a TPM (preferably 2.0 or higher).  At the moment, there are only a couple of devices that have a TPM present.&lt;/p&gt;
+
+&lt;p&gt;+–+
+Carlos&lt;/p&gt;
+
+&lt;p&gt;On Wed, Aug 17, 2016 at 8:48 AM, Al-Dhaher, Ali &amp;lt;aaldhahe at ciena.com&lt;a href=&quot;mailto:aaldhahe at ciena.com&quot;&gt;aaldhahe at ciena.com&lt;/a&gt;&amp;gt; wrote:
+Hi there,&lt;/p&gt;
+
+&lt;p&gt;I was wondering if there has been any progress made on enabling secure boot in UEFI for ONIE? Is there an expected timeline for when this feature will become available?&lt;/p&gt;
+
+&lt;p&gt;Thanks!
+Ali&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;p&gt;Opencompute-onie mailing list
+Unsubscribe: http://lists.opencompute.org/mailman/options/opencompute-onie&lt;/p&gt;
+
+&lt;p&gt;Opencompute-onie at lists.opencompute.org&lt;a href=&quot;mailto:Opencompute-onie at lists.opencompute.org&quot;&gt;Opencompute-onie at lists.opencompute.org&lt;/a&gt;
+http://lists.opencompute.org/mailman/listinfo/opencompute-onie&lt;/p&gt;
+
+&lt;p&gt;————– next part ————–
+An HTML attachment was scrubbed…
+URL: &lt;a href=&quot;http://lists.opencompute.org/pipermail/opencompute-onie/attachments/20160817/8f2ba873/attachment.html&quot;&gt;http://lists.opencompute.org/pipermail/opencompute-onie/attachments/20160817/8f2ba873/attachment.html&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;From banther at gmail.com  Thu Aug 18 01:47:52 2016
+From: banther at gmail.com (Mark Pearson)
+Date: Thu, 18 Aug 2016 01:47:52 +0000
+Subject: [Opencompute-onie] ONIE UEFI Secure Boot
+In-Reply-To: &amp;lt;D3DA3B34.58E0%aaldhahe@ciena.com&amp;gt;
+References: &amp;lt;D3D9FF88.58D7%aaldhahe@ciena.com&amp;gt;
+ &amp;lt;CAMgwifxeRq1whKG8Fe+qjA5KDDWFC-zHF_vW2dAsRS7MEe6Pzw@mail.gmail.com&amp;gt;
+ &amp;lt;D3DA3B34.58E0%aaldhahe@ciena.com&amp;gt;
+Message-ID: &lt;a href=&quot;mailto:CANfa5DYWrHovnyDCYU4d_q0DLabM0tpSKKM_6n0kYPKvz3Mzbw@mail.gmail.com&quot;&gt;CANfa5DYWrHovnyDCYU4d_q0DLabM0tpSKKM_6n0kYPKvz3Mzbw@mail.gmail.com&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;My $0.02 having spent some time looking at this..I am interested in to see
+what others think&lt;/p&gt;
+
+&lt;p&gt;To boot ONIE with secure boot enabled you are going to have to have a
+signed ONIE grub image as a minimum - and to do that in the community build
+you’d have to put your private key into the ONIE repository and that
+probably isn’t wise :)&lt;/p&gt;
+
+&lt;p&gt;You could sign an ONIE grubx64.efi and do your own special private ONIE
+release (not sure how that sits with the community…but it’s technically
+doable)&lt;/p&gt;
+
+&lt;p&gt;If you go this route I don’t think the ONIE grub currently has the patches
+to support secure boot (assuming you want to use the standard linux efi
+shim for also authenticating your kernel because what’s the point of secure
+boot if you don’t do that). You also hit headaches with how you release
+that grub executable (do you sign all the modules or do a standalone
+grub?). You likely have to mess around with the ONIE updater steps, build
+steps etc - not trivial :)&lt;/p&gt;
+
+&lt;p&gt;I don’t know if these changes are of interest to the rest of the community
+as it ultimately leads to a locked down private ONIE and it all seems
+somewhat counter-intuitive to me: now nobody can really load on their OS
+except for the key owner as they won’t have the key to sign images. This
+seems to defeat the point of ONIE.&lt;/p&gt;
+
+&lt;p&gt;What I think makes sense for customers that are security conscious is:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Have UEFI ONIE and a system that has secure boot capability but with
+secure boot &lt;em&gt;disabled&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;Provide customers with a certificate to load your key into the UEFI
+firmware database (you could pre-load on your own hardware if you are a HW
+and SW vendor)&lt;/li&gt;
+  &lt;li&gt;Provide your ONIE OS installer which installs signed bootloader, kernel
+etc to work with secure boot when enabled&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;With this a customer can then enable secure boot once they have installed
+your secure OS and your key. The big downside is I think enabling secure
+boot itself is a manual process and requires going into the firmware menu.
+I’ve not found a way to be able to enable it from linux but my experience
+in this area is virtually nil though - maybe it’s possible? It would be
+neat if it’s possible but I suspect it wouldn’t be by design&lt;/p&gt;
+
+&lt;p&gt;Note: the above is my opinion only. I’m also not an expert in this area -
+I’ve just been actively tinkering recently with secure boot to see what it
+can do and the email thread grabbed my interest&lt;/p&gt;
+
+&lt;p&gt;Mark&lt;/p&gt;
+
+&lt;p&gt;PS - FWIW I don’t think TPM is a requirement for secure boot - it helps add
+a measured boot component to your secure implementation but isn’t actively
+required. I’m happy to be corrected ;)&lt;/p&gt;
+
+&lt;p&gt;On Wed, 17 Aug 2016 at 16:06 Al-Dhaher, Ali &lt;aaldhahe at=&quot;&quot; ciena.com=&quot;&quot;&gt; wrote:&lt;/aaldhahe&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Thanks for the reply Carlos.&lt;/p&gt;
+
+  &lt;p&gt;I have a switch which does contain a TPM running v.2.2. How would one go
+about building an ONIE image containing a GRUB UEFI application which uses
+the secure boot capability?&lt;/p&gt;
+
+  &lt;p&gt;From: Carlos Cardenas &lt;carlos at=&quot;&quot; cumulusnetworks.com=&quot;&quot;&gt;
+Date: Wednesday, August 17, 2016 at 12:00 PM
+To: Al-Dhaher Ali &lt;aaldhahe at=&quot;&quot; ciena.com=&quot;&quot;&gt;
+Cc: &quot;opencompute-onie at lists.opencompute.org&quot; &amp;lt;
+opencompute-onie at lists.opencompute.org&amp;gt;
+Subject: Re: [Opencompute-onie] ONIE UEFI Secure Boot&lt;/aaldhahe&gt;&lt;/carlos&gt;&lt;/p&gt;
+
+  &lt;p&gt;Hi Ali,&lt;/p&gt;
+
+  &lt;p&gt;In order for UEFI Secure Boot to be an option, hardware vendors must
+include a TPM (preferably 2.0 or higher).  At the moment, there are only a
+couple of devices that have a TPM present.&lt;/p&gt;
+
+  &lt;p&gt;+–+
+Carlos&lt;/p&gt;
+
+  &lt;p&gt;On Wed, Aug 17, 2016 at 8:48 AM, Al-Dhaher, Ali &lt;aaldhahe at=&quot;&quot; ciena.com=&quot;&quot;&gt;
+wrote:&lt;/aaldhahe&gt;&lt;/p&gt;
+
+  &lt;blockquote&gt;
+    &lt;p&gt;Hi there,&lt;/p&gt;
+
+    &lt;p&gt;I was wondering if there has been any progress made on enabling secure
+boot in UEFI for ONIE? Is there an expected timeline for when this feature
+will become available?&lt;/p&gt;
+
+    &lt;p&gt;Thanks!
+Ali&lt;/p&gt;
+
+    &lt;hr /&gt;
+    &lt;p&gt;Opencompute-onie mailing list
+Unsubscribe:
+http://lists.opencompute.org/mailman/options/opencompute-onie&lt;/p&gt;
+
+    &lt;p&gt;Opencompute-onie at lists.opencompute.org
+http://lists.opencompute.org/mailman/listinfo/opencompute-onie&lt;/p&gt;
+
+    &lt;hr /&gt;
+    &lt;p&gt;Opencompute-onie mailing list
+Unsubscribe: http://lists.opencompute.org/mailman/options/opencompute-onie&lt;/p&gt;
+  &lt;/blockquote&gt;
+
+  &lt;p&gt;Opencompute-onie at lists.opencompute.org
+http://lists.opencompute.org/mailman/listinfo/opencompute-onie&lt;/p&gt;
+
+  &lt;p&gt;————– next part ————–
+An HTML attachment was scrubbed…
+URL: &lt;a href=&quot;http://lists.opencompute.org/pipermail/opencompute-onie/attachments/20160818/c21deb19/attachment-0001.html&quot;&gt;http://lists.opencompute.org/pipermail/opencompute-onie/attachments/20160818/c21deb19/attachment-0001.html&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;From olson at cumulusnetworks.com  Thu Aug 18 02:19:28 2016
+From: olson at cumulusnetworks.com (Dave Olson)
+Date: Wed, 17 Aug 2016 19:19:28 -0700
+Subject: [Opencompute-onie] ONIE UEFI Secure Boot
+In-Reply-To: &lt;a href=&quot;mailto:CANfa5DYWrHovnyDCYU4d_q0DLabM0tpSKKM_6n0kYPKvz3Mzbw@mail.gmail.com&quot;&gt;CANfa5DYWrHovnyDCYU4d_q0DLabM0tpSKKM_6n0kYPKvz3Mzbw@mail.gmail.com&lt;/a&gt;
+References: &amp;lt;D3D9FF88.58D7%aaldhahe@ciena.com&amp;gt;
+ &amp;lt;CAMgwifxeRq1whKG8Fe+qjA5KDDWFC-zHF_vW2dAsRS7MEe6Pzw@mail.gmail.com&amp;gt;
+ &amp;lt;D3DA3B34.58E0%aaldhahe@ciena.com&amp;gt;
+ &lt;a href=&quot;mailto:CANfa5DYWrHovnyDCYU4d_q0DLabM0tpSKKM_6n0kYPKvz3Mzbw@mail.gmail.com&quot;&gt;CANfa5DYWrHovnyDCYU4d_q0DLabM0tpSKKM_6n0kYPKvz3Mzbw@mail.gmail.com&lt;/a&gt;
+Message-ID: &lt;a href=&quot;mailto:20160818021611.GA12998@cumulusnetworks.com&quot;&gt;20160818021611.GA12998@cumulusnetworks.com&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Mark Pearson &lt;banther at=&quot;&quot; gmail.com=&quot;&quot;&gt; wrote:&lt;/banther&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;My $0.02 having spent some time looking at this..I am interested in to see what
+others think&lt;/p&gt;
+
+  &lt;p&gt;To boot ONIE with secure boot enabled you are going to have to have a signed
+ONIE grub image as a minimum - and to do that in the community build you’d have
+to put your private key into the ONIE repository and that probably isn’t wise
+:)&lt;/p&gt;
+
+  &lt;p&gt;You could sign an ONIE grubx64.efi and do your own special private ONIE release
+(not sure how that sits with the community…but it’s technically doable)?&lt;/p&gt;
+
+  &lt;p&gt;If you go this route I don’t think the ONIE grub currently has the patches to
+support secure boot (assuming you want to use the standard linux efi shim for
+also authenticating your kernel because what’s the point of secure boot if you
+don’t do that). You also hit headaches with how you release that grub
+executable (do you sign all the modules or do a standalone grub?). You likely
+have to mess around with the ONIE updater steps, build steps etc - not trivial
+:)?&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;At a past company, the legal department expressed their opinion that
+this kind of thing would be a violation of GPL v2 for grub, because it prevents
+booting a kernel of the end-user’s choice.&lt;/p&gt;
+
+&lt;p&gt;Some kind of override would have to be allowed to live within the GPL.&lt;/p&gt;
+
+&lt;p&gt;The lockdown of ONIE would almost certainly be a GPL violation as well,
+if that legal opinion was correct.&lt;/p&gt;
+
+&lt;p&gt;Again, an override would have to be provided (as you suggest).&lt;/p&gt;
+
+&lt;p&gt;However, once anything can be booted that is not verified through secure
+boot, that gives the ability to bypass/alter the TPM, BIOS, grub, etc.,
+thereby making the system no longer secure (or at least, the potential
+for not being secure).  Sort of makes the whole thing pointless…&lt;/p&gt;
+
+&lt;p&gt;Dave Olson
+olson at cumulusnetworks.com&lt;/p&gt;
+
+&lt;p&gt;From Lakesh_Sharma at DELL.com  Thu Aug 18 19:31:54 2016
+From: Lakesh_Sharma at DELL.com (Lakesh_Sharma at DELL.com)
+Date: Thu, 18 Aug 2016 19:31:54 +0000
+Subject: [Opencompute-onie] patches for fixing issue #403 and #404
+Message-ID: &lt;a href=&quot;mailto:d4099b79aabc4a5a9ebe08987409fafb@ausx13mpc109.AMER.DELL.COM&quot;&gt;d4099b79aabc4a5a9ebe08987409fafb@ausx13mpc109.AMER.DELL.COM&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;https://github.com/opencomputeproject/onie/issues/403
+(onie-fwpkg: add operation prints unnecessary warning)&lt;/p&gt;
+
+&lt;p&gt;https://github.com/opencomputeproject/onie/issues/404
+(onie-fwpkg: handling updates that require special reboot or power cycle)
+————– next part ————–
+A non-text attachment was scrubbed…
+Name: 0001-Fix_issue_403-added-argument-in-function-remove_upda.patch
+Type: text/x-patch
+Size: 1708 bytes
+Desc: 0001-Fix_issue_403-added-argument-in-function-remove_upda.patch
+URL: &lt;a href=&quot;http://lists.opencompute.org/pipermail/opencompute-onie/attachments/20160818/a7979cf4/attachment.bin&quot;&gt;http://lists.opencompute.org/pipermail/opencompute-onie/attachments/20160818/a7979cf4/attachment.bin&lt;/a&gt;
+————– next part ————–
+A non-text attachment was scrubbed…
+Name: 0001-Fix_issue_404-Added-support-for-special-reboot-after.patch
+Type: text/x-patch
+Size: 2712 bytes
+Desc: 0001-Fix_issue_404-Added-support-for-special-reboot-after.patch
+URL: &lt;a href=&quot;http://lists.opencompute.org/pipermail/opencompute-onie/attachments/20160818/a7979cf4/attachment-0001.bin&quot;&gt;http://lists.opencompute.org/pipermail/opencompute-onie/attachments/20160818/a7979cf4/attachment-0001.bin&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;From curt at cumulusnetworks.com  Fri Aug 19 15:16:46 2016
+From: curt at cumulusnetworks.com (Curt Brune)
+Date: Fri, 19 Aug 2016 08:16:46 -0700
+Subject: [Opencompute-onie] patches for fixing issue #403 and #404
+In-Reply-To: &lt;a href=&quot;mailto:d4099b79aabc4a5a9ebe08987409fafb@ausx13mpc109.AMER.DELL.COM&quot;&gt;d4099b79aabc4a5a9ebe08987409fafb@ausx13mpc109.AMER.DELL.COM&lt;/a&gt;
+References: &lt;a href=&quot;mailto:d4099b79aabc4a5a9ebe08987409fafb@ausx13mpc109.AMER.DELL.COM&quot;&gt;d4099b79aabc4a5a9ebe08987409fafb@ausx13mpc109.AMER.DELL.COM&lt;/a&gt;
+Message-ID: &lt;a href=&quot;mailto:20160819151646.GB22531@cumulusnetworks.com&quot;&gt;20160819151646.GB22531@cumulusnetworks.com&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;On Thu Aug 18 19:31, Lakesh_Sharma at DELL.com wrote:&lt;/p&gt;
+&lt;blockquote&gt;
+
+  &lt;p&gt;https://github.com/opencomputeproject/onie/issues/403
+(onie-fwpkg: add operation prints unnecessary warning)&lt;/p&gt;
+
+  &lt;p&gt;https://github.com/opencomputeproject/onie/issues/404
+(onie-fwpkg: handling updates that require special reboot or power cycle)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;The patches look great.  Thanks for that.&lt;/p&gt;
+
+&lt;p&gt;Applied to master:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;d68e641 Added support for platform specific reboot after fw update&lt;/li&gt;
+  &lt;li&gt;a50da2c Add warn_exists argument in function remove_update&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;From curt at cumulusnetworks.com  Fri Aug 19 16:02:56 2016
+From: curt at cumulusnetworks.com (Curt Brune)
+Date: Fri, 19 Aug 2016 09:02:56 -0700
+Subject: [Opencompute-onie] patches for fixing issue #403 and #404
+In-Reply-To: &lt;a href=&quot;mailto:20160819151646.GB22531@cumulusnetworks.com&quot;&gt;20160819151646.GB22531@cumulusnetworks.com&lt;/a&gt;
+References: &lt;a href=&quot;mailto:d4099b79aabc4a5a9ebe08987409fafb@ausx13mpc109.AMER.DELL.COM&quot;&gt;d4099b79aabc4a5a9ebe08987409fafb@ausx13mpc109.AMER.DELL.COM&lt;/a&gt;
+ &lt;a href=&quot;mailto:20160819151646.GB22531@cumulusnetworks.com&quot;&gt;20160819151646.GB22531@cumulusnetworks.com&lt;/a&gt;
+Message-ID: &lt;a href=&quot;mailto:20160819160256.GC22531@cumulusnetworks.com&quot;&gt;20160819160256.GC22531@cumulusnetworks.com&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;On Fri Aug 19 08:16, Curt Brune wrote:&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;On Thu Aug 18 19:31, Lakesh_Sharma at DELL.com wrote:&lt;/p&gt;
+  &lt;blockquote&gt;
+
+    &lt;p&gt;https://github.com/opencomputeproject/onie/issues/403
+(onie-fwpkg: add operation prints unnecessary warning)&lt;/p&gt;
+
+    &lt;p&gt;https://github.com/opencomputeproject/onie/issues/404
+(onie-fwpkg: handling updates that require special reboot or power cycle)&lt;/p&gt;
+  &lt;/blockquote&gt;
+
+  &lt;p&gt;The patches look great.  Thanks for that.&lt;/p&gt;
+
+  &lt;p&gt;Applied to master:&lt;/p&gt;
+
+  &lt;ul&gt;
+    &lt;li&gt;d68e641 Added support for platform specific reboot after fw update&lt;/li&gt;
+    &lt;li&gt;a50da2c Add warn_exists argument in function remove_update&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;As promised I updated the ONIE wiki to describe the new “reboot-cmd”
+feature to use during updates.  See this section:&lt;/p&gt;
+
+&lt;p&gt;https://github.com/opencomputeproject/onie/wiki/Design-Spec-Firmware-Updates#firmware-update-flow&lt;/p&gt;
+
+&lt;p&gt;Thanks for adding this.&lt;/p&gt;
+
+&lt;p&gt;Cheers,
+Curt&lt;/p&gt;
+
+&lt;p&gt;From curt at cumulusnetworks.com  Fri Aug 19 19:59:15 2016
+From: curt at cumulusnetworks.com (Curt Brune)
+Date: Fri, 19 Aug 2016 12:59:15 -0700
+Subject: [Opencompute-onie] 2016.08 ONIE release is now available
+Message-ID: &lt;a href=&quot;mailto:20160819195915.GD22531@cumulusnetworks.com&quot;&gt;20160819195915.GD22531@cumulusnetworks.com&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;The 2016.08 release is now available:&lt;/p&gt;
+
+&lt;p&gt;https://github.com/opencomputeproject/onie/releases/tag/2016.08&lt;/p&gt;
+
+&lt;p&gt;Thanks everyone for all your contributions.&lt;/p&gt;
+
+&lt;p&gt;The merge window for 2016.11 is now open.&lt;/p&gt;
+
+&lt;p&gt;Below are the release statistics and notes.&lt;/p&gt;
+
+&lt;p&gt;Cheers,
+Curt&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;Developers with the most changesets
+Curt Brune                  21 (47.7%)
+david_yang                   5 (11.4%)
+Lakesh Sharma                4 (9.1%)
+Mark Pearson                 4 (9.1%)
+vincent0083                  3 (6.8%)
+willkuo103                   1 (2.3%)
+VicLin                       1 (2.3%)
+Cao Jie                      1 (2.3%)
+Vitaliy Ivanov               1 (2.3%)
+JadaLin                      1 (2.3%)
+Shengzhou Liu                1 (2.3%)
+Matthew Morgan               1 (2.3%)&lt;/p&gt;
+
+&lt;p&gt;Developers with the most changed lines
+vincent0083               3981 (52.6%)
+Curt Brune                1222 (16.1%)
+david_yang                 712 (9.4%)
+Lakesh Sharma              521 (6.9%)
+JadaLin                    326 (4.3%)
+willkuo103                 215 (2.8%)
+Matthew Morgan             176 (2.3%)
+Cao Jie                    168 (2.2%)
+Vitaliy Ivanov             107 (1.4%)
+VicLin                      92 (1.2%)
+Shengzhou Liu               25 (0.3%)
+Mark Pearson                22 (0.3%)&lt;/p&gt;
+
+&lt;p&gt;Developers with the most lines removed
+david_yang                 540 (32.5%)&lt;/p&gt;
+
+&lt;p&gt;Developers with the most signoffs (total 51)
+Curt Brune                  43 (84.3%)
+Bernhard Reutner-Fischer     2 (3.9%)
+Shengzhou Liu                1 (2.0%)
+Mike Frysinger               1 (2.0%)
+Anthony G. Basile            1 (2.0%)
+Vidya Sagar Ravipati         1 (2.0%)
+Vitaliy Ivanov               1 (2.0%)
+Cao Jie                      1 (2.0%)&lt;/p&gt;
+
+&lt;p&gt;Top changeset contributors by employer
+Cumulus Networks            21 (47.7%)
+Accton Technology            5 (11.4%)
+Lenovo                       4 (9.1%)
+Dell                         4 (9.1%)
+vincent.liu at agemasystems.com    3 (6.8%)
+shengzhou.liu at nxp.com        1 (2.3%)
+jada_lin at wiwynn.com          1 (2.3%)
+matt.morgan at plexxi.com       1 (2.3%)
+vic.lin at wnc.com.tw           1 (2.3%)
+Alpha Networks               1 (2.3%)
+Centec Networks              1 (2.3%)
+Interface Masters            1 (2.3%)&lt;/p&gt;
+
+&lt;p&gt;Top lines changed by employer
+vincent.liu at agemasystems.com 3981 (52.6%)
+Cumulus Networks          1222 (16.1%)
+Accton Technology          712 (9.4%)
+Dell                       521 (6.9%)
+jada_lin at wiwynn.com        326 (4.3%)
+Alpha Networks             215 (2.8%)
+matt.morgan at plexxi.com     176 (2.3%)
+Centec Networks            168 (2.2%)
+Interface Masters          107 (1.4%)
+vic.lin at wnc.com.tw          92 (1.2%)
+shengzhou.liu at nxp.com       25 (0.3%)
+Lenovo                      22 (0.3%)&lt;/p&gt;
+
+&lt;p&gt;Employers with the most signoffs (total 51)
+Cumulus Networks            41 (80.4%)
+curt at brune.net               3 (5.9%)
+rep.dot.nop at gmail.com        2 (3.9%)
+Centec Networks              1 (2.0%)
+Interface Masters            1 (2.0%)
+shengzhou.liu at nxp.com        1 (2.0%)
+vapier at gentoo.org            1 (2.0%)
+blueness at gentoo.org          1 (2.0%)&lt;/p&gt;
+
+&lt;p&gt;Employers with the most hackers (total 12)
+Cumulus Networks             1 (8.3%)
+Centec Networks              1 (8.3%)
+Interface Masters            1 (8.3%)
+shengzhou.liu at nxp.com        1 (8.3%)
+vincent.liu at agemasystems.com    1 (8.3%)
+Accton Technology            1 (8.3%)
+Dell                         1 (8.3%)
+jada_lin at wiwynn.com          1 (8.3%)
+Alpha Networks               1 (8.3%)
+matt.morgan at plexxi.com       1 (8.3%)
+vic.lin at wnc.com.tw           1 (8.3%)
+Lenovo                       1 (8.3%)&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;2016.08 Public Release&lt;/p&gt;
+
+&lt;p&gt;Major new features:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;New infrastructure for building machine firmware updates.  This
+includes updating BIOS and CPLDs.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Added kernel support and userspace tools for the BTRFS file system.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Enabled U-Boot feature CONFIG_API by default.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;additional-new-hardware-platforms&quot;&gt;Additional New Hardware Platforms&lt;/h1&gt;
+
+&lt;p&gt;ae3a6d8 Plexxi Switch 2 ONIE support.
+  9ebbde0 wiwynn_andromeda: add new platform
+  65bcc5f Add support for DNI 3048UP
+  933ad35 Dell Networking S6010 Data-center switch
+  1157a4d Dell Networking S4048T Data-center switch
+  80bfa2d Add support for Centec Networks E582-48X2Q4Z platform
+  5873ada Alphanetworks Platforms: Add SNC60A0-486F to support ONIE&lt;/p&gt;
+
+&lt;h1 id=&quot;documentation-updates&quot;&gt;Documentation Updates&lt;/h1&gt;
+
+&lt;p&gt;01ed2e0 kvm_x86_64: add a demonstration firmware update
+  3fb22c6 updates to Niagara 2XXX family documentation.
+  2e6899d updates to x86_64-wnc_sst1_n1 documentation&lt;/p&gt;
+
+&lt;h1 id=&quot;features&quot;&gt;Features&lt;/h1&gt;
+
+&lt;p&gt;Linux Kernel:&lt;/p&gt;
+
+&lt;p&gt;c634d2d kernel: move to latest LTS v4.1.28&lt;/p&gt;
+
+&lt;p&gt;U-Boot:&lt;/p&gt;
+
+&lt;p&gt;f67e033 U-Boot: Enable CONFIG_API option&lt;/p&gt;
+
+&lt;p&gt;Misc:&lt;/p&gt;
+
+&lt;p&gt;8305d41 firmware updates: add infra for building firmware updates
+  b5b8749 add btrfs kernel support and btrf-progs utilities
+  b2d5cb5 Adding extra UBI tools to list of binaries
+  d68e641 Added support for platform specific reboot after fw update&lt;/p&gt;
+
+&lt;h1 id=&quot;bugs-fixes&quot;&gt;Bugs Fixes&lt;/h1&gt;
+
+&lt;p&gt;Hardware Support:&lt;/p&gt;
+
+&lt;p&gt;e1ef815 kvm_x86_64: do not assign Ethernet management MAC addresses
+  d1baaaa Accton AS4610: correct mass storage for demo OS installation&lt;/p&gt;
+
+&lt;p&gt;Misc:&lt;/p&gt;
+
+&lt;p&gt;1abe604 sys_eeprom: fix issue of updating CRC TLV
+  a50da2c Add warn_exists argument in function remove_update&lt;/p&gt;
+
+&lt;p&gt;Build Time:&lt;/p&gt;
+
+&lt;p&gt;f847af8 Run mdev to populate dynamic nodes, including ubi_ctrl
+  8f097b5 Install UBI utilities if busybox versions have not been installed
+  f22804e Increase mtd nodes and remove incorrectly created UBI nodes&lt;/p&gt;
+
+&lt;p&gt;From banther at gmail.com  Mon Aug 29 12:30:20 2016
+From: banther at gmail.com (Mark Pearson)
+Date: Mon, 29 Aug 2016 12:30:20 +0000
+Subject: [Opencompute-onie] ONIE UEFI Secure Boot
+In-Reply-To: &lt;a href=&quot;mailto:20160818021611.GA12998@cumulusnetworks.com&quot;&gt;20160818021611.GA12998@cumulusnetworks.com&lt;/a&gt;
+References: &amp;lt;D3D9FF88.58D7%aaldhahe@ciena.com&amp;gt;
+ &amp;lt;CAMgwifxeRq1whKG8Fe+qjA5KDDWFC-zHF_vW2dAsRS7MEe6Pzw@mail.gmail.com&amp;gt;
+ &amp;lt;D3DA3B34.58E0%aaldhahe@ciena.com&amp;gt;
+ &lt;a href=&quot;mailto:CANfa5DYWrHovnyDCYU4d_q0DLabM0tpSKKM_6n0kYPKvz3Mzbw@mail.gmail.com&quot;&gt;CANfa5DYWrHovnyDCYU4d_q0DLabM0tpSKKM_6n0kYPKvz3Mzbw@mail.gmail.com&lt;/a&gt;
+ &lt;a href=&quot;mailto:20160818021611.GA12998@cumulusnetworks.com&quot;&gt;20160818021611.GA12998@cumulusnetworks.com&lt;/a&gt;
+Message-ID: &amp;lt;CANfa5Db8ZRM+g_DrWTUODUw=2NJGk8dq4g70SURNFKL7gzRO6g@mail.gmail.com&amp;gt;&lt;/p&gt;
+
+&lt;p&gt;Hi Dave,&lt;/p&gt;
+
+&lt;p&gt;(sorry for the slow reply - summer holidays ;))&lt;/p&gt;
+
+&lt;p&gt;Specifically on this bit:
+“However, once anything can be booted that is not verified through secure boot,
+that gives the ability to bypass/alter the TPM, BIOS, grub, etc., thereby
+making the system no longer secure (or at least, the potential for not
+being secure).  Sort of makes the whole thing pointless… “&lt;/p&gt;
+
+&lt;p&gt;My take is if a customer enables secure boot and then protects their switch
+(physically and by password protecting the firmware configuration) then
+secure boot is a good way of securing the switch after the fact. It assumes
+that the UEFI firmware isn’t compromised but covers everything from then
+on. Am I missing something?&lt;/p&gt;
+
+&lt;p&gt;I did think about this a bit more and can see two options that could work.&lt;/p&gt;
+
+&lt;p&gt;Option 1: Nothing new required. The HW is shipped with ONIE available and
+if a customer wants to use secure boot with SW that is signed they have to
+be aware that they need to enable secure boot in the firmware menu and load
+in the key to verify the signatures. It sucks there are manual steps but
+that’s the price of security.&lt;/p&gt;
+
+&lt;p&gt;Option 2: We add some extra bits to ONIE - specifically building the
+shim.efi bootloader and signing the shim, grub and kernel with a key of the
+builders choosing (presumably local). With this if you have a key you could
+then build a “secure ONIE” which you could release yourself (nobody else
+could build it). This ONIE would boot on a switch with secure boot enabled
+(assuming the key is installed of course).
+A vendor which provides both HW and SW could use this to ship a secure
+switch with both their software and ONIE. If a customer wants to install an
+alternate OS they will have to disable secure boot (or install the
+alternate OS key). I guess potentially a HW vendor could also choose to
+provide a signing service but I’m going to guess that nobody would be
+interested in that.
+A truly security aware customer should verify that their key database only
+contains the key they require and that secure boot is enabled - so some
+manual steps are required anyway which makes me wonder if it’s worth the
+effort of going this route&lt;/p&gt;
+
+&lt;p&gt;Would option 2 be of interest to anyone else? Does it go against the ONIE
+community open approach? I know at Lenovo (where I work) that we would
+probably use this approach if it was available so if it’s of interest I can
+put in the effort to make the changes. I’d only want to do it if it was
+likely to be useful to others too - I personally don’t like the idea of a
+locked down ONIE….it feels ethically icky :) I can be convinced otherwise
+if it is of general interest and would not be purely selfish.&lt;/p&gt;
+
+&lt;p&gt;Thoughts?
+Mark&lt;/p&gt;
+
+&lt;p&gt;On Wed, 17 Aug 2016 at 22:19 Dave Olson &lt;olson at=&quot;&quot; cumulusnetworks.com=&quot;&quot;&gt; wrote:&lt;/olson&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Mark Pearson &lt;banther at=&quot;&quot; gmail.com=&quot;&quot;&gt; wrote:&lt;/banther&gt;&lt;/p&gt;
+
+  &lt;blockquote&gt;
+    &lt;p&gt;My $0.02 having spent some time looking at this..I am interested in to
+see what
+others think&lt;/p&gt;
+
+    &lt;p&gt;To boot ONIE with secure boot enabled you are going to have to have a
+signed
+ONIE grub image as a minimum - and to do that in the community build
+you’d have
+to put your private key into the ONIE repository and that probably isn’t
+wise
+:)&lt;/p&gt;
+
+    &lt;p&gt;You could sign an ONIE grubx64.efi and do your own special private ONIE
+release
+(not sure how that sits with the community…but it’s technically
+doable)&lt;/p&gt;
+
+    &lt;p&gt;If you go this route I don’t think the ONIE grub currently has the
+patches to
+support secure boot (assuming you want to use the standard linux efi
+shim for
+also authenticating your kernel because what’s the point of secure boot
+if you
+don’t do that). You also hit headaches with how you release that grub
+executable (do you sign all the modules or do a standalone grub?). You
+likely
+have to mess around with the ONIE updater steps, build steps etc - not
+trivial
+:)&lt;/p&gt;
+  &lt;/blockquote&gt;
+
+  &lt;p&gt;At a past company, the legal department expressed their opinion that
+this kind of thing would be a violation of GPL v2 for grub, because it
+prevents
+booting a kernel of the end-user’s choice.&lt;/p&gt;
+
+  &lt;p&gt;Some kind of override would have to be allowed to live within the GPL.&lt;/p&gt;
+
+  &lt;p&gt;The lockdown of ONIE would almost certainly be a GPL violation as well,
+if that legal opinion was correct.&lt;/p&gt;
+
+  &lt;p&gt;Again, an override would have to be provided (as you suggest).&lt;/p&gt;
+
+  &lt;p&gt;However, once anything can be booted that is not verified through secure
+boot, that gives the ability to bypass/alter the TPM, BIOS, grub, etc.,
+thereby making the system no longer secure (or at least, the potential
+for not being secure).  Sort of makes the whole thing pointless…&lt;/p&gt;
+
+  &lt;p&gt;Dave Olson
+olson at cumulusnetworks.com&lt;/p&gt;
+
+  &lt;p&gt;————– next part ————–
+An HTML attachment was scrubbed…
+URL: &lt;a href=&quot;http://lists.opencompute.org/pipermail/opencompute-onie/attachments/20160829/f1ae02d9/attachment.html&quot;&gt;http://lists.opencompute.org/pipermail/opencompute-onie/attachments/20160829/f1ae02d9/attachment.html&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;From curt at cumulusnetworks.com  Mon Aug 29 16:54:09 2016
+From: curt at cumulusnetworks.com (Curt Brune)
+Date: Mon, 29 Aug 2016 09:54:09 -0700
+Subject: [Opencompute-onie] ONIE UEFI Secure Boot
+In-Reply-To: &amp;lt;CANfa5Db8ZRM+g_DrWTUODUw=2NJGk8dq4g70SURNFKL7gzRO6g@mail.gmail.com&amp;gt;
+References: &amp;lt;D3D9FF88.58D7%aaldhahe@ciena.com&amp;gt;
+ &amp;lt;CAMgwifxeRq1whKG8Fe+qjA5KDDWFC-zHF_vW2dAsRS7MEe6Pzw@mail.gmail.com&amp;gt;
+ &amp;lt;D3DA3B34.58E0%aaldhahe@ciena.com&amp;gt;
+ &lt;a href=&quot;mailto:CANfa5DYWrHovnyDCYU4d_q0DLabM0tpSKKM_6n0kYPKvz3Mzbw@mail.gmail.com&quot;&gt;CANfa5DYWrHovnyDCYU4d_q0DLabM0tpSKKM_6n0kYPKvz3Mzbw@mail.gmail.com&lt;/a&gt;
+ &lt;a href=&quot;mailto:20160818021611.GA12998@cumulusnetworks.com&quot;&gt;20160818021611.GA12998@cumulusnetworks.com&lt;/a&gt;
+ &amp;lt;CANfa5Db8ZRM+g_DrWTUODUw=2NJGk8dq4g70SURNFKL7gzRO6g@mail.gmail.com&amp;gt;
+Message-ID: &lt;a href=&quot;mailto:20160829165409.GI20743@cumulusnetworks.com&quot;&gt;20160829165409.GI20743@cumulusnetworks.com&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Hi Mark,&lt;/p&gt;
+
+&lt;p&gt;I think generally “Option 2” you describe below is the way forward for
+Secure Boot and ONIE.  I think a HW vendor “owns” the platform and is
+best positioned to sign and provide ONIE.&lt;/p&gt;
+
+&lt;p&gt;I am in the process of documenting some Secure Boot workflows for
+ONIE, including things like:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Manufacturing work flow.  How is the firmware installed?  How is
+ONIE installed?  What needs to be done here.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;OS installers.  How will OS installers interact with a Secure Boot
+ONIE system?&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Roll your own end users.  How will fully security conscious folks
+interact with the systems?&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Cheers,
+Curt&lt;/p&gt;
+
+&lt;p&gt;On Mon Aug 29 12:30, Mark Pearson wrote:&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Hi Dave,&lt;/p&gt;
+
+  &lt;p&gt;(sorry for the slow reply - summer holidays ;))&lt;/p&gt;
+
+  &lt;p&gt;Specifically on this bit:
+“However, once anything can be booted that is not verified through secure boot,
+that gives the ability to bypass/alter the TPM, BIOS, grub, etc., thereby
+making the system no longer secure (or at least, the potential for not
+being secure).  Sort of makes the whole thing pointless… “&lt;/p&gt;
+
+  &lt;p&gt;My take is if a customer enables secure boot and then protects their switch
+(physically and by password protecting the firmware configuration) then
+secure boot is a good way of securing the switch after the fact. It assumes
+that the UEFI firmware isn’t compromised but covers everything from then
+on. Am I missing something?&lt;/p&gt;
+
+  &lt;p&gt;I did think about this a bit more and can see two options that could work.&lt;/p&gt;
+
+  &lt;p&gt;Option 1: Nothing new required. The HW is shipped with ONIE available and
+if a customer wants to use secure boot with SW that is signed they have to
+be aware that they need to enable secure boot in the firmware menu and load
+in the key to verify the signatures. It sucks there are manual steps but
+that’s the price of security.&lt;/p&gt;
+
+  &lt;p&gt;Option 2: We add some extra bits to ONIE - specifically building the
+shim.efi bootloader and signing the shim, grub and kernel with a key of the
+builders choosing (presumably local). With this if you have a key you could
+then build a “secure ONIE” which you could release yourself (nobody else
+could build it). This ONIE would boot on a switch with secure boot enabled
+(assuming the key is installed of course).
+A vendor which provides both HW and SW could use this to ship a secure
+switch with both their software and ONIE. If a customer wants to install an
+alternate OS they will have to disable secure boot (or install the
+alternate OS key). I guess potentially a HW vendor could also choose to
+provide a signing service but I’m going to guess that nobody would be
+interested in that.
+A truly security aware customer should verify that their key database only
+contains the key they require and that secure boot is enabled - so some
+manual steps are required anyway which makes me wonder if it’s worth the
+effort of going this route&lt;/p&gt;
+
+  &lt;p&gt;Would option 2 be of interest to anyone else? Does it go against the ONIE
+community open approach? I know at Lenovo (where I work) that we would
+probably use this approach if it was available so if it’s of interest I can
+put in the effort to make the changes. I’d only want to do it if it was
+likely to be useful to others too - I personally don’t like the idea of a
+locked down ONIE….it feels ethically icky :) I can be convinced otherwise
+if it is of general interest and would not be purely selfish.&lt;/p&gt;
+
+  &lt;p&gt;Thoughts?
+Mark&lt;/p&gt;
+
+  &lt;p&gt;On Wed, 17 Aug 2016 at 22:19 Dave Olson &lt;olson at=&quot;&quot; cumulusnetworks.com=&quot;&quot;&gt; wrote:&lt;/olson&gt;&lt;/p&gt;
+
+  &lt;blockquote&gt;
+    &lt;p&gt;Mark Pearson &lt;banther at=&quot;&quot; gmail.com=&quot;&quot;&gt; wrote:&lt;/banther&gt;&lt;/p&gt;
+
+    &lt;blockquote&gt;
+      &lt;p&gt;My $0.02 having spent some time looking at this..I am interested in to
+see what
+others think&lt;/p&gt;
+
+      &lt;p&gt;To boot ONIE with secure boot enabled you are going to have to have a
+signed
+ONIE grub image as a minimum - and to do that in the community build
+you’d have
+to put your private key into the ONIE repository and that probably isn’t
+wise
+:)&lt;/p&gt;
+
+      &lt;p&gt;You could sign an ONIE grubx64.efi and do your own special private ONIE
+release
+(not sure how that sits with the community…but it’s technically
+doable)&lt;/p&gt;
+
+      &lt;p&gt;If you go this route I don’t think the ONIE grub currently has the
+patches to
+support secure boot (assuming you want to use the standard linux efi
+shim for
+also authenticating your kernel because what’s the point of secure boot
+if you
+don’t do that). You also hit headaches with how you release that grub
+executable (do you sign all the modules or do a standalone grub?). You
+likely
+have to mess around with the ONIE updater steps, build steps etc - not
+trivial
+:)&lt;/p&gt;
+    &lt;/blockquote&gt;
+
+    &lt;p&gt;At a past company, the legal department expressed their opinion that
+this kind of thing would be a violation of GPL v2 for grub, because it
+prevents
+booting a kernel of the end-user’s choice.&lt;/p&gt;
+
+    &lt;p&gt;Some kind of override would have to be allowed to live within the GPL.&lt;/p&gt;
+
+    &lt;p&gt;The lockdown of ONIE would almost certainly be a GPL violation as well,
+if that legal opinion was correct.&lt;/p&gt;
+
+    &lt;p&gt;Again, an override would have to be provided (as you suggest).&lt;/p&gt;
+
+    &lt;p&gt;However, once anything can be booted that is not verified through secure
+boot, that gives the ability to bypass/alter the TPM, BIOS, grub, etc.,
+thereby making the system no longer secure (or at least, the potential
+for not being secure).  Sort of makes the whole thing pointless…&lt;/p&gt;
+
+    &lt;p&gt;Dave Olson
+olson at cumulusnetworks.com&lt;/p&gt;
+
+  &lt;/blockquote&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;hr /&gt;
+  &lt;p&gt;Opencompute-onie mailing list
+Unsubscribe: http://lists.opencompute.org/mailman/options/opencompute-onie&lt;/p&gt;
+
+  &lt;p&gt;Opencompute-onie at lists.opencompute.org
+http://lists.opencompute.org/mailman/listinfo/opencompute-onie&lt;/p&gt;
+&lt;/blockquote&gt;
+
+</description>
+        
+        <pubDate>Sat, 26 Aug 2023 00:00:00 +0800</pubDate>
+        <link>http://10.10.50.50:1125/note/2023-08-26-wil/</link>
+        <guid isPermaLink="true">http://10.10.50.50:1125/note/2023-08-26-wil/</guid>
+
+        
+          <category>api</category>
+        
+          <category>openapi</category>
+        
+          <category>webdev</category>
+        
+          <category>tutorial</category>
+        
+          <category>swagger</category>
+        
+      </item>
+    
+  </channel>
+</rss>

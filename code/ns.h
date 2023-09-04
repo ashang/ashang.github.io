@@ -1,5 +1,0 @@
-
-namespace my{
-	void foo();
-}
-

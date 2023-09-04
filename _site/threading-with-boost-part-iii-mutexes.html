@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta name="description" content="In Part I of this series on Boost threading, we looked at the basics of how to create and run threads using the Boost libraries.  Then we reviewed the main i...">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://10.10.50.50:1125/threading-with-boost-part-iii-mutexes">
+  <link rel="alternate" type="application/rss+xml" title="in love we trust" href="http://10.10.50.50:1125/feed.xml">
+  <title>
+    
+      Threading with Boost - Part III: Mutexes &middot; in love we trust
+    
+  </title>
+
+  
+  <link rel="canonical" href="http://10.10.50.50:1125/threading-with-boost-part-iii-mutexes">
+  
+
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/poole.css">
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/syntax.css">
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/lanyon.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <link rel="shortcut icon" href="http://10.10.50.50:1125/favicon.ico">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://10.10.50.50:1125/atom.xml">
+
+  
+</head>
+<body class="fixed-nav"><header class="site-header" >
+    <a class="site-title" href="/">in love we trust</a>
+
+    <nav class="site-nav">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+
+      <div class="trigger">
+        
+          
+        
+          
+          <a class="page-link" href="/404/"> </a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/ansible-examples">Ansible examples</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-guide">Ansible quickstart</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-modules">Ansible modules</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-roles">Ansible roles</a>
+          
+        
+          
+          <a class="page-link" href="/ansible">Ansible</a>
+          
+        
+          
+          <a class="page-link" href="/archive">Archive</a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/cmd-test">cmd Test</a>
+          
+        
+          
+          <a class="page-link" href="/cryptsetup">cryptsetup with LUKS</a>
+          
+        
+          
+          <a class="page-link" href="/cupper-shortcodes--percent-sign">Cupper Shortcodes with percent sign</a>
+          
+        
+          
+          <a class="page-link" href="/curl">curl</a>
+          
+        
+          
+          <a class="page-link" href="/downtime">downtime</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/frontend">front-end</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/notes/">WILT</a>
+          
+        
+          
+          <a class="page-link" href="/p4-lang">p4</a>
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/tags/">Tags</a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/tutorials">Tutorials</a>
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+</header>
+<div class="container">
+    <div id="page" class="site">
+      <main class="page-content" aria-label="Content">
+        <main class="content fade-in-down delay-0_5s">
+  <div class="inner">
+    <article class="post">
+      <div class="entry-box">
+        <header class="entry-header">
+          <h2 class="post-title">Threading with Boost - Part III: Mutexes</h2>
+          <div class="entry-meta">
+            
+              <time class="post-date" datetime="2012-02-20">February 20, 2012</time>
+            
+            
+          </div><!-- .entry-meta -->
+        </header><!-- .entry-header -->
+        <div class="entry-content">
+            <p>In <a href="/2009/05/threading-with-boost---part-i-creating-threads.html">Part I</a> of this series on <a href="http://boost.org/">Boost</a> threading, we looked at the basics of how to create and run threads using the Boost libraries.  Then we reviewed the main issues encountered with multithreading code in <a href="/2010/01/threading-with-boost---part-ii-threading-challenges.html">Part II: Threading Challenges</a>. One of the biggest challenges is safely managing concurrent access to a resource.  A Mutex provides a way to serialise access to a shared resource, such that only one thread is accessing the data at any given time, to ensure your data is consistent.  In this article, we look at how to create and use Boost mutexes.</p>
+
+<!--more-->
+
+<h1 id="mutual-exclusion---mutex">Mutual exclusion - Mutex</h1>
+
+<p>One of the main solutions to race conditions and other threading problems is the <em>mutex</em>, short for “mutual exclusion”.  Think of it as a special kind of lock, which is used to protect shared resources.  A mutex is special because it is guaranteed to be held by <em>at most</em> one thread at a time.  While one thread holds a lock on a mutex, no other thread is able to.  Thus mutexes can be used as a protection mechanism for resources and data, by locking before using shared resources and unlocking when finished. A mutex can be used to avoid race conditions, and implement atomic operations.</p>
+
+<p>If a mutex is not locked by a thread, then any thread can potentially lock it.  Once it is locked, if any other thread attempts to lock it, it will typically block and wait until the mutex is unlocked by the owning thread.  It is also possible to return if the lock fails, or wait for a certain period of time before giving up.  These variations are discussed below.</p>
+
+<h2 id="mutex-scope">Mutex Scope</h2>
+
+<p>A mutex is typically declared alongside the resource it protects.  The mutex should be in the same scope as the resource, or an enclosing scope.  For example, a data member in a C++ object that can potentially be accessed by more than one thread at a time should have a mutex declared alongside.  A class instance (static data member) should have a similarly class-scoped mutex.  The shared resource should never have a greater scope than the mutex, otherwise it may not always be protected.  Let us not speak of the blight known as global variables, surely a symptom of deficient design.</p>
+
+<p>In simple cases, a single mutex per object may be sufficient, but this is totally dependent on the algorithms used.  If there are multiple resources being accessed independently, having a single mutex may lead to too much contention.  In this case, a separate mutex for each resource may be more efficient.  Only analysis and performance tests will reveal the more efficient choice.</p>
+
+<p>Any time the resource is accessed (whether for reading or writing), the mutex should <em>always</em> be locked before use, and unlocked after the operation.</p>
+
+<h2 id="types-of-mutexes">Types of Mutexes</h2>
+
+<p>There are four flavours of mutexes available in Boost, depending on your requirements.  Each are described in detail below, and feature a sample program illustrating its use.  The full source code is available for browsing, downloading or even cloning from my Boost Theading Examples Mercurial repository on <a href="http://www.bitbucket.org/gavinb/boost_examples/">BitBucket</a>.</p>
+
+<h3 id="regular-mutex">Regular Mutex</h3>
+
+<p>The simplest form of mutex is a regular <code class="language-plaintext highlighter-rouge">boost::mutex</code>.  You lock and unlock it, and only one thread can lock the mutex at a time.  Any thread that calls <code class="language-plaintext highlighter-rouge">lock()</code> on a mutex held by another thread will block indefinitely (an important factor when considering synchronisation).  This is worth repeating: calling <code class="language-plaintext highlighter-rouge">lock()</code> can block <em>indefinitely</em>.  This may be the desired behaviour, as your thread may need to wait an undetermined time for something else to happen (but this then raises issues of interruption).  It should be obvious then that this must be carefully managed to avoid program hangs, a common symptom of concurrency failure.</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++">    <span class="n">boost</span><span class="o">::</span><span class="n">mutex</span> <span class="n">work_queue_mutex</span><span class="p">;</span>
+    <span class="n">queue</span><span class="o">&lt;</span><span class="n">item</span><span class="o">&gt;</span> <span class="n">work_queue</span><span class="p">;</span>
+
+    <span class="c1">// ...</span>
+
+    <span class="n">work_queue_mutex</span><span class="p">.</span><span class="n">lock</span><span class="p">();</span>
+
+    <span class="k">auto</span> <span class="n">work_item</span> <span class="o">=</span> <span class="n">work_queue</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+
+    <span class="n">work_queue_mutex</span><span class="p">.</span><span class="n">unlock</span><span class="p">();</span></code></pre></figure>
+
+<p>Regular mutexes also have a <code class="language-plaintext highlighter-rouge">try_lock()</code> method, which will return immediately with a failure status if the mutex cannot locked.  Since most threads run in a loop, it would be terribly inefficient to try to lock a mutex and then continue around the loop without performing anything else, especially when it is unlikely that the mutex will become immediately available.  In these cases, it <em>may</em> be appropriate to do a short sleep (but see below for a better solution).  Even then, this may be a sign that your algorithm needs improvement.  Unfortunately, there are no one-size-fits-all solutions.</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++">    <span class="n">boost</span><span class="o">::</span><span class="n">mutex</span> <span class="n">work_queue_mutex</span><span class="p">;</span>
+    <span class="n">queue</span><span class="o">&lt;</span><span class="n">item</span><span class="o">&gt;</span> <span class="n">work_queue</span><span class="p">;</span>
+
+    <span class="c1">// ...</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">work_queue_mutex</span><span class="p">.</span><span class="n">try_lock</span><span class="p">())</span>
+    <span class="p">{</span>
+	    <span class="k">auto</span> <span class="n">work_item</span> <span class="o">=</span> <span class="n">work_queue</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+
+	    <span class="n">work_queue_mutex</span><span class="p">.</span><span class="n">unlock</span><span class="p">();</span>
+	<span class="p">}</span>
+	<span class="k">else</span>
+	<span class="p">{</span>
+		<span class="c1">// Do something else...</span>
+	<span class="p">}</span></code></pre></figure>
+
+<h3 id="timed-mutexes">Timed Mutexes</h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">boost::timed_mutex</code> class is a subtype of <code class="language-plaintext highlighter-rouge">boost::mutex</code>, which adds the ability to specify a timeout.  For example, you may wish to try to lock the mutex but give up after a certain time if you cannot obtain a lock.  This takes either an absolute time, or a relative time.  If the mutex cannot be obtained within the time specified, the call will return false and the mutex is not held.  If the mutex is locked within the timeout period, it returns true.</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++">    <span class="n">boost</span><span class="o">::</span><span class="n">mutex</span> <span class="n">work_queue_mutex</span><span class="p">;</span>
+    <span class="n">queue</span><span class="o">&lt;</span><span class="n">item</span><span class="o">&gt;</span> <span class="n">work_queue</span><span class="p">;</span>
+	<span class="n">TimeDuration</span> <span class="n">mutex_timeout</span><span class="p">;</span>
+
+    <span class="c1">// ...</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">work_queue_mutex</span><span class="p">.</span><span class="n">timed_lock</span><span class="p">(</span><span class="n">mutex_timeout</span><span class="p">))</span>
+    <span class="p">{</span>
+	    <span class="k">auto</span> <span class="n">work_item</span> <span class="o">=</span> <span class="n">work_queue</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+
+	    <span class="n">work_queue_mutex</span><span class="p">.</span><span class="n">unlock</span><span class="p">();</span>
+	<span class="p">}</span></code></pre></figure>
+
+<h3 id="recursive-mutexes">Recursive Mutexes</h3>
+
+<p>Normally a mutex is locked only once, then unlocked.  Depending on the structure of your application, there may be times when it would be useful to be able to lock a mutex multiple times <em>on the one thread</em> (in very special circumstances, such as nested method calls).  For example, you have two (or more) methods which may be called independently, and another method which itself calls one of the other two.  If they all need the mutex held to function safely, this can cause complications when determining when the mutex needs to be locked and released.  However, by using a recursive mutex, it can be locked as many times as necessary, provided it is unlocked the same number of times.  Thus all these methods can be called individually, as they all lock the resources, and in a nested fashion, as the mutex can be locked multiple times.  Provided the mutex is unlocked the same number of times (which is a matter of care and thought), the mutex will be correctly released by the end of the nested operation.</p>
+
+<h3 id="shared-mutexes">Shared Mutexes</h3>
+
+<p>Some concurrency scenarios involve having one writer and many readers.  For example, one thread may be downloading data from the network, while another thread is displaying the data on the screen, and a third thread is saving the data to a database.  So the downloading thread will be locking for writing, and the other two only for reading.  There is therefore no reason why the display thread and the database thread (which both only read the shared resource) need to exclude the other; concurrent reading is perfectly safe.  It is only if the network updating thread needs to write to the shared data that the other two need to be locked out.  This process is shown below:</p>
+
+<!-- @todo Insert diagram here -->
+
+<p>Any time the reading threads need to read the resource, they obtain a read-lock.  This allows other read-locks to successfully access the resource, but will prevent a write-lock (since you don’t want updates to occur while someone else is reading - the data must be consistent).  When an update comes in on the networking thread, it must wait until the readers have finished before it can obtain a write-lock.  This will prevent any readers from accessing the resource for the duration of the update.  In this way, concurrent access is increased, contention is reduced, and the resource is always consistent.</p>
+
+<!-- @todo Insert diagram here -->
+
+<p>One of the example programs shows this in action.</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++">    <span class="n">boost</span><span class="o">::</span><span class="n">mutex</span> <span class="n">work_queue_mutex</span><span class="p">;</span>
+    <span class="n">queue</span><span class="o">&lt;</span><span class="n">item</span><span class="o">&gt;</span> <span class="n">work_queue</span><span class="p">;</span>
+
+    <span class="c1">// Reader thread</span>
+
+    <span class="n">work_queue_mutex</span><span class="p">.</span><span class="n">read_lock</span><span class="p">();</span>
+
+    <span class="k">auto</span> <span class="n">work_item</span> <span class="o">=</span> <span class="n">work_queue</span><span class="p">.</span><span class="n">head</span><span class="p">();</span>
+
+    <span class="n">work_queue_mutex</span><span class="p">.</span><span class="n">unlock</span><span class="p">();</span>
+
+    <span class="c1">// Writer thread</span>
+
+    <span class="n">work_queue_mutex</span><span class="p">.</span><span class="n">write_lock</span><span class="p">();</span>
+
+    <span class="k">auto</span> <span class="n">work_item</span> <span class="o">=</span> <span class="n">work_queue</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">new_item</span><span class="p">);</span>
+
+    <span class="n">work_queue_mutex</span><span class="p">.</span><span class="n">unlock</span><span class="p">();</span></code></pre></figure>
+
+<h3 id="summary">Summary</h3>
+
+<p>The table below summarises the difference mutex types, and their main distinguishing features:</p>
+
+<table>
+	<tr>
+		<td><tt>boost::mutex</tt></td>
+		<td>Normal mutex, most commonly used, blocking lock</td>
+		<td>has <tt>lock()</tt> and <tt>try_lock()</tt></td>
+	</tr>
+	<tr>
+		<td><tt>boost::timed_mutex</tt></td>
+		<td>Adds ability to timeout waiting for a lock</td>
+		<td>adds <tt>timed_lock()</tt> to wait for lock with a timeout</td>
+	</tr>
+	<tr>
+		<td><tt>boost::recursive_mutex</tt></td>
+		<td>`lock()` can be called multiple times on the *same* thread</td>
+	</tr>
+	<tr>
+		<td><tt>boost::shared_mutex</tt></td><td>lock can be upgraded to allow multiple readers or a single writer</td><td>can upgrade locks (R-&gt;W)</td>
+	</tr>
+</table>
+
+<h2 id="lock-duration">Lock duration</h2>
+
+<p>It is important that the mutex only be locked for the shortest possible time to ensure data integrity is maintained.  If a lock is held for too long, it may cause other threads to wait excessively, thus stalling processing and negating the benefits of concurrent processing.  Getting the granularity of threading right takes experience and judgement, so learning by studying existing multithreaded code is an excellent way to pick up design patterns.</p>
+
+<p>The next article shows some timing diagrams which illustrate lock contention in simple apps, so you can see just how much time a thread is waiting.</p>
+
+<h2 id="lockunlock-pairing">Lock/Unlock Pairing</h2>
+
+<p>If a mutex is not released due to a logical error (such as an uncaught exception), this may cause the program to lock up or behave strangely, and is probably not recoverable.  Thus it is vitally important that all lock/unlock operations appear in pairs.</p>
+
+<p>To protect against this class of problem, the <code class="language-plaintext highlighter-rouge">lock_guard</code> object was introduced.  It locks the mutex for you in its constructor, and unlocks it in the destructor.  (This safety-conscious approach is known as <a href="http://en.wikipedia.org/wiki/RAII">RAII</a>, or Resource Acquisition Is Initialisation, whereby the lifecycle of a resource is tied to the lifecycle of an owning object).</p>
+
+<p>This simple example code shows potentially unsafe method implementation.</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++">	<span class="kt">void</span> <span class="nf">writeTotalsToDatabase</span><span class="p">()</span> <span class="k">throw</span> <span class="p">(</span><span class="n">myapp</span><span class="o">::</span><span class="n">SQLException</span><span class="p">)</span>
+	<span class="p">{</span>
+	    <span class="c1">// does SQL stuff, and throws on error</span>
+	<span class="p">}</span>
+	
+	<span class="kt">unsigned</span> <span class="nf">applyTotals</span><span class="p">(</span><span class="kt">unsigned</span> <span class="n">count</span><span class="p">)</span>
+	<span class="p">{</span>
+	    <span class="n">mTotalsMutex</span><span class="p">.</span><span class="n">lock</span><span class="p">();</span>
+	    
+	    <span class="n">mTotals</span><span class="p">.</span><span class="n">globalCount</span> <span class="o">+=</span> <span class="n">count</span><span class="p">;</span>
+	    
+	    <span class="n">writeTotalsToDatabase</span><span class="p">();</span>
+	    
+	    <span class="n">mTotalsMutex</span><span class="p">.</span><span class="n">unlock</span><span class="p">();</span>
+	<span class="p">}</span></code></pre></figure>
+
+<p>This code looks at first glance to be safe.  It simply makes the updating and saving of the totals atomic, right?  Well, yes - except if there’s an exception thrown by <code class="language-plaintext highlighter-rouge">writeTotalsToDatabase()</code>.  If that happens, the normal flow of execution goes out the window, and the program unwinds the stack in search of a suitable <code class="language-plaintext highlighter-rouge">catch</code> statement.  And the lock that we have acquired will never be released!  This is very dangerous, and can happen in seemingly “safe” code.  While you could certainly put a <code class="language-plaintext highlighter-rouge">try/catch</code> around the database method, a better way is to use a lock guard.</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++">	<span class="kt">unsigned</span> <span class="nf">applyTotals</span><span class="p">(</span><span class="kt">unsigned</span> <span class="n">count</span><span class="p">)</span>
+	<span class="p">{</span>
+	    <span class="n">boost</span><span class="o">::</span><span class="n">lock_guard</span>    <span class="n">totalsLock</span><span class="p">(</span><span class="n">mTotalsMutex</span><span class="p">);</span>
+	    
+	    <span class="n">mTotals</span><span class="p">.</span><span class="n">globalCount</span> <span class="o">+=</span> <span class="n">count</span><span class="p">;</span>
+	    
+	    <span class="n">writeTotalsToDatabase</span><span class="p">();</span>
+	<span class="p">}</span></code></pre></figure>
+
+<p>The <code class="language-plaintext highlighter-rouge">totalsLock</code> will acquire (or wait to acquire) the mutex at the start, and when it goes out of scope at the end of the method, it will unlock the mutex.  If an exception is thrown, the lock’s destructor will be invoked as part of unwinding the stack, and there the mutex will be safely released.  This ensures the operation is atomic, and can safely handle error conditions.</p>
+
+<h2 id="avoiding-deadlocks">Avoiding Deadlocks</h2>
+
+<p>So far, we’ve looked at using one mutex at a time.  But a non-trivial application may involve many threads, and even more mutexes.  And what happens when there is contention for mutexes between threads?  There is a fatal error known as a deadlock, and in its simplest form, two threads are holding a resource each, which the other also wants.  Since neither will release one until it gets the other, the threads get stuck waiting forever (or at least until the user gets sick of waiting and kills the process).</p>
+
+<h2 id="shared-object-with-one-mutex">Shared Object with One Mutex</h2>
+
+<p>Imagine you have a shared object, such as a singleton, that may be accessed by multiple threads in the system.  A simple solution to ensure consistent data is returned is to give the object a mutex, and use a lock guard in every method.  For example:</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++">	<span class="k">class</span> <span class="nc">Baz</span>
+	<span class="p">{</span>
+	    <span class="nl">public:</span>
+	        <span class="n">Baz</span><span class="p">();</span>
+	        <span class="kt">void</span> <span class="n">accumulate</span><span class="p">(</span><span class="k">const</span> <span class="n">Foo</span><span class="o">&amp;</span> <span class="n">foo</span><span class="p">)</span>
+	        <span class="p">{</span>
+	        	<span class="n">boost</span><span class="o">::</span><span class="n">lock_guard</span> <span class="n">lock</span><span class="p">(</span><span class="n">m_mutex</span><span class="p">);</span>
+
+	        	<span class="n">m_total</span> <span class="o">+=</span> <span class="n">foo</span><span class="p">.</span><span class="n">value</span><span class="p">();</span>
+	        <span class="p">}</span>
+	        <span class="kt">float</span> <span class="nf">getTotal</span><span class="p">()</span> <span class="k">const</span>
+	        <span class="p">{</span>
+	        	<span class="n">boost</span><span class="o">::</span><span class="n">lock_guard</span> <span class="n">lock</span><span class="p">(</span><span class="n">m_mutex</span><span class="p">);</span>
+
+	        	<span class="k">return</span> <span class="n">m_total</span><span class="p">;</span>
+	        <span class="p">}</span>
+	    <span class="k">private</span><span class="o">:</span>
+	        <span class="n">boost</span><span class="o">::</span><span class="n">mutex</span> <span class="n">m_mutex</span><span class="p">;</span>
+	        <span class="kt">double</span>		<span class="n">m_total</span><span class="p">;</span>
+	<span class="p">};</span></code></pre></figure>
+
+<h2 id="a-note-on-performance">A note on performance</h2>
+
+<p>Under Linux, the Boost threads implementation uses pthreads and pthread mutexes.  These may use a spinlock at the kernel level, for optimal performance.</p>
+
+<p>Under Windows, a real “Mutex” object at the operating system level is actually a fairly expensive, heavyweight and slow construct (relatively speaking), mainly intended for intra-process synchronisation.  If you only need serialisation within your process, a “critical section” is a far better choice, as it is significantly faster.  Fortunately, Boost uses a CritSec for process-level mutexes.  If you need inter-process mutexes, look at the <a href="http://boost.org/">Boost IPC library</a>.</p>
+
+<h2 id="other-types-of-mutexes">Other types of Mutexes</h2>
+
+<p>There are a few different flavours of Mutexes, which can be used in more sophisticated scenarios. These are beyond the scope of this article (which is already long enough!).</p>
+
+<h2 id="up-next">Up Next</h2>
+
+<p>The next article will focus on <a href="/2012/02/threading-with-boost---part-iv-mutex-examples.html">a series of examples showing the use of different mutex types</a>. The source has been published on BitBucket in my <a href="http://bitbucket.org/gavinb/boost_samples/">Boost Sample Code</a> repository.  Feel free to use, fork, and share!</p>
+
+        </div><!-- .entry-content -->
+        <footer class="entry-footer">
+          
+            <div class="post-tags">
+              <a href="/tags/" rel="tag">Tags: </a>
+                <a href="/archive/#Boost" rel="tag">Boost</a>, <a href="/archive/#C%2B%2B" rel="tag">C++</a>, <a href="/archive/#Threading" rel="tag">Threading</a>
+            </div>
+          
+          <div class="share-post">
+            <!--
+              <span>Share this:</span>
+                <a class="btn-twitter" target="_blank" href="https://twitter.com/intent/tweet?text=Threading%20with%20Boost%20-%20Part%20III:%20Mutexes&amp;url=http://10.10.50.50:1125/threading-with-boost-part-iii-mutexes"><i class="fa fa-twitter" aria-hidden="true"></i><span class="screen-reader-text">Twitter</span></a>
+                -->
+          </div><!-- .share-post -->
+        </footer><!-- .entry-footer -->
+      </div><!-- .entry-box -->
+    <div class="post-line"></div>
+    <div class="author-box">
+        <div class="author-info">
+          <!--
+          <h2 class="author-title">About </h2>
+          <p class="author-bio"></p>
+          <p class="author-links">
+              
+              
+            </p>
+            -->
+        </div><!-- .author-info -->
+      </div><!-- .author-box -->
+    </article><!-- .post -->
+    <a href="#" class="top">Top</a>
+  </div><!-- .inner -->
+</main><!-- .content -->
+      </main>
+    <aside class="footer-widgets">
+
+    
+
+    <div id="footer-columns" class="footer-columns">
+        <div class="inner">
+            <div class="grid">
+
+                
+
+                <!-- Create a sorted array of tags -->
+                <div class="one-third">
+                    
+                    
+                    <section class="widget widget-tags">
+                        <!--
+                        <h2 class="widget-title">Tags</h2>
+                        <div class="tagcloud">
+                            
+                            <a href="/tags/#Algorithms">Algorithms</a>
+                            
+                            <a href="/tags/#Apple">Apple</a>
+                            
+                            <a href="/tags/#Boost">Boost</a>
+                            
+                            <a href="/tags/#C%2B%2B">C++</a>
+                            
+                            <a href="/tags/#Cocoa">Cocoa</a>
+                            
+                            <a href="/tags/#Coding">Coding</a>
+                            
+                            <a href="/tags/#Jekyll">Jekyll</a>
+                            
+                            <a href="/tags/#Mac">Mac</a>
+                            
+                            <a href="/tags/#OSX">OSX</a>
+                            
+                            <a href="/tags/#Performance">Performance</a>
+                            
+                            <a href="/tags/#STL">STL</a>
+                            
+                            <a href="/tags/#Threading">Threading</a>
+                            
+                            <a href="/tags/#Unicode">Unicode</a>
+                            
+                            <a href="/tags/#api">api</a>
+                            
+                            <a href="/tags/#c%2B%2B">c++</a>
+                            
+                            <a href="/tags/#c%2B%2B11">c++11</a>
+                            
+                            <a href="/tags/#code+block">code block</a>
+                            
+                            <a href="/tags/#iOS">iOS</a>
+                            
+                            <a href="/tags/#iPhone">iPhone</a>
+                            
+                            <a href="/tags/#iptables">iptables</a>
+                            
+                            <a href="/tags/#markdown">markdown</a>
+                            
+                            <a href="/tags/#nftables">nftables</a>
+                            
+                            <a href="/tags/#openapi">openapi</a>
+                            
+                            <a href="/tags/#programming+language">programming language</a>
+                            
+                            <a href="/tags/#racket">racket</a>
+                            
+                            <a href="/tags/#select">select</a>
+                            
+                            <a href="/tags/#stl">stl</a>
+                            
+                            <a href="/tags/#swagger">swagger</a>
+                            
+                            <a href="/tags/#test">test</a>
+                            
+                            <a href="/tags/#tutorial">tutorial</a>
+                            
+                            <a href="/tags/#webdev">webdev</a>
+                            
+                        </div>
+                        -->
+                    </section><!-- .widget -->
+                </div><!-- .one-third -->
+
+            </div><!-- .grid -->
+        </div><!-- .inner -->
+    </div><!-- .footer-columns -->
+
+</aside><!-- .footer-widgets -->
+
+    </div><!-- .site -->
+    <div class="profile">
+      <a href="http://10.10.50.50:1125"><img src="" class="profile-image"></a>
+      <div class="profile-about">
+        <h2 style="margin-bottom: 0; font-weight: 700;"></h2>
+        
+        
+        
+        <a href="about"><img src="/img/icon/me.svg" class="social-icon"></a>
+        <br>
+        
+        <br>
+        <div class="mode" id="mode-switcher" onclick="toggleNightMode();">
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--
+  
+<footer class="site-footer">
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li><a href="mailto:Kea Wot <hi@ashang.org>">Kea Wot <hi@ashang.org></a></li>
+        </ul>
+      </div>
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/ashang">
+              <span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+
+              </span>
+              <span class="username">ashang
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+      <div class="footer-col footer-col-3">
+        <p>ramblings notes, things I worked through to make sure I understand.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+-->
+</body>
+</html>

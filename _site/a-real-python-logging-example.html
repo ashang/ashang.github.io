@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta name="description" content="For some reason, all the examples of the configuration files for the Python logging framework are artificial ones, with names like handler01, handler02 and s...">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://10.10.50.50:1125/a-real-python-logging-example">
+  <link rel="alternate" type="application/rss+xml" title="in love we trust" href="http://10.10.50.50:1125/feed.xml">
+  <title>
+    
+      A real Python logging example &middot; in love we trust
+    
+  </title>
+
+  
+  <link rel="canonical" href="http://10.10.50.50:1125/a-real-python-logging-example">
+  
+
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/poole.css">
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/syntax.css">
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/lanyon.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <link rel="shortcut icon" href="http://10.10.50.50:1125/favicon.ico">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://10.10.50.50:1125/atom.xml">
+
+  
+</head>
+<body class="fixed-nav"><header class="site-header" >
+    <a class="site-title" href="/">in love we trust</a>
+
+    <nav class="site-nav">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+
+      <div class="trigger">
+        
+          
+        
+          
+          <a class="page-link" href="/404/"> </a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/ansible-examples">Ansible examples</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-guide">Ansible quickstart</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-modules">Ansible modules</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-roles">Ansible roles</a>
+          
+        
+          
+          <a class="page-link" href="/ansible">Ansible</a>
+          
+        
+          
+          <a class="page-link" href="/archive">Archive</a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/cmd-test">cmd Test</a>
+          
+        
+          
+          <a class="page-link" href="/cryptsetup">cryptsetup with LUKS</a>
+          
+        
+          
+          <a class="page-link" href="/cupper-shortcodes--percent-sign">Cupper Shortcodes with percent sign</a>
+          
+        
+          
+          <a class="page-link" href="/curl">curl</a>
+          
+        
+          
+          <a class="page-link" href="/downtime">downtime</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/frontend">front-end</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/notes/">WILT</a>
+          
+        
+          
+          <a class="page-link" href="/p4-lang">p4</a>
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/tags/">Tags</a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/tutorials">Tutorials</a>
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+</header>
+<div class="container">
+    <div id="page" class="site">
+      <main class="page-content" aria-label="Content">
+        <main class="content fade-in-down delay-0_5s">
+  <div class="inner">
+    <article class="post">
+      <div class="entry-box">
+        <header class="entry-header">
+          <h2 class="post-title">A real Python logging example</h2>
+          <div class="entry-meta">
+            
+              <time class="post-date" datetime="2005-03-15">March 15, 2005</time>
+            
+            
+          </div><!-- .entry-meta -->
+        </header><!-- .entry-header -->
+        <div class="entry-content">
+            <p>For some reason, all the examples of the configuration files for the Python logging framework are artificial ones, with names like <code class="language-plaintext highlighter-rouge">handler01, handler02</code> and so on.  This makes it a little difficult to figure out how to apply it to a real world example.  So after a bit of fiddling around, here is a real example of using the Python <code class="language-plaintext highlighter-rouge">logging</code> module in a non-trivial application (ie. with multiple hierarchical modules) with an associated configuration file.</p>
+
+<p>The Python logging framework is extremely useful and powerful, but the documentation is somewhat lacking.  It is dead easy to use in its simplest form:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="n">os</span>
+<span class="kn">import</span> <span class="n">math</span>
+<span class="kn">import</span> <span class="n">logging</span>
+
+<span class="k">def</span> <span class="nf">frobnicate</span><span class="p">(</span><span class="n">foo</span><span class="p">,</span> <span class="n">baz</span><span class="p">):</span>
+    <span class="n">logging</span><span class="p">.</span><span class="nf">info</span><span class="p">(</span><span class="sh">'</span><span class="s">Processing %s</span><span class="sh">'</span> <span class="o">%</span> <span class="n">foo</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">baz</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">logging</span><span class="p">.</span><span class="nf">warning</span><span class="p">(</span><span class="sh">'</span><span class="s">This could get complex!</span><span class="sh">'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">math</span><span class="p">.</span><span class="nf">sqrt</span><span class="p">(</span><span class="n">baz</span> <span class="o">*</span> <span class="n">math</span><span class="p">.</span><span class="n">pi</span><span class="p">)</span>
+
+<span class="n">logging</span><span class="p">.</span><span class="nf">basicConfig</span><span class="p">()</span></code></pre></figure>
+
+<p>So you really do nothing more than import the module, then make logging calls with the appropriate severity level.  But if you have a project with lots of different modules, and you want more control over how things are handled, what do you do?</p>
+
+<p>The first thing is to get a logger instance for each module.  You can use the same name as the module hierarchy, which gives you a lot of flexibility.  Thus, at the top of each module, we have something like:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="n">logging</span>
+<span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="p">.</span><span class="nf">getLogger</span><span class="p">(</span><span class="sh">'</span><span class="s">pi.basil.gui.widgets</span><span class="sh">'</span><span class="p">)</span></code></pre></figure>
+
+<p>The <code class="language-plaintext highlighter-rouge">logging.getLogger()</code> call will return us a logger for just that module, which we can then use throughout.  Thus:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">class</span> <span class="nc">CalibrationCanvas</span><span class="p">:</span>
+
+    <span class="c1">#... some stuff
+</span>
+    <span class="k">def</span> <span class="nf">_on_draw</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+
+        <span class="n">log</span><span class="p">.</span><span class="nf">debug</span><span class="p">(</span><span class="sh">'</span><span class="s">ImageCanvas._on_draw</span><span class="sh">'</span><span class="p">)</span>
+        <span class="c1"># do some funky stuff
+</span>        <span class="nf">glBegin</span><span class="p">()</span>
+        <span class="c1"># ...
+</span>
+    <span class="k">def</span> <span class="nf">_update</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">model</span><span class="p">:</span>
+            <span class="n">log</span><span class="p">.</span><span class="nf">warning</span><span class="p">(</span><span class="sh">'</span><span class="s">update: No model specified</span><span class="sh">'</span><span class="p">)</span></code></pre></figure>
+
+<p>So note the use of the logging instance <code class="language-plaintext highlighter-rouge">log</code> instead of <code class="language-plaintext highlighter-rouge">logging</code>.  By using a different <code class="language-plaintext highlighter-rouge">Logger</code> for each module, we have very fine-grained control.</p>
+
+<p>It is important to use the right severity levels when you write you log calls.  I tend to use <code class="language-plaintext highlighter-rouge">INFO</code> for generally useful stuff that I like to see traced while developing, but not at runtime, while I reserve <code class="language-plaintext highlighter-rouge">DEBUG</code> for the extra detailed information that is only useful when something is going wrong.  The <code class="language-plaintext highlighter-rouge">WARNING</code> and lower I always have on at runtime, and in production are sent to an operator console.</p>
+
+<p>So now we need to set up the logging configuration.  Don’t bother trying to do this programmatically (although you could) - use a configuration file.  This is the part that isn’t documented so well.  Here is a snippet from a real file:</p>
+
+<figure class="highlight"><pre><code class="language-ini" data-lang="ini"><span class="nn">[formatters]</span>
+<span class="err">keys:</span> <span class="err">detailed,simple</span>
+
+<span class="nn">[handlers]</span>
+<span class="err">keys:</span> <span class="err">console,syslog</span>
+
+<span class="nn">[loggers]</span>
+<span class="err">keys:</span> <span class="err">root,gui,engine</span>
+
+<span class="nn">[formatter_simple]</span>
+<span class="err">format:</span> <span class="err">%(name)s:%(levelname)s:</span>  <span class="err">%(message)s</span>
+
+<span class="nn">[formatter_detailed]</span>
+<span class="err">format:</span> <span class="err">%(name)s:%(levelname)s</span> <span class="err">%(module)s:%(lineno)d:</span>  <span class="err">%(message)s</span>
+
+<span class="nn">[handler_console]</span>
+<span class="err">class:</span> <span class="err">StreamHandler</span>
+<span class="err">args:</span> <span class="nn">[]</span>
+<span class="err">formatter:</span> <span class="err">simple</span>
+
+<span class="nn">[handler_syslog]</span>
+<span class="err">class:</span> <span class="err">handlers.SysLogHandler</span>
+<span class="err">args:</span> <span class="nn">[('myhost.mycorp.net', handlers.SYSLOG_UDP_PORT), handlers.SysLogHandler.LOG_USER]</span>
+<span class="err">formatter:</span> <span class="err">detailed</span>
+
+<span class="nn">[logger_root]</span>
+<span class="err">level:</span> <span class="err">INFO</span>
+<span class="err">handlers:</span> <span class="err">syslog</span>
+
+<span class="nn">[logger_gui]</span>
+<span class="err">level:</span> <span class="err">WARNING</span>
+<span class="err">qualname:</span> <span class="err">pi.basil.gui</span>
+<span class="err">handlers:</span> <span class="err">console</span>
+
+<span class="nn">[logger_engine]</span>
+<span class="err">level:</span> <span class="err">INFO</span>
+<span class="err">qualname:</span> <span class="err">pi.basil</span>
+<span class="err">handlers:</span> <span class="err">console</span></code></pre></figure>
+
+<p>A few notes: First, you must list all of the loggers, formatters and handlers in a section up front.  This is a bit odd, since each has their own section with a unique name anyway, but it appears to be due to a limitation of the <code class="language-plaintext highlighter-rouge">ConfigParser</code>.  So if you have formatters called <code class="language-plaintext highlighter-rouge">root</code> and <code class="language-plaintext highlighter-rouge">engine</code>, you must declare them in a section:</p>
+
+<figure class="highlight"><pre><code class="language-ini" data-lang="ini"><span class="nn">[formatters]</span>
+<span class="err">keys:</span> <span class="err">simple,detailed</span></code></pre></figure>
+
+<p>Then the details of each formatter are supplied like this:</p>
+
+<figure class="highlight"><pre><code class="language-ini" data-lang="ini"><span class="nn">[formatter_simple]</span>
+<span class="err">format:</span> <span class="err">%(name)s:%(levelname)s:</span>  <span class="err">%(message)s</span></code></pre></figure>
+
+<p>And so on, for each instance of each type.</p>
+
+<p>Second, be careful not to add any spaces in the comma-separated list of keys (I think this is a bug) as you can end up with a Logger with a leading space in the name.  So ‘keys:root,db,gui’ is not the same as ‘keys:root, db, gui’.</p>
+
+<p>Third, I have configured one of the handlers above to send logging information to a separate host using the SysLog facility.  Note that you will need to make sure <code class="language-plaintext highlighter-rouge">syslogd</code> is listening for remote calls for this to work, as it does not by default.  Under Debian, this involved adding the “-r” option to the SYSLOGD settings at the top of <code class="language-plaintext highlighter-rouge">/etc/init.d/sysklogd</code>.  Also note there are security implications for doing this, so some careful firewall rules are appropriate here.</p>
+
+<p>The trick is the <code class="language-plaintext highlighter-rouge">qualname</code> setting - this allows us to specify different loggers, and associate the name that we use to get a logger instance with particular settings in the config file.  So the <code class="language-plaintext highlighter-rouge">root</code> logger above is the default for the system, but we have separate settings for the engine and GUI components.  This <code class="language-plaintext highlighter-rouge">qualname</code> corresponds to the <code class="language-plaintext highlighter-rouge">getLogger()</code> call in our code.</p>
+
+<p>The configuration file is loaded at app startup time like this:</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python">    <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+
+        <span class="c1"># ...
+</span>
+        <span class="kn">import</span> <span class="n">logging.config</span>
+        <span class="n">logging</span><span class="p">.</span><span class="n">config</span><span class="p">.</span><span class="nf">fileConfig</span><span class="p">(</span><span class="sh">'</span><span class="s">logging_basil.conf</span><span class="sh">'</span><span class="p">)</span></code></pre></figure>
+
+<p>Once you get the hang of it, the logging framework can save you a lot of time and effort, and you will be able to stop the bad habit of adding <code class="language-plaintext highlighter-rouge">print</code> statements all over the place, only to forget them or have to come back later and remove them.  The logging calls become a part of the code, you leave them in for production code, and can turn up the level of detail for diagnosing problems.  Fortunately, the performance penalty for leaving the logging code in is <em>very</em> small, and it is definitely worth a few extra cycles for that peace of mind.</p>
+
+<h2 id="archived-comments">Archived Comments</h2>
+
+<p>AUTHOR: Anonymous
+DATE: 08/02/2005 07:00:29 AM</p>
+
+<p>Typo in config file
+Thanks for clearing up this mistery! I encountered a small typo in the config file. In section
+[logger_root]
+ level: INFO
+ handlers: root
+the handlers value should be syslog instead of root.</p>
+
+<p>Joost van Lawick
+joost@lawick.nl</p>
+
+<p>AUTHOR: Chris Lambacher
+DATE: 03/17/2006 09:07:37 AM
+You are missing an closing pre tag
+After the first code block you are missing a closing pre tag.  It makes the article kind of hard to read.</p>
+
+<p>AUTHOR: gavinb
+DATE: 06/07/2006 11:40:57 AM
+d’oh
+Thanks, fixed!</p>
+
+<p>AUTHOR: Pokerbot
+DATE: 08/21/2007 03:23:32 PM
+it must be difficult being a
+it must be difficult being a python logging - do they wrap around the logs or swallow them in order to move them?</p>
+
+<p>AUTHOR: Kirk Strauser
+DATE: 12/25/2007 05:17:45 AM
+Reason for listing all the elements
+A few notes: First, you must list all of the loggers, formatters and handlers in a section up front. This is a bit odd, since each has their own section with a unique name anyway, but it appears to be due to a limitation of the ConfigParser.</p>
+
+<p>That’s not so odd when you consider larger deployments where many applications are configured from the same config file.  This is the case in my company where a master “mycompany.conf” holds all settings used throughout our entire codebase.  In theory, you could run every piece of our software on your own system just by tweaking that one file.  With this setup, the logger details will occupy just one tiny corner; it’s not as if the whole config file is dedicated to it.</p>
+
+<p>AUTHOR: dramenbejs
+DATE: 05/07/2008 11:07:44 PM</p>
+
+<p>The font configured for the PRE tag in this article is too small: 0.8em.
+It forces me to process the article by hand to read it.
+Why you don’t leave it on the default settings, which are at least readable?</p>
+
+        </div><!-- .entry-content -->
+        <footer class="entry-footer">
+          
+          <div class="share-post">
+            <!--
+              <span>Share this:</span>
+                <a class="btn-twitter" target="_blank" href="https://twitter.com/intent/tweet?text=A%20real%20Python%20logging%20example&amp;url=http://10.10.50.50:1125/a-real-python-logging-example"><i class="fa fa-twitter" aria-hidden="true"></i><span class="screen-reader-text">Twitter</span></a>
+                -->
+          </div><!-- .share-post -->
+        </footer><!-- .entry-footer -->
+      </div><!-- .entry-box -->
+    <div class="post-line"></div>
+    <div class="author-box">
+        <div class="author-info">
+          <!--
+          <h2 class="author-title">About </h2>
+          <p class="author-bio"></p>
+          <p class="author-links">
+              
+              
+            </p>
+            -->
+        </div><!-- .author-info -->
+      </div><!-- .author-box -->
+    </article><!-- .post -->
+    <a href="#" class="top">Top</a>
+  </div><!-- .inner -->
+</main><!-- .content -->
+      </main>
+    <aside class="footer-widgets">
+
+    
+
+    <div id="footer-columns" class="footer-columns">
+        <div class="inner">
+            <div class="grid">
+
+                
+
+                <!-- Create a sorted array of tags -->
+                <div class="one-third">
+                    
+                    
+                    <section class="widget widget-tags">
+                        <!--
+                        <h2 class="widget-title">Tags</h2>
+                        <div class="tagcloud">
+                            
+                            <a href="/tags/#Algorithms">Algorithms</a>
+                            
+                            <a href="/tags/#Apple">Apple</a>
+                            
+                            <a href="/tags/#Boost">Boost</a>
+                            
+                            <a href="/tags/#C%2B%2B">C++</a>
+                            
+                            <a href="/tags/#Cocoa">Cocoa</a>
+                            
+                            <a href="/tags/#Coding">Coding</a>
+                            
+                            <a href="/tags/#Jekyll">Jekyll</a>
+                            
+                            <a href="/tags/#Mac">Mac</a>
+                            
+                            <a href="/tags/#OSX">OSX</a>
+                            
+                            <a href="/tags/#Performance">Performance</a>
+                            
+                            <a href="/tags/#STL">STL</a>
+                            
+                            <a href="/tags/#Threading">Threading</a>
+                            
+                            <a href="/tags/#Unicode">Unicode</a>
+                            
+                            <a href="/tags/#api">api</a>
+                            
+                            <a href="/tags/#c%2B%2B">c++</a>
+                            
+                            <a href="/tags/#c%2B%2B11">c++11</a>
+                            
+                            <a href="/tags/#code+block">code block</a>
+                            
+                            <a href="/tags/#iOS">iOS</a>
+                            
+                            <a href="/tags/#iPhone">iPhone</a>
+                            
+                            <a href="/tags/#iptables">iptables</a>
+                            
+                            <a href="/tags/#markdown">markdown</a>
+                            
+                            <a href="/tags/#nftables">nftables</a>
+                            
+                            <a href="/tags/#openapi">openapi</a>
+                            
+                            <a href="/tags/#programming+language">programming language</a>
+                            
+                            <a href="/tags/#racket">racket</a>
+                            
+                            <a href="/tags/#select">select</a>
+                            
+                            <a href="/tags/#stl">stl</a>
+                            
+                            <a href="/tags/#swagger">swagger</a>
+                            
+                            <a href="/tags/#test">test</a>
+                            
+                            <a href="/tags/#tutorial">tutorial</a>
+                            
+                            <a href="/tags/#webdev">webdev</a>
+                            
+                        </div>
+                        -->
+                    </section><!-- .widget -->
+                </div><!-- .one-third -->
+
+            </div><!-- .grid -->
+        </div><!-- .inner -->
+    </div><!-- .footer-columns -->
+
+</aside><!-- .footer-widgets -->
+
+    </div><!-- .site -->
+    <div class="profile">
+      <a href="http://10.10.50.50:1125"><img src="" class="profile-image"></a>
+      <div class="profile-about">
+        <h2 style="margin-bottom: 0; font-weight: 700;"></h2>
+        
+        
+        
+        <a href="about"><img src="/img/icon/me.svg" class="social-icon"></a>
+        <br>
+        
+        <br>
+        <div class="mode" id="mode-switcher" onclick="toggleNightMode();">
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--
+  
+<footer class="site-footer">
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li><a href="mailto:Kea Wot <hi@ashang.org>">Kea Wot <hi@ashang.org></a></li>
+        </ul>
+      </div>
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/ashang">
+              <span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+
+              </span>
+              <span class="username">ashang
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+      <div class="footer-col footer-col-3">
+        <p>ramblings notes, things I worked through to make sure I understand.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+-->
+</body>
+</html>

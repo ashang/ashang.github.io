@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta name="description" content="Undirected Graphs">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://10.10.50.50:1125/algorithms-graphs">
+  <link rel="alternate" type="application/rss+xml" title="in love we trust" href="http://10.10.50.50:1125/feed.xml">
+  <title>
+    
+      Algorithms - Graphs &middot; in love we trust
+    
+  </title>
+
+  
+  <link rel="canonical" href="http://10.10.50.50:1125/algorithms-graphs">
+  
+
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/poole.css">
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/syntax.css">
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/lanyon.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <link rel="shortcut icon" href="http://10.10.50.50:1125/favicon.ico">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://10.10.50.50:1125/atom.xml">
+
+  
+</head>
+<body class="fixed-nav"><header class="site-header" >
+    <a class="site-title" href="/">in love we trust</a>
+
+    <nav class="site-nav">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+
+      <div class="trigger">
+        
+          
+        
+          
+          <a class="page-link" href="/404/"> </a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/ansible-examples">Ansible examples</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-guide">Ansible quickstart</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-modules">Ansible modules</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-roles">Ansible roles</a>
+          
+        
+          
+          <a class="page-link" href="/ansible">Ansible</a>
+          
+        
+          
+          <a class="page-link" href="/archive">Archive</a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/cmd-test">cmd Test</a>
+          
+        
+          
+          <a class="page-link" href="/cryptsetup">cryptsetup with LUKS</a>
+          
+        
+          
+          <a class="page-link" href="/cupper-shortcodes--percent-sign">Cupper Shortcodes with percent sign</a>
+          
+        
+          
+          <a class="page-link" href="/curl">curl</a>
+          
+        
+          
+          <a class="page-link" href="/downtime">downtime</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/frontend">front-end</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/notes/">WILT</a>
+          
+        
+          
+          <a class="page-link" href="/p4-lang">p4</a>
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/tags/">Tags</a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/tutorials">Tutorials</a>
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+</header>
+<div class="container">
+    <div id="page" class="site">
+      <main class="page-content" aria-label="Content">
+        <main class="content fade-in-down delay-0_5s">
+  <div class="inner">
+    <article class="post">
+      <div class="entry-box">
+        <header class="entry-header">
+          <h2 class="post-title">Algorithms - Graphs</h2>
+          <div class="entry-meta">
+            
+              <time class="post-date" datetime="2020-05-01">May 1, 2020</time>
+            
+            
+          </div><!-- .entry-meta -->
+        </header><!-- .entry-header -->
+        <div class="entry-content">
+            <h2 id="undirected-graphs">Undirected Graphs</h2>
+
+<h3 id="some-problems">Some problems</h3>
+
+<ul>
+  <li>Path</li>
+  <li>Shortest path</li>
+  <li>Cycle</li>
+  <li>Ehler tour: A cycle that uses each edge excatly once.</li>
+  <li>Hamilton tour: A cycle that uses each vertex exactly once
+    <ul>
+      <li>classical NP-complete problem.</li>
+    </ul>
+  </li>
+  <li>Connectivity</li>
+  <li>MST:</li>
+  <li>Biconnectivity: A vertex whose removal disconnects the graph</li>
+  <li>Planarity</li>
+  <li>Graph isomorphism: Are two graphs identical?
+    <ul>
+      <li>No one knows so far. A lonstanding open problem</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="representations">Representations</h3>
+
+<p>Real-world graphs tend to be <strong>sparse</strong> (huge number of vertices, small average vertex degree).</p>
+
+<ul>
+  <li>Set-of-edges representation
+    <ul>
+      <li>unefficient</li>
+    </ul>
+  </li>
+  <li>Adjacency-matrix representation
+    <ul>
+      <li>space cost is prohibitive</li>
+    </ul>
+  </li>
+  <li>Adjacency-list array representation
+    <ul>
+      <li>GOOD</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="adjacency-list-data-structure">Adjacency-list Data structure</h3>
+
+<ul>
+  <li>Space usage proportional to V + E</li>
+  <li>Constant time to add an edge</li>
+  <li>Time proportional to the degree of v to iterate through vertices adjacent to v</li>
+</ul>
+
+<h3 id="depth-first-search-dfs">Depth-first Search (DFS)</h3>
+
+<p>Typical applications:</p>
+<ul>
+  <li>Find all vertices connected to a given source vertex</li>
+  <li>Find a path between two vertices</li>
+</ul>
+
+<p>Algorithm:</p>
+<ul>
+  <li>Use recursion (a function-call stack) or an explicit stack.</li>
+  <li>Mark each visited vertex (and keep track of edge taken to visit it)</li>
+  <li>Return (retrace steps) when no unvisited options</li>
+</ul>
+
+<pre><code class="language-Java">public class DepthFirstPaths{
+    private blloean[] marked;
+    private int[] edgeTO;
+    private int s;
+    public DepthFirstPaths(Graph G, int s)
+    {
+        // ...
+        dfs(G, s);
+    }
+
+    private void dfs(Graph Gm int v)
+    {
+        marked[v] = true;
+        for (int w : G.adj(v))
+            if (!marked[v])
+            {
+                dfs(G, w)
+                edgeTo[w] = v;
+            }
+    }
+}
+</code></pre>
+
+<p>Propositions:</p>
+<ol>
+  <li>DFS marks all vertices connected to s in time proportional to the sum of their degrees.</li>
+  <li>After DFS, can find vertices connected to s in constant time and can find a path to s in time proportional to its length.</li>
+</ol>
+
+<h3 id="breadth-first-search-bfs">Breadth-first Search (BFS)</h3>
+
+<p>Typical applications:</p>
+<ul>
+  <li>shortest path</li>
+</ul>
+
+<p>Algorithm:</p>
+<ul>
+  <li>Put s onto a queue, and mark s as visited</li>
+  <li>Take the next vertex v from the queue and mark it</li>
+  <li>Put onto the queue all unmarked vertices that are adjacent to v</li>
+</ul>
+
+<pre><code class="language-Java">public class BreadthFirstPaths
+{
+    private boolean[] marked;
+    private int[] edgeTo;
+    // ...
+    private void bfs(Graph G, int s)
+    {
+        Queue&lt;Integer&gt; q = new Queue&lt;&gt;();
+        q.enqueue(s);
+        marked[s] = ture;
+        while (!q.isEmpty())
+        {
+            int v = q.dequeue();
+            for (int w: G.adj(v))
+            {
+                if (!marked[w])
+                {
+                    q.enqueue(w);
+                    marked[w] = true;
+                    edgeTo[w] = v;
+                }
+            }
+        }
+    }
+}
+</code></pre>
+
+<p>Proposition:</p>
+<ol>
+  <li>BFS computes shortest paths (fewest number of edges) from s to all other vertices in a graph in time proportional to E + V</li>
+</ol>
+
+<h3 id="applications-of-dfs">Applications of DFS</h3>
+
+<h4 id="connected-components">Connected components</h4>
+
+<p>The goal is to preprocess graph to answer queries of the form <em>is v connected to w?</em> in constant time.</p>
+
+<p>The relation <em>is connected to</em> is an equivalence relation:</p>
+<ul>
+  <li>Reflexive: v is connected to v</li>
+  <li>Symmetric: if v is connected to w, then w is connected to v</li>
+  <li>Transitive: if v connected to w and w connected to x, then v connected to x</li>
+</ul>
+
+<pre><code class="language-Java">public class CC {
+    private boolean[] marked;
+    private int[] id;
+    private int count;
+
+    public CC(Graph G) {
+        marked = new boolean[G.V()];
+        id = new int[G.V()];
+        for (int v = 0, v &lt; G.V(); v++) {
+            if (!marked[v]) {
+                dfs(G, v);
+                count++;
+            }
+        }
+    }
+
+    // ...
+
+    private void dfs(Graph G, int v) {
+        marked[v] = true;
+        id[v] = count;
+        for (int w : G.adj(v)) {
+            if (!marked[w]) {
+                dfs(G, w)
+            }
+        }
+    }
+}
+</code></pre>
+
+<h4 id="cycle-detection">Cycle detection</h4>
+
+<p>Problem: Is a given graph acylic?</p>
+
+<p><strong>TODO</strong></p>
+
+<h4 id="two-colorability">Two-colorability</h4>
+
+<p>Problem: Is the graph bipartite?</p>
+
+<p><strong>TODO</strong></p>
+
+<h4 id="symbol-graphs">Symbol graphs</h4>
+
+<p><strong>TODO</strong></p>
+
+<h4 id="degrees-of-separation">Degrees of separation</h4>
+
+<p><strong>TODO</strong></p>
+
+<h2 id="directed-graphs">Directed Graphs</h2>
+
+<blockquote>
+  <p>A directed graph (or digraph) is a set of vertices and a collection of directed edges. Each directed edge connects an ordered pair of vertices.</p>
+</blockquote>
+
+<ul>
+  <li><em>outdegree</em>: the number of edges going <strong>from</strong> it</li>
+  <li><em>indegree</em>: the number fo edges going <strong>into</strong> it</li>
+  <li><em>directed path</em>: a sequence of vertices in which there is a (directed) edge pointing from each vertex in the sequence to its successor in the sequence</li>
+  <li><em>directed cycle</em></li>
+  <li><em>simple cycle</em>: a cycle with no repeated edges or vertices</li>
+</ul>
+
+<h3 id="representations-1">Representations</h3>
+
+<p>Again, use <a href="#Adjacency-list-Data-structure">adjacency-lists representation</a></p>
+<ul>
+  <li>Based on iterating over vertices pointing from v</li>
+  <li>Real-world digraphs tend to be sparse</li>
+</ul>
+
+<pre><code class="language-Java">public class Digraph {
+    private final int V;
+    private final Bag&lt;Integer&gt;[] adj;
+
+    public Digraph(int V) {
+        this.V = V;
+        adj = (Bag&lt;Integer&gt;[]) new Bag[V];
+        for (int v = 0; v &lt; V; v++) {
+            adj[v] = new Bag&lt;Integer&gt;[];
+        }
+    }
+
+    public void addEdge(int v, int w) {
+        adj[v].add(w);
+    }
+
+    public Iterable&lt;Integer&gt; adj(int v) {
+        return adj[v];
+    }
+}
+</code></pre>
+
+<h3 id="digraph-search">Digraph search</h3>
+
+<p>Reachabiliity problem: Find all vertices reachable from s along a directed path.</p>
+
+<p>We can use <a href="#Depth-first-Search-(DFS)">the same dfs method as for undirected graphs</a>.</p>
+<ul>
+  <li>Every undirected graph is a digraph with edges in both directions.</li>
+  <li>DFS is a digraph algorithm,</li>
+</ul>
+
+<p>Reachability applications:</p>
+<ul>
+  <li>program control-flow analysis
+    <ul>
+      <li>Dead-code elimination</li>
+      <li>infinite-loop detection</li>
+    </ul>
+  </li>
+  <li>mark-sweep garbage collector</li>
+</ul>
+
+<p>Other DFS problems:</p>
+<ul>
+  <li>Path findind</li>
+  <li>Topological sort</li>
+  <li>Directed cycle detection</li>
+  <li>…</li>
+</ul>
+
+<p>BFS problems:</p>
+<ul>
+  <li>shortest path</li>
+  <li>multiple-source shortest paths</li>
+  <li>web crawler application</li>
+</ul>
+
+<h3 id="topological-sort">Topological Sort</h3>
+
+<blockquote>
+  <p>Topological sort: Given a digraph, put the vertices in order such that all its directed edges point from a vertix earlier in the order to a vertex later in the order (or report impossible).</p>
+</blockquote>
+
+<p>A digraph has a topological order <strong>if and only if</strong> it is a <em>directed acyclic graph</em> (DAG).
+Topological sort redraws DAG so all edges poitn upwards.</p>
+
+<p>use <strong>DFS</strong> again. It can be proved that reverse postorder of a DAG is a topological order.
+(check P578 for the definition of Preorder/Postorder)</p>
+
+<pre><code class="language-Java">public class DepthFirstOrder {
+    private boolean[] marked;
+    private Stack&lt;Integer&gt; reversePost;
+
+    publiv DepthFirstOrder(Digraph G) {
+        reversePost = new Stack&lt;Integer&gt;();
+        marked = new boolean[G.V()];
+        for (int v = 0; v &lt; G.V(); v++) {
+            if (!marked[v]) dfs(G, v);
+        }
+    }
+
+    private void dfs(Digrapg G, int v) {
+        marked[v] = true;
+        for (int w : G.adj(v)) {
+            if (!marked[w]) dfs(G, w)
+        }
+        reversePost.push(v);
+    }
+}
+</code></pre>
+
+<h4 id="directed-cycle-detection">Directed cycle detection</h4>
+
+<p>To find out if a given digraph is a DAG, we can try to find a directec cycle in the digraph.
+Use DFS and a stack to track the cycle.</p>
+
+<pre><code class="language-Java">// TODO
+</code></pre>
+
+<p>Some very typical applications of directed cycle detection and topological sort:
+(A directed cycle means the problem is infeasible)</p>
+<ul>
+  <li>job schedule</li>
+  <li>course scuedule</li>
+  <li>inheritance</li>
+  <li>spreadsheet
+    <ul>
+      <li>vertex: cell</li>
+      <li>edge: formula</li>
+    </ul>
+  </li>
+  <li>symbolic links</li>
+</ul>
+
+<h3 id="strong-components">Strong components</h3>
+
+<p>Vertices v and w are <strong>strongly connected</strong> if there is both a directed path from v to w and a directed path from w to v.
+Strong connectivity is an equvicalence relation.</p>
+
+<h4 id="kosaraju-sharir-algorithm">Kosaraju-Sharir Algorithm</h4>
+
+<p>Kosaraju-Sharir is easy to implement but difficutl to understand. It runs DFS twice:</p>
+<ul>
+  <li>Given a digraph G, run DFS to compute the topological order of its reverse $G^R$</li>
+  <li>Run DFS on G in the order given by first DFS</li>
+</ul>
+
+<p>TODO: ADD Proof</p>
+
+<p><a href="https://algs4.cs.princeton.edu/code/edu/princeton/cs/algs4/KosarajuSharirSCC.java.html">https://algs4.cs.princeton.edu/code/edu/princeton/cs/algs4/KosarajuSharirSCC.java.html</a></p>
+<pre><code class="language-Java">public class KosarajuSharirSCC {
+    private boolean[] marked;     // marked[v] = has vertex v been visited?
+    private int[] id;             // id[v] = id of strong component containing v
+    private int count;            // number of strongly-connected components
+
+    /**
+     * Computes the strong components of the digraph {@code G}.
+     * @param G the digraph
+     */
+    public KosarajuSharirSCC(Digraph G) {
+
+        // compute reverse postorder of reverse graph
+        DepthFirstOrder dfs = new DepthFirstOrder(G.reverse());
+
+        // run DFS on G, using reverse postorder to guide calculation
+        marked = new boolean[G.V()];
+        id = new int[G.V()];
+        for (int v : dfs.reversePost()) {
+            if (!marked[v]) {
+                dfs(G, v);
+                count++;
+            }
+        }
+    }
+
+    // DFS on graph G
+    private void dfs(Digraph G, int v) { 
+        marked[v] = true;
+        id[v] = count;
+        for (int w : G.adj(v)) {
+            if (!marked[w]) dfs(G, w);
+        }
+    }
+
+    // ...
+}
+</code></pre>
+
+<h2 id="minimum-spanning-trees">Minimum Spanning Trees</h2>
+
+<p>An edge-weighted-graph is a graph where we associate weight or costs with each edge.
+A spanning tree of an undirected edge-weighted graph G is a subgraph T that is both <strong>a tree (conneted and acyclic)</strong> and <strong>spanning (includes all of the vertices)</strong>.
+Given an (connected) undirected edge-weighted graph G with V vertices and E edges, the MST of it must have <strong>V - 1</strong> edges.
+If the graph is not connceted, we compute minimum spanning forest (MST of each component).</p>
+
+<ul>
+  <li>A <em>cut</em> in a graph is a partition of its vertices into two (nonempty) sets</li>
+  <li>A <em>crossing edge</em> connects a vertex in one set with a vertex in the other.</li>
+  <li>Cut property: Given any cut, the crossing edge of min weight is in the MST.</li>
+</ul>
+
+<h3 id="edge-weight-graph-data-type">Edge-weight Graph Data Type</h3>
+
+<p>Edge:
+<a href="https://algs4.cs.princeton.edu/code/edu/princeton/cs/algs4/Edge.java.html">https://algs4.cs.princeton.edu/code/edu/princeton/cs/algs4/Edge.java.html</a></p>
+
+<p>EdgeWeigthedGraph:
+<a href="https://algs4.cs.princeton.edu/code/edu/princeton/cs/algs4/EdgeWeightedGraph.java.html">https://algs4.cs.princeton.edu/code/edu/princeton/cs/algs4/EdgeWeightedGraph.java.html</a></p>
+
+<h3 id="greedy-mst-algorithm"><strong>Greedy MST Algorithm:</strong></h3>
+<ul>
+  <li>Start with all edges colored gray.</li>
+  <li>Find cut with no blacked crossing edges; color its min-weight edge black.</li>
+  <li>Repeat until V-1 edges are colored black.</li>
+</ul>
+
+<h3 id="implementations-1-kruskals-algorithm">Implementations 1: Kruskal’s algorithm</h3>
+
+<p>For edges in ascending order of weight:</p>
+<ul>
+  <li>Add next edge to Tree unless doing so would create a cycle.</li>
+</ul>
+
+<p>To efficiently solve this problem, use union-find :</p>
+<ol>
+  <li>use a priority queue to maintain all the edges in V</li>
+  <li>union-find data structure:
+    <ul>
+      <li>maintain a set for each connected component in T.</li>
+      <li>if v and w are in saome set, then adding v-&gt;w would create a cycle</li>
+      <li>to add v&gt;w to T, merge sets containing v and w.</li>
+    </ul>
+  </li>
+</ol>
+
+<p>TODO: Add code</p>
+
+<h3 id="implementations-2-prims-algorithm">Implementations 2: Prim’s algorithm</h3>
+
+<ul>
+  <li>Start with vertex 0 and greedily grow tree T.</li>
+  <li>Add To T the min weight edge with exactly oue endpoint in T.</li>
+  <li>Reapeat unitl V - 1 edges.</li>
+</ul>
+
+<p>The key to solve this problem is how do we find the crossing edge of minimal weight efficiently.</p>
+
+<p>A lazy solution (in time proportional to $ElogE$, fair enough):</p>
+<ol>
+  <li>Maintain a PQ of edges with (at least) one endpoint in T
+    <ul>
+      <li>Key = edge, priority = weight</li>
+    </ul>
+  </li>
+  <li>Delete-min to determine next edge e = v-&gt;w to add to T</li>
+  <li>Disregard if both endpoints v and w are marked (both in T)</li>
+  <li>Otherwise, let w be the unmarked vertex (not in T)
+    <ul>
+      <li>add to PQ and edge incident to w (assuming other endpoint not in T)</li>
+      <li>add e to T and mark w</li>
+    </ul>
+  </li>
+</ol>
+
+<p>TODO: add code</p>
+
+<p>A eager solution (in time proprotional to $ElogV$, better):</p>
+<ol>
+  <li>Maintain a PQ of vertices connected by an edge to T, where priority of v = weight of shortedt edge connecting v to T</li>
+  <li>Delete min vertex v and add its associated edge e = v-&gt;w to T</li>
+  <li>Update PQ by considering all edges e = v-&gt;x incident to v
+    <ul>
+      <li>ignore if x is already in T</li>
+      <li>add x to PQ if not alread on it</li>
+      <li>decrease priority of x if v-&gt;x becomes shortest edge connecting x to T</li>
+    </ul>
+  </li>
+</ol>
+
+<p>This solution uses an <a href="https://algs4.cs.princeton.edu/code/edu/princeton/cs/algs4/IndexMinPQ.java.html">indexed priority queue</a> data structure.</p>
+
+<p>TODO: add code</p>
+
+<h2 id="shortest-paths">Shortest Paths</h2>
+
+<p><strong>Some variants:</strong></p>
+<ul>
+  <li>Which vertices?
+    <ul>
+      <li>Single source</li>
+      <li>Source-sink</li>
+      <li>All pairs</li>
+    </ul>
+  </li>
+  <li>Edge weights
+    <ul>
+      <li>Nonegative weights</li>
+      <li>Euclidean weights</li>
+      <li>Arbitrary weights</li>
+    </ul>
+  </li>
+  <li>Cycles?
+    <ul>
+      <li>No directed cycles</li>
+      <li>No negative cycles</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="edge-weighted-digraph-data-strcuture">Edge-weighted digraph data strcuture</h3>
+
+<p>Weighted directed edge:
+<a href="https://algs4.cs.princeton.edu/code/edu/princeton/cs/algs4/DirectedEdge.java.html">https://algs4.cs.princeton.edu/code/edu/princeton/cs/algs4/DirectedEdge.java.html</a></p>
+
+<p>Edge-weighted digraph:
+<a href="https://algs4.cs.princeton.edu/code/edu/princeton/cs/algs4/EdgeWeightedDigraph.java.html">https://algs4.cs.princeton.edu/code/edu/princeton/cs/algs4/EdgeWeightedDigraph.java.html</a></p>
+
+<p>Use adjacency-lists implementation same as <a href="https://algs4.cs.princeton.edu/code/edu/princeton/cs/algs4/EdgeWeightedGraph.java.html">EdgeWeightedGraph</a></p>
+
+<h3 id="generic-single-source-shortest-paths">Generic Single-source Shortest paths</h3>
+
+<p>Our goal is to find the shortest path from s to every other vertex. As a result, what we find will be the <strong>shortest-paths tree (SPT)</strong> for source s.</p>
+
+<h4 id="relax-edge-e--v-w">Relax edge e = v-&gt;w</h4>
+
+<ul>
+  <li>distTo[v] is length of shortest known path from s to v</li>
+  <li>distTo[w] is length of shortest known path from s to w</li>
+  <li>esgeTo[w] is last edge on shortest known pathh from s to w</li>
+  <li>if e = v-&gt;w gives shorter path to w through v, update both distTo[w] and edgeTo[w]</li>
+</ul>
+
+<pre><code class="language-Java">private void relax(DirectedEdge e) {
+    int v = e.from(), w = e.to();
+    if (distTo[w] &gt; distTo[v] + e.weight()) {
+        distTo[w] = distTo[v] + e.weight();
+        edgeTo[w] = e;
+    }
+}
+</code></pre>
+
+<h4 id="optimality-conditions">Optimality conditions</h4>
+
+<p>Given an edge-weighted digraph G, distTo[] are the shortest path distances from s <strong>iff</strong>:</p>
+<ul>
+  <li>distTo[s] = 0</li>
+  <li>For each vertex v, distTo[v] is the length of some path from s to v.</li>
+  <li>For each edge e = v-&gt;w, distTo[w] &lt;= distTo[v] + e.weight()</li>
+</ul>
+
+<h4 id="generic-algorithm">Generic algorithm</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Generic algorithm (to compute SPT from s) {
+    Initialize distTo[s] = 0 and distTo[v] = $\infty$
+
+    Repeat until optimality conditions are satisfied:
+        - Relax any edge
+}
+</code></pre></div></div>
+
+<p>Efficient implementations:</p>
+<ul>
+  <li>Nonnegative weights: <a href="#implement-1-dijkstras-algorithm">Dijkstra’s algorithm</a></li>
+  <li>No directed cycles (DAGs): <a href="#implement-2-topological-sort-algorithm">Topological sort algorithm</a></li>
+  <li>No negative cycles: <a href="#implement-3-bellman-ford-algorithm">Bellman-Ford</a></li>
+</ul>
+
+<h3 id="implement-1-dijkstras-algorithm">Implement 1: Dijkstra’s algorithm</h3>
+<p>When there is no nonnegative weight exists, we can use Dijkstra’s algorithm.</p>
+<ul>
+  <li>Consider vertices in increasing order of distance from s (non-tree vertex with the lowest distTo[] value)</li>
+  <li>add vertex to tree and relax all edges pointing from that vertex</li>
+</ul>
+
+<pre><code class="language-Java">public class DijkstraSP{
+        // ...
+    public DijkstraSP(EdgeWeightedDigraph G, int s) {
+        edgeTo = new DirectedEdge[G.V()];
+        distTo = new double[G.V()];
+        pq = new IndexMinPQ&lt;Double&gt;(G.V());
+
+        for (int v = 0; v &lt; G.V(); v++) {
+            distTo[v] = Double.POSITIVE_INFINITY;
+        }
+        distTo[s] = 0;
+
+        pq.insert(s, 0.0);
+        while(!pq.isEmpty()) {
+            int v= pq.delMin();
+            for (DirectedEdge e : G.adj(v)) {
+                relax(e);
+            }
+        }
+    }
+
+    private void relax(DirectedEdge e) {
+        int v = e.from(), w = e.to();
+        if (distTo[w] &gt; distTo[v] + e.weight()) {
+            distTo[w] = distTo[v] + e.weight();
+            edgeTo[w] = e;
+            if (pq.contains(w)) pq.decreaseKey(w, distTo[w]);
+            else pq.insert(w, distTo[w]);
+        }
+    }
+}
+</code></pre>
+
+<p><strong>Compare to Prim’s algorithm:</strong></p>
+<ul>
+  <li>Both are computing a graph’s spanning tree</li>
+  <li>Prim’s algorithm choose closest vertex to tree as next vertex, while Dijkstra’s algorithm choose closest vertex to the source</li>
+</ul>
+
+<h3 id="implement-2-topological-sort-algorithm">Implement 2: Topological sort algorithm</h3>
+
+<p>When the graph is a DAG, we can consider vertices in topological order and do relaxing.</p>
+
+<pre><code class="language-Java">    // ...
+    Topological topological = new Topological(G);
+    for (int v : topological.order()) {
+        for (DirectedEdge e : G.adj(v)) {
+            relax(e);
+        }
+    }
+</code></pre>
+
+<p><strong><a href="https://en.wikipedia.org/wiki/Seam_carving">Seam carving</a></strong>: Resize an image without distortion.</p>
+
+<p><strong>Longest paths</strong>:</p>
+<ul>
+  <li>Formuate as a shortest paths problem in edge-weighted DAGs
+    <ul>
+      <li>Negate all weights</li>
+      <li>Find shortest paths</li>
+      <li>Negate weights in result</li>
+    </ul>
+  </li>
+  <li>Allpication: Parallel job scheduling (<a href="https://ja.wikipedia.org/wiki/%E3%82%AF%E3%83%AA%E3%83%86%E3%82%A3%E3%82%AB%E3%83%AB%E3%83%91%E3%82%B9%E6%B3%95">Critical path method, CPM</a>).</li>
+</ul>
+
+<h3 id="implement-3-bellman-ford-algorithm">Implement 3: Bellman-Ford algorithm</h3>
+
+<blockquote>
+  <p>A SPT exists iff no negative cycles (a directed cycle whose sum of edge weights is negative).</p>
+</blockquote>
+
+<p>When we want to find shortest paths with nagative weights, Dijkstra’s algorithms doesn’t work.
+We can use Bellman-Ford algorithm as long as there is no negative cycle in the graph.
+(Bellman-Ford algorithm is a dynamic programming algorithm)</p>
+
+<ul>
+  <li>Initialize distTo[s] = 0 and distTo[v] = $\infty$</li>
+  <li>Maintain a queue and repeat until the queue is empty or find a cycle:
+    <ul>
+      <li>Pop vertex v from q</li>
+      <li>Relax each edge pointing from v to  any vertex w:
+        <ul>
+          <li>if distTo[w] can be de decreased, update distTo[w] and add w to the queue</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<pre><code class="language-Java">// ...
+    public BellmanFordSP(EdgeWeightedDigraph G, int s) {
+        distTo  = new double[G.V()];
+        edgeTo  = new DirectedEdge[G.V()];
+        onQueue = new boolean[G.V()];
+        for (int v = 0; v &lt; G.V(); v++)
+            distTo[v] = Double.POSITIVE_INFINITY;
+        distTo[s] = 0.0;
+
+        // Bellman-Ford algorithm
+        queue = new Queue&lt;Integer&gt;();
+        queue.enqueue(s);
+        onQueue[s] = true;
+        while (!queue.isEmpty() &amp;&amp; !hasNegativeCycle()) {
+            int v = queue.dequeue();
+            onQueue[v] = false;
+            relax(G, v);
+        }
+    }
+
+    private void relax(EdgeWeightedDigraph G, int v) {
+        for (DirectedEdge e : G.adj(v)) {
+            int w = e.to();
+            if (distTo[w] &gt; distTo[v] + e.weight()) {
+                distTo[w] = distTo[v] + e.weight();
+                edgeTo[w] = e;
+                if (!onQueue[w]) {
+                    queue.enqueue(w);
+                    onQueue[w] = true;
+                }
+            }
+            if (++cost % G.V() == 0) {
+                findNegativeCycle();
+                if (hasNegativeCycle()) return;  // found a negative cycle
+            }
+        }
+    }
+
+</code></pre>
+
+<p>Bellman-Ford algorithm can also be used for finding a negative cycle.</p>
+
+<p>Negative cycle application: arbitrage detection.</p>
+
+        </div><!-- .entry-content -->
+        <footer class="entry-footer">
+          
+            <div class="post-tags">
+              <a href="/tags/" rel="tag">Tags: </a>
+                <a href="/archive/#Algorithms" rel="tag">Algorithms</a>
+            </div>
+          
+          <div class="share-post">
+            <!--
+              <span>Share this:</span>
+                <a class="btn-twitter" target="_blank" href="https://twitter.com/intent/tweet?text=Algorithms%20-%20Graphs&amp;url=http://10.10.50.50:1125/algorithms-graphs"><i class="fa fa-twitter" aria-hidden="true"></i><span class="screen-reader-text">Twitter</span></a>
+                -->
+          </div><!-- .share-post -->
+        </footer><!-- .entry-footer -->
+      </div><!-- .entry-box -->
+    <div class="post-line"></div>
+    <div class="author-box">
+        <div class="author-info">
+          <!--
+          <h2 class="author-title">About </h2>
+          <p class="author-bio"></p>
+          <p class="author-links">
+              
+              
+            </p>
+            -->
+        </div><!-- .author-info -->
+      </div><!-- .author-box -->
+    </article><!-- .post -->
+    <a href="#" class="top">Top</a>
+  </div><!-- .inner -->
+</main><!-- .content -->
+      </main>
+    <aside class="footer-widgets">
+
+    
+
+    <div id="footer-columns" class="footer-columns">
+        <div class="inner">
+            <div class="grid">
+
+                
+
+                <!-- Create a sorted array of tags -->
+                <div class="one-third">
+                    
+                    
+                    <section class="widget widget-tags">
+                        <!--
+                        <h2 class="widget-title">Tags</h2>
+                        <div class="tagcloud">
+                            
+                            <a href="/tags/#Algorithms">Algorithms</a>
+                            
+                            <a href="/tags/#Apple">Apple</a>
+                            
+                            <a href="/tags/#Boost">Boost</a>
+                            
+                            <a href="/tags/#C%2B%2B">C++</a>
+                            
+                            <a href="/tags/#Cocoa">Cocoa</a>
+                            
+                            <a href="/tags/#Coding">Coding</a>
+                            
+                            <a href="/tags/#Jekyll">Jekyll</a>
+                            
+                            <a href="/tags/#Mac">Mac</a>
+                            
+                            <a href="/tags/#OSX">OSX</a>
+                            
+                            <a href="/tags/#Performance">Performance</a>
+                            
+                            <a href="/tags/#STL">STL</a>
+                            
+                            <a href="/tags/#Threading">Threading</a>
+                            
+                            <a href="/tags/#Unicode">Unicode</a>
+                            
+                            <a href="/tags/#api">api</a>
+                            
+                            <a href="/tags/#c%2B%2B">c++</a>
+                            
+                            <a href="/tags/#c%2B%2B11">c++11</a>
+                            
+                            <a href="/tags/#code+block">code block</a>
+                            
+                            <a href="/tags/#iOS">iOS</a>
+                            
+                            <a href="/tags/#iPhone">iPhone</a>
+                            
+                            <a href="/tags/#iptables">iptables</a>
+                            
+                            <a href="/tags/#markdown">markdown</a>
+                            
+                            <a href="/tags/#nftables">nftables</a>
+                            
+                            <a href="/tags/#openapi">openapi</a>
+                            
+                            <a href="/tags/#programming+language">programming language</a>
+                            
+                            <a href="/tags/#racket">racket</a>
+                            
+                            <a href="/tags/#select">select</a>
+                            
+                            <a href="/tags/#stl">stl</a>
+                            
+                            <a href="/tags/#swagger">swagger</a>
+                            
+                            <a href="/tags/#test">test</a>
+                            
+                            <a href="/tags/#tutorial">tutorial</a>
+                            
+                            <a href="/tags/#webdev">webdev</a>
+                            
+                        </div>
+                        -->
+                    </section><!-- .widget -->
+                </div><!-- .one-third -->
+
+            </div><!-- .grid -->
+        </div><!-- .inner -->
+    </div><!-- .footer-columns -->
+
+</aside><!-- .footer-widgets -->
+
+    </div><!-- .site -->
+    <div class="profile">
+      <a href="http://10.10.50.50:1125"><img src="" class="profile-image"></a>
+      <div class="profile-about">
+        <h2 style="margin-bottom: 0; font-weight: 700;"></h2>
+        
+        
+        
+        <a href="about"><img src="/img/icon/me.svg" class="social-icon"></a>
+        <br>
+        
+        <br>
+        <div class="mode" id="mode-switcher" onclick="toggleNightMode();">
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--
+  
+<footer class="site-footer">
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li><a href="mailto:Kea Wot <hi@ashang.org>">Kea Wot <hi@ashang.org></a></li>
+        </ul>
+      </div>
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/ashang">
+              <span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+
+              </span>
+              <span class="username">ashang
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+      <div class="footer-col footer-col-3">
+        <p>ramblings notes, things I worked through to make sure I understand.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+-->
+</body>
+</html>

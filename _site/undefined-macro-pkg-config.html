@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta name="description" content="GNU Autotools has always seemed like voodoo to me. When a package has aconfigure.ac and Makefile.am or aclocal.m4, I know they’re three fileextensions used n...">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://10.10.50.50:1125/undefined-macro-pkg-config">
+  <link rel="alternate" type="application/rss+xml" title="in love we trust" href="http://10.10.50.50:1125/feed.xml">
+  <title>
+    
+      Why &#39;Possibly Undefined Macro&#39; Means Install pkg-config &middot; in love we trust
+    
+  </title>
+
+  
+  <link rel="canonical" href="http://10.10.50.50:1125/undefined-macro-pkg-config">
+  
+
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/poole.css">
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/syntax.css">
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/lanyon.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <link rel="shortcut icon" href="http://10.10.50.50:1125/favicon.ico">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://10.10.50.50:1125/atom.xml">
+
+  
+</head>
+<body class="fixed-nav"><header class="site-header" >
+    <a class="site-title" href="/">in love we trust</a>
+
+    <nav class="site-nav">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+
+      <div class="trigger">
+        
+          
+        
+          
+          <a class="page-link" href="/404/"> </a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/ansible-examples">Ansible examples</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-guide">Ansible quickstart</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-modules">Ansible modules</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-roles">Ansible roles</a>
+          
+        
+          
+          <a class="page-link" href="/ansible">Ansible</a>
+          
+        
+          
+          <a class="page-link" href="/archive">Archive</a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/cmd-test">cmd Test</a>
+          
+        
+          
+          <a class="page-link" href="/cryptsetup">cryptsetup with LUKS</a>
+          
+        
+          
+          <a class="page-link" href="/cupper-shortcodes--percent-sign">Cupper Shortcodes with percent sign</a>
+          
+        
+          
+          <a class="page-link" href="/curl">curl</a>
+          
+        
+          
+          <a class="page-link" href="/downtime">downtime</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/frontend">front-end</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/notes/">WILT</a>
+          
+        
+          
+          <a class="page-link" href="/p4-lang">p4</a>
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/tags/">Tags</a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/tutorials">Tutorials</a>
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+</header>
+<div class="container">
+    <div id="page" class="site">
+      <main class="page-content" aria-label="Content">
+        <main class="content fade-in-down delay-0_5s">
+  <div class="inner">
+    <article class="post">
+      <div class="entry-box">
+        <header class="entry-header">
+          <h2 class="post-title">Why 'Possibly Undefined Macro' Means Install pkg-config</h2>
+          <div class="entry-meta">
+            
+              <time class="post-date" datetime="2020-07-14">July 14, 2020</time>
+            
+            
+          </div><!-- .entry-meta -->
+        </header><!-- .entry-header -->
+        <div class="entry-content">
+            <p>GNU Autotools has always seemed like voodoo to me. When a package has a
+<code class="language-plaintext highlighter-rouge">configure.ac</code> and <code class="language-plaintext highlighter-rouge">Makefile.am</code> or <code class="language-plaintext highlighter-rouge">aclocal.m4</code>, I know they’re three file
+extensions used nowhere else in the programming universe. It never seemed
+productive to study something from before my time that apparently merited no
+broader use in software engineering. So I just try typing every command that
+starts with “auto”…search the Internet for error messages I get…and blindly
+try the guesses people offer in message threads until a working <strong>configure</strong>
+script and <strong>Makefile</strong> magically appear.</p>
+
+<p>This weekend I was trying to build the RedHat Package Manager (RPM), and it was
+the same old story. After fumbling on through whatever autoconf/autoreconf
+or aclocal got me to the next <strong>sudo apt install</strong>, I got this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>configure.ac:34: error: possibly undefined macro: AC_MSG_ERROR
+    If this token and others are legitimate, please use m4_pattern_allow.
+    See the Autoconf documentation.
+configure.ac:143: error: possibly undefined macro: AC_DEFINE
+autoreconf: /usr/bin/autoconf failed with exit status: 1
+</code></pre></div></div>
+
+<p>There were a couple of pieces of failed advice. One person on a mailing list
+suggested installing <strong>autoconf-archive</strong>, which is an auxiliary set of macros
+that aren’t in the standard distribution. It didn’t work for the person asking
+the question, and it didn’t work for me.</p>
+
+<p>But why <em>would</em> it work? These aren’t esoteric macro contributions from the
+community. They’re <a href="http://www.gnu.org/software/autoconf/manual/html_node/Autoconf-Macro-Index.html#Autoconf-Macro-Index">in the manual</a>, and you can edit simple tutorial files
+which use them freely.</p>
+
+<p>What could RedHat Package Manager be doing to make them <em>seem</em> undefined?</p>
+
+<h2 id="problemsolved">Problem…Solved?</h2>
+
+<p>The advice that actually worked was <strong>sudo apt install pkg-config</strong>.  While
+I had to try a couple of unhelpful steps before that, it isn’t like it took
+<em>long</em> to get a resolution. Just another few-minute voodoo speed-bump to forget
+until the next time.</p>
+
+<p>But…something about this case got to me. <em>No one</em> explained it. I tried just
+about every search I could to see if there was a reasoned rationale, but the
+best I mustered were sympathetic voices saying “yeah, sometimes autoconf error
+mesages are really bad”. Yet this seemed like a complaint coming from the macro
+processor itself about missing definitions. How was autoconf screwing this up,
+and why hadn’t anyone fixed it?</p>
+
+<p>I found a <a href="https://ahelpme.com/linux/compiling/missing-pkg-config-results-in-configure-error-possibly-undefined-macro/">whole page for “demystifying” the error</a>, which was just an echo
+of every other place on the Internet: <em>this happens because you need
+<code class="language-plaintext highlighter-rouge">pkg-config</code>, since without <code class="language-plaintext highlighter-rouge">pkg-config</code> you will get the error.</em></p>
+
+<p>It was glaringly obvious that a globe full of programmers were steadfast in the
+same attitude I’d had about autotools. No one wanted to take any time to look
+into it.</p>
+
+<p>So I caved, and I looked.</p>
+
+<h2 id="a-simple-failing-heuristic">A Simple, Failing, Heuristic</h2>
+
+<p>What is happening is not that the macros are undefined. They’re just winding up
+as part of a context where they are not being expanded…hence left as strings
+in the output file that start with <code class="language-plaintext highlighter-rouge">AC_</code>. A piece of autoconf called
+<strong>autom4te</strong> (written in perl) notices that the output still has such patterns
+after expansion, and wrongly guesses that implies a missing definition.</p>
+
+<p>The actual regular expressions that are being looked for in the post-expansion
+text are a little hard to find. But a few are in <a href="https://github.com/autotools-mirror/autoconf/blob/ff47b2ea8d53dd4dc7536775e4a222dc18837fcb/lib/autoconf/general.m4#L1414">autoconf/general.m4</a>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>m4_pattern_forbid([^_?A[CHUM]_])
+m4_pattern_forbid([_AC_])
+m4_pattern_forbid([^LIBOBJS$],
+	  [do not use LIBOBJS directly, use AC_LIBOBJ (see section `AC_LIBOBJ vs LIBOBJS'])
+</code></pre></div></div>
+
+<p>That first regular expression <code class="language-plaintext highlighter-rouge">^_?A[CHUM]_</code> when translated into English is:</p>
+
+<blockquote>
+  <p>“Match any pattern at the beginning of a line (<code class="language-plaintext highlighter-rouge">^</code>) which may or may not
+begin with an underscore (<code class="language-plaintext highlighter-rouge">_?</code>) that is followed by <code class="language-plaintext highlighter-rouge">AC_</code>, <code class="language-plaintext highlighter-rouge">AH_</code>, <code class="language-plaintext highlighter-rouge">AU_</code>,
+or <code class="language-plaintext highlighter-rouge">AM_</code>.”</p>
+</blockquote>
+
+<p><em>(The abbreviations are for AutoConfig, AutoHeader, AutoUpdate, and AutoMake.)</em></p>
+
+<p>That looks like a smoking gun! But for thoroughness, we can dig up a couple
+more forbidden patterns in <a href="https://github.com/autotools-mirror/autoconf/blob/ff47b2ea8d53dd4dc7536775e4a222dc18837fcb/lib/autoconf/general.m4#L1415">autoconf/m4sugar.m4</a>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>m4_pattern_forbid([^_?m4_])
+m4_pattern_forbid([^dnl$])
+</code></pre></div></div>
+
+<p>Then one from <a href="https://github.com/autotools-mirror/autoconf/blob/c6daae41276a49b52a9d5e2f70c95651364ed619/lib/m4sugar/m4sh.m4#L2139">autoconf/m4sh.m4</a>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>m4_pattern_forbid([^_?AS_])
+</code></pre></div></div>
+
+<p><em>(This abbreviates AutoShell macros…helpers for basic shell constructs.)</em></p>
+
+<p>In the case I was looking at, it used “libtool” which added another from its
+<a href="https://github.com/autotools-mirror/libtool/blob/b9b44533fbf7c7752ffd255c3d09cc360e24183b/m4/libtool.m4#L70">m4/libtool.m4</a>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>m4_pattern_forbid([^_?LT_[A-Z_]+$])dnl
+</code></pre></div></div>
+
+<p>The point of listing all of these is to explain how in the case of RPM, the
+variable <code class="language-plaintext highlighter-rouge">$forbidden</code> comes to be assigned in autom4te to the complete
+expression of possibilities:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>^_?A[CHUM]_|_AC_|^LIBOBJS$|^_?m4_|^dnl$|^_?AS_|^_?LT_[A-Z_]+$
+</code></pre></div></div>
+
+<p>If it sees anything in that list of alternate patterns, it assumes a mistake,
+and <a href="https://github.com/autotools-mirror/autoconf/blob/ff47b2ea8d53dd4dc7536775e4a222dc18837fcb/bin/autom4te.in#L616">warns you about the residue</a> it believes should have vaporized in the
+m4 expansion process.</p>
+
+<h2 id="examining-a-trivial-case">Examining a Trivial Case</h2>
+
+<p>Let’s try a very simple step with just <code class="language-plaintext highlighter-rouge">autoconf</code>. The only thing we will
+write is the <strong>configure.ac</strong>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># configure.ac
+AC_INIT([Basic Case], 1.0)
+AM_INIT_AUTOMAKE
+AC_PROG_CC
+AC_CONFIG_FILES(Makefile)
+AC_OUTPUT
+
+MAKE_ME_A_SANDWICH
+</code></pre></div></div>
+
+<p>On that last line, I threw in something we’re pretty sure that autoconf isn’t
+going to recognize. Let’s try it.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ autoconf
+</code></pre></div></div>
+
+<p>This generates a nearly 5,000 lines long <strong>configure</strong> shell script. But at
+the bottom of it, the last line is still MAKE_ME_A_SANDWICH. It isn’t a macro,
+so it’s passed through as part of what it imagines is plain shell script code.</p>
+
+<p>Now let’s try something a little different:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># configure.ac
+AC_INIT([Forbidden Case], 1.0)
+AM_INIT_AUTOMAKE
+AC_PROG_CC
+AC_CONFIG_FILES(Makefile)
+AC_OUTPUT
+
+AC_MAKE_ME_A_SANDWICH
+</code></pre></div></div>
+
+<p>This time we’ve used something that matches one of the forbidden patterns, that
+has no definition in effect. So autom4te is going to complain:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ autocconf
+configure.ac:7: error: possibly undefined macro: AC_MAKE_ME_A_SANDWICH
+    If this token and others are legitimate, please use m4_pattern_allow.
+    See the Autoconf documentation.
+</code></pre></div></div>
+
+<p>But if we remember our patterns it had to be at the start of a line to be a
+problem. Let’s try a twist:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># configure.ac
+AC_INIT([Not Start Of Line Case], 1.0)
+AM_INIT_AUTOMAKE
+AC_PROG_CC
+AC_CONFIG_FILES(Makefile)
+AC_OUTPUT
+
+if [ $AC_MAKE_ME_A_SANDWICH == abcdef ] ; then echo yes ; else echo no ; fi
+</code></pre></div></div>
+
+<p>That looks like passable bash code. And the <code class="language-plaintext highlighter-rouge">AC_</code> isn’t at the start of a line.
+So what does autoconf say?</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ autoconf
+configure.ac:7: error: possibly undefined macro: AC_MAKE_ME_A_SANDWICH
+  If this token and others are legitimate, please use m4_pattern_allow.
+  See the Autoconf documentation.
+</code></pre></div></div>
+
+<p>Whoops. What we missed is that autom4te is actually breaking the output up in
+terms of its idea of “words”, which <a href="https://github.com/autotools-mirror/autoconf/blob/ff47b2ea8d53dd4dc7536775e4a222dc18837fcb/bin/autom4te.in#L564">runs a gauntlet of substitutions</a>
+before doing that start-of-line test:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  s/\s+$//;
+  s/__oline__/$./g;
+  s/\@&lt;:\@/[/g;
+  s/\@:&gt;\@/]/g;
+  s/\@\{:\@/(/g;
+  s/\@:\}\@/)/g;
+  s/\@S\|\@/\$/g;
+  s/\@%:\@/#/g;
+
+  $res = $_;
+
+  # Don't complain in comments.  Well, until we have something
+  # better, don't consider '#include' etc. are comments.
+  s/\#.*//
+unless /^\#\s*(if|include|endif|ifdef|ifndef|define)\b/;
+  foreach (split (/\W+/))
+{
+  $prohibited{$_} = $.
+    if !/^$/ &amp;&amp; /$forbidden/o &amp;&amp; !/$allowed/o &amp;&amp; ! exists $prohibited{$_};
+}
+</code></pre></div></div>
+
+<p>So our <code class="language-plaintext highlighter-rouge">$forbidden</code> patterns become actually more of a start-of-word test, and
+the violators are collected in <code class="language-plaintext highlighter-rouge">$prohibited</code> and reported to us.</p>
+
+<h2 id="without-further-ado-the-pkg-config-debacle">Without Further Ado: The pkg-config Debacle</h2>
+
+<p>The previous section seems like it “worked”…in the sense that we tried to
+use AC_MAKE_ME_A_SANDWICH, which looks like an autoconfig macro but had no
+definition. So the warning helps us know we either made a typo or need to
+get the dependency where it’s defined.</p>
+
+<p>But the errors I was getting in RPM were for AC_DEFINE and AC_MSG_ERROR, that
+do have definitions. Digging in I find <a href="https://github.com/rpm-software-management/rpm/blob/16d9074e1a3020f8844ed4a213fb92e844d8f9ad/configure.ac#L763">it comes from this code</a> in the
+configure.ac file for RPM:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PKG_CHECK_MODULES([LUA],
+  [lua &gt;= 5.1],
+  [AC_DEFINE(WITH_LUA, 1, [Build with lua support?])],
+  [AC_MSG_ERROR([lua not present (--without-lua to disable)])])
+</code></pre></div></div>
+
+<p>We have a macro being parameterized with other macros. If you don’t have
+PKG_CHECK_MODULES pulled into your definitions, it might as well have been
+MAKE_ME_A_SANDWICH…it’s left as-is. So the macro processor thinks the only
+work it has to do in this case is to vaporize the brackets (which are m4’s
+means of “quoting” the contained material to pass through verbatim).</p>
+
+<p>To make the point, let’s try an AC_DEFINE call when the call itself is not
+enclosed in brackets:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># configure.ac
+AC_INIT([No Outer Brackets], 1.0)
+AM_INIT_AUTOMAKE
+AC_PROG_CC
+AC_CONFIG_FILES(Makefile)
+AC_OUTPUT
+
+AC_DEFINE(WITH_LUA, 1, [Build with lua support?])
+</code></pre></div></div>
+
+<p>When we run that through autoconf, the last line of the long configure file
+that is generated looks like:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$as_echo "#define WITH_LUA 1" &gt;&gt;confdefs.h
+</code></pre></div></div>
+
+<p>Convoluted though this is, we see what’s happening. It’s making a shell script
+that makes a header file with a #define in it.  But what if we had tried the
+same thing with surrounding brackets?</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># configure.ac
+AC_INIT([Outer Brackets], 1.0)
+AM_INIT_AUTOMAKE
+AC_PROG_CC
+AC_CONFIG_FILES(Makefile)
+AC_OUTPUT
+
+[AC_DEFINE(WITH_LUA, 1, [Build with lua support?])]
+</code></pre></div></div>
+
+<p>We now see a different last line of our configure file:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>AC_DEFINE(WITH_LUA, 1, [Build with lua support?])
+</code></pre></div></div>
+
+<p>This reveals the problem that arises when PKG_CHECK_MODULES isn’t defined.
+It’s a macro whose job it is to take quoted macro material and pick a branch
+to run (either a definition branch or an erroring branch). But without that
+defined, the quoted material simply becomes unquoted and triggers the forbidden
+pattern.</p>
+
+<p>Hence: if you <code class="language-plaintext highlighter-rouge">sudo apt install pkg-info</code>, you get a definition for
+PKG_CHECK_MODULES. That means at autoconf time there’ll be an active macro that
+ensures that either the AC_DEFINE or AC_MSG_ERROR will be expanded.</p>
+
+<h2 id="how-might-this-get-better">How Might This Get Better?</h2>
+
+<p>A simple-minded improvement would be if you convinced the autotools maintainers
+to add an m4_pattern_forbid() like:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>m4_pattern_forbid([^_?PKG_[A-Z_]+$])
+</code></pre></div></div>
+
+<p>(Another option would be if you could go back in time and tell the pkg-info
+people to name their macros according to an existing pattern of what’s
+already forbidden in output, e.g. <code class="language-plaintext highlighter-rouge">AC_PKG_CHECK_MODULES</code>.)</p>
+
+<p>That would bring up an added error as the first hit which would be at least a
+slightly more informative. Your result would look like:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ autoreconf
+configure.ac:33: error: possibly undefined macro: PKG_CHECK_MODULES
+    If this token and others are legitimate, please use m4_pattern_allow.
+    See the Autoconf documentation.
+configure.ac:34: error: possibly undefined macro: AC_MSG_ERROR
+configure.ac:143: error: possibly undefined macro: AC_DEFINE
+autoreconf: /usr/bin/autoconf failed with exit status: 1
+</code></pre></div></div>
+
+<p>This is still suboptimal, because it’s not pinpointing the real culprit. What
+we’d really like to do is exploit the m4 processor’s inherent knowledge of
+whether a macro is defined or not, so it could distinguish the “undefined”
+case of PKG_CHECK_MODULES from the “passed by quote” cases of AC_MSG_ERROR
+and AC_DEFINE.</p>
+
+<p>But there’s a problem: <em>by the time we execute autom4te, it’s just a perl
+script, and m4 is not running</em>. Perl can’t take a token and retroactively
+use the finished m4 session’s <a href="https://www.gnu.org/software/m4/manual/m4-1.4.15/html_node/Ifdef.html"><code class="language-plaintext highlighter-rouge">ifdef()</code></a> to test the <code class="language-plaintext highlighter-rouge">$prohibited</code>
+cases for bona fide undefinedness.</p>
+
+<p>Given the fluidity of definitions in effect at any given time (with defines
+and undefines spanning different ranges in a file), it seems this may motivate
+making the forbidden outputs filtering a feature of m4 itself. Then it could
+reliably tell you what the cause was.</p>
+
+<p>But bringing the ambition level down a notch, I’ll go back to what people were
+saying about autoconf’s messages being bad. We are programmers here, so why not
+be honest?</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>configure.ac:34: error: unexpanded AC_XXX macro: AC_MSG_ERROR
+    A token that looks like an autoconf macro was residual in the output.
+    It may be undefined -or- passed by quote to another macro that should
+    have invoked it but isn't installed to do so. If this token and others
+    are legitimate, please use m4_pattern_allow.
+configure.ac:143: error: unexpanded AC_XXX macro: AC_DEFINE
+autoreconf: /usr/bin/autoconf failed with exit status: 1
+</code></pre></div></div>
+
+<p>Error messages that report what they actually checked have a chance of making
+people more educated. This would have been a great opportunity to bring all
+the voodoo-fearers into the loop so they could be involved instead of afraid.</p>
+
+<p>But the messages as written are now the gateway to finding the usual solution.
+If that led you here, I hope this write-up gives you the knowledge to figure
+out whether installing <code class="language-plaintext highlighter-rouge">pkg-config</code> is the right answer or not!  Look at the
+generated output at the line where the first error occurs for anything that
+looks like a macro that takes <code class="language-plaintext highlighter-rouge">[AC_WHATEVER_CAUSED_THE_ERROR(...)]</code>. If it
+is <code class="language-plaintext highlighter-rouge">PKG_CHECK_MODULES()</code> then installing <code class="language-plaintext highlighter-rouge">pkg-config</code> is your ticket. But if
+it’s something else, you might need to look elsewhere.</p>
+
+<h2 id="acknowledgements">Acknowledgements</h2>
+
+<p>The only actionable information I found on the Internet to write this came
+from the following thread on Stack Overflow:</p>
+
+<p><a href="https://stackoverflow.com/questions/48093804/how-to-troubleshoot-possibly-undefined-macro-ac-msg-error">How to troubleshoot “Possibly undefined macro: AC_MSG_ERROR”</a></p>
+
+
+        </div><!-- .entry-content -->
+        <footer class="entry-footer">
+          
+          <div class="share-post">
+            <!--
+              <span>Share this:</span>
+                <a class="btn-twitter" target="_blank" href="https://twitter.com/intent/tweet?text=Why%20'Possibly%20Undefined%20Macro'%20Means%20Install%20pkg-config&amp;url=http://10.10.50.50:1125/undefined-macro-pkg-config"><i class="fa fa-twitter" aria-hidden="true"></i><span class="screen-reader-text">Twitter</span></a>
+                -->
+          </div><!-- .share-post -->
+        </footer><!-- .entry-footer -->
+      </div><!-- .entry-box -->
+    <div class="post-line"></div>
+    <div class="author-box">
+        <div class="author-info">
+          <!--
+          <h2 class="author-title">About </h2>
+          <p class="author-bio"></p>
+          <p class="author-links">
+              
+              
+            </p>
+            -->
+        </div><!-- .author-info -->
+      </div><!-- .author-box -->
+    </article><!-- .post -->
+    <a href="#" class="top">Top</a>
+  </div><!-- .inner -->
+</main><!-- .content -->
+      </main>
+    <aside class="footer-widgets">
+
+    
+
+    <div id="footer-columns" class="footer-columns">
+        <div class="inner">
+            <div class="grid">
+
+                
+
+                <!-- Create a sorted array of tags -->
+                <div class="one-third">
+                    
+                    
+                    <section class="widget widget-tags">
+                        <!--
+                        <h2 class="widget-title">Tags</h2>
+                        <div class="tagcloud">
+                            
+                            <a href="/tags/#Algorithms">Algorithms</a>
+                            
+                            <a href="/tags/#Apple">Apple</a>
+                            
+                            <a href="/tags/#Boost">Boost</a>
+                            
+                            <a href="/tags/#C%2B%2B">C++</a>
+                            
+                            <a href="/tags/#Cocoa">Cocoa</a>
+                            
+                            <a href="/tags/#Coding">Coding</a>
+                            
+                            <a href="/tags/#Jekyll">Jekyll</a>
+                            
+                            <a href="/tags/#Mac">Mac</a>
+                            
+                            <a href="/tags/#OSX">OSX</a>
+                            
+                            <a href="/tags/#Performance">Performance</a>
+                            
+                            <a href="/tags/#STL">STL</a>
+                            
+                            <a href="/tags/#Threading">Threading</a>
+                            
+                            <a href="/tags/#Unicode">Unicode</a>
+                            
+                            <a href="/tags/#api">api</a>
+                            
+                            <a href="/tags/#c%2B%2B">c++</a>
+                            
+                            <a href="/tags/#c%2B%2B11">c++11</a>
+                            
+                            <a href="/tags/#code+block">code block</a>
+                            
+                            <a href="/tags/#iOS">iOS</a>
+                            
+                            <a href="/tags/#iPhone">iPhone</a>
+                            
+                            <a href="/tags/#iptables">iptables</a>
+                            
+                            <a href="/tags/#markdown">markdown</a>
+                            
+                            <a href="/tags/#nftables">nftables</a>
+                            
+                            <a href="/tags/#openapi">openapi</a>
+                            
+                            <a href="/tags/#programming+language">programming language</a>
+                            
+                            <a href="/tags/#racket">racket</a>
+                            
+                            <a href="/tags/#select">select</a>
+                            
+                            <a href="/tags/#stl">stl</a>
+                            
+                            <a href="/tags/#swagger">swagger</a>
+                            
+                            <a href="/tags/#test">test</a>
+                            
+                            <a href="/tags/#tutorial">tutorial</a>
+                            
+                            <a href="/tags/#webdev">webdev</a>
+                            
+                        </div>
+                        -->
+                    </section><!-- .widget -->
+                </div><!-- .one-third -->
+
+            </div><!-- .grid -->
+        </div><!-- .inner -->
+    </div><!-- .footer-columns -->
+
+</aside><!-- .footer-widgets -->
+
+    </div><!-- .site -->
+    <div class="profile">
+      <a href="http://10.10.50.50:1125"><img src="" class="profile-image"></a>
+      <div class="profile-about">
+        <h2 style="margin-bottom: 0; font-weight: 700;"></h2>
+        
+        
+        
+        <a href="about"><img src="/img/icon/me.svg" class="social-icon"></a>
+        <br>
+        
+        <br>
+        <div class="mode" id="mode-switcher" onclick="toggleNightMode();">
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--
+  
+<footer class="site-footer">
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li><a href="mailto:Kea Wot <hi@ashang.org>">Kea Wot <hi@ashang.org></a></li>
+        </ul>
+      </div>
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/ashang">
+              <span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+
+              </span>
+              <span class="username">ashang
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+      <div class="footer-col footer-col-3">
+        <p>ramblings notes, things I worked through to make sure I understand.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+-->
+</body>
+</html>

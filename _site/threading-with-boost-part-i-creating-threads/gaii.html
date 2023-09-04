@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <meta name="description" content="Boost is an incredibly powerful collection of portable class libraries for C++.  There are classes for such tasks as date/time manipulation, filesystem inter...">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="canonical" href="http://10.10.50.50:1125/threading-with-boost-part-i-creating-threads/gaii">
+  <link rel="alternate" type="application/rss+xml" title="in love we trust" href="http://10.10.50.50:1125/feed.xml">
+  <title>
+    
+      Threading with Boost - Part I: Creating Threads &middot; in love we trust
+    
+  </title>
+
+  
+  <link rel="canonical" href="http://10.10.50.50:1125/threading-with-boost-part-i-creating-threads/gaii">
+  
+
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/poole.css">
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/syntax.css">
+  <link rel="stylesheet" href="http://10.10.50.50:1125/css/lanyon.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <link rel="shortcut icon" href="http://10.10.50.50:1125/favicon.ico">
+
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="http://10.10.50.50:1125/atom.xml">
+
+  
+</head>
+<body class="fixed-nav"><header class="site-header" >
+    <a class="site-title" href="/">in love we trust</a>
+
+    <nav class="site-nav">
+      <span class="menu-icon">
+        <svg viewBox="0 0 18 15" width="18px" height="15px">
+          <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </span>
+
+      <div class="trigger">
+        
+          
+        
+          
+          <a class="page-link" href="/404/"> </a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/ansible-examples">Ansible examples</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-guide">Ansible quickstart</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-modules">Ansible modules</a>
+          
+        
+          
+          <a class="page-link" href="/ansible-roles">Ansible roles</a>
+          
+        
+          
+          <a class="page-link" href="/ansible">Ansible</a>
+          
+        
+          
+          <a class="page-link" href="/archive">Archive</a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/cmd-test">cmd Test</a>
+          
+        
+          
+          <a class="page-link" href="/cryptsetup">cryptsetup with LUKS</a>
+          
+        
+          
+          <a class="page-link" href="/cupper-shortcodes--percent-sign">Cupper Shortcodes with percent sign</a>
+          
+        
+          
+          <a class="page-link" href="/curl">curl</a>
+          
+        
+          
+          <a class="page-link" href="/downtime">downtime</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/frontend">front-end</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/notes/">WILT</a>
+          
+        
+          
+          <a class="page-link" href="/p4-lang">p4</a>
+          
+        
+          
+        
+          
+        
+          
+          <a class="page-link" href="/tags/">Tags</a>
+          
+        
+          
+        
+          
+          <a class="page-link" href="/tutorials">Tutorials</a>
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    </nav>
+</header>
+<div class="container">
+    <div id="page" class="site">
+      <main class="page-content" aria-label="Content">
+        <main class="content fade-in-down delay-0_5s">
+  <div class="inner">
+    <article class="post">
+      <div class="entry-box">
+        <header class="entry-header">
+          <h2 class="post-title">Threading with Boost - Part I: Creating Threads</h2>
+          <div class="entry-meta">
+            
+              <time class="post-date" datetime="2009-05-13">May 13, 2009</time>
+            
+            
+          </div><!-- .entry-meta -->
+        </header><!-- .entry-header -->
+        <div class="entry-content">
+            <p><a href="http://www.boost.org/">Boost</a> is an incredibly powerful collection of portable class libraries for C++.  There are classes for such tasks as date/time manipulation, filesystem interfaces, networking, numerical programming, interprocess communication and <a href="http://www.boost.org/doc/libs">much more</a>.</p>
+
+<p>The Boost documentation is substantial, but can still be daunting to new users.  So this article is the first of a series on using Boost, starting with basic threading.  It aims to provide an accessible introduction, with complete working examples.</p>
+
+<p>First, this article assumes you know about general threading concepts and the basics of how to use them on your platform.  (For a refresher, see the Wikipedia article on <a href="http://en.wikipedia.org/wiki/Thread_(computer_science)">Threads</a>.)  Here I focus specifically on how to use <a href="http://www.boost.org/doc/libs/1_39_0/doc/html/thread.html">Boost threads</a> in a practical setting, starting from the basics.  I also assume you have Boost installed and ready to use (see the Boost <a href="http://www.boost.org/doc/libs/1_39_0/more/getting_started/index.html">Getting Started Guide</a> for details).</p>
+
+<p>This article looks specifically at the different ways to <em>create</em> threads.  There are many other techniques necessary for real multi-threaded systems, such as synchronisation and mutual exclusion, which will be covered in a future article.</p>
+
+<h2 id="overview">Overview</h2>
+
+<p>A <code class="language-plaintext highlighter-rouge">boost::thread</code> object represents a single thread of execution, as you would normally create and manage using your operating system specific interfaces.  For example: on POSIX systems, a Boost thread uses the <code class="language-plaintext highlighter-rouge">Pthreads</code> API, and on Win32 it uses the native <code class="language-plaintext highlighter-rouge">CreateThread</code> and related calls.  Because Boost abstracts away all the platform-specific code, you can easily write sophisticated and portable code that runs across all major platforms.  A thread object can be set to a special state of not-a-thread, in which case it is inactive (or hasn’t been given a thread function to run yet).</p>
+
+<p>A <code class="language-plaintext highlighter-rouge">boost::thread</code> object is normally constructed by passing the threading function or method it is to run.  There are actually a number of different ways to do so.  I cover the main thread creation approaches below.</p>
+
+<h2 id="code-examples">Code Examples</h2>
+
+<p>All the code examples are provided in a single download below, which you can use for any purpose, no strings attached.  (The usual disclaimer is that no warranties apply!)  And just as Boost runs on many platforms (ie. Windows, Unix/Linux, Mac OS X and others) the example code should be similarly portable.</p>
+
+<ul>
+  <li>Download <a href="http://antonym.org/boost/boost_threads_eg1.zip"><code class="language-plaintext highlighter-rouge">boost_threads_eg1.zip</code></a> (4kB)</li>
+</ul>
+
+<p>There is a separate example program for each section below, and a common Bjam script to build them all (<code class="language-plaintext highlighter-rouge">Jamroot</code>).  <a href="http://www.boost.org/boost-build2/doc/html/index.html">Bjam</a> is the Boost build system, a very powerful (but notoriously difficult to learn, and worthy of a whole series of articles).</p>
+
+<p>Having said that, you are certainly not obliged to use Bjam.  It is still worth knowing how to build applications manually before relying on scripts, so here is an example command line for manual compilation on my system (Mac OS X with Boost installed from MacPorts):</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>g++ -I/opt/local/include -L/opt/local/lib -lboost_thread-mt -o t1 t1.cpp
+</code></pre></div></div>
+
+<p>All this does is add an include path (with the <code class="language-plaintext highlighter-rouge">-I</code> option) pointing to the root of the boost headers, add the library search path (with the <code class="language-plaintext highlighter-rouge">-L</code> option) and link in the threading library (<code class="language-plaintext highlighter-rouge">boost_thread-mt</code>).  You can use the above as the basis for writing our own Makefile if you prefer, or creating build rules in your IDE of choice.</p>
+
+<h2 id="doing-real-work">Doing ‘Real’ Work</h2>
+
+<p>And before we dive in, a quick note on doing “real work”… In the examples below, a simple sleep call is used to simulate performing actual work in the threads.  This is simply to avoid cluttering up the examples with code that would take some finite time to execute but would otherwise be irrelevant.</p>
+
+<p>The simplest way to sleep for a given duration using Boost is to first create a time duration object, and then pass this to the <code class="language-plaintext highlighter-rouge">sleep</code> method of the special <code class="language-plaintext highlighter-rouge">boost::this_thread</code> class.  The <code class="language-plaintext highlighter-rouge">this_thread</code> class gives us a convenient way to refer to the currently running thread, when we otherwise may not be able to access it directly (ie. within an arbitrary function).  Here’s how to sleep for a few seconds:</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="c1">// Three seconds of pure, hard work!</span>
+<span class="n">boost</span><span class="o">::</span><span class="n">posix_time</span><span class="o">::</span><span class="n">seconds</span> <span class="nf">workTime</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="n">boost</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep</span><span class="p">(</span><span class="n">workTime</span><span class="p">);</span></code></pre></figure>
+
+<p>In the <code class="language-plaintext highlighter-rouge">main()</code> function, we then wait for the worker thread to complete using the <code class="language-plaintext highlighter-rouge">join()</code> method.  This will cause the main thread to sleep until the worker thread completes (successfully or otherwise).</p>
+
+<p>The observant reader will wonder then what the advantage is in spawning a thread, only to wait for it to complete?  Surely that serialises the execution path and places us firmly back in sequential world?  What is the point of spawning a thread?  Well, until we figure out how to use the synchronisation mechanisms, this is the most straightforward approach to illustrate thread creation.  And knowing ow to ‘join’ threads is also very important.  To synchronise the completion of a thread, we wait for it to finish by calling <code class="language-plaintext highlighter-rouge">workerThread.join()</code>.</p>
+
+<p>The general structure of the examples below is shown in the following sequence diagram:</p>
+
+<p><img alt="BoostThreadExample.png" src="http://antonym.org/boost/BoostThreadExample.png" width="410" height="462" style="text-align: center; display: block; margin: 0 auto 20px;" /></p>
+
+<p>The application starts, and the main thread runs at (a).  Then at (b), the main thread spawns the worker thread by constructing a thread object with the worker function.  Right after, at (c), the main thread calls <code class="language-plaintext highlighter-rouge">join</code> on the thread, which means it will go to sleep (and not consume any CPU time) until the worker thread has completed.  As soon as the worker thread is created at (b), it will start execution.  At some point later at (d), the worker completes.  Since the main thread was joining on its completion, main wakes up and continues running.  It finishes at (e) and the process terminates.  Each of the examples below follow this general scheme - the difference lies in how the threads are created.</p>
+
+<h2 id="type-1-a-thread-function">Type 1: A Thread Function</h2>
+
+<p>The simplest threading scenario is where you have a simple (C-style) function that you want to run as a separate thread.  You just pass the function to the <code class="language-plaintext highlighter-rouge">boost::thread</code> constructor, and it will start running.  You can then wait for the thread to complete by calling <code class="language-plaintext highlighter-rouge">join()</code>, as shown above.</p>
+
+<p>The following example shows how.  First, we include the correct Boost thread header, create the thread object and pass in our worker function.  The main thread in the process will then wait for the thread to complete.</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;boost/thread.hpp&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;boost/date_time.hpp&gt;</span><span class="cp">
+</span>
+<span class="kt">void</span> <span class="nf">workerFunc</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">boost</span><span class="o">::</span><span class="n">posix_time</span><span class="o">::</span><span class="n">seconds</span> <span class="n">workTime</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Worker: running"</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+    <span class="c1">// Pretend to do something useful...</span>
+    <span class="n">boost</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep</span><span class="p">(</span><span class="n">workTime</span><span class="p">);</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Worker: finished"</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span>
+<span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"main: startup"</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+    <span class="n">boost</span><span class="o">::</span><span class="kr">thread</span> <span class="n">workerThread</span><span class="p">(</span><span class="n">workerFunc</span><span class="p">);</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"main: waiting for thread"</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+    <span class="n">workerThread</span><span class="p">.</span><span class="n">join</span><span class="p">();</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"main: done"</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>When you run the program, you should see output similar to the following:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>% ./t1
+main: startup
+main: waiting for thread
+Worker: running
+Worker: finished
+main: done
+</code></pre></div></div>
+
+<p>It’s as simple as that!  This created a thread and ran it, and you would have seen a pause while the worker thread was running (ok, busy sleeping!).  Later on, we’ll do something a bit more substantial.  But this example shows the absolute minimum code required to start a simple thread.  Simply pass your function to the <code class="language-plaintext highlighter-rouge">boost::thread</code> constructor.</p>
+
+<h2 id="type-2-function-with-arguments">Type 2: Function with Arguments</h2>
+
+<p>So the above function wasn’t terribly useful by itself.  We really want to be able to pass in arguments to the thread function.  And fortunately, it’s very easy - you simply add parameters to the thread object’s constructor, and those arguments are automagically bound and passed in to the thread function.</p>
+
+<p>Let’s say your thread function had the following signature:</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="kt">void</span> <span class="n">workerFunc</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">msg</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="n">delaySecs</span><span class="p">)</span> <span class="c1">//...</span></code></pre></figure>
+
+<p>You simply pass the arguments to the thread constructor after the name of the thread function, thus:</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">boost</span><span class="o">::</span><span class="kr">thread</span> <span class="nf">workerThread</span><span class="p">(</span><span class="n">workerFunc</span><span class="p">,</span> <span class="s">"Hello, boost!"</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span></code></pre></figure>
+
+<p>This example is called ‘t2’ in the source examples.</p>
+
+<h2 id="type-3-functor">Type 3: Functor</h2>
+
+<p>A functor is a fancy name for an object that can be called just like a function.  The class defines a special method by overloading the <code class="language-plaintext highlighter-rouge">operator()</code> which will be invoked when the functor is called.  In this way, the functor can encapsulate the thread’s context and still behave like a thread function.  (Functors are not specific to threads, they are simply very convenient.)</p>
+
+<p>This is what our functor looks like:</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="k">class</span> <span class="nc">Worker</span>
+<span class="p">{</span>
+<span class="nl">public:</span>
+
+    <span class="n">Worker</span><span class="p">(</span><span class="kt">unsigned</span> <span class="n">N</span><span class="p">,</span> <span class="kt">float</span> <span class="n">guess</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="n">iter</span><span class="p">)</span>
+            <span class="o">:</span> <span class="n">m_Number</span><span class="p">(</span><span class="n">N</span><span class="p">),</span>
+              <span class="n">m_Guess</span><span class="p">(</span><span class="n">guess</span><span class="p">),</span>
+              <span class="n">m_Iterations</span><span class="p">(</span><span class="n">iter</span><span class="p">)</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="nf">operator</span><span class="p">()()</span>
+    <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Worker: calculating sqrt("</span> <span class="o">&lt;&lt;</span> <span class="n">m_Number</span>
+                  <span class="o">&lt;&lt;</span> <span class="s">"), itertations = "</span>
+                  <span class="o">&lt;&lt;</span> <span class="n">m_Iterations</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+        <span class="c1">// Use Newton's Method</span>
+        <span class="kt">float</span>   <span class="n">x</span><span class="p">;</span>
+        <span class="kt">float</span>   <span class="n">x_last</span> <span class="o">=</span> <span class="n">m_Guess</span><span class="p">;</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">m_Iterations</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">x_last</span> <span class="o">-</span> <span class="p">(</span><span class="n">x_last</span><span class="o">*</span><span class="n">x_last</span><span class="o">-</span><span class="n">m_Number</span><span class="p">)</span><span class="o">/</span>
+                    <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">x_last</span><span class="p">);</span>
+            <span class="n">x_last</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+
+            <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Iter "</span> <span class="o">&lt;&lt;</span> <span class="n">i</span> <span class="o">&lt;&lt;</span> <span class="s">" = "</span>
+                  <span class="o">&lt;&lt;</span> <span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"Worker: Answer = "</span> <span class="o">&lt;&lt;</span> <span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+
+<span class="k">private</span><span class="o">:</span>
+
+    <span class="kt">unsigned</span>    <span class="n">m_Number</span><span class="p">;</span>
+    <span class="kt">float</span>       <span class="n">m_Guess</span><span class="p">;</span>
+    <span class="kt">unsigned</span>    <span class="n">m_Iterations</span><span class="p">;</span>
+<span class="p">};</span></code></pre></figure>
+
+<p>This worker functor calculates a square root of a number using <a href="http://en.wikipedia.org/wiki/Newton%27s_method">Newton-Rhapson’s method</a>, just for fun (ok, I got bored putting sleep in all the threads).  The number, a rough guess and the number of iterations is passed to the constructor.  The calculation (which is in fact extremely fast) is performed in the thread itself, when the <code class="language-plaintext highlighter-rouge">operator()()</code> gets called.</p>
+
+<p>So in the main code, first we create our callable object, constructing it with any necessary arguments as normal.  Then you pass the instance to the <code class="language-plaintext highlighter-rouge">boost::thread</code> constructor, which will invoke the <code class="language-plaintext highlighter-rouge">operator()()</code> method on your functor.  This becomes the new thread, and runs just like any other thread, with the added benefit that it has access to the object’s context and other methods.  This approach has the benefit of wrapping up a thread into a convenient bundle.</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span>
+<span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"main: startup"</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+    <span class="n">Worker</span> <span class="n">w</span><span class="p">(</span><span class="mi">612</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+    <span class="n">boost</span><span class="o">::</span><span class="kr">thread</span> <span class="n">workerThread</span><span class="p">(</span><span class="n">w</span><span class="p">);</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"main: waiting for thread"</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+    <span class="n">workerThread</span><span class="p">.</span><span class="n">join</span><span class="p">();</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"main: done"</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>Note: A very important consideration when using functors with boost threads is that the thread constructor takes the functor parameter <em>by value</em>, and thus makes a <em>copy</em> of the functor object.  Depending on the design of your functor object, this may have unintended side-effects.  Take care when writing functor objects to ensure that they can be safely copied.</p>
+
+<h2 id="type-4-object-method-i">Type 4: Object method I</h2>
+
+<p>It is frequently convenient to define an object with an instance method that runs on its own thread.  After all, we’re coding C++ here, not C!  With Boost’s <code class="language-plaintext highlighter-rouge">thread</code> object, this only slightly more work than making a regular function into a thread.  First, we have to specify the method using its class qualifier, as you would expect, and we use the <code class="language-plaintext highlighter-rouge">&amp;</code> operator to pass the address of the method.</p>
+
+<p>Because methods in C++ always have an implicit <code class="language-plaintext highlighter-rouge">this</code> pointer passed in as the first parameter, we need to make sure we call the object’s method using the same convention.  So we will pass the object pointer (or <code class="language-plaintext highlighter-rouge">this</code> depending on whether we are inside the object or not) as the first parameter, along with any other actual parameters we might have after that, thus:</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">Worker</span> <span class="nf">w</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="n">boost</span><span class="o">::</span><span class="kr">thread</span> <span class="nf">workerThread</span><span class="p">(</span><span class="o">&amp;</span><span class="n">Worker</span><span class="o">::</span><span class="n">processQueue</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">w</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span></code></pre></figure>
+
+<p>As an aside, take care in your own code that you don’t accidentally allocate an object on the stack in one place, spawn a thread, then have the object go out of scope and be destroyed before the thread has completed!  This could be the source of many tricky bugs.</p>
+
+<p>The full listing is essentially the same.  To pass additional parameters to the method, simply add them in the constructor to the thread object after the object pointer.</p>
+
+<h2 id="type-5-object-method-ii">Type 5: Object method II</h2>
+
+<p>You may want to create a bunch of objects that manage their own threads, and can be created and run in a more flexible manner than keeping around a bunch of objects along with their associated threads in the caller.  (I think they call this encapsulation.)</p>
+
+<p>So our final example places the thread instance within the object itself, and provides methods to manage them.  Since the thread object exists as an instance member (as opposed to a pointer), what happens in the constructor?  In particular, what if we don’t want to run the thread at the same time as we create our object?  Fortunately, the default constructor for the thread creates it in an “invalid” state, called <code class="language-plaintext highlighter-rouge">not-a-thread</code>, which will do nothing until you assign a real one to it (in our <code class="language-plaintext highlighter-rouge">start</code> method, for example).</p>
+
+<p>So now our class declaration has the following data member added:</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="c1">//...</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="n">boost</span><span class="o">::</span><span class="kr">thread</span>    <span class="n">m_Thread</span><span class="p">;</span>
+<span class="c1">//...</span></code></pre></figure>
+
+<p>The <code class="language-plaintext highlighter-rouge">Worker::start()</code> method spawns the thread which will run the <code class="language-plaintext highlighter-rouge">processQueue</code> method.  Notice how we pass in <code class="language-plaintext highlighter-rouge">this</code> as the first bound parameter?  Because we are using an instance method (and not a class method or regular function), we must ensure the first parameter is the instance pointer.  The <code class="language-plaintext highlighter-rouge">N</code> parameter is the first actual parameter for the thread function, as can be seen in its signature.</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="kt">void</span> <span class="nf">start</span><span class="p">(</span><span class="kt">int</span> <span class="n">N</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">m_Thread</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="kr">thread</span><span class="p">(</span><span class="o">&amp;</span><span class="n">Worker</span><span class="o">::</span><span class="n">processQueue</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="n">N</span><span class="p">);</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>The join method is very simply:</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="kt">void</span> <span class="nf">join</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">m_Thread</span><span class="p">.</span><span class="n">join</span><span class="p">();</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>which means our main function becomes no more than:</p>
+
+<figure class="highlight"><pre><code class="language-c--" data-lang="c++"><span class="n">Worker</span> <span class="n">worker</span><span class="p">;</span>
+
+<span class="n">worker</span><span class="p">.</span><span class="n">start</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+
+<span class="n">worker</span><span class="p">.</span><span class="n">join</span><span class="p">();</span></code></pre></figure>
+
+<p>This encapsulation of the threading can be very useful, especially when combined with patterns such as the Singleton (which we will look at in a future article).</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>We have seen a variety of techniques for creating threads using the Boost threading library.  From simple C functions to instance methods with parameters, the thread class permits a great deal of flexibility in how you structure your application.</p>
+
+<h2 id="future-articles">Future Articles</h2>
+
+<p>In later installments, we will look at synchronisation methods, mutexes, and all sorts of other interesting techniques.</p>
+
+<p>Please leave a comment below, with any questions or feedback you may have.  Too long?  Too brief?  More details required?  Something confusing?  Let me know.</p>
+
+        </div><!-- .entry-content -->
+        <footer class="entry-footer">
+          
+            <div class="post-tags">
+              <a href="/tags/" rel="tag">Tags: </a>
+                <a href="/archive/#Boost" rel="tag">Boost</a>, <a href="/archive/#C%2B%2B" rel="tag">C++</a>, <a href="/archive/#Threading" rel="tag">Threading</a>
+            </div>
+          
+          <div class="share-post">
+            <!--
+              <span>Share this:</span>
+                <a class="btn-twitter" target="_blank" href="https://twitter.com/intent/tweet?text=Threading%20with%20Boost%20-%20Part%20I:%20Creating%20Threads&amp;url=http://10.10.50.50:1125/threading-with-boost-part-i-creating-threads/gaii"><i class="fa fa-twitter" aria-hidden="true"></i><span class="screen-reader-text">Twitter</span></a>
+                -->
+          </div><!-- .share-post -->
+        </footer><!-- .entry-footer -->
+      </div><!-- .entry-box -->
+    <div class="post-line"></div>
+    <div class="author-box">
+        <div class="author-info">
+          <!--
+          <h2 class="author-title">About </h2>
+          <p class="author-bio"></p>
+          <p class="author-links">
+              
+              
+            </p>
+            -->
+        </div><!-- .author-info -->
+      </div><!-- .author-box -->
+    </article><!-- .post -->
+    <a href="#" class="top">Top</a>
+  </div><!-- .inner -->
+</main><!-- .content -->
+      </main>
+    <aside class="footer-widgets">
+
+    
+
+    <div id="footer-columns" class="footer-columns">
+        <div class="inner">
+            <div class="grid">
+
+                
+
+                <!-- Create a sorted array of tags -->
+                <div class="one-third">
+                    
+                    
+                    <section class="widget widget-tags">
+                        <!--
+                        <h2 class="widget-title">Tags</h2>
+                        <div class="tagcloud">
+                            
+                            <a href="/tags/#Algorithms">Algorithms</a>
+                            
+                            <a href="/tags/#Apple">Apple</a>
+                            
+                            <a href="/tags/#Boost">Boost</a>
+                            
+                            <a href="/tags/#C%2B%2B">C++</a>
+                            
+                            <a href="/tags/#Cocoa">Cocoa</a>
+                            
+                            <a href="/tags/#Coding">Coding</a>
+                            
+                            <a href="/tags/#Jekyll">Jekyll</a>
+                            
+                            <a href="/tags/#Mac">Mac</a>
+                            
+                            <a href="/tags/#OSX">OSX</a>
+                            
+                            <a href="/tags/#Performance">Performance</a>
+                            
+                            <a href="/tags/#STL">STL</a>
+                            
+                            <a href="/tags/#Threading">Threading</a>
+                            
+                            <a href="/tags/#Unicode">Unicode</a>
+                            
+                            <a href="/tags/#api">api</a>
+                            
+                            <a href="/tags/#c%2B%2B">c++</a>
+                            
+                            <a href="/tags/#c%2B%2B11">c++11</a>
+                            
+                            <a href="/tags/#code+block">code block</a>
+                            
+                            <a href="/tags/#iOS">iOS</a>
+                            
+                            <a href="/tags/#iPhone">iPhone</a>
+                            
+                            <a href="/tags/#iptables">iptables</a>
+                            
+                            <a href="/tags/#markdown">markdown</a>
+                            
+                            <a href="/tags/#nftables">nftables</a>
+                            
+                            <a href="/tags/#openapi">openapi</a>
+                            
+                            <a href="/tags/#programming+language">programming language</a>
+                            
+                            <a href="/tags/#racket">racket</a>
+                            
+                            <a href="/tags/#select">select</a>
+                            
+                            <a href="/tags/#stl">stl</a>
+                            
+                            <a href="/tags/#swagger">swagger</a>
+                            
+                            <a href="/tags/#test">test</a>
+                            
+                            <a href="/tags/#tutorial">tutorial</a>
+                            
+                            <a href="/tags/#webdev">webdev</a>
+                            
+                        </div>
+                        -->
+                    </section><!-- .widget -->
+                </div><!-- .one-third -->
+
+            </div><!-- .grid -->
+        </div><!-- .inner -->
+    </div><!-- .footer-columns -->
+
+</aside><!-- .footer-widgets -->
+
+    </div><!-- .site -->
+    <div class="profile">
+      <a href="http://10.10.50.50:1125"><img src="" class="profile-image"></a>
+      <div class="profile-about">
+        <h2 style="margin-bottom: 0; font-weight: 700;"></h2>
+        
+        
+        
+        <a href="about"><img src="/img/icon/me.svg" class="social-icon"></a>
+        <br>
+        
+        <br>
+        <div class="mode" id="mode-switcher" onclick="toggleNightMode();">
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--
+  
+<footer class="site-footer">
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li><a href="mailto:Kea Wot <hi@ashang.org>">Kea Wot <hi@ashang.org></a></li>
+        </ul>
+      </div>
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/ashang">
+              <span class="icon icon--github"><svg viewBox="0 0 16 16"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+
+              </span>
+              <span class="username">ashang
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+      </div>
+      <div class="footer-col footer-col-3">
+        <p>ramblings notes, things I worked through to make sure I understand.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+-->
+</body>
+</html>

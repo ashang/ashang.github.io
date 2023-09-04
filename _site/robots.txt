@@ -1,0 +1,1 @@
+Sitemap: http://10.10.50.50:1125/sitemap.xml

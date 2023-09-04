@@ -1,0 +1,1946 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>in love we trust</title>
+    <description>ramblings notes, things I worked through to make sure I understand.</description>
+    <link>http://10.10.50.50:1125/</link>
+    <atom:link href="http://10.10.50.50:1125/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Mon, 04 Sep 2023 10:44:41 +0800</pubDate>
+    <lastBuildDate>Mon, 04 Sep 2023 10:44:41 +0800</lastBuildDate>
+    <generator>Jekyll v4.3.2</generator>
+    
+      <item>
+        <title>Chang An</title>
+        <description>
+&lt;p&gt;綦&lt;/p&gt;
+
+&lt;p&gt;长史&lt;/p&gt;
+
+&lt;p&gt;《河岳英灵集》是唐代诗歌总集，唐代殷璠编选。共三卷。&lt;/p&gt;
+
+&lt;p&gt;《河岳英灵集》仿梁昭明太子撰《文选》方式，[1]选录盛唐开元二年（714年）至安史之乱前夕（天宝十二载，753年）的诗人，自常建至阎防等二十四人，共收诗二百三十四首。今存二百三十首，有殷璠的《叙》和《论》。《河岳英灵集》所选诗人历仕坎坷，“皆淹蹇之士”，[2]其职官品阶最高是王维，这与殷璠本人仕途不顺达有关[3]。河岳英灵集为现存盛唐诗最重要的选本，王维、孟浩然、李白、王昌龄、髙适和岑参皆有入选。
+注释
+	维基文库中相关的原始文献：河岳英灵集 (四库全书本)&lt;/p&gt;
+
+&lt;p&gt;《河岳英灵集·叙》曰：“梁昭明太子撰《文选》，后相效著述者十余家，咸自称尽善，高听之士，或未全许。且大同至于天宝，把笔者近千人，除势要及贿赂者，中间烁然可尚者，五分无二，岂得逢诗辑纂，往往盈帙。盖身后立节，当无诡随，其应诠拣不精，玉石相混，致令众口销铄，为知音所痛。”
+《四库全书总目》卷一八六《河岳英灵集》云：“姓名之下各著品题……其序谓‘爰因退迹，得遂宿心’，盖不得志而著述者，故所录皆淹蹇之士，所论皆感慨之言，而序称名不副实，才不合道，遂权压梁窦，终无取焉，其宗旨可知也。……”
+傅璇琮，李珍华《河岳英灵集》：“他在对诗人的评论中一再以文学成就与仕履进退相对立以表示对世局的不满，认为有才能的人，不是屈居下位，就是受到毁谤。”&lt;/p&gt;
+
+</description>
+        <pubDate>Tue, 08 Aug 2023 00:00:00 +0800</pubDate>
+        <link>http://10.10.50.50:1125/chang-an</link>
+        <guid isPermaLink="true">http://10.10.50.50:1125/chang-an</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>X11 forwarding request failed</title>
+        <description>&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+ssh -Y 
+
+$ ssh code
+X11 forwarding request failed
+Last login: Thu Aug 31 14:52:32 2023 from 10.10.50.14
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;wget -O- https://www.virtualbox.org/download/oracle_vbox_2016.asc&lt;/td&gt;
+      &lt;td&gt;sudo gpg –dearmor –yes –output /usr/share/keyrings/oracle-virtualbox-2016.gpg&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;echo “deb [arch=amd64 signed-by=/usr/share/keyrings/oracle-virtualbox-2016.gpg] http://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib”&lt;/td&gt;
+      &lt;td&gt;sudo tee /etc/apt/sources.list.d/virtualbox.list&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;W: https://mirrors.ustc.edu.cn/docker-ce/linux/debian/dists/bullseye/InRelease: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.&lt;/p&gt;
+
+&lt;p&gt;[2023-08-30 11:15:12] DEBUG close: 10.10.50.14:33202
+[2023-08-30 11:15:24] DEBUG close: 10.10.50.14:50482
+[2023-08-30 17:59:23] DEBUG accept: 10.10.50.14:48456
+[2023-08-30 17:59:23] DEBUG Jekyll::Commands::Serve::Servlet is invoked.
+[2023-08-30 17:59:54] DEBUG close: 10.10.50.14:48456
+^C[2023-08-31 15:11:19] DEBUG close TCPSocket(10.10.50.50, 1124)
+[2023-08-31 15:11:19] INFO  going to shutdown …
+[2023-08-31 15:11:19] INFO  WEBrick::HTTPServer#start done.&lt;/p&gt;
+
+&lt;p&gt;$ vboxmanage -v | cut -dr -f1
+7.0.10&lt;/p&gt;
+&lt;h1 id=&quot;aaroncode4t4t&quot;&gt;aaron@code:~/4t/4t&lt;/h1&gt;
+
+&lt;p&gt;wget https://download.virtualbox.org/virtualbox/7.0.2/Oracle_VM_VirtualBox_Extension_Pack-7.0.2.vbox-extpack&lt;/p&gt;
+
+&lt;p&gt;sudo vboxmanage extpack install Oracle_VM_VirtualBox_Extension_Pack-7.0.2.vbox-extpack&lt;/p&gt;
+
+&lt;p&gt;swap 0 0&lt;/p&gt;
+
+&lt;p&gt;VBoxManage startvm “VM name” –type headless&lt;/p&gt;
+
+&lt;p&gt;127.0.0.2:3391&lt;/p&gt;
+
+&lt;p&gt;127.0.0.2:3391&lt;/p&gt;
+
+&lt;p&gt;aaron    tty2     -                28:36m Xwayland :1 -rootless -terminate -core -listenfd 29 -listenfd 30 -wm 70
+aaron    tty3     -                28:36m /usr/libexec/gnome-session-binary –session=gnome
+aaron    pts/13   tmux(10892).%21  10:09  lvim -u /home/aaron/.local/share/lunarvim/lvim/init.lua -p x-forwarding.md&lt;/p&gt;
+
+</description>
+        <pubDate>Sat, 05 Aug 2023 00:00:00 +0800</pubDate>
+        <link>http://10.10.50.50:1125/x-forwarding</link>
+        <guid isPermaLink="true">http://10.10.50.50:1125/x-forwarding</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>P4</title>
+        <description>
+&lt;h2 id=&quot;implementing-basic-forwarding&quot;&gt;Implementing Basic Forwarding&lt;/h2&gt;
+
+&lt;p&gt;With IPv4 forwarding, the switch must perform the following actions for every packet: (i) update the source and destination MAC addresses, (ii) decrement the time-to-live (TTL) in the IP header, and (iii) forward the packet out the appropriate port.&lt;/p&gt;
+
+&lt;p&gt;Your switch will have a single table, which the control plane will populate with static rules. Each rule will map an IP address to the MAC address and output port for the next hop. We have already defined the control plane rules, so you only need to implement the data plane logic of your P4 program.&lt;/p&gt;
+
+&lt;p&gt;使用Vagrant可以快速的搭建虚拟机或者起一套集群，而且可以通过Vagrantfile和相应的脚本将设计好的虚拟机进行移植，如果你经常需要学习搭建k8s、hadoop之类的分布式系统，&lt;/p&gt;
+
+&lt;p&gt;#这里的“2”，指的是使用Vagrantfile使用的版本，默认不需要改动
+Vagrant.configure(“2”) do |config|
+  #指定使用的镜像
+  config.vm.box = “ubuntu18”&lt;/p&gt;
+
+&lt;p&gt;#指定使用public_network，通过bridge参数指定网卡，网络具体内容在后面
+  config.vm.network “public_network” , bridge: “wlan0”&lt;/p&gt;
+
+&lt;p&gt;#指定虚拟机开机的时候执行的脚本，可以使用当前路径指定，也可以使用绝对路径
+  config.vm.provision “shell” , path: “startup.sh”&lt;/p&gt;
+
+&lt;p&gt;#指定虚拟机的mac地址，k8s集群可能会用到mac地址的信息。如果不特别指定，使用vagrant创建的集群mac地址会相同
+  config.vm.base_mac = “080027000000”&lt;/p&gt;
+
+&lt;p&gt;#指定共享的文件目录，默认当前目录已经映射到了虚拟机”/vagrant“中，你也可以专门指定
+  config.vm.synced_folder “./” , “/share_folder”  , craete: true&lt;/p&gt;
+
+&lt;p&gt;#指定虚拟机的内存、CPU等等
+  config.vm.provider “virtualbox” do |vb| 
+    vb.memory = “512”
+    vb.cpus = “1”
+    vb.gui = false
+  end
+end&lt;/p&gt;
+
+&lt;S-Del&gt;
+
+
+
+一般Vagrant会为虚拟机默认创建一张nat网卡用于连接Internet以及vagrant ssh的连接，宿主机对应的网卡为vmnet8，虚拟机对应的网卡为enp0s3
+
+
+
+指定虚拟机到宿主机的端口映射即可实现端口的转发
+
+# -*- mode: ruby -*-
+# vi: set ft=ruby:
+Vagrant.configure(&quot;2&quot;) do |config|
+  #指定使用的镜像
+  config.vm.box = &quot;ubuntu18&quot;
+
+  #指定使用forwarded_port网络，即端口转发，将虚拟机的80端口转发到宿主机的8080端口
+  config.vm.network &quot;forwarded_port&quot; , guest: 80 , host:8080
+end
+
+
+
+
+
+
+私有网络的建立对应virtualbox的Host-Only模式，私有网络中宿主机对应的网卡一般以vboxnet开头
+
+09
+09
+
+    一种是不指定网络的ip，指定使用dhcp自动分配，宿主机自动创建一张网卡，并为虚拟机分配ip
+    一种是指定了网络的ip，宿主机根据你的ip自动创建一张网卡，同时给虚拟机分配指定的ip，需要保证指定ip的有效性。如果需要搭建集群要保证个个虚拟机在同一网段下。以及不要使用**.1**结尾的ip，这个ip通常作为网关。
+
+# -*- mode: ruby -*-
+# vi: set ft=ruby:
+Vagrant.configure(&quot;2&quot;) do |config|
+  #指定使用的镜像
+  config.vm.box = &quot;ubuntu18&quot;
+
+  #指定使用private_network网络，即私有网络
+  #可以自行指定网络ip（需要保证ip有效），如果不指定，可以指定DHCP分配一个ip
+  config.vm.network &quot;private_network&quot; , ip: &quot;192.168.100.10&quot;
+  # config.vm.network &quot;private_network&quot; , type: &quot;dhcp&quot;
+
+end
+
+
+
+
+
+
+公有网络的建立对应的是virtualbox中的Bridge模式，局域网为虚拟机分配一个ip，局域网内的其他机器也可以访问到
+
+# -*- mode: ruby -*-
+# vi: set ft=ruby:
+Vagrant.configure(&quot;2&quot;) do |config|
+  #指定使用的镜像
+  config.vm.box = &quot;ubuntu18&quot;
+
+  #指定使用public_network网络，即公有网络，这里采用的是Bridge网络，即桥接模式，需要指定宿主机有效的网卡
+  #公有网络默认就是DHCP分配ip
+  config.vm.network &quot;public_network&quot; ,bridge: &quot;wlan0&quot;
+  #config.vm.network &quot;public_network&quot; ,bridge: &quot;wlan0&quot;, ip: &quot;10.252.75.192&quot;
+
+end
+
+
+同时指定多台或者单台虚拟机来部署集群
+
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(&quot;2&quot;) do |config|
+  # 设定虚拟机的内存和CPU
+  config.vm.provider &quot;virtualbox&quot; do |vb|
+    vb.memory = &quot;512&quot;
+  end
+
+  #(1..3)指定虚拟机的数量
+  (1..3).each do |i| 
+    config.vm.define &quot;node#{i}&quot; do |node|
+      node.vm.hostname = &quot;node#{i}&quot;
+      node.vm.network &quot;private_network&quot; , ip: &quot;192.168.100.10#{i}&quot;
+      node.vm.synced_folder &quot;app#{i}&quot; , &quot;/vagrant&quot;  
+      node.vm.box = &quot;ubuntu18&quot;
+      node.vm.provision &quot;shell&quot; , path: &quot;bootstrap-node.sh&quot;
+      node.vm.provision &quot;shell&quot; , path: &quot;bootstrap-common.sh&quot;
+      node.vm.base_mac = &quot;08002700000#{i}&quot;
+    end
+  end
+
+  # 单独指定一台虚拟机
+  config.vm.define &quot;master&quot; do |master|
+    master.vm.hostname = &quot;master&quot;
+    master.vm.box = &quot;ubuntu18&quot;
+    master.vm.network &quot;private_network&quot; , ip: &quot;192.168.100.200&quot;
+    master.vm.synced_folder &quot;master&quot; , &quot;/vagrant&quot; 
+    master.vm.provision &quot;shell&quot; , path: &quot;bootstrap-master.sh&quot;
+    master.vm.provision &quot;shell&quot; , path: &quot;bootstrap-common.sh&quot;
+    master.vm.base_mac = &quot;080027000000&quot;
+  end
+end
+
+注意在创建虚拟机之前需要创建用到的脚本和目录
+
+vagrant init 
+vim Vagrantfile   
+mkdir app1 app2 app3 master 
+touch bootstrap-common.sh bootstrap-node.sh bootstrap-master.sh
+vagrant up
+
+
+
+nginx集群
+
+这里的搭建就先不考虑高可用的情况，用虚拟ip和nginx的默认的负载均衡搭建一个简单的集群
+
+对应的Vagrantfile
+
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(&quot;2&quot;) do |config|
+  # 设定虚拟机的内存和CPU
+  config.vm.provider &quot;virtualbox&quot; do |vb|
+    vb.memory = &quot;512&quot;
+  end
+
+  #(1..3)指定虚拟机的数量
+  (1..3).each do |i| 
+    config.vm.define &quot;node#{i}&quot; do |node|
+      node.vm.hostname = &quot;node#{i}&quot;
+      node.vm.network &quot;private_network&quot; , ip: &quot;192.168.100.10#{i}&quot;
+      node.vm.synced_folder &quot;app#{i}&quot; , &quot;/vagrant&quot;  
+      node.vm.synced_folder &quot;common&quot; , &quot;/common&quot;  
+      node.vm.box = &quot;ubuntu18&quot;
+      node.vm.provision &quot;shell&quot; , path: &quot;bootstrap-node.sh&quot;
+      node.vm.provision &quot;shell&quot; , path: &quot;bootstrap-common.sh&quot;
+      node.vm.base_mac = &quot;08002700000#{i}&quot;
+    end
+  end
+
+  # 单独指定一台虚拟机
+  config.vm.define &quot;master&quot; do |master|
+    master.vm.hostname = &quot;master&quot;
+    master.vm.box = &quot;ubuntu18&quot;
+    master.vm.network &quot;private_network&quot; , ip: &quot;192.168.100.200&quot;
+    master.vm.synced_folder &quot;master&quot; , &quot;/vagrant&quot; 
+    master.vm.synced_folder &quot;common&quot; , &quot;/common&quot; 
+    master.vm.provision &quot;shell&quot; , path: &quot;bootstrap-master.sh&quot;
+    master.vm.provision &quot;shell&quot; , path: &quot;bootstrap-common.sh&quot;
+    master.vm.base_mac = &quot;080027000000&quot;
+  end
+end
+
+建立对应的脚本和文件
+
+mkdir app1 app2 app3 master common
+touch bootstrap-common.sh bootstrap-node.sh bootstrap-master.sh
+
+配置nginx安装的脚本，同时准备一份简单的nginx.conf文件直接输入进去
+
+bootstrap-common.sh
+
+apt-get install -y nginx
+echo &apos;user www-data;
+worker_processes auto;
+pid /run/nginx.pid;
+include /etc/nginx/modules-enabled/*.conf;
+events {
+        worker_connections 768;
+}
+http {
+    myapp1 {
+        192.168.100.101;
+        192.168.100.102;
+        192.168.100.103;
+        192.168.100.200;
+    }
+
+        sendfile on;
+        tcp_nopush on;
+        tcp_nodelay on;
+        keepalive_timeout 65;
+        types_hash_max_size 2048;
+        include /etc/nginx/mime.types;
+        default_type application/octet-stream;
+        ssl_protocols TLSv1 TLSv1.1 TLSv1.2; # Dropping SSLv3, ref: POODLE
+        ssl_prefer_server_ciphers on;
+        access_log /var/log/nginx/access.log;
+        error_log /var/log/nginx/error.log;
+        gzip on;
+        include /etc/nginx/conf.d/*.conf;
+        include /etc/nginx/sites-enabled/*;
+}
+&apos; &amp;gt; /etc/nginx/nginx.conf
+systemctl start nginx
+
+配置虚拟网卡，通过一个虚拟ip来访问
+
+bootstrap-master.sh
+
+ifconfig enp0s8:1 192.168.100.201 broadcast 192.168.100.255 netmask 255.255.255.0 up
+route add -host 192.168.100.201 dev enp0s8:1
+
+启动集群
+
+vagrant up
+curl 192.168.100.201 
+
+常用命令操作
+操作	效果
+vagrant up [box]	根据Vagrantfile建立虚拟机，可选参数指定建立的虚拟机，默认全部建立
+vagrant status [box]	查看虚拟机状态，可选参数指定查看的虚拟机，默认全部查看
+vagrant status [box]	
+vagrant init [box]	在当前目录建立Vagrantfile，可选参数指定镜像名称
+vagrant halt [box]	关闭虚拟机，可选参数关闭建立的虚拟机，默认全部关闭，开机需要使用vagrant up
+vagrant reload [box]	重启虚拟机，并根据新的Vagrantfile重载虚拟机，可选参数指定重载的虚拟机，默认全部重载
+vagrant box add [link]	根据link链接下载对应的box，https://app.vagrantup.com/boxes/search，可以在这个链接里搜索对应的box
+vagrant destroy [box]	删除虚拟机，可选参数指定删除的虚拟机，默认全部删除
+
+
+## Halo
+
+Gradle 的 Node 集成插件使用了 https://github.com/node-gradle/gradle-node-plugin，目前也已经内置支持了 pnpm。
+
+
+ Console（原 halo-admin）与后端分离的时候就是单独托管到另外一个库，但目前带来以下问题：
+
+    PR 和 Milestone 管理分散，无法仅在 Halo 的仓库进行管理，可能造成两边状态不同步。
+        https://github.com/halo-dev/console/milestones
+        https://github.com/halo-dev/halo/milestones
+    构建流程和开发环境运行可能有点繁琐。
+
+如果合并为一个仓库，会带来以下好处：
+
+    PR 和 Milestone 可以包括后端和 Console 端，发布版本的时候更加方便。
+    可以统一使用 Gradle 脚本来构建或者运行 Console，也可以减少 CI 构建的流程，Console 的构建产物可以直接输出到 src/main/resources/console。
+    可以让维护人员更加集中维护一个仓库。
+    如果一个 PR 同时包含后端和 Console 的修改，可以仅用一个 PR 完成，而不是向两个仓库分别提交。
+    和插件的项目结构一致，参考：https://github.com/halo-sigs/plugin-links
+
+/area core
+/area console
+/kind improvement
+/cc @halo-dev/sig-halo
+/cc @halo-dev/sig-halo-console
+
+
+
+
+
+
+
+#这里的“2”，指的是使用Vagrantfile使用的版本，默认不需要改动
+Vagrant.configure(&quot;2&quot;) do |config|
+  #指定使用的镜像
+  config.vm.box = &quot;ubuntu18&quot;
+
+  #指定使用public_network，通过bridge参数指定网卡，网络具体内容在后面
+  config.vm.network &quot;public_network&quot; , bridge: &quot;wlan0&quot;
+
+  #指定虚拟机开机的时候执行的脚本，可以使用当前路径指定，也可以使用绝对路径
+  config.vm.provision &quot;shell&quot; , path: &quot;startup.sh&quot; 
+
+  #指定虚拟机的mac地址，k8s集群可能会用到mac地址的信息。如果不特别指定，使用vagrant创建的集群mac地址会相同
+  config.vm.base_mac = &quot;080027000000&quot;
+  
+  #指定共享的文件目录，默认当前目录已经映射到了虚拟机”/vagrant“中，你也可以专门指定
+  config.vm.synced_folder &quot;./&quot; , &quot;/share_folder&quot;  , craete: true
+
+  #指定虚拟机的内存、CPU等等
+  config.vm.provider &quot;virtualbox&quot; do |vb| 
+    vb.memory = &quot;512&quot;
+    vb.cpus = &quot;1&quot;
+    vb.gui = false
+  end
+end
+
+
+
+## A Proxy Profile contains settings like server ip &amp;amp; port for proxy.
+Profiles are the the basic configuration units in SwitchyOmega.
+We have already created an example profile for you. Try opening it.
+
+
+You can tell SwitchyOmega to switch between proxies automatically through the mighty Switch Profile.
+However, its features cannot be covered in this quick guide.
+You can open this profile to unlock its power some time later.
+
+
+
+
+Update your Pocket login to Firefox accounts by August 15, 2023
+See Details 
+Pocket users, including those who log in via Google and Apple, must update.
+Security benefits powered by Mozilla include two-factor authentication and account recovery keys.
+You can still access Pocket in any browser or mobile device, not just Firefox.
+
+
+
+
+
+https://getpocket.com/import/instapaper_process.php
+
+
+504 ERROR
+The request could not be satisfied.
+CloudFront attempted to establish a connection with the origin, but either the attempt failed or the origin closed the connection. We can&apos;t connect to the server for this app or website at this time. There might be too much traffic or a configuration error. Try again later, or contact the app or website owner.
+If you provide content to customers through CloudFront, you can find steps to troubleshoot and help prevent this error by reviewing the CloudFront documentation.
+
+Generated by cloudfront (CloudFront)
+Request ID: yN_eUskDZ_kbRDU0nhlkc_MHIaH2ZwKawPoU8IFY9N1LcR7FbCXP3w==
+
+
+
+
+
+
+$ more si.sh 
+#!/bin/sh
+find . -name &quot;*.h&quot; -o -name &quot;*.c&quot; -o -name &quot;*.cc&quot; &amp;gt; cscope.files
+cscope -bkq -i cscope.files
+ctags -R
+
+
+
+&lt;/S-Del&gt;
+</description>
+        <pubDate>Tue, 01 Aug 2023 00:00:00 +0800</pubDate>
+        <link>http://10.10.50.50:1125/p4</link>
+        <guid isPermaLink="true">http://10.10.50.50:1125/p4</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Im Config</title>
+        <description>
+&lt;p&gt;The user configuration has been manually modified.
+Remove the user configuration /home/aaron/.xinputrc manually to use im-config.
+If a daemon program for the previous configuration is re-started by the X session manager, you may need to kill it manually with kill(1).
+See im-config(8) and /usr/share/doc/im-config/README.Debian.gz for more.&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 25 Jul 2022 00:00:00 +0800</pubDate>
+        <link>http://10.10.50.50:1125/im-config</link>
+        <guid isPermaLink="true">http://10.10.50.50:1125/im-config</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Duokan</title>
+        <description>
+&lt;p&gt;$ adb shell mount
+tmpfs on /dev type tmpfs (rw,seclabel,nosuid,relatime,mode=755)
+devpts on /dev/pts type devpts (rw,seclabel,relatime,mode=600,ptmxmode=000)
+proc on /proc type proc (rw,relatime,gid=3009,hidepid=2)
+sysfs on /sys type sysfs (rw,seclabel,relatime)
+selinuxfs on /sys/fs/selinux type selinuxfs (rw,relatime)
+tmpfs on /mnt type tmpfs (rw,seclabel,nosuid,nodev,noexec,relatime,mode=755,gid=1000)
+/dev/block/mmcblk2p16 on /metadata type ext4 (rw,sync,seclabel,nosuid,nodev,noatime,discard)
+/dev/block/dm-5 on / type ext4 (ro,seclabel,nodev,relatime)
+/dev/block/dm-7 on /vendor type ext4 (ro,seclabel,relatime)
+/dev/block/dm-9 on /odm type ext4 (ro,seclabel,relatime)
+/dev/block/dm-8 on /product type ext4 (ro,seclabel,relatime)
+/dev/block/dm-6 on /system_ext type ext4 (ro,seclabel,relatime)
+tmpfs on /apex type tmpfs (rw,seclabel,nosuid,nodev,noexec,relatime,mode=755)
+tmpfs on /linkerconfig type tmpfs (rw,seclabel,nosuid,nodev,noexec,relatime,mode=755)
+tmpfs on /mnt/installer type tmpfs (rw,seclabel,nosuid,nodev,noexec,relatime,mode=755,gid=1000)
+tmpfs on /mnt/androidwritable type tmpfs (rw,seclabel,nosuid,nodev,noexec,relatime,mode=755,gid=1000)
+/dev/block/dm-5 on /apex/com.android.media type ext4 (ro,seclabel,relatime)
+/dev/block/dm-5 on /apex/com.android.runtime type ext4 (ro,seclabel,relatime)
+/dev/block/dm-5 on /apex/com.android.permission type ext4 (ro,seclabel,relatime)
+/dev/block/dm-5 on /apex/com.android.resolv type ext4 (ro,seclabel,relatime)
+/dev/block/dm-5 on /apex/com.android.tzdata type ext4 (ro,seclabel,relatime)
+/dev/block/dm-5 on /apex/com.android.vndk.v30 type ext4 (ro,seclabel,relatime)
+/dev/block/dm-5 on /apex/com.android.mediaprovider type ext4 (ro,seclabel,relatime)
+/dev/block/dm-5 on /apex/com.android.sdkext type ext4 (ro,seclabel,relatime)
+/dev/block/dm-5 on /apex/com.android.tethering type ext4 (ro,seclabel,relatime)
+/dev/block/dm-5 on /apex/com.android.neuralnetworks type ext4 (ro,seclabel,relatime)
+/dev/block/dm-5 on /apex/com.android.ipsec type ext4 (ro,seclabel,relatime)
+/dev/block/dm-5 on /apex/com.android.i18n type ext4 (ro,seclabel,relatime)
+/dev/block/dm-5 on /apex/com.android.extservices type ext4 (ro,seclabel,relatime)
+/dev/block/dm-5 on /apex/com.android.os.statsd type ext4 (ro,seclabel,relatime)
+/dev/block/dm-5 on /apex/com.android.conscrypt type ext4 (ro,seclabel,relatime)
+/dev/block/dm-5 on /apex/com.android.wifi type ext4 (ro,seclabel,relatime)
+/dev/block/dm-5 on /apex/com.android.adbd type ext4 (ro,seclabel,relatime)
+/dev/block/dm-5 on /apex/com.android.art type ext4 (ro,seclabel,relatime)
+/dev/block/dm-5 on /apex/com.android.media.swcodec type ext4 (ro,seclabel,relatime)
+none on /dev/blkio type cgroup (rw,nosuid,nodev,noexec,relatime,blkio)
+none on /sys/fs/cgroup type cgroup2 (rw,nosuid,nodev,noexec,relatime)
+none on /dev/cpuctl type cgroup (rw,nosuid,nodev,noexec,relatime,cpu)
+none on /acct type cgroup (rw,nosuid,nodev,noexec,relatime,cpuacct)
+none on /dev/cpuset type cgroup (rw,nosuid,nodev,noexec,relatime,cpuset,noprefix,release_agent=/sbin/cpuset_release_agent)
+none on /dev/memcg type cgroup (rw,nosuid,nodev,noexec,relatime,memory)
+none on /dev/stune type cgroup (rw,nosuid,nodev,noexec,relatime,schedtune)
+tmpfs on /linkerconfig type tmpfs (rw,seclabel,nosuid,nodev,noexec,relatime,mode=755)
+tracefs on /sys/kernel/tracing type tracefs (rw,seclabel,relatime)
+none on /config type configfs (rw,nosuid,nodev,noexec,relatime)
+binder on /dev/binderfs type binder (rw,relatime,max=1048576,stats=global)
+none on /sys/fs/fuse/connections type fusectl (rw,relatime)
+bpf on /sys/fs/bpf type bpf (rw,nosuid,nodev,noexec,relatime)
+pstore on /sys/fs/pstore type pstore (rw,seclabel,nosuid,nodev,noexec,relatime)
+/dev/block/mmcblk2p15 on /cache type ext4 (rw,seclabel,nosuid,nodev,noatime,nodiratime,discard,noauto_da_alloc)
+/dev/block/mmcblk2p21 on /data type f2fs (rw,lazytime,seclabel,nosuid,nodev,noatime,background_gc=on,discard,no_heap,user_xattr,inline_xattr,acl,inline_data,inline_dentry,flush_merge,extent_cache,mode=adaptive,active_logs=6,reserve_root=32768,resuid=0,resgid=1065,alloc_mode=default,fsync_mode=posix)
+/dev/block/mmcblk2p21 on /data/user/0 type f2fs (rw,lazytime,seclabel,nosuid,nodev,noatime,background_gc=on,discard,no_heap,user_xattr,inline_xattr,acl,inline_data,inline_dentry,flush_merge,extent_cache,mode=adaptive,active_logs=6,reserve_root=32768,resuid=0,resgid=1065,alloc_mode=default,fsync_mode=posix)
+tmpfs on /data_mirror type tmpfs (rw,seclabel,nosuid,nodev,noexec,relatime,mode=700,gid=1000)
+/dev/block/mmcblk2p21 on /data_mirror/data_ce/null type f2fs (rw,lazytime,seclabel,nosuid,nodev,noatime,background_gc=on,discard,no_heap,user_xattr,inline_xattr,acl,inline_data,inline_dentry,flush_merge,extent_cache,mode=adaptive,active_logs=6,reserve_root=32768,resuid=0,resgid=1065,alloc_mode=default,fsync_mode=posix)
+/dev/block/mmcblk2p21 on /data_mirror/data_ce/null/0 type f2fs (rw,lazytime,seclabel,nosuid,nodev,noatime,background_gc=on,discard,no_heap,user_xattr,inline_xattr,acl,inline_data,inline_dentry,flush_merge,extent_cache,mode=adaptive,active_logs=6,reserve_root=32768,resuid=0,resgid=1065,alloc_mode=default,fsync_mode=posix)
+/dev/block/mmcblk2p21 on /data_mirror/data_de/null type f2fs (rw,lazytime,seclabel,nosuid,nodev,noatime,background_gc=on,discard,no_heap,user_xattr,inline_xattr,acl,inline_data,inline_dentry,flush_merge,extent_cache,mode=adaptive,active_logs=6,reserve_root=32768,resuid=0,resgid=1065,alloc_mode=default,fsync_mode=posix)
+/dev/block/mmcblk2p21 on /data_mirror/cur_profiles type f2fs (rw,lazytime,seclabel,nosuid,nodev,noatime,background_gc=on,discard,no_heap,user_xattr,inline_xattr,acl,inline_data,inline_dentry,flush_merge,extent_cache,mode=adaptive,active_logs=6,reserve_root=32768,resuid=0,resgid=1065,alloc_mode=default,fsync_mode=posix)
+tmpfs on /storage type tmpfs (rw,seclabel,nosuid,nodev,noexec,relatime,mode=755,gid=1000)
+adb on /dev/usb-ffs/adb type functionfs (rw,relatime)
+mtp on /dev/usb-ffs/mtp type functionfs (rw,relatime)
+ptp on /dev/usb-ffs/ptp type functionfs (rw,relatime)
+/dev/fuse on /mnt/user/0/emulated type fuse (rw,lazytime,nosuid,nodev,noexec,noatime,user_id=0,group_id=0,allow_other)
+/dev/fuse on /mnt/installer/0/emulated type fuse (rw,lazytime,nosuid,nodev,noexec,noatime,user_id=0,group_id=0,allow_other)
+/dev/fuse on /mnt/androidwritable/0/emulated type fuse (rw,lazytime,nosuid,nodev,noexec,noatime,user_id=0,group_id=0,allow_other)
+/dev/fuse on /storage/emulated type fuse (rw,lazytime,nosuid,nodev,noexec,noatime,user_id=0,group_id=0,allow_other)
+/dev/block/mmcblk2p21 on /mnt/pass_through/0/emulated type f2fs (rw,lazytime,seclabel,nosuid,nodev,noatime,background_gc=on,discard,no_heap,user_xattr,inline_xattr,acl,inline_data,inline_dentry,flush_merge,extent_cache,mode=adaptive,active_logs=6,reserve_root=32768,resuid=0,resgid=1065,alloc_mode=default,fsync_mode=posix)
+/dev/block/mmcblk2p21 on /mnt/user/0/emulated/0/Android/data type f2fs (rw,lazytime,seclabel,nosuid,nodev,noatime,background_gc=on,discard,no_heap,user_xattr,inline_xattr,acl,inline_data,inline_dentry,flush_merge,extent_cache,mode=adaptive,active_logs=6,reserve_root=32768,resuid=0,resgid=1065,alloc_mode=default,fsync_mode=posix)
+/dev/block/mmcblk2p21 on /storage/emulated/0/Android/data type f2fs (rw,lazytime,seclabel,nosuid,nodev,noatime,background_gc=on,discard,no_heap,user_xattr,inline_xattr,acl,inline_data,inline_dentry,flush_merge,extent_cache,mode=adaptive,active_logs=6,reserve_root=32768,resuid=0,resgid=1065,alloc_mode=default,fsync_mode=posix)
+/dev/block/mmcblk2p21 on /mnt/androidwritable/0/emulated/0/Android/data type f2fs (rw,lazytime,seclabel,nosuid,nodev,noatime,background_gc=on,discard,no_heap,user_xattr,inline_xattr,acl,inline_data,inline_dentry,flush_merge,extent_cache,mode=adaptive,active_logs=6,reserve_root=32768,resuid=0,resgid=1065,alloc_mode=default,fsync_mode=posix)
+/dev/block/mmcblk2p21 on /mnt/installer/0/emulated/0/Android/data type f2fs (rw,lazytime,seclabel,nosuid,nodev,noatime,background_gc=on,discard,no_heap,user_xattr,inline_xattr,acl,inline_data,inline_dentry,flush_merge,extent_cache,mode=adaptive,active_logs=6,reserve_root=32768,resuid=0,resgid=1065,alloc_mode=default,fsync_mode=posix)
+/dev/block/mmcblk2p21 on /mnt/user/0/emulated/0/Android/obb type f2fs (rw,lazytime,seclabel,nosuid,nodev,noatime,background_gc=on,discard,no_heap,user_xattr,inline_xattr,acl,inline_data,inline_dentry,flush_merge,extent_cache,mode=adaptive,active_logs=6,reserve_root=32768,resuid=0,resgid=1065,alloc_mode=default,fsync_mode=posix)
+/dev/block/mmcblk2p21 on /storage/emulated/0/Android/obb type f2fs (rw,lazytime,seclabel,nosuid,nodev,noatime,background_gc=on,discard,no_heap,user_xattr,inline_xattr,acl,inline_data,inline_dentry,flush_merge,extent_cache,mode=adaptive,active_logs=6,reserve_root=32768,resuid=0,resgid=1065,alloc_mode=default,fsync_mode=posix)
+/dev/block/mmcblk2p21 on /mnt/androidwritable/0/emulated/0/Android/obb type f2fs (rw,lazytime,seclabel,nosuid,nodev,noatime,background_gc=on,discard,no_heap,user_xattr,inline_xattr,acl,inline_data,inline_dentry,flush_merge,extent_cache,mode=adaptive,active_logs=6,reserve_root=32768,resuid=0,resgid=1065,alloc_mode=default,fsync_mode=posix)
+/dev/block/mmcblk2p21 on /mnt/installer/0/emulated/0/Android/obb type f2fs (rw,lazytime,seclabel,nosuid,nodev,noatime,background_gc=on,discard,no_heap,user_xattr,inline_xattr,acl,inline_data,inline_dentry,flush_merge,extent_cache,mode=adaptive,active_logs=6,reserve_root=32768,resuid=0,resgid=1065,alloc_mode=default,fsync_mode=posix)&lt;/p&gt;
+</description>
+        <pubDate>Mon, 25 Jul 2022 00:00:00 +0800</pubDate>
+        <link>http://10.10.50.50:1125/duokan</link>
+        <guid isPermaLink="true">http://10.10.50.50:1125/duokan</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Sonic</title>
+        <description>&lt;p&gt;The SONiC image install can be from HTTP since the image is a standard ONIE image.&lt;/p&gt;
+
+&lt;p&gt;To speed up testing in case of failures, download a master image to local access for install.&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ONIE:/ &lt;span class=&quot;c&quot;&gt;# onie-nos-install http://10.10.50.22/build/sonic-broadcom-master.bin&lt;/span&gt;
+discover: Rescue mode detected. No discover stopped.
+Info: Attempting http://10.10.50.22/build/sonic-broadcom-master.bin ...
+Connecting to 10.10.50.22 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;10.10.50.22:80&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+installer      100% |&lt;span class=&quot;k&quot;&gt;*******************************&lt;/span&gt;|  1010M  0:00:00 ETA
+ONIE: Executing installer: http://10.10.50.22/build/sonic-broadcom-master.bin
+Verifying image checksum ... OK.
+Preparing image archive ... OK.
+Installing SONiC &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;ONIE
+ONIE Installer: platform: x86_64-broadcom-r0
+onie_platform: x86_64-accton_as5712_54x-r0
+Partition &lt;span class=&quot;c&quot;&gt;#1 is in use.&lt;/span&gt;
+Partition &lt;span class=&quot;c&quot;&gt;#2 is in use.&lt;/span&gt;
+Partition &lt;span class=&quot;c&quot;&gt;#3 is in use.&lt;/span&gt;
+Partition &lt;span class=&quot;c&quot;&gt;#4 is in use.&lt;/span&gt;
+Partition &lt;span class=&quot;c&quot;&gt;#5 is in use.&lt;/span&gt;
+Partition &lt;span class=&quot;c&quot;&gt;#6 is in use.&lt;/span&gt;
+Partition &lt;span class=&quot;c&quot;&gt;#7 is available&lt;/span&gt;
+Creating new SONiC-OS partition /dev/sda7 ...
+Could not create partition 7 from 34 to 67108897
+Unable to &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;partition 7&lt;span class=&quot;s1&quot;&gt;&apos;s name to &apos;&lt;/span&gt;SONiC-OS&lt;span class=&quot;s1&quot;&gt;&apos;!
+Error encountered; not saving changes.
+Warning: The first trial of creating partition failed, trying the largest aligned available block of sectors on the disk
+Warning: The kernel is still using the old partition table.
+The new table will be used at the next reboot.
+The operation has completed successfully.
+mke2fs 1.42.13 (17-May-2015)
+
+Filesystem too small for a journal
+Creating filesystem with 1004 1k blocks and 128 inodes
+
+Allocating group tables: done
+Writing inode tables: done
+Writing superblocks and filesystem accounting information: done
+
+Installing SONiC to /tmp/tmp.DtgLhF/image-master.115998-e2396b46e
+Archive:  fs.zip
+   creating: boot/
+  inflating: boot/config-5.10.0-12-2-amd64
+  inflating: boot/System.map-5.10.0-12-2-amd64
+  inflating: boot/vmlinuz-5.10.0-12-2-amd64
+unzip: write: No space left on device
+unzip: inflate error
+Failure: Unable to install image: http://10.10.50.22/build/sonic-broadcom-master.bin
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Adjust partitions to meet the storage and install again.&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ONIE:/ &lt;span class=&quot;c&quot;&gt;# fdisk /dev/sda&lt;/span&gt;
+
+Command &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;m &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;help&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;: p
+
+Disk /dev/sda: 8048 MB, 8048869376 bytes
+255 heads, 63 sectors/track, 978 cylinders
+Units &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; cylinders of 16065 &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; 512 &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 8225280 bytes
+
+   Device Boot  Start       End      Blocks  Id System
+/dev/sda1         1         979     7860223+ ee EFI GPT
+Partition 1 has different physical/logical beginnings &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;non-Linux?&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:
+   &lt;span class=&quot;nv&quot;&gt;phys&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=(&lt;/span&gt;0, 0, 1&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;logical&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=(&lt;/span&gt;0, 0, 2&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+Partition 1 has different physical/logical endings:
+   &lt;span class=&quot;nv&quot;&gt;phys&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=(&lt;/span&gt;1023, 254, 63&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;logical&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=(&lt;/span&gt;978, 140, 58&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+
+Command &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;m &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;help&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;: q
+
+ONIE:/ &lt;span class=&quot;c&quot;&gt;# gdisk /dev/sda&lt;/span&gt;
+GPT fdisk &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;gdisk&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; version 0.8.8
+
+Partition table scan:
+  MBR: protective
+  BSD: not present
+  APM: not present
+  GPT: present
+
+Found valid GPT with protective MBR&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; using GPT.
+
+Command &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;? &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;help&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;: p
+Disk /dev/sda: 15720448 sectors, 7.5 GiB
+Logical sector size: 512 bytes
+Disk identifier &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;GUID&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;: 9B20D3A5-9453-4713-AA02-D865DF54E8DE
+Partition table holds up to 128 entries
+First usable sector is 34, last usable sector is 15720414
+Partitions will be aligned on 2-sector boundaries
+Total free space is 0 sectors &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;0 bytes&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+
+Number  Start &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;sector&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  End &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;sector&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  Size   Code  Name
+   1      2048            6143   2.0 MiB     EF02  GRUB-BOOT
+   2      6144          268287   128.0 MiB   3000  ONIE-BOOT
+   3    268288          301055   16.0 MiB    8300  PICOS
+   4    301056         4495359   2.0 GiB     8300  PICOS
+   5   4495360         8689663   2.0 GiB     8300  PICOS
+   6   8689664        15720414   3.4 GiB     8300  Linux filesystem
+   7        34            2047   1007.0 KiB  8300  SONiC-OS
+
+Command &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;? &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;help&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;: d
+Partition number &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;1-7&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:
+Partition number &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;1-7&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;: 3
+
+Command &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;? &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;help&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;: d
+Partition number &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;1-7&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;: 4
+
+Command &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;? &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;help&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;: p
+Disk /dev/sda: 15720448 sectors, 7.5 GiB
+Logical sector size: 512 bytes
+Disk identifier &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;GUID&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;: 9B20D3A5-9453-4713-AA02-D865DF54E8DE
+Partition table holds up to 128 entries
+First usable sector is 34, last usable sector is 15720414
+Partitions will be aligned on 2-sector boundaries
+Total free space is 4227072 sectors &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;2.0 GiB&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+
+Number  Start &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;sector&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  End &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;sector&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  Size   Code  Name
+   1      2048            6143   2.0 MiB     EF02  GRUB-BOOT
+   2      6144          268287   128.0 MiB   3000  ONIE-BOOT
+   5   4495360         8689663   2.0 GiB     8300  PICOS
+   6   8689664        15720414   3.4 GiB     8300  Linux filesystem
+   7        34            2047   1007.0 KiB  8300  SONiC-OS
+
+Command &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;? &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;help&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;: d
+Partition number &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;1-7&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;: 5
+
+Command &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;? &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;help&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;: d
+Partition number &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;1-7&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;: 6
+
+Command &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;? &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;help&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;: d
+Partition number &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;1-7&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;: 7
+
+Command &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;? &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;help&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;: p
+Disk /dev/sda: 15720448 sectors, 7.5 GiB
+Logical sector size: 512 bytes
+Disk identifier &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;GUID&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;: 9B20D3A5-9453-4713-AA02-D865DF54E8DE
+Partition table holds up to 128 entries
+First usable sector is 34, last usable sector is 15720414
+Partitions will be aligned on 2-sector boundaries
+Total free space is 15454141 sectors &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;7.4 GiB&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+
+Number  Start &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;sector&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  End &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;sector&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  Size   Code  Name
+   1      2048            6143   2.0 MiB     EF02  GRUB-BOOT
+   2      6144          268287   128.0 MiB   3000  ONIE-BOOT
+
+Command &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;? &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;help&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;: w
+
+Final checks complete. About to write GPT data. THIS WILL OVERWRITE EXISTING
+PARTITIONS!!
+
+Do you want to proceed? &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Y/N&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;: y
+OK&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; writing new GUID partition table &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;GPT&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; to /dev/sda.
+Warning: The kernel is still using the old partition table.
+The new table will be used at the next reboot.
+The operation has completed successfully.
+ONIE:/ &lt;span class=&quot;c&quot;&gt;# partprobe&lt;/span&gt;
+ONIE:/ &lt;span class=&quot;c&quot;&gt;# fdisk -l /dev/sda&lt;/span&gt;
+
+Disk /dev/sda: 8048 MB, 8048869376 bytes
+255 heads, 63 sectors/track, 978 cylinders
+Units &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; cylinders of 16065 &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; 512 &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 8225280 bytes
+
+   Device Boot  Start       End      Blocks  Id System
+/dev/sda1         1         979     7860223+ ee EFI GPT
+Partition 1 has different physical/logical beginnings &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;non-Linux?&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:
+   &lt;span class=&quot;nv&quot;&gt;phys&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=(&lt;/span&gt;0, 0, 1&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;logical&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=(&lt;/span&gt;0, 0, 2&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+Partition 1 has different physical/logical endings:
+   &lt;span class=&quot;nv&quot;&gt;phys&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=(&lt;/span&gt;1023, 254, 63&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;logical&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=(&lt;/span&gt;978, 140, 58&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+ONIE:/ &lt;span class=&quot;c&quot;&gt;# gdisk -l /dev/sda&lt;/span&gt;
+GPT fdisk &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;gdisk&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; version 0.8.8
+
+Partition table scan:
+  MBR: protective
+  BSD: not present
+  APM: not present
+  GPT: present
+
+Found valid GPT with protective MBR&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; using GPT.
+Disk /dev/sda: 15720448 sectors, 7.5 GiB
+Logical sector size: 512 bytes
+Disk identifier &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;GUID&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;: 9B20D3A5-9453-4713-AA02-D865DF54E8DE
+Partition table holds up to 128 entries
+First usable sector is 34, last usable sector is 15720414
+Partitions will be aligned on 2048-sector boundaries
+Total free space is 15454141 sectors &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;7.4 GiB&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+
+Number  Start &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;sector&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  End &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;sector&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;  Size   Code  Name
+   1      2048            6143   2.0 MiB     EF02  GRUB-BOOT
+   2      6144          268287   128.0 MiB   3000  ONIE-BOOT
+ONIE:/ &lt;span class=&quot;c&quot;&gt;# onie-nos-install http://10.10.50.22/build/sonic-broadcom-master.bin&lt;/span&gt;
+discover: Rescue mode detected. No discover stopped.
+Info: Attempting http://10.10.50.22/build/sonic-broadcom-master.bin ...
+Connecting to 10.10.50.22 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;10.10.50.22:80&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+installer      100% |&lt;span class=&quot;k&quot;&gt;*******************************&lt;/span&gt;|  1010M  0:00:00 ETA
+ONIE: Executing installer: http://10.10.50.22/build/sonic-broadcom-master.bin
+Verifying image checksum ... OK.
+Preparing image archive ... OK.
+Installing SONiC &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;ONIE
+ONIE Installer: platform: x86_64-broadcom-r0
+onie_platform: x86_64-accton_as5712_54x-r0
+Partition &lt;span class=&quot;c&quot;&gt;#1 is in use.&lt;/span&gt;
+Partition &lt;span class=&quot;c&quot;&gt;#2 is in use.&lt;/span&gt;
+Partition &lt;span class=&quot;c&quot;&gt;#3 is available&lt;/span&gt;
+Creating new SONiC-OS partition /dev/sda3 ...
+Could not create partition 3 from 268288 to 67377151
+Unable to &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;partition 3&lt;span class=&quot;s1&quot;&gt;&apos;s name to &apos;&lt;/span&gt;SONiC-OS&lt;span class=&quot;s1&quot;&gt;&apos;!
+Error encountered; not saving changes.
+Warning: The first trial of creating partition failed, trying the largest aligned available block of sectors on the disk
+Warning: The kernel is still using the old partition table.
+The new table will be used at the next reboot.
+The operation has completed successfully.
+mke2fs 1.42.13 (17-May-2015)
+Creating filesystem with 1931515 4k blocks and 483328 inodes
+Filesystem UUID: c2c1aa7f-923e-477e-a5fb-7b1c9c9e0d85
+Superblock backups stored on blocks:
+  32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632
+
+Allocating group tables: done
+Writing inode tables: done
+Creating journal (32768 blocks): done
+Writing superblocks and filesystem accounting information: done
+
+Installing SONiC to /tmp/tmp.6RCqUh/image-master.115998-e2396b46e
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This install needs some time, we can check some status from another terminal.&lt;/p&gt;
+
+&lt;p&gt;Such as the temp mount point of the new partition.&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\s&lt;/span&gt;sh root@10.10.51.186
+The authenticity of host &lt;span class=&quot;s1&quot;&gt;&apos;10.10.51.186 (10.10.51.186)&apos;&lt;/span&gt; can&lt;span class=&quot;s1&quot;&gt;&apos;t be established.
+RSA key fingerprint is SHA256:SxaUcEBJKNK35XSZFgw/YYN/JTCNnlwLFLnWRskdEKw.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added &apos;&lt;/span&gt;10.10.51.186&lt;span class=&quot;s1&quot;&gt;&apos; (RSA) to the list of known hosts.
+ONIE:~ # df
+Filesystem     1K-blocks      Used Available Use% Mounted on
+tmpfs              10240        20     10220   0% /run
+tmpfs              10240         0     10240   0% /run/lock
+tmpfs            4078664         4   4078660   0% /tmp
+tmpfs            4078664   1034744   3043920  25% /var/tmp
+tmpfs            4078664         0   4078664   0% /run/shm
+/dev/sda2         122835     12638    101023  11% /mnt/onie-boot
+tmpfs-installer  4078664   1035092   3043572  25% /tmp/tmp.NCEfNm
+/dev/sda3        7473612   1465168   5605760  21% /tmp/tmp.6RCqUh
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Install finished, system booted.&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Initializing Intel&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;R&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; Boot Agent GE v1.5.43
+PXE 2.1 Build 092 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;WfM 2.0&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+Press Ctrl+S to enter the Setup Menu..
+
+...
+Sent SIGKILL toreboot: Restarting system                               B2
+reboot: machine restart
+
+Version 2.16.1242. Copyright &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;C&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; 2013 American Megatrends, Inc.
+BIOS Date: 11/20/2014 10:55:31 Ver:
+Press  &amp;lt;ESC&amp;gt; to enter setup.
+
+                    GNU GRUB  version 2.02~beta3
+ &lt;span class=&quot;k&quot;&gt;******************************************************************************&lt;/span&gt;
+ &lt;span class=&quot;k&quot;&gt;**&lt;/span&gt;SONiC-OS-master.115998-e2396b46e                                     &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;
+ &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; ONIE                                                                 &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;
+ &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;                                                                      &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;
+ &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;                                                                      &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;
+ &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;                                                                      &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;
+ &lt;span class=&quot;k&quot;&gt;******************************************************************************&lt;/span&gt;
+
+  Use the &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; and &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; keys to &lt;span class=&quot;k&quot;&gt;select &lt;/span&gt;which entry is highlighted.
+  Press enter to boot the selected OS, &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;e&lt;span class=&quot;s1&quot;&gt;&apos; to edit the commands
+  before booting or `c&apos;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;a command-line.
+   The highlighted entry will be executed automatically &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;0s.
+
+  Booting &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;SONiC-OS-master.115998-e2396b46e&lt;span class=&quot;s1&quot;&gt;&apos;
+Loading SONiC-OS OS kernel ...
+Loading SONiC-OS OS initial ramdisk ...
+tune2fs 1.46.2 (28-Feb-2021)
+Setting reserved blocks percentage to 0% (0 blocks)
+Setting reserved blocks count to 0
+[   15.377355] pstore: crypto_comp_decompress failed, ret = -22!
+[   19.550812] rc.local[472]: + cat /etc/sonic/sonic_version.yml
+[   19.569952] rc.local[473]: + grep build_version
+[   19.594555] rc.local[477]: + sed -e s/build_version: //g;s/&apos;&lt;/span&gt;//g
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   19.620272] rc.local[466]: + &lt;span class=&quot;nv&quot;&gt;SONIC_VERSION&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;master.115998-e2396b46e
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   19.637344] rc.local[466]: + &lt;span class=&quot;nv&quot;&gt;FIRST_BOOT_FILE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/host/image-master.115998-e2396b46e/platform/firsttime
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   19.657287] rc.local[466]: + &lt;span class=&quot;nv&quot;&gt;SONIC_CONFIG_DIR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/host/image-master.115998-e2396b46e/sonic-configOS initial ramdisk ...
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   19.677362] rc.local[466]: + &lt;span class=&quot;nv&quot;&gt;SONIC_ENV_FILE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;/host/image-master.115998-e2396b46e/sonic-config/sonic-environment
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   19.697494] rc.local[466]: + &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; /host/image-master.115998-e2396b46e/sonic-config &lt;span class=&quot;nt&quot;&gt;-a&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; /host/image-master.115998-e2396b46e/sonic-config/sonic-environment &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   19.725299] rc.local[466]: + logger SONiC version master.115998-e2396b46e starting up...
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   19.822461] rc.local[466]: + &lt;span class=&quot;nv&quot;&gt;grub_installation_needed&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   19.839238] rc.local[466]: + &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-e&lt;/span&gt; /host/machine.conf &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   19.858222] rc.local[466]: + &lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt; /host/machine.conf
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   19.865300] rc.local[466]: + &lt;span class=&quot;nv&quot;&gt;onie_version&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;2017.05.00.08
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   19.881409] rc.local[466]: + &lt;span class=&quot;nv&quot;&gt;onie_vendor_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;259
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   19.903524] rc.local[466]: + &lt;span class=&quot;nv&quot;&gt;onie_platform&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;x86_64-accton_as5712_54x-r0
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   19.922043] rc.local[466]: + &lt;span class=&quot;nv&quot;&gt;onie_machine&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;accton_as5712_54x
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   19.937392] rc.local[466]: + &lt;span class=&quot;nv&quot;&gt;onie_machine_rev&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   19.953335] rc.local[466]: + &lt;span class=&quot;nv&quot;&gt;onie_arch&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;x86_64
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   19.959582] rc.local[466]: + &lt;span class=&quot;nv&quot;&gt;onie_config_version&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   19.973354] rc.local[466]: + &lt;span class=&quot;nv&quot;&gt;onie_build_date&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;2017-08-22T11:01+0800
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   19.985981] rc.local[466]: + &lt;span class=&quot;nv&quot;&gt;onie_partition_type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;gpt
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   19.994635] rc.local[466]: + &lt;span class=&quot;nv&quot;&gt;onie_kernel_version&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;4.1.23
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   20.009377] rc.local[466]: + &lt;span class=&quot;nv&quot;&gt;onie_firmware&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;bios
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   20.016919] rc.local[466]: + &lt;span class=&quot;nv&quot;&gt;onie_switch_asic&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;bcm
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   20.033296] rc.local[466]: + &lt;span class=&quot;nv&quot;&gt;onie_skip_ethmgmt_macs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;no
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   20.041298] rc.local[466]: + &lt;span class=&quot;nv&quot;&gt;onie_grub_image_name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;grubx64.efi
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   20.073654] rc.local[466]: + program_console_speed
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   20.100544] rc.local[507]: + &lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-Eo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;console&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;ttyS[0-9]+,[0-9]+
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   20.121906] kdump-tools[452]: Starting kdump-tools:
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   20.139713] rc.local[506]: + &lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; /proc/cmdline
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   20.153571] kdump-tools[515]: no &lt;span class=&quot;nv&quot;&gt;crashkernel&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; parameter &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;the kernel cmdline ...
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   20.173668] kdump-tools[541]:  failed!
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   20.185817] rc.local[522]: + &lt;span class=&quot;nb&quot;&gt;cut&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; , &lt;span class=&quot;nt&quot;&gt;-f2&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   20.198222] rc.local[466]: + &lt;span class=&quot;nv&quot;&gt;speed&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;115200
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   20.217970] rc.local[466]: + &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-z&lt;/span&gt; 115200 &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   20.237336] rc.local[466]: + &lt;span class=&quot;nv&quot;&gt;CONSOLE_SPEED&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;115200
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   20.254500] rc.local[531]: + &lt;span class=&quot;nb&quot;&gt;grep &lt;/span&gt;agetty /lib/systemd/system/serial-getty@.service
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   20.279617] rc.local[532]: + &lt;span class=&quot;nb&quot;&gt;grep &lt;/span&gt;keep-baud
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   20.293301] rc.local[532]: &lt;span class=&quot;nv&quot;&gt;ExecStart&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;-/sbin/agetty &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&apos;-p -- \\u&apos;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--keep-baud&lt;/span&gt; 115200,57600,38400,9600 %I &lt;span class=&quot;nv&quot;&gt;$TERM&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   20.313866] rc.local[466]: + &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; 0 &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 0 &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   20.329349] rc.local[466]: + &lt;span class=&quot;nb&quot;&gt;sed&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; s|&lt;span class=&quot;se&quot;&gt;\-\-&lt;/span&gt;keep&lt;span class=&quot;se&quot;&gt;\-&lt;/span&gt;baud .&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; %I| 115200 %I|g /lib/systemd/system/serial-getty@.service
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   20.350160] rc.local[466]: + systemctl daemon-reload
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   20.662966] rc.local[466]: + &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; /host/image-master.115998-e2396b46e/platform/firsttime &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   20.682346] rc.local[466]: + &lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;First boot detected. Performing first boot tasks...
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   20.701354] rc.local[466]: First boot detected. Performing first boot tasks...
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   20.722212] rc.local[466]: + &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   20.737363] rc.local[466]: + &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; x86_64-accton_as5712_54x-r0 &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   20.746894] rc.local[466]: + &lt;span class=&quot;nv&quot;&gt;platform&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;x86_64-accton_as5712_54x-r0
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   20.765343] rc.local[466]: + &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; /host/old_config &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   20.781318] rc.local[466]: + &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; /host/minigraph.xml &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   20.797399] rc.local[466]: + &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   20.809317] rc.local[466]: + &lt;span class=&quot;nb&quot;&gt;touch&lt;/span&gt; /tmp/pending_config_initialization
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   20.819812] rc.local[466]: + &lt;span class=&quot;nb&quot;&gt;touch&lt;/span&gt; /tmp/notify_firstboot_to_platform
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   20.837314] rc.local[466]: + &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; /host/reboot-cause/platform &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   20.853413] rc.local[466]: + &lt;span class=&quot;nb&quot;&gt;mkdir&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; /host/reboot-cause/platform
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   20.860808] rc.local[466]: + &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; /host/image-master.115998-e2396b46e/platform/x86_64-accton_as5712_54x-r0 &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   20.881311] rc.local[466]: + dpkg &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; /host/image-master.115998-e2396b46e/platform/x86_64-accton_as5712_54x-r0/sonic-platform-accton-as5712-54x_1.1_amd64.deb
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   21.670500] rc.local[568]: Selecting previously unselected package sonic-platform-accton-as5712-54x.
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   22.892010] rc.local[568]: &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Reading database ... 34554 files and directories currently installed.&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   22.913344] rc.local[568]: Preparing to unpack .../sonic-platform-accton-as5712-54x_1.1_amd64.deb ...
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   22.933304] rc.local[568]: Unpacking sonic-platform-accton-as5712-54x &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;1.1&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; ...
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   32.305752] rc.local[568]: Setting up sonic-platform-accton-as5712-54x &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;1.1&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; ...
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   32.872907] rc.local[605]: Created symlink /etc/systemd/system/multi-user.target.wants/as5712-platform-monitor.service → /lib/systemd/system/as5712-platform-monitor.service.
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   48.209853] rc.local[466]: + &lt;span class=&quot;nb&quot;&gt;sync&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   52.806791] rc.local[466]: + &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; x86_64-accton_as5712_54x-r0 &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   52.829671] rc.local[466]: + &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   52.841303] rc.local[466]: + &lt;span class=&quot;nb&quot;&gt;mkdir&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; /var/platform
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   52.857340] rc.local[466]: + &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; /etc/default/kdump-tools &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   52.873276] rc.local[466]: + &lt;span class=&quot;nb&quot;&gt;sed&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-e&lt;/span&gt; s/__PLATFORM__/x86_64-accton_as5712_54x-r0/g /etc/default/kdump-tools
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   52.893263] rc.local[466]: + firsttime_exit
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   52.905247] rc.local[466]: + &lt;span class=&quot;nb&quot;&gt;rm&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-rf&lt;/span&gt; /host/image-master.115998-e2396b46e/platform/firsttime
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;   52.921273] rc.local[466]: + &lt;span class=&quot;nb&quot;&gt;exit &lt;/span&gt;0
+
+Debian GNU/Linux 11 sonic ttyS1
+
+sonic login:
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;sonic-architecture&quot;&gt;SONiC Architecture&lt;/h2&gt;
+
+&lt;p&gt;SONiC places each module in independent docker containers to keep high cohesion among semantically-affine components, while reducing coupling between disjointed ones. Each of these components are written to be entirely independent of the platform-specific details required to interact with lower-layer abstractions.&lt;/p&gt;
+
+&lt;p&gt;SONiC breaks its main functional components into the following docker containers:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Dhcp-relay&lt;/li&gt;
+  &lt;li&gt;Pmon&lt;/li&gt;
+  &lt;li&gt;Snmp&lt;/li&gt;
+  &lt;li&gt;Lldp&lt;/li&gt;
+  &lt;li&gt;Bgp&lt;/li&gt;
+  &lt;li&gt;Teamd&lt;/li&gt;
+  &lt;li&gt;Database&lt;/li&gt;
+  &lt;li&gt;Swss&lt;/li&gt;
+  &lt;li&gt;Syncd&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The following diagram displays a high-level view of the functionality enclosed within each docker-container, and how these containers interact among themselves. Notice that not all SONiC applications interact with other SONiC components, as some of these collect their state from external entities. We are making use of blue-arrows to represent the interactions with the centralized redis-engine, and black-arrows for all the others (netlink, /sys file-system, etc).&lt;/p&gt;
+
+&lt;p&gt;Even though most of SONiC’s main components are held within docker containers, there are some key modules seating within the linux-host system itself. That is the case of SONiC’s configuration module (sonic-cfggen) and SONiC’s CLI.&lt;/p&gt;
+
+&lt;h3 id=&quot;platform-monitor-container---pmon&quot;&gt;Platform Monitor container - pmon&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Sensord&lt;/p&gt;
+
+    &lt;p&gt;– Log sensor readings from hardware components&lt;/p&gt;
+
+    &lt;p&gt;– Alert when an alarm is signaled&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Fancontrol&lt;/p&gt;
+
+    &lt;p&gt;– Collect temperature stats from platform sensors&lt;/p&gt;
+
+    &lt;p&gt;– React on that by increasing/decreasing fan speed&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;database-container&quot;&gt;Database container&lt;/h3&gt;
+
+&lt;p&gt;redis-database engine: a key-value database to provide a language independent interface, a method for data persistence, replication and multi-process communication among all SONiC subsystems.&lt;/p&gt;
+
+&lt;p&gt;By relying on the publisher/subscriber messaging paradigm offered by the redis-engine infrastructure, applications can subscribe only to the data-views that they require, and avoid implementation details that are irrelevant to their functionality.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;APPL_DB&lt;/p&gt;
+
+    &lt;p&gt;– Stores the state generated by all application containers&lt;/p&gt;
+
+    &lt;p&gt;– EX: routes, next-hops, neighbors, interfaces&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;CONFIG_DB&lt;/p&gt;
+
+    &lt;p&gt;– Stores the configuration created by SONiC applications&lt;/p&gt;
+
+    &lt;p&gt;– EX: port configurations, interfaces, vlans&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;STATE_DB&lt;/p&gt;
+
+    &lt;p&gt;– stores all the state resolve cross-modular dependencies between
+subsystems&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;ASIC_DB&lt;/p&gt;
+
+    &lt;p&gt;– Stores the necessary state of ASIC configuration and operation&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;swss-switch-state-services-container&quot;&gt;SWSS Switch State Services container&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Orchagent&lt;/p&gt;
+
+    &lt;p&gt;– The most critical component in the SwSS
+subsystem&lt;/p&gt;
+
+    &lt;p&gt;– As consumer for state coming from APPL_DB&lt;/p&gt;
+
+    &lt;p&gt;– As producer for state being pushed into ASIC_DB&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;intfMgrd&lt;/p&gt;
+
+    &lt;p&gt;– Configure interfaces in the linux kernel&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;vlanMgrd&lt;/p&gt;
+
+    &lt;p&gt;– Configure vlan-interfaces in the linux kernel&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;syncd-container&quot;&gt;Syncd container&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Syncd&lt;/p&gt;
+
+    &lt;p&gt;– Links with the ASIC SDK library provided by the hardware-vendor&lt;/p&gt;
+
+    &lt;p&gt;– Injects state to the ASIC by invoking the interfaces provided for such effect&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;SAI API&lt;/p&gt;
+
+    &lt;p&gt;– Defines the API to provide a vendor-independent forwarding elements control&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;ASIC SDK&lt;/p&gt;
+
+    &lt;p&gt;– A SAI-friendly implementation&lt;/p&gt;
+
+    &lt;p&gt;– Typically provided in the form of a dynamic-linked-library which hooks up to a driving process&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;sai-switch-abstraction-interface&quot;&gt;SAI: Switch Abstraction Interface&lt;/h2&gt;
+
+&lt;p&gt;• Standardized C API to program ASICs&lt;/p&gt;
+
+&lt;p&gt;https://github.com/opencomputeproject/SAI/inc&lt;/p&gt;
+
+&lt;h3 id=&quot;hardware-elements-for-pmon&quot;&gt;Hardware elements for PMON&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;https://github.com/Azure/sonic-buildimage&lt;/li&gt;
+  &lt;li&gt;device/{vendor}/{model}/&lt;/li&gt;
+  &lt;li&gt;pmon_daemon_control.json&lt;/li&gt;
+  &lt;li&gt;plugins&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;sdk--platform-for-syncd&quot;&gt;Sdk &amp;amp; Platform for Syncd&lt;/h3&gt;
+
+&lt;p&gt;https://github.com/Azure/sonic-buildimage/tree/master/platform/barefoot&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;bfn-platform.mk&lt;/li&gt;
+  &lt;li&gt;bfn-sai.mk&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;https://github.com/barefootnetworks/sonic-release-pkgs/tree/dev&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Modify bfn-platform.mk &amp;amp; bfn-sai.mk&lt;/li&gt;
+  &lt;li&gt;$ make target/docker-syncd-bfn.gz&lt;/li&gt;
+  &lt;li&gt;Upload new container to SONiC&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Upgrade SONiC syncd&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;$ docker load &amp;lt; docker-syncd-bfn.gz&lt;/li&gt;
+  &lt;li&gt;Tag the image as latest&lt;/li&gt;
+  &lt;li&gt;$ sudo systemctl restart swss&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;docker ps&lt;/li&gt;
+  &lt;li&gt;docker images&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;switchp4&quot;&gt;Switch.p4&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;https://github.com/p4lang/switch&lt;/li&gt;
+  &lt;li&gt;p4src&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;pipeline-selection-from-configuration&quot;&gt;Pipeline selection from configuration&lt;/h3&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ vim /etc/sonic/config_db.json
+
+&quot;DEVICE_METADATA&quot;: {
+&quot;localhost&quot;: {
+&quot;hostname&quot;: &quot;sonic&quot;,
+&quot;p4_profile&quot;: ”xxx_profile&quot;,
+……
+$ sudo config reload -y
+
+lIlIn syncd docker image 
+/opt/bfn
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;possible-way-to-add-new-feature-in-sonic-12&quot;&gt;Possible way to add new feature in SONiC (1/2)&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Add new container with new feature&lt;/li&gt;
+  &lt;li&gt;Add new api, in syncd&lt;/li&gt;
+  &lt;li&gt;Compile and apply new pipeline&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;docker-sonic-vsgz-and-docker-sonic-p4gz&quot;&gt;docker-sonic-vs.gz and docker-sonic-p4.gz&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Docker image for all-in-one software virtual switch and p4 software switch (gzip tar archive)&lt;/li&gt;
+  &lt;li&gt;Run gns3 for emulation&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;how-to-configure-sonic&quot;&gt;How to configure SONiC?&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Configuration Database&lt;/p&gt;
+
+    &lt;p&gt;– https://github.com/Azure/sonic-swss/blob/master/doc/Configuration.md&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Command Line Interface (CLI)&lt;/p&gt;
+
+    &lt;p&gt;– https://github.com/Azure/sonic-utilities/blob/master/doc/Command-Reference.md&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;sonic-p4-software-switch&quot;&gt;SONIC-P4 SOFTWARE SWITCH&lt;/h2&gt;
+
+&lt;p&gt;SONiC-P4 is a software switch that runs on the P4-emulated SAI behavioral model software switch ASIC.&lt;/p&gt;
+
+&lt;p&gt;Code for this maintained by Mellanox under https://github.com/Mellanox/SAI-P4-BM.&lt;/p&gt;
+
+&lt;p&gt;It uses the sai_bm.p4 to program the P4-emulated switch ASIC to emulate the data plane behavior.&lt;/p&gt;
+
+&lt;p&gt;On top of that, it runs the real SONiC network stack.&lt;/p&gt;
+
+&lt;p&gt;The current SONiC-P4 is released as a docker image.&lt;/p&gt;
+
+&lt;h2 id=&quot;sonic-with-frr&quot;&gt;Sonic with FRR&lt;/h2&gt;
+
+&lt;h2 id=&quot;links&quot;&gt;Links&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/sonic-net/SONiC/blob/master/doc/SONiC-User-Manual.md&quot;&gt;https://github.com/sonic-net/SONiC/blob/master/doc/SONiC-User-Manual.md&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Thu, 21 Jul 2022 00:00:00 +0800</pubDate>
+        <link>http://10.10.50.50:1125/sonic</link>
+        <guid isPermaLink="true">http://10.10.50.50:1125/sonic</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>NIC bonding and teaming</title>
+        <description>&lt;h2 id=&quot;bond-绑定聚合&quot;&gt;bond 绑定聚合&lt;/h2&gt;
+
+&lt;p&gt;将多条以太网物理链路捆绑在一起成为一条逻辑链路，从而实现增加链路带宽的目的。同时，这些捆绑在一起的链路通过相互间的动态备份，可以有效地提高链路的可靠性。&lt;/p&gt;
+
+&lt;p&gt;功能：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;增加了带宽—将多个链路的容量组合到一个逻辑链路中。&lt;/li&gt;
+  &lt;li&gt;自动故障转移/故障恢复—将来自故障链路的通信转移到聚合中的工作链路。&lt;/li&gt;
+  &lt;li&gt;负载均衡—传入和外发通信都是根据用户选择的负载均衡策略（如源和目标 MAC 或 IP 地址）进行分配的。&lt;/li&gt;
+  &lt;li&gt;改进了管理—所有接口作为一个单元进行管理。&lt;/li&gt;
+  &lt;li&gt;减少了网络地址池消耗—可以将一个 IP 地址指定给整个聚合。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;bond-模式&quot;&gt;bond 模式&lt;/h3&gt;
+
+&lt;p&gt;bond 提供了（0-6）共7种工作模式：&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;mode=0 round-robin轮询策略（balance-rr）&lt;/li&gt;
+  &lt;li&gt;mode=1 active-backup主备策略（active-backup）&lt;/li&gt;
+  &lt;li&gt;mode=2 load balancing (xor)异或策略(balance-xor)&lt;/li&gt;
+  &lt;li&gt;mode=3 fault-tolerance (broadcast)广播策略(broadcast)&lt;/li&gt;
+  &lt;li&gt;mode=4 lacp IEEE 802.3ad 动态链路聚合(IEEE 802.3ad Dynamic link aggregation) （802.3ad）&lt;/li&gt;
+  &lt;li&gt;mode=5 transmit load balancing适配器传输负载均衡（balance-tlb）&lt;/li&gt;
+  &lt;li&gt;mode=6 adaptive load balancing适配器负载均衡（balance-alb）&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;mode=0（balance-rr）
+表示负载分担round-robin，并且是轮询的方式比如第一个包走eth0，第二个包走eth1，直到数据包发送完毕。&lt;/p&gt;
+
+&lt;p&gt;优点：流量提高一倍&lt;/p&gt;
+
+&lt;p&gt;缺点：需要接入交换机做端口聚合，否则可能无法使用&lt;/p&gt;
+
+&lt;p&gt;mode=1（active-backup）
+表示主备模式，即同时只有1块网卡在工作。&lt;/p&gt;
+
+&lt;p&gt;优点：冗余性高&lt;/p&gt;
+
+&lt;p&gt;缺点：链路利用率低，两块网卡只有1块在工作&lt;/p&gt;
+
+&lt;p&gt;mode=2(balance-xor)(平衡策略)&lt;/p&gt;
+
+&lt;p&gt;表示XOR Hash负载分担，和交换机的聚合强制不协商方式配合。（需要xmit_hash_policy，需要交换机配置port channel）&lt;/p&gt;
+
+&lt;p&gt;特点：基于指定的传输HASH策略传输数据包。缺省的策略是：(源MAC地址 XOR 目标MAC地址) % slave数量。其他的传输策略可以通过xmit_hash_policy选项指定，此模式提供负载平衡和容错能力&lt;/p&gt;
+
+&lt;p&gt;mode=3(broadcast)(广播策略)&lt;/p&gt;
+
+&lt;p&gt;表示所有包从所有网络接口发出，这个不均衡，只有冗余机制，但过于浪费资源。此模式适用于金融行业，因为他们需要高可靠性的网络，不允许出现任何问题。需要和交换机的聚合强制不协商方式配合。&lt;/p&gt;
+
+&lt;p&gt;特点：在每个slave接口上传输每个数据包，此模式提供了容错能力&lt;/p&gt;
+
+&lt;p&gt;mode=4(802.3ad)(IEEE 802.3ad 动态链接聚合)&lt;/p&gt;
+
+&lt;p&gt;表示支持802.3ad协议，和交换机的聚合LACP方式配合（需要xmit_hash_policy）.标准要求所有设备在聚合操作时，要在同样的速率和双工模式，而且，和除了balance-rr模式外的其它bonding负载均衡模式一样，任何连接都不能使用多于一个接口的带宽。&lt;/p&gt;
+
+&lt;p&gt;特点：创建一个聚合组，它们共享同样的速率和双工设定。根据802.3ad规范将多个slave工作在同一个激活的聚合体下。外出流量的slave选举是基于传输hash策略，该策略可以通过xmit_hash_policy选项从缺省的XOR策略改变到其他策略。需要注意的是，并不是所有的传输策略都是802.3ad适应的，尤其考虑到在802.3ad标准43.2.4章节提及的包乱序问题。不同的实现可能会有不同的适应性。&lt;/p&gt;
+
+&lt;p&gt;必要条件：&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;条件1：ethtool支持获取每个slave的速率和双工设定
+
+条件2：switch(交换机)支持IEEE802.3ad Dynamic link aggregation
+
+条件3：大多数switch(交换机)需要经过特定配置才能支持802.3ad模式
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;mode=5(balance-tlb)(适配器传输负载均衡)&lt;/p&gt;
+
+&lt;p&gt;是根据每个slave的负载情况选择slave进行发送，接收时使用当前轮到的slave。该模式要求slave接口的网络设备驱动有某种ethtool支持；而且ARP监控不可用。&lt;/p&gt;
+
+&lt;p&gt;特点：不需要任何特别的switch(交换机)支持的通道bonding。在每个slave上根据当前的负载（根据速度计算）分配外出流量。如果正在接受数据的slave出故障了，另一个slave接管失败的slave的MAC地址。&lt;/p&gt;
+
+&lt;p&gt;必要条件：&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ethtool支持获取每个slave的速率
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;mode=6(balance-alb)(适配器适应性负载均衡)&lt;/p&gt;
+
+&lt;p&gt;在5的tlb基础上增加了rlb(接收负载均衡receiveload balance).不需要任何switch(交换机)的支持。接收负载均衡是通过ARP协商实现的.&lt;/p&gt;
+
+&lt;p&gt;特点：该模式包含了balance-tlb模式，同时加上针对IPV4流量的接收负载均衡(receiveload balance, rlb)，而且不需要任何switch(交换机)的支持。接收负载均衡是通过ARP协商实现的。bonding驱动截获本机发送的ARP应答，并把源硬件地址改写为bond中某个slave的唯一硬件地址，从而使得不同的对端使用不同的硬件地址进行通信。来自服务器端的接收流量也会被均衡。当本机发送ARP请求时，bonding驱动把对端的IP信息从ARP包中复制并保存下来。当ARP应答从对端到达时，bonding驱动把它的硬件地址提取出来，并发起一个ARP应答给bond中的某个slave。使用ARP协商进行负载均衡的一个问题是：每次广播 ARP请求时都会使用bond的硬件地址，因此对端学习到这个硬件地址后，接收流量将会全部流向当前的slave。这个问题可以通过给所有的对端发送更新（ARP应答）来解决，应答中包含他们独一无二的硬件地址，从而导致流量重新分布。当新的slave加入到bond中时，或者某个未激活的slave重新激活时，接收流量也要重新分布。接收的负载被顺序地分布（round robin）在bond中最高速的slave上当某个链路被重新接上，或者一个新的slave加入到bond中，接收流量在所有当前激活的slave中全部重新分配，通过使用指定的MAC地址给每个 client发起ARP应答。下面介绍的updelay参数必须被设置为某个大于等于switch(交换机)转发延时的值，从而保证发往对端的ARP应答不会被switch(交换机)阻截。&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;grep &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;BONDING&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; /boot/config-5.&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;
+/boot/config-5.17.15-76051715-generic:CONFIG_BONDING&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;m
+/boot/config-5.18.10-76051810-generic:CONFIG_BONDING&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;m
+
+nmcli connection add con-name bond0 ifname bond0 mode active-backup ip4 172.25.254.177/24 &lt;span class=&quot;c&quot;&gt;##添加一个BOND，并设置ip和子网掩码&lt;/span&gt;
+
+ping 172.25.254.177 &lt;span class=&quot;c&quot;&gt;##此时可以Ping通自己，但ping不同不可以其它主机（因为没有添加有效的物理网卡）&lt;/span&gt;
+
+nmcil connection add con-name eth0 ifname eth0 &lt;span class=&quot;nb&quot;&gt;type &lt;/span&gt;bond-slave master bond0 &lt;span class=&quot;c&quot;&gt;##在bond里面添加eth0卡网&lt;/span&gt;
+
+nmcli connection add con-name eth1 ifname eth1 &lt;span class=&quot;nb&quot;&gt;type &lt;/span&gt;bond-slave master bond0 &lt;span class=&quot;c&quot;&gt;##在bond中添加eth1&lt;/span&gt;
+
+ping 172.25.254.77 &lt;span class=&quot;c&quot;&gt;##此时，是通这的（主机177和77均可以）&lt;/span&gt;
+
+watch &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; 1 &lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; /proc/net/bonding/bond0 &lt;span class=&quot;c&quot;&gt;##查看当前bond0的工作状态（是eth0工作，并且eth0和eth1均处于up状态）&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;#关闭eth0，此时eth1会工作&lt;/span&gt;
+ifdown eth0
+
+&lt;span class=&quot;c&quot;&gt;#使eth0开启&lt;/span&gt;
+ifup eth0
+
+mcli connection show &lt;span class=&quot;c&quot;&gt;##查看已有的链接设备&lt;/span&gt;
+
+nmcli connection delete bond0 &lt;span class=&quot;c&quot;&gt;##删除bond0&lt;/span&gt;
+
+nmcli connection delete eth0 &lt;span class=&quot;c&quot;&gt;##删除bond0上的eth0&lt;/span&gt;
+
+nmcli connection delete eth1 &lt;span class=&quot;c&quot;&gt;##删除bond0上的eth1&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;7种工作模式的定义如下：&lt;/p&gt;
+
+&lt;p&gt;mode=0 round-robin轮询策略(balance-rr)
+cat /proc/net/bonding/bond0 
+Bonding Mode: load balancing (round-robin)
+此模式下，链路处于负载均衡状态，数据以轮询方式向每条链路发送报文，基于per packet方式发送。即每条链路各一个数据包。这模式好处在于增加了带宽，同时支持容错能力，当有链路出问题，会把流量切换到正常的链路上。该模式下，交换机端需要配置聚合口，在cisco交换机上叫port channel。&lt;/p&gt;
+
+&lt;p&gt;mode0工作模式图如下：&lt;/p&gt;
+
+&lt;p&gt;mode=1 active-backup主备策略（active-backup)
+cat /proc/net/bonding/bond0
+Bonding Mode: fault-tolerance (active-backup) 
+此模式下，一个端口处于主状态，一个处于备状态，所有流量都在主链路上发出和接收，备用链路不会有任何流量。当主链路端口down掉时，备用端口立即启动接管主状态，从而达到链路冗余热备目的。这种模式接入不需要交换机端支持。&lt;/p&gt;
+
+&lt;p&gt;mode1工作模式图如下：&lt;/p&gt;
+
+&lt;p&gt;mode=2 load balancing (xor)异或策略(balance-xor)
+cat /proc/net/bonding/bond0
+Bonding Mode: load balancing (xor) 
+在此模式下，通过源和目标mac做hash因子来做xor算法来选择链路，这样就使得到达特定对端的流量总是从同一个接口上发出。和balance-rr一样，交换机端口需要配置为“port channel”。需要注意的是，若选择这种模式，如果所有流量源和目标mac都固定了，例如使用“网关模式”，即所有对外的数据传输均固定走一个网关，那么根据该模式的描述，分发算法算出的线路就一直是同一条，另外一条链路不会有任何数据流，那么这种模式就没有多少意义了。&lt;/p&gt;
+
+&lt;p&gt;mode2模式拓补图同mode0、mode1&lt;/p&gt;
+
+&lt;p&gt;mode=3 fault-tolerance (broadcast)广播策略
+cat /proc/net/bonding/bond0
+Bonding Mode: fault-tolerance (broadcast)
+这种模式的特点是一个报文会复制两份往bond下的两个接口分别发送出去。当有对端交换机失效，我们感觉不到任何丢包。这个模式也需要交换机配置聚合口。如下图，带dup的行即是重复发往第2个网卡的数据。&lt;/p&gt;
+
+&lt;p&gt;mode3模式的拓扑图如下所示：&lt;/p&gt;
+
+&lt;p&gt;mode=4 lacp IEEE 802.3ad 动态链路聚合（802.3ad）
+该模式拓扑结构与mode1模式相同&lt;/p&gt;
+
+&lt;p&gt;cat /proc/net/bonding/bond0
+Bonding Mode: IEEE 802.3ad Dynamic link aggregation
+该模式是基于IEEE 802.3ad Dynamic link aggregation（动态链接聚合）协议。在该模式下，操作系统和交换机都会创建一个聚合组，在同一聚合组下的网口共享同样的速率和双工设定。操作系统根据802.3ad 协议将多个slave 网卡绑定在一个聚合组下。聚合组向外发送数据选择哪一块儿网卡是基于传输hash 策略，该策略可以通过xmit_hash_policy 选项从缺省的XOR 策略改变到其他策略。&lt;/p&gt;
+
+&lt;p&gt;该模式的必要条件：&lt;/p&gt;
+
+&lt;p&gt;1、ethtool 支持获取每个slave 的速率和双工设定；&lt;/p&gt;
+
+&lt;p&gt;2、交换机支持IEEE 802.3ad Dynamic link aggregation（动态链路聚合）。大多数交换机需要经过特定配置才能支持802.3ad模式。&lt;/p&gt;
+
+&lt;p&gt;mode=5 transmit load balancing适配器传输负载均衡（balance-tlb）
+cat /proc/net/bonding/bond0
+Bonding Mode: transmit load balancing
+这种模式相较mode2异或策略及mode4 LACP模式的hash策略相对智能，会主动根据对端的MAC地址上的流量，智能的分配流量从哪个网卡发出。但不足之处在于，仍使用一块网卡接收数据。存在的问题与load balancing (xor)也是一样的一样，如果对端MAC地址是唯一的，那么策略就会失效。这个模式下bond成员使用各自的mac，而不是上面几种模式是使用bond0接口的mac。此模式无需交换机支持。&lt;/p&gt;
+
+&lt;p&gt;此模式拓扑图如下：&lt;/p&gt;
+
+&lt;p&gt;mode=6 adaptive load balancing适配器负载均衡（balance-alb）
+此模式拓扑结构与mode5相同。&lt;/p&gt;
+
+&lt;p&gt;cat /proc/net/bonding/bond0
+Bonding Mode: adaptive load balancing
+该模式除了balance-tlb适配器传输负载均衡模式的功能外，同时加上针对IPV4流量接收的负载均衡。接收负载均衡是通过ARP协商实现的。在进行ARP协商的过程中，bond模块将对端和本地的mac地址进行绑定，这样从同一端发出的数据，在本地也会一直使用同一块网卡来接收。若是网络上发出的广播包，则由不同网卡轮询的方式来进行接收。通过这种方式实现了接收的负载均衡。该模式同样无需交换机支持。&lt;/p&gt;
+
+&lt;p&gt;注意：在网卡绑定的七种模式下，其中mode=0、2、3需要交换机支持EtherChannel，mode=4需要交换机同时支持EtherChannel和LACP，mode=1、5、6不需要交换机配置支持。&lt;/p&gt;
+
+&lt;p&gt;以上7种工作模式，可以根据实际生产环境中的业务场景需求来灵活的选择配置。&lt;/p&gt;
+
+&lt;p&gt;Linux多网卡bond配置
+1、手动创建配置文件方式&lt;/p&gt;
+
+&lt;p&gt;创建bond0网卡配置文件
+[root@centos6 ~]#vim /etc/sysconfig/network-scripts/ifcfg-bond0 
+DEVICE=bond0                           #虚拟网卡设备名称
+BOOTPROTO=none                         #使用静态IP
+BONDING_OPTS=”mode=1 miimon=100”   #bond模式设定，此例使用mode1模式 miimon=100 为每隔100ms监控主网卡的状态
+IPADDR=192.168.20.100    #IP地址
+PREFIX=24                #子网掩码
+GATEWAY=192.168.20.2     #默认网关
+DNS1=114.114.114.114     #DNS服务器&lt;/p&gt;
+
+&lt;p&gt;修改第一块网卡配置文件
+vim /etc/sysconfig/network-scripts/ifcfg-eth0
+DEVICE=eth0
+BOOTPROTO=none
+MASTER=bond0
+SLAVE=yes&lt;/p&gt;
+
+&lt;p&gt;修改第二块网卡配置文件
+vim /etc/sysconfig/network-scripts/ifcfg-eth1
+DEVICE=eth1
+BOOTPROTO=none
+MASTER=bond0
+SLAVE=yes&lt;/p&gt;
+
+&lt;p&gt;将所有物理网卡启用
+[root@centos6 ~]#cd /etc/sysconfig/network-scripts/
+ifconfig eth0 up
+ifconfig eth1 up&lt;/p&gt;
+
+&lt;p&gt;重启网络服务
+[root@centos6 ~]#/etc/init.d/network restart
+Shutting down interface bond0:                             [  OK  ]
+Shutting down loopback interface:                          [  OK  ]
+Bringing up loopback interface:                            [  OK  ]
+Bringing up interface bond0:  Determining if ip address 192.168.20.100 is already in use for device bond0…
+                                                           [  OK  ]
+[root@centos6 ~]#&lt;/p&gt;
+
+&lt;p&gt;可以看到bond0网络已成功启动并获得IP地址=
+查看一下当前bond0网卡的工作状态&lt;/p&gt;
+
+&lt;p&gt;[root@centos6 ~]#cat /proc/net/bonding/bond0 
+Ethernet Channel Bonding Driver: v3.7.1 (April 27, 2011)&lt;/p&gt;
+
+&lt;p&gt;Bonding Mode: fault-tolerance (active-backup)
+Primary Slave: None
+Currently Active Slave: eth0
+MII Status: up
+MII Polling Interval (ms): 100
+Up Delay (ms): 0
+Down Delay (ms): 0&lt;/p&gt;
+
+&lt;p&gt;Slave Interface: eth0
+MII Status: up
+Speed: 1000 Mbps
+Duplex: full
+Link Failure Count: 0
+Permanent HW addr: 00:0c:29:54:90:f2
+Slave queue ID: 0&lt;/p&gt;
+
+&lt;p&gt;Slave Interface: eth1
+MII Status: up
+Speed: 1000 Mbps
+Duplex: full
+Link Failure Count: 0
+Permanent HW addr: 00:0c:29:54:90:fc
+Slave queue ID: 0
+[root@centos6 ~]#&lt;/p&gt;
+
+&lt;p&gt;可以看到当前工作在mode1模式，且eth0网卡为活动的主网卡，eth1处于备用状态&lt;/p&gt;
+
+&lt;p&gt;注意：在centos6系统下，由于NetworkManager服务于network会存在相互干扰问题，建议将NetworkManager服务停止，否则容易导致发生以下错误。&lt;/p&gt;
+
+&lt;p&gt;禁用NetworkManager服务&lt;/p&gt;
+
+&lt;p&gt;[root@centos6 network-scripts]#/etc/init.d/NetworkManager stop
+[root@centos6 network-scripts]#chkconfig NetworkManager off&lt;/p&gt;
+
+&lt;p&gt;2、通过nmcli命令配置网卡bond&lt;/p&gt;
+
+&lt;p&gt;在centos7下，可以通过nmctl命名来创建多网卡bond配置。&lt;/p&gt;
+
+&lt;p&gt;创建bond接口并设置IP地址信息
+[root@centos7 ~]#nmcli connection add type bond con-name bond0 ifname bond0 mode active-backup ipv4.method manual ipv4.addresses 192.168.20.100/24 ipv4.gateway 192.168.20.2 ipv4.dns 192.168.20.2
+Connection ‘bond0’ (24e90eef-a160-4cc0-af86-9e13259696ba) successfully added.
+[root@centos7 ~]#&lt;/p&gt;
+
+&lt;p&gt;将物理网卡添加到bond0作为从属接口
+[root@centos7 ~]#nmcli connection add type bond-slave ifname eth0 master bond0 
+Connection ‘bond-slave-eth0’ (bb89e659-a59e-4611-8fbb-a97a99840b66) successfully added.
+[root@centos7 ~]#nmcli connection add type bond-slave ifname eth1 master bond0 
+Connection ‘bond-slave-eth1’ (7081209c-09d0-4fb9-aaa9-2564613590b9) successfully added.
+[root@centos7 ~]#&lt;/p&gt;
+
+&lt;p&gt;启动从属接口
+[root@centos7 ~]#nmcli connection up bond-slave-eth0
+Connection successfully activated (D-Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/46)&lt;/p&gt;
+
+&lt;p&gt;[root@centos7 ~]#nmcli connection up bond-slave-eth1 
+Connection successfully activated (D-Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/50)&lt;/p&gt;
+
+&lt;p&gt;启动bond0
+[root@centos7 ~]#nmcli connection up bond0&lt;/p&gt;
+
+&lt;p&gt;查看bond连接状态
+[root@centos7 ~]#nmcli connection show 
+NAME             UUID                                  TYPE      DEVICE 
+bond0            24e90eef-a160-4cc0-af86-9e13259696ba  bond      bond0&lt;br /&gt;
+bond-slave-eth0  bb89e659-a59e-4611-8fbb-a97a99840b66  ethernet  eth0 &lt;br /&gt;
+bond-slave-eth1  7081209c-09d0-4fb9-aaa9-2564613590b9  ethernet  eth1 &lt;br /&gt;
+virbr0           08a6c628-bae9-4157-a4c3-d954bf07fbb9  bridge    virbr0 
+eth0             f82cab29-1dd2-4e17-9c66-4a8726b8dd89  ethernet&lt;/p&gt;
+
+&lt;p&gt;查看一下bond0运行模式状态
+[root@centos7 ~]#cat /proc/net/bonding/bond0 
+Ethernet Channel Bonding Driver: v3.7.1 (April 27, 2011)&lt;/p&gt;
+
+&lt;p&gt;Bonding Mode: fault-tolerance (active-backup)
+Primary Slave: None
+Currently Active Slave: eth0
+MII Status: up
+MII Polling Interval (ms): 100
+Up Delay (ms): 0
+Down Delay (ms): 0&lt;/p&gt;
+
+&lt;p&gt;Slave Interface: eth0
+MII Status: up
+Speed: 1000 Mbps
+Duplex: full
+Link Failure Count: 0
+Permanent HW addr: 00:0c:29:d3:63:8c
+Slave queue ID: 0&lt;/p&gt;
+
+&lt;p&gt;Slave Interface: eth1
+MII Status: up
+Speed: 1000 Mbps
+Duplex: full
+Link Failure Count: 0
+Permanent HW addr: 00:0c:29:d3:63:96
+Slave queue ID: 0
+[root@centos7 ~]#&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;p&gt;从软件的角度来看，多网卡绑定实际上只需要提供一个额外的bond驱动程序即可，通过该虚拟网卡驱动程序可以将实际多块网卡屏蔽，对TCP/IP协议层而言只存在一个Bond网卡。&lt;/p&gt;
+
+&lt;p&gt;二、   Linux网卡绑定七种模式详解
+Linux网卡绑定共七种模式，分别是如下模式：&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;mode=0  round-robin轮询策略(Round-robin policy)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;mode=1  active-backup主备策略(Active-backup policy)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;mode=2  load balancing (xor)异或策略(XOR policy)&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;mode=3  fault-tolerance (broadcast)广播策略(Broadcast policy)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;mode=4  lacp IEEE 802.3ad 动态链路聚合(IEEE 802.3ad Dynamic link aggregation)&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;mode=5  transmit load balancing适配器传输负载均衡(Adaptive transmit load balancing)&lt;/li&gt;
+  &lt;li&gt;mode=6  adaptive load balancing适配器负载均衡(Adaptive load balancing)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;接下来，我们一一来看每种模式的含义。&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;   round-robin轮询策略&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;cat /proc/net/bonding/bond0
+Bonding Mode: load balancing (round-robin)
+该模式下，链路处于负载均衡状态，数据以轮询方式向每条链路发送报文，基于per packet方式发送。即每条链路各一个数据包。这模式好处在于增加了带宽，同时支持容错能力，当有链路出问题，会把流量切换到正常的链路上。该模式下，交换机端需要配置聚合口，在cisco交换机上叫port channel&lt;/p&gt;
+
+&lt;p&gt;2.active-backup主备策略&lt;/p&gt;
+
+&lt;p&gt;该模式拓扑图与上图相同
+cat /proc/net/bonding/bond0
+Bonding Mode: fault-tolerance (active-backup)
+在该模式下，一个端口处于主状态，一个处于备状态，所有流量都在主链路上发出和接收，备链路不会有任何流量。当主端口down掉时，备端口接管主状态。同时可以设置primary网卡，若primary网卡出现故障，切换至备网卡，primary网卡回复后，流量自动回切。这种模式接入不需要交换机端支持。&lt;/p&gt;
+
+&lt;p&gt;3.load balancing (xor)异或策略&lt;/p&gt;
+
+&lt;p&gt;该模式拓扑图与上图相同
+cat /proc/net/bonding/bond0
+Bonding Mode: load balancing (xor)
+在该模式下，通过源和目标mac做hash因子来做xor算法来选择链路，这样就使得到达特定对端的流量总是从同一个接口上发出。和balance-rr一样，交换机端口需要能配置为“port channel”。
+值得注意的是，若选择这种模式，如果所有流量源和目标mac都固定了，例如使用“网关模式”，即所有对外的数据传输均固定走一个网关，那么根据该模式的描述，分发算法算出的线路就一直是同一条，另外一条链路不会有任何数据流，那么这种模式就没有多少意义了。&lt;/p&gt;
+
+&lt;p&gt;4.fault-tolerance (broadcast)广播策略&lt;/p&gt;
+
+&lt;p&gt;cat /proc/net/bonding/bond0
+Bonding Mode: fault-tolerance (broadcast)
+这种模式的特点是一个报文会复制两份往bond下的两个接口分别发送出去。当有对端交换机失效，我们感觉不到任何丢包。这个模式也需要交换机配置聚合口。
+拓扑图如下所示：&lt;/p&gt;
+
+&lt;p&gt;当一条链路出现故障是不会影响服务器另一条链路正常工作的。而且故障过程是0丢包。下面展示了这种模式下ping信息：&lt;/p&gt;
+
+&lt;p&gt;从这个ping信息可以看到，这种模式的特点是，同一个报文服务器会复制两份分别往两条线路发送，导致回复两份重复报文，虽然这种模式不能起到增加网络带宽的效果，反而给网络增加负担，但对于一些需要高可用的环境下，例如RAC的心跳网络，还是有一定价值的。&lt;/p&gt;
+
+&lt;p&gt;5.lacp IEEE 802.3ad 动态链路聚合&lt;/p&gt;
+
+&lt;p&gt;该模式拓扑结构与主备模式相同
+cat /proc/net/bonding/bond0
+Bonding Mode: IEEE 802.3ad Dynamic link aggregation
+该模式是基于IEEE 802.3ad Dynamic link aggregation（动态链接聚合）协议，针对该协议的介绍，在公众号之前的文章中有所涉及。
+在该模式下，操作系统和交换机都会创建一个聚合组，在同一聚合组下的网口共享同样的速率和双工设定。操作系统根据802.3ad 协议将多个slave 网卡绑定在一个聚合组下。聚合组向外发送数据选择哪一块儿网卡是基于传输hash 策略，该策略可以通过xmit_hash_policy 选项从缺省的XOR 策略改变到其他策略。
+该模式的必要条件：&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;ethtool 支持获取每个slave 的速率和双工设定；&lt;/li&gt;
+  &lt;li&gt;交换机支持IEEE 802.3ad Dynamic link aggregation。
+大多数交换机需要经过特定配置才能支持802.3ad 模式。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;6.transmit load balancing适配器传输负载均衡&lt;/p&gt;
+
+&lt;p&gt;cat /proc/net/bonding/bond0
+Bonding Mode: transmit load balancing
+这种模式相较load balancing (xor)异或策略及LACP模式的hash策略相对智能，会主动根据对端的MAC地址上的流量，智能的分配流量从哪个网卡发出。但不足之处在于，仍使用一块网卡接收数据。存在的问题与load balancing (xor)也是一样的一样，如果对端MAC地址是唯一的，那么策略就会失效。这个模式下bond成员使用各自的mac，而不是上面几种模式是使用bond0接口的mac。无需交换机支持
+该模式拓扑图如下：&lt;/p&gt;
+
+&lt;p&gt;7.adaptive load balancing适配器负载均衡&lt;/p&gt;
+
+&lt;p&gt;该模式拓扑结构与上图一致。
+cat /proc/net/bonding/bond0
+Bonding Mode: adaptive load balancing
+该模式除了balance-tlb适配器传输负载均衡模式的功能外，同时加上针对IPV4流量接收的负载均衡。接收负载均衡是通过ARP协商实现的。在进行ARP协商的过程中，bond模块将对端和本地的mac地址进行绑定，这样从同一端发出的数据，在本地也会一直使用同一块网卡来接收。若是网络上发出的广播包，则由不同网卡轮询的方式来进行接收。通过这种方式实现了接收的负载均衡。该模式同样无需交换机支持。&lt;/p&gt;
+
+&lt;p&gt;三、小结
+在网卡绑定的七种模式下，其中mode=0、2、3、4需要交换机支持，mode=1、5、6不需要交换机配置支持
+———————————–&lt;/p&gt;
+
+&lt;h2 id=&quot;team&quot;&gt;team&lt;/h2&gt;
+
+&lt;p&gt;team也是链路聚合的一种方式
+本质上也是一个虚拟的网卡驱动（networkdevicedriver）， 只不过并没有真实的物理网卡与之对应，而是由这个虚拟网卡去“管辖”一系列的真实的物理网卡， 它的代码结构和一般网卡驱动的代码结构非常类似。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;最多支持8块网卡&lt;/li&gt;
+  &lt;li&gt;支持模式&lt;/li&gt;
+  &lt;li&gt;广播&lt;/li&gt;
+  &lt;li&gt;论旬&lt;/li&gt;
+  &lt;li&gt;主备&lt;/li&gt;
+  &lt;li&gt;负载均衡&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;聚合组内的成员端口具有以下两种状态：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;选中状态：此状态下的成员端口可以参与用户数据的转发，处于此状态的成员端口简称为“选中端口”。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;非选中状态：此状态下的成员端口不能参与用户数据的转发，处于此状态的成员端口简称为“非选中端口”。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;team支持的runner方式&quot;&gt;team支持的runner方式&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;broadcast 广播容错&lt;/li&gt;
+  &lt;li&gt;roundrobin 平衡轮叫&lt;/li&gt;
+  &lt;li&gt;activebackup 主备&lt;/li&gt;
+  &lt;li&gt;loadbalance 负载均衡&lt;/li&gt;
+  &lt;li&gt;lacp (implements the 802.3ad Link Aggregation Control Protocol)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;网络组相关特性&lt;/p&gt;
+
+&lt;p&gt;启动网络组接口不会自动启动网络组中的port接口&lt;/p&gt;
+
+&lt;p&gt;启动网络组接口中的port接口总会自动启动网络组接口&lt;/p&gt;
+
+&lt;p&gt;禁用网络组接口会自动禁用网络组中的port接口&lt;/p&gt;
+
+&lt;p&gt;没有port接口的网络组接口可以启动静态IP连接&lt;/p&gt;
+
+&lt;p&gt;启用DHCP连接时，没有port接口的网络组会等待port接口的加入&lt;/p&gt;
+
+&lt;p&gt;配置：
+1、通过nmctl命令创建&lt;/p&gt;
+
+&lt;p&gt;创建网络接口组
+[root@centos7 ~]#nmcli connection add type team con-name team0 ifname team0 config ‘{“runner”:{“name”:”activebackup”}}’
+Connection ‘team0’ (b59f80dc-c425-4fa6-b1ef-2935d290fa6a) successfully added.&lt;/p&gt;
+
+&lt;p&gt;创建port接口
+[root@centos7 ~]#nmcli connection add type team-slave con-name team0-eth0 ifname eth0 master team0 
+Connection ‘team0-eth0’ (5d7e5824-4d87-449c-8fff-42b2f20bc877) successfully added.
+[root@centos7 ~]#nmcli connection add type team-slave con-name team0-eth1 ifname eth1 master team0 
+Connection ‘team0-eth1’ (920f9f03-9f24-40bc-89eb-509e44ee606f) successfully added.&lt;/p&gt;
+
+&lt;p&gt;启动team接口
+[root@centos7 network-scripts]#nmcli connection up team0 
+[root@centos7 network-scripts]#nmcli connection up team0-eth0
+[root@centos7 network-scripts]#nmcli connection up team0-eth1&lt;/p&gt;
+
+&lt;p&gt;查看team连接状态
+[root@centos7 ~]#teamdctl team0 stat
+setup:
+  runner: activebackup
+ports:
+  eth0
+    link watches:
+      link summary: up
+      instance[link_watch_0]:
+        name: ethtool
+        link: up
+        down count: 0
+  eth1
+    link watches:
+      link summary: up
+      instance[link_watch_0]:
+        name: ethtool
+        link: up
+        down count: 0
+runner:
+  active port: eth1&lt;/p&gt;
+
+&lt;p&gt;2、手动创建配置文件&lt;/p&gt;
+
+&lt;p&gt;创建team0接口配置文件
+vim /etc/sysconfig/network-scripts/ifcfg-team0
+DEVICE=team0
+DEVICETYPE=Team
+TEAM_CONFIG=”{&quot;runner&quot;: {&quot;name&quot;: &quot;broadcast&quot;}}”
+BOOTPROTO=none
+IPADDR0=172.16.0.100
+PREFIX0=24
+NAME=team0
+ONBOOT=yes&lt;/p&gt;
+
+&lt;p&gt;创建port接口配置文件&lt;/p&gt;
+
+&lt;p&gt;/etc/sysconfig/network-scripts/ifcfg-team0-eth0
+DEVICE=eth0
+DEVICETYPE=TeamPort
+TEAM_MASTER=team0
+NAME=team0-eth0
+ONBOOT=yes&lt;/p&gt;
+
+&lt;p&gt;/etc/sysconfig/network-scripts/ifcfg-team0-eth1
+DEVICE=eth1
+DEVICETYPE=TeamPort
+TEAM_MASTER=team0
+NAME=team0-eth1
+ONBOOT=yes&lt;/p&gt;
+
+&lt;p&gt;启动team接口
+[root@centos7 ~]#nmcli connection up team0
+Connection successfully activated (master waiting for slaves) (D-Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/69)&lt;/p&gt;
+
+&lt;h3 id=&quot;配置&quot;&gt;配置&lt;/h3&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;grep &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;NET_TEAM&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; /boot/config-5.&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;
+/boot/config-5.17.15-76051715-generic:CONFIG_NET_TEAM&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;m
+/boot/config-5.18.10-76051810-generic:CONFIG_NET_TEAM&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;m
+
+&lt;span class=&quot;c&quot;&gt;#添加team0，且方式为主备&lt;/span&gt;
+nmcli connection add con-name team0 ifname team0 &lt;span class=&quot;nb&quot;&gt;type &lt;/span&gt;team config &lt;span class=&quot;s1&quot;&gt;&apos;{&quot;runner&quot;:{&quot;name&quot;:&quot;activebackup&quot;}}&apos;&lt;/span&gt; ip4 172.25.254.177/24
+watch &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; 1 teamdctl team0 state
+
+&lt;span class=&quot;c&quot;&gt;#在team0中添加物理网卡eth0&lt;/span&gt;
+nmcli connection add con-name eth0 ifname eth0 &lt;span class=&quot;nb&quot;&gt;type &lt;/span&gt;team-slave master team0
+watch &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; 1 teamdctl team0 state
+
+&lt;span class=&quot;c&quot;&gt;#在team0中添加物理网卡eth1&lt;/span&gt;
+nmcli connection add con-name eth1 ifname eth1 &lt;span class=&quot;nb&quot;&gt;type &lt;/span&gt;team-slave master team0
+watch &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; 1 teamdctl team0 state
+
+ping 172.25.254.77
+
+&lt;span class=&quot;c&quot;&gt;#当eth0关闭的时候，此时eth1工作(77主机一直是通的状态)&lt;/span&gt;
+watch &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; 1 teamdctl team0 &lt;span class=&quot;nb&quot;&gt;stat
+&lt;/span&gt;ifconfig eth0 down
+watch &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; 1 teamdctl team0 &lt;span class=&quot;nb&quot;&gt;stat&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# 当eth0开启的时候，还是eth1工作；除非eth1关闭，才会启动eth0.&lt;/span&gt;
+ifconfig eth0 up
+watch &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; 1 teamdctl team0 &lt;span class=&quot;nb&quot;&gt;stat
+
+&lt;/span&gt;nmcli connection delete team0
+watch &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; 1 teamdctl team0 &lt;span class=&quot;nb&quot;&gt;stat
+
+&lt;/span&gt;nmcli connection delete eth0
+watch &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; 1 teamdctl team0 &lt;span class=&quot;nb&quot;&gt;stat
+
+&lt;/span&gt;nmcli connection delete eth1
+watch &lt;span class=&quot;nt&quot;&gt;-n&lt;/span&gt; 1 teamdctl team0 &lt;span class=&quot;nb&quot;&gt;stat&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;网桥&quot;&gt;网桥&lt;/h2&gt;
+
+&lt;p&gt;网桥工作在数据链路层，可以将两个局域网链连接起来，实现数据的快速传输。&lt;/p&gt;
+
+&lt;div class=&quot;language-sh highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# 查看网桥&lt;/span&gt;
+brctl show
+
+brctl addbr br0
+
+ifconfig br0 172.25.254.177/24
+
+&lt;span class=&quot;c&quot;&gt;#此时没有物理网卡&lt;/span&gt;
+ping 172.25.254.77
+
+brctl addif br0 eth0
+
+ping 172.25.254.77
+brctl show
+
+brctl delif br0 eth0
+
+ifconfig br0 down
+
+brctl delbr br0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;links&quot;&gt;Links&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/networking_guide/sec-comparison_of_network_teaming_to_bonding&quot;&gt;https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/networking_guide/sec-comparison_of_network_teaming_to_bonding&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/networking_guide/sec-converting_a_bond_to_a_team&quot;&gt;https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/7/html/networking_guide/sec-converting_a_bond_to_a_team&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Regarding the Mode 4 Link Aggregation Control Protocol (LACP) teaming mode, requires configuring the switch to aggregate the links. For more details, see &lt;a href=&quot;https://www.kernel.org/doc/Documentation/networking/bonding.txt&quot;&gt;https://www.kernel.org/doc/Documentation/networking/bonding.txt&lt;/a&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Tue, 19 Jul 2022 00:00:00 +0800</pubDate>
+        <link>http://10.10.50.50:1125/nic-bond-team</link>
+        <guid isPermaLink="true">http://10.10.50.50:1125/nic-bond-team</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Git Objects</title>
+        <description>
+&lt;pre&gt;&lt;code class=&quot;language-log&quot;&gt;Cloning into &apos;merge&apos;...
+remote: Enumerating objects: 987736, done.
+remote: Counting objects: 100% (295/295), done.
+remote: Compressing objects: 100% (218/218), done.
+remote: Total 987736 (delta 142), reused 164 (delta 75), pack-reused 987441
+Receiving objects: 100% (987736/987736), 14.27 GiB | 40.63 MiB/s, done.
+Resolving deltas: 100% (692596/692596), done.
+Updating files: 100% (71788/71788), done.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-log&quot;&gt;Cloning into &apos;linux&apos;...
+remote: Enumerating objects: 8036127, done.
+remote: Total 8036127 (delta 0), reused 0 (delta 0), pack-reused 8036127
+Receiving objects: 100% (8036127/8036127), 1.47 GiB | 27.49 MiB/s, done.
+Resolving deltas: 100% (6799830/6799830), done.
+Updating files: 100% (70851/70851), done.
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+        <pubDate>Fri, 15 Jul 2022 00:00:00 +0800</pubDate>
+        <link>http://10.10.50.50:1125/git-objects</link>
+        <guid isPermaLink="true">http://10.10.50.50:1125/git-objects</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Web Ux</title>
+        <description>
+&lt;h2 id=&quot;performance&quot;&gt;Performance&lt;/h2&gt;
+
+&lt;h2 id=&quot;seo&quot;&gt;SEO&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;https://search.google.com/search-console/&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Optimize your content with Search Analytics&lt;/p&gt;
+
+&lt;p&gt;See which queries bring users to your site. Analyze your site’s impressions, clicks, and position on Google Search.&lt;/p&gt;
+
+&lt;p&gt;Get alerted on issues and fix your site&lt;/p&gt;
+
+&lt;p&gt;Receive email alerts when Google identifies issues on your site. See which URLs are affected by these issues and tell Google when you’ve fixed them.&lt;/p&gt;
+
+&lt;p&gt;Understand how Google Search sees your pages&lt;/p&gt;
+
+&lt;p&gt;The URL Inspection tool provides detailed crawl, index, and serving information about your pages, directly from the Google index.&lt;/p&gt;
+
+&lt;h2 id=&quot;amp&quot;&gt;AMP&lt;/h2&gt;
+
+&lt;p&gt;Monitor, test, and track your AMP pages with Search Console tools and reports.&lt;/p&gt;
+
+&lt;h2 id=&quot;mobile-usability&quot;&gt;Mobile Usability&lt;/h2&gt;
+
+&lt;p&gt;Test and improve your site’s mobile usability with customized reports.&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 11 Jul 2022 00:00:00 +0800</pubDate>
+        <link>http://10.10.50.50:1125/web-ux</link>
+        <guid isPermaLink="true">http://10.10.50.50:1125/web-ux</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Tmux</title>
+        <description>
+&lt;p&gt;$ ps auxf | grep tmux
+aaron    2847416  0.0  0.0  11260   664 pts/2    S+   13:10   0:00              _ grep -E –color=auto –exclude-dir=.git -s -I tmux
+aaron       7849  0.0  0.0 303172  2188 ?        Ss   May13  50:55 tmux -2&lt;/p&gt;
+
+&lt;p&gt;$ tmux ls
+no server running on /tmp/tmux-1000/default&lt;/p&gt;
+
+&lt;p&gt;$ lsof -n -p $(pidof tmux) -a -U
+lsof: WARNING: can’t stat() tracefs file system /sys/kernel/debug/tracing
+      Output information may be incomplete.
+COMMAND    PID  USER   FD   TYPE             DEVICE SIZE/OFF  NODE NAME
+tmux:\x20 7849 aaron    6u  unix 0x0000000000000000      0t0 24257 /tmp/tmux-1000/default type=STREAM&lt;/p&gt;
+
+&lt;p&gt;$ tmux -S /tmp/tmux-1000/default at
+no sessions&lt;/p&gt;
+
+&lt;p&gt;$ ps auxf | grep tmux
+aaron       7849  0.0  0.2 303172 85216 ?        Ss   May13  50:57 tmux -2&lt;/p&gt;
+
+&lt;p&gt;Description: terminal multiplexer
+ tmux enables a number of terminals (or windows) to be accessed and
+ controlled from a single terminal like screen. tmux runs as a
+ server-client system. A server is created automatically when necessary
+ and holds a number of sessions, each of which may have a number of
+ windows linked to it. Any number of clients may connect to a session,
+ or the server may be controlled by issuing commands with tmux.
+ Communication takes place through a socket, by default placed in /tmp.
+ Moreover tmux provides a consistent and well-documented command
+ interface, with the same syntax whether used interactively, as a key
+ binding, or from the shell. It offers a choice of vim or Emacs key
+ layouts.
+Original-Maintainer: Romain Francoise &lt;a href=&quot;mailto:rfrancoise@debian.org&quot;&gt;rfrancoise@debian.org&lt;/a&gt;
+Homepage: https://tmux.github.io/&lt;/p&gt;
+
+&lt;p&gt;$ tmux a
+no sessions&lt;/p&gt;
+&lt;h1 id=&quot;w203-0518-164749-main-aaroncode&quot;&gt;W20.3 0518 16:47:49 (main) aaron@code:~&lt;/h1&gt;
+&lt;p&gt;$ tmux ls
+no server running on /tmp/tmux-1000/default&lt;/p&gt;
+
+&lt;p&gt;$ tmux list-panes -a -F “#{pane_pid} #{session_name}:#{window_index}:#{pane_index}”&lt;/p&gt;
+
+&lt;p&gt;print(“Swap vowels for numbers.”.translate(str.maketrans(‘aeiou’, ‘12345’)))&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;blockquote&gt;
+    &lt;blockquote&gt;
+      &lt;p&gt;print(“Swap vowels for numbers.”.translate({ord(x): y for (x, y) in zip(‘aeiou’, ‘12345’)}))
+~                                                                                                                       │Sw1p v4w2ls f4r n5mb2rs.&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/blockquote&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;ryptor&quot;&gt;ryptor&lt;/h2&gt;
+
+&lt;p&gt;Suspend the respective process with Ctrl-Z
+Send the job to background using bg
+Take away the ownership from the shell using disown
+Start or enter your tmux/screen session
+Run reptyr PID to attach the process to the current shell
+It also has some additional useful features, such as TTY-stealing, which is documented in the man page.&lt;/p&gt;
+
+&lt;h2 id=&quot;setup&quot;&gt;setup&lt;/h2&gt;
+
+&lt;p&gt;(neo)mutt + mbsync + notmuch + khard (+ khal)
+taskwarrior + timewarrior&lt;/p&gt;
+
+</description>
+        <pubDate>Mon, 27 Jun 2022 00:00:00 +0800</pubDate>
+        <link>http://10.10.50.50:1125/tmux</link>
+        <guid isPermaLink="true">http://10.10.50.50:1125/tmux</guid>
+        
+        
+      </item>
+    
+  </channel>
+</rss>
