@@ -1,7 +1,7 @@
 ---
 title: Ansible roles
-category: Ansible
-layout: 2017/sheet
+date: 2019-02-12T23:39:06-06:00
+tags: [Ansible, shortcodes]
 ---
 
 ### Structure

@@ -1,7 +1,7 @@
 ---
 title: Ansible modules
-category: Ansible
-layout: 2017/sheet
+date: 2012-03-03
+tags: Ansible
 prism_languages: [yaml]
 updated: 2017-10-03
 ---
@@ -244,4 +244,3 @@ See: [template module](https://devdocs.io/ansible/template_module)
 
 See: [debug module](https://devdocs.io/ansible/debug_module)
 {% endraw %}
-

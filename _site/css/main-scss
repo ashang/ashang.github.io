@@ -54,61 +54,17 @@
           
         
           
-          <a class="page-link" href="/ansible-examples">Ansible examples</a>
-          
-        
-          
-          <a class="page-link" href="/ansible-guide">Ansible quickstart</a>
-          
-        
-          
-          <a class="page-link" href="/ansible-modules">Ansible modules</a>
-          
-        
-          
-          <a class="page-link" href="/ansible-roles">Ansible roles</a>
-          
-        
-          
-          <a class="page-link" href="/ansible">Ansible</a>
-          
-        
-          
           <a class="page-link" href="/archive">Archive</a>
           
         
           
         
           
-          <a class="page-link" href="/cmd-test">cmd Test</a>
-          
-        
-          
-          <a class="page-link" href="/cryptsetup">cryptsetup with LUKS</a>
-          
-        
-          
-          <a class="page-link" href="/cupper-shortcodes--percent-sign">Cupper Shortcodes with percent sign</a>
-          
-        
-          
-          <a class="page-link" href="/curl">curl</a>
-          
-        
-          
-          <a class="page-link" href="/downtime">downtime</a>
-          
         
           
         
           
         
-          
-        
-          
-        
-          
-          <a class="page-link" href="/frontend">front-end</a>
           
         
           
@@ -130,21 +86,13 @@
           
         
           
-          <a class="page-link" href="/p4-lang">p4</a>
+          <a class="page-link" href="/posts">posts</a>
           
         
           
         
           
         
-          
-          <a class="page-link" href="/tags/">Tags</a>
-          
-        
-          
-        
-          
-          <a class="page-link" href="/tutorials">Tutorials</a>
           
         
           
@@ -165,7 +113,7 @@
       <main class="page-content" aria-label="Content">
         @import
 
-    "skins/",
+    "skins/default",
     // "skins/chocolate",
     // "skins/dark",
     // "skins/default",
@@ -173,7 +121,7 @@
     // "skins/ocean",
     // "skins/orange",
 
-    "skins/highlight/",
+    "skins/highlight/default",
     // "skins/highlight/tomorrow",
     // "skins/highlight/tomorrow-night",
     // "skins/highlight/tomorrow-night-eighties",

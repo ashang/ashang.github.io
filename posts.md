@@ -1,7 +1,7 @@
 ---
 layout: default
-title: "Tags"
-permalink: /tags/
+title: "posts"
+#permalink: /posts/
 ---
 
 https://www.v2ex.com/rework
@@ -89,3 +89,13 @@ https://page.iesdouyin.com/traffic-aggregation/249600
     {% endunless %}{% endfor %}
   </div>
 </div>
+
+----
+
+<ul class="listing">
+  {% for n in site.note %}
+    {% if n.title != "Wiki Template" %}
+      <li class="listing-item"><a href="{{ n.url }}">{{ n.title }}</a></li>
+    {% endif %}
+    {% endfor %}
+</ul>

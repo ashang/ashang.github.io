@@ -5,8 +5,8 @@
     <description>ramblings notes, things I worked through to make sure I understand.</description>
     <link>http://10.10.50.50:1125/</link>
     <atom:link href="http://10.10.50.50:1125/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 04 Sep 2023 10:44:41 +0800</pubDate>
-    <lastBuildDate>Mon, 04 Sep 2023 10:44:41 +0800</lastBuildDate>
+    <pubDate>Mon, 04 Sep 2023 11:20:06 +0800</pubDate>
+    <lastBuildDate>Mon, 04 Sep 2023 11:20:06 +0800</lastBuildDate>
     <generator>Jekyll v4.3.2</generator>
     
       <item>
@@ -28,8 +28,8 @@
 
 </description>
         <pubDate>Tue, 08 Aug 2023 00:00:00 +0800</pubDate>
-        <link>http://10.10.50.50:1125/chang-an</link>
-        <guid isPermaLink="true">http://10.10.50.50:1125/chang-an</guid>
+        <link>http://10.10.50.50:1125/post/2023-08-08-chang-an/</link>
+        <guid isPermaLink="true">http://10.10.50.50:1125/post/2023-08-08-chang-an/</guid>
         
         
       </item>
@@ -95,8 +95,8 @@ aaron    pts/13   tmux(10892).%21  10:09  lvim -u /home/aaron/.local/share/lunar
 
 </description>
         <pubDate>Sat, 05 Aug 2023 00:00:00 +0800</pubDate>
-        <link>http://10.10.50.50:1125/x-forwarding</link>
-        <guid isPermaLink="true">http://10.10.50.50:1125/x-forwarding</guid>
+        <link>http://10.10.50.50:1125/post/2023-08-05-x-forwarding/</link>
+        <guid isPermaLink="true">http://10.10.50.50:1125/post/2023-08-05-x-forwarding/</guid>
         
         
       </item>
@@ -467,8 +467,8 @@ ctags -R
 &lt;/S-Del&gt;
 </description>
         <pubDate>Tue, 01 Aug 2023 00:00:00 +0800</pubDate>
-        <link>http://10.10.50.50:1125/p4</link>
-        <guid isPermaLink="true">http://10.10.50.50:1125/p4</guid>
+        <link>http://10.10.50.50:1125/post/2023-08-01-p4/</link>
+        <guid isPermaLink="true">http://10.10.50.50:1125/post/2023-08-01-p4/</guid>
         
         
       </item>
@@ -483,8 +483,8 @@ See im-config(8) and /usr/share/doc/im-config/README.Debian.gz for more.&lt;/p&g
 
 </description>
         <pubDate>Mon, 25 Jul 2022 00:00:00 +0800</pubDate>
-        <link>http://10.10.50.50:1125/im-config</link>
-        <guid isPermaLink="true">http://10.10.50.50:1125/im-config</guid>
+        <link>http://10.10.50.50:1125/post/2022-07-25-im-config/</link>
+        <guid isPermaLink="true">http://10.10.50.50:1125/post/2022-07-25-im-config/</guid>
         
         
       </item>
@@ -569,8 +569,8 @@ ptp on /dev/usb-ffs/ptp type functionfs (rw,relatime)
 /dev/block/mmcblk2p21 on /mnt/installer/0/emulated/0/Android/obb type f2fs (rw,lazytime,seclabel,nosuid,nodev,noatime,background_gc=on,discard,no_heap,user_xattr,inline_xattr,acl,inline_data,inline_dentry,flush_merge,extent_cache,mode=adaptive,active_logs=6,reserve_root=32768,resuid=0,resgid=1065,alloc_mode=default,fsync_mode=posix)&lt;/p&gt;
 </description>
         <pubDate>Mon, 25 Jul 2022 00:00:00 +0800</pubDate>
-        <link>http://10.10.50.50:1125/duokan</link>
-        <guid isPermaLink="true">http://10.10.50.50:1125/duokan</guid>
+        <link>http://10.10.50.50:1125/post/2022-07-25-duokan/</link>
+        <guid isPermaLink="true">http://10.10.50.50:1125/post/2022-07-25-duokan/</guid>
         
         
       </item>
@@ -1176,8 +1176,8 @@ lIlIn syncd docker image
 &lt;/ul&gt;
 </description>
         <pubDate>Thu, 21 Jul 2022 00:00:00 +0800</pubDate>
-        <link>http://10.10.50.50:1125/sonic</link>
-        <guid isPermaLink="true">http://10.10.50.50:1125/sonic</guid>
+        <link>http://10.10.50.50:1125/post/2022-07-21-sonic/</link>
+        <guid isPermaLink="true">http://10.10.50.50:1125/post/2022-07-21-sonic/</guid>
         
         
       </item>
@@ -1791,8 +1791,8 @@ brctl delbr br0
 
 </description>
         <pubDate>Tue, 19 Jul 2022 00:00:00 +0800</pubDate>
-        <link>http://10.10.50.50:1125/nic-bond-team</link>
-        <guid isPermaLink="true">http://10.10.50.50:1125/nic-bond-team</guid>
+        <link>http://10.10.50.50:1125/post/2022-07-19-nic-bond-team/</link>
+        <guid isPermaLink="true">http://10.10.50.50:1125/post/2022-07-19-nic-bond-team/</guid>
         
         
       </item>
@@ -1819,8 +1819,8 @@ Updating files: 100% (70851/70851), done.
 &lt;/code&gt;&lt;/pre&gt;
 </description>
         <pubDate>Fri, 15 Jul 2022 00:00:00 +0800</pubDate>
-        <link>http://10.10.50.50:1125/git-objects</link>
-        <guid isPermaLink="true">http://10.10.50.50:1125/git-objects</guid>
+        <link>http://10.10.50.50:1125/post/2022-07-15-git-objects/</link>
+        <guid isPermaLink="true">http://10.10.50.50:1125/post/2022-07-15-git-objects/</guid>
         
         
       </item>
@@ -1858,8 +1858,8 @@ Updating files: 100% (70851/70851), done.
 
 </description>
         <pubDate>Mon, 11 Jul 2022 00:00:00 +0800</pubDate>
-        <link>http://10.10.50.50:1125/web-ux</link>
-        <guid isPermaLink="true">http://10.10.50.50:1125/web-ux</guid>
+        <link>http://10.10.50.50:1125/post/2022-07-11-web-ux/</link>
+        <guid isPermaLink="true">http://10.10.50.50:1125/post/2022-07-11-web-ux/</guid>
         
         
       </item>
@@ -1936,8 +1936,8 @@ taskwarrior + timewarrior&lt;/p&gt;
 
 </description>
         <pubDate>Mon, 27 Jun 2022 00:00:00 +0800</pubDate>
-        <link>http://10.10.50.50:1125/tmux</link>
-        <guid isPermaLink="true">http://10.10.50.50:1125/tmux</guid>
+        <link>http://10.10.50.50:1125/post/2022-06-27-tmux/</link>
+        <guid isPermaLink="true">http://10.10.50.50:1125/post/2022-06-27-tmux/</guid>
         
         
       </item>

@@ -199,11 +199,10 @@ repository: ashang/ashang.github.io
 
 collections:
   posts:
-    #permalink: "/:path/"
+    permalink: /post/:path/   # Default is "/:path/"
+    #output: true             # Default is true for internal `_posts` path
 
   note:
-    output: true
-    permalink: /note/:path/
-    # Default is "/:path/"
-    #permalink: "/:path/"
+    output: true              # Default is false
+    permalink: /note/:path/   # Default is "/:path/"
 
