@@ -1,0 +1,72 @@
+  {%- seo -%}
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <meta name="theme-color" content="#151515">
+  <meta name="theme-color" content="#943526">
+  <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+  <meta name="keyword"  content="thepro">
+
+  <meta name="msapplication-navbutton-color" content="#151515">
+
+  <link rel="alternate" type="application/atom+xml" title="{{ site.title | escape }}" href="{{ site.feed.path | default: 'atom.xml' | relative_url }}">
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title | escape }}" href="{{ "/rss.xml" | relative_url }}">
+
+  <title>{% if page.title %}{{ page.title | escape }} - {{ site.title }}{% else %}{{ site.title | escape }}{% endif %}</title>
+
+  <title>
+    {% if page.title == "Home" %}
+      {{ site.title }} &middot; {{ site.tagline }}
+    {% else %}
+      {{ page.title }} &middot; {{ site.title }}
+    {% endif %}
+  </title>
+  {% if page.url and site.baseurl %}
+  <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
+  <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+  {% endif %}
+
+  <link rel="stylesheet" href="{{ "/styles.css" | relative_url }}">
+  <link rel="stylesheet" href="/css/syntax.css">
+  <!-- Bootstrap Core CSS -->
+  <link rel="stylesheet" href="{{ "/css/bootstrap.min.css" | prepend: site.baseurl }}">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{{ "/css/hux-blog.css" | prepend: site.baseurl }}">
+
+  <!-- Pygments Github CSS -->
+  <link rel="stylesheet" href="{{ "/css/syntax.css" | prepend: site.baseurl }}">
+
+  <!-- Custom Fonts -->
+  <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+  <!-- Hux change font-awesome CDN to qiniu -->
+  <link href="https://cdn.staticfile.org/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+  <!-- Hux Delete, sad but pending in China 
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  -->
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  {% if jekyll.environment == 'production' and site.google_analytics %}
+  {% include google-analytics.html %}
+  {% endif %}
+
+  <!--
+  Tested OK for a PNG file named as ico.
+  -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ '/apple-touch-icon-precomposed.png' | absolute_url }}">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <!-- insert favicons. use http://realfavicongenerator.net/ -->
+  <link rel="shortcut icon" type="image/x-icon" href="{{ '/favicon.ico' | relative_url }}">
+
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+

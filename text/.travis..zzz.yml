@@ -1,0 +1,25 @@
+sudo: false
+language: python
+python: "2.7"
+#python: '3.5'
+install:
+    - pip install mkdocs
+    #- pip install tox
+    #- gem install mdl
+script:
+    - git clean -f -d -x
+    - mkdocs build
+    #- tox
+
+#before_install: pip install codecov
+#after_success: codecov
+#deploy:
+  #provider: pypi
+  #user: mkdocsdeploy
+  #distributions: "sdist bdist_wheel"
+  #password:
+    #secure: b4f6y1xw5B/RXXnOu6JIaNcgOBZ0/CkNaMeEXsoQSewYZNwobLPYALY9WaaOblarwrVa5NRD3e4x6SoL1/1NzQxfhCNMn7L82sssmtevnK+mSuUp4IZQa8WKyz+xLfnk28TlHgQbctAU9NaeQ6GuEflTRD7Bp8+xJ1C7h+yBUnw=
+  #on:
+    #tags: true
+    #repo: mkdocs/mkdocs
+    #condition: "$TOXENV = py27-integration"

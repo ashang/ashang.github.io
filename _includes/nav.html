@@ -1,0 +1,21 @@
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top nav" role="navigation">
+  {% for item in site.data.nav %}
+    <a href="{{ item.link }}" {% if page.url == item.link %}class="current"{% endif %}>
+      {{ item.name }}
+    </a>
+  {% endfor %}
+
+  <div class="nav-container container">
+    <div class="navbar-collapse collapse navbar-right">
+      <ul class="nav navbar-nav">
+        <li {% if page.permalink == "/" %}class="active"{% endif %}><a title="Home" href="{{"/" | prepend: site.baseurl }}">home</a></li>
+	<li><a href="{{ "/about" | relative_url }}">about</a></li>
+        <li><a href="{{ "/archive" | prepend: site.baseurl | replace: '//', '/' }}">archive</a></li>
+        <li><a href="{{ "/atom.xml" | prepend: site.baseurl | replace: '//', '/' }}">atom</a></li>
+        <li><a href="{{ "/feed.xml" | prepend: site.baseurl }}">rss</a></li>
+        <li><a href="{{ '/tags' | prepend: site.baseurl }}">tags</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</nav>

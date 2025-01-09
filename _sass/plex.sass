@@ -1,0 +1,770 @@
+@use "sass:meta"
+@use "sass:map"
+@use "sass:math"
+@use "sass:list"
+
+@import "reset"
+
+// Basics
+$unit: 16px
+
+// Layouts: Breakpoints and layout parameters
+// XS - extra small
+$extrasmall_padding: math.div($unit, 4)
+$extrasmall_border: math.div($unit, 8)
+$extrasmall_margin: math.div($unit, 4)
+$extrasmall_line_height: 1.25
+
+// S - small
+$small_breakpoint: 320px
+$small_padding: math.div($unit, 4)
+$small_border: math.div($unit, 8)
+$small_margin: math.div($unit, 2)
+$small_table_breakpoint: $small_breakpoint 
+$small_line_height: 1.5
+
+// M - medium
+$medium_content_width: 42 * $unit
+$medium_padding: 3 * $unit
+$medium_border: math.div($unit, 8)
+$medium_minimum_vertical_margin: $small_margin
+$medium_maximum_horizontal_margin: 4 * $unit
+$medium_maximum_vertical_margin: $medium_maximum_horizontal_margin
+$medium_breakpoint: $medium_content_width + 2 * $medium_padding + 2 * $medium_border + 2 * $medium_minimum_vertical_margin
+$medium_table_breakpoint: 36 * $unit // This table breakpoint is independent of the layout breakpoint
+$medium_line_height: 1.5
+
+// L - large: With left navigation pane
+$large_minimum_left_navigation_width: 16 * $unit
+$large_maximum_left_navigation_width: 24 * $unit
+$large_breakpoint: $medium_breakpoint + $large_minimum_left_navigation_width + 2 * $medium_maximum_horizontal_margin
+
+// Page layout modes, based on above breakpoints
+@mixin extrasmall_mode
+  @media screen and (max-width: $small_breakpoint - 1)
+    @content
+
+@mixin small_mode
+  @media screen and (min-width: $small_breakpoint) and (max-width: $medium_breakpoint - 1)
+    @content
+
+@mixin medium_mode
+  @media screen and (min-width: $medium_breakpoint) and (max-width: $large_breakpoint - 1)
+    @content
+    
+@mixin below_large_mode
+  @media screen and (max-width: $large_breakpoint - 1)
+    @content
+    
+@mixin large_mode
+  @media screen and (min-width: $large_breakpoint)
+    @content
+    
+// Table layout modes
+@mixin extrasmall_table_mode
+  @media screen and (max-width: $small_table_breakpoint - 1)
+    @content
+
+@mixin small_table_mode
+  @media screen and (min-width: $small_table_breakpoint) and (max-width: $medium_table_breakpoint - 1)
+    @content
+
+@mixin medium_table_mode
+  @media screen and (min-width: $medium_table_breakpoint)
+    @content
+
+@mixin print_mode
+  @media print
+    @content
+
+@mixin dark_mode
+  @media (prefers-color-scheme: dark)
+    @content
+
+// Creates a CSS property with separate values depending on the mode/breakpoint. 
+// Modes "xs", "s", "m" and "l" are available as keyword arguments. Examples:
+//
+//   responsive_property(padding, $xs: 10px, $s: 20px)
+//   -> will set padding to 10px for XS mode and 20px for S mode
+//
+//   responsive_property(padding, $xs: 10px, $otherwise: 100px)
+//   -> will set padding to 10px for XS mode and
+//      explicitly to 100px for all other modes
+@mixin responsive_property($property, $arguments...)    
+  $modes: (xs, s, m, l)
+  $arguments: meta.keywords($arguments)
+  
+  @each $mode in $modes
+    @if map.has-key($arguments, $mode)
+      $value: map.get($arguments, $mode)
+      @if $mode == "xs"
+        @include extrasmall_mode
+          #{$property}: #{$value}
+      @else if $mode == "s"
+        @include small_mode
+          #{$property}: #{$value}
+      @else if $mode == "m"
+        @include medium_mode
+          #{$property}: #{$value}
+      @else if $mode == "l"
+        @include large_mode
+          #{$property}: #{$value}
+    @else
+      @if map.has-key($arguments, "otherwise")
+        $value: map.get($arguments, "otherwise")
+        @if $mode == "xs"
+          @include extrasmall_mode
+            #{$property}: #{$value}
+        @else if $mode == "s"
+          @include small_mode
+            #{$property}: #{$value}
+        @else if $mode == "m"
+          @include medium_mode
+            #{$property}: #{$value}
+        @else if $mode == "l"
+          @include large_mode
+            #{$property}: #{$value}
+
+// Creates a property that behaves as follows:
+// - If the viewport is narrower than $viewport_min, the property is set to $property_min
+// - If the viewport is wider than $viewport_max, the property is set to $property_max
+// - Between the minimum and maximum, the property is scaled linearly depending on the viewport width
+@mixin linear_responsive_property($property, $viewport_min, $property_min, $viewport_max, $property_max)
+  #{$property}: clamp(#{$property_min}, #{$property_min} + #{"calc(("} 100vw - #{$viewport_min} #{")"} * #{math.div($property_max - $property_min, $viewport_max - $viewport_min)} #{")"}, #{$property_max})
+  
+// Fonts
+@font-face
+  font-family: IBMPlexSans
+  font-weight: normal
+  font-style: normal
+  src: url("../fonts/IBMPlexSans-Regular.woff2")
+
+@font-face
+  font-family: IBMPlexSans
+  font-weight: bold
+  font-style: normal
+  src: url("../fonts/IBMPlexSans-Bold.woff2")
+
+@font-face
+  font-family: IBMPlexSans
+  font-weight: normal
+  font-style: italic
+  src: url("../fonts/IBMPlexSans-Italic.woff2")
+
+@font-face
+  font-family: IBMPlexSans
+  font-weight: bold
+  font-style: italic
+  src: url("../fonts/IBMPlexSans-BoldItalic.woff2")
+
+@font-face
+  font-family: IBMPlexMono
+  font-weight: normal
+  font-style: normal
+  src: url("../fonts/IBMPlexMono-Regular.woff2")
+
+@font-face
+  font-family: IBMPlexMono
+  font-weight: bold
+  font-style: normal
+  src: url("../fonts/IBMPlexMono-Bold.woff2")
+
+@font-face
+  font-family: IBMPlexMono
+  font-weight: normal
+  font-style: italic
+  src: url("../fonts/IBMPlexMono-Italic.woff2")
+
+@font-face
+  font-family: IBMPlexMono
+  font-weight: bold
+  font-style: italic
+  src: url("../fonts/IBMPlexMono-BoldItalic.woff2")
+
+@font-face
+  font-family: IBMPlexSerif
+  font-weight: normal
+  font-style: italic
+  src: url("../fonts/IBMPlexSerif-Italic.woff2")
+
+@font-face
+  font-family: IBMPlexSerif
+  font-weight: bold
+  font-style: italic
+  src: url("../fonts/IBMPlexSerif-BoldItalic.woff2")
+
+@mixin default_font
+  font-family: IBMPlexSans
+  color: var(--primary_foreground_color)
+  font-weight: normal
+
+  @include responsive_property(font-size, $xs: 0.875 * $unit, $s: 1 * $unit, $m: 1.125 * $unit, $otherwise: 1.125 * $unit)
+  @include print_mode
+    font-size: 0.875 * $unit
+  
+  @include responsive_property(line-height, $xs: $extrasmall_line_height, $s: $small_line_height, $m: $medium_line_height, $otherwise: $medium_line_height)
+  @include print_mode
+    line-height: $extrasmall_line_height
+
+@mixin title_font
+  font-family: IBMPlexMono
+  color: var(--heading_foreground_color)
+  text-decoration: underline
+  font-weight: bold
+
+@mixin heading_font
+  font-family: IBMPlexSans
+  color: var(--heading_foreground_color)
+  font-weight: bold
+
+@mixin quote_font
+  font-family: IBMPlexSerif
+  font-style: italic
+  color: var(--accent_color_1)
+
+// Accessibility
+.visually-hidden
+  position: absolute
+  left: -10000px
+  top: auto
+  width: 1px
+  height: 1px
+  overflow: hidden
+
+  &:focus
+    color: var(--primary_foreground_color)
+    display: inline-block
+    height: auto
+    width: auto
+    position: static
+    margin: auto
+
+:root
+  // Colors for light mode
+  --primary_foreground_color: #444444
+  --heading_foreground_color: #333333
+  --interactive_color: #777777
+  --interactive_background_color: #eeeeee
+  --accent_color_1: #777777
+  --outer_background_color: #ffffff
+  --content_background_color: #ffffff
+  --group_color_level_1: #eeeeee
+  --group_color_level_2: #dddddd
+
+
+:root
+  @media (prefers-color-scheme: dark)
+    --primary_foreground_color: #ffffff
+    --heading_foreground_color: #eeeeee
+    --interactive_color: #eeeeee
+    --interactive_background_color: #777777
+    --accent_color_1: #dddddd
+    --outer_background_color: #333333
+    --content_background_color: #333333    
+    --group_color_level_1: #555555
+    --group_color_level_2: #777777
+
+body
+  @include default_font
+  background: var(--outer_background_color)
+  width: 100%
+  height: 100%
+  min-height: 100%
+
+  div#layout
+    @include large_mode
+      display: grid
+      height: 100vh
+      grid-template-columns: [left-navigation] auto [content] 1fr
+      grid-template-rows: auto
+
+    @include below_large_mode
+      display: flex
+      flex-flow: column nowrap
+      align-items: stretch
+      justify-content: space-between
+      height: 100vh 
+    
+    main#content
+      background: var(--content_background_color)
+      
+      @include extrasmall_mode
+        padding: $extrasmall_padding
+        margin: $extrasmall_margin
+      
+      @include small_mode
+        @include linear_responsive_property("padding", 26 * $unit, 4px, $medium_breakpoint, 48px)
+        margin: $small_margin
+      
+      @include medium_mode
+        width: $medium_content_width
+        padding: $medium_padding
+        margin-left: calc((100vw - #{$medium_content_width} - #{2*$medium_padding} - #{2*$medium_border}) / 2)
+        margin-right: calc((100vw - #{$medium_content_width} - #{2*$medium_padding} - #{2*$medium_border}) / 2)
+        margin-top: #{"min("}$medium_maximum_vertical_margin, calc((100vw - #{$medium_content_width} - #{2*$medium_padding} - #{2*$medium_border}) / 2)#{")"}
+        margin-bottom: #{"min("}$medium_maximum_vertical_margin, calc((100vw - #{$medium_content_width} - #{2*$medium_padding} - #{2*$medium_border}) / 2)#{")"}
+        
+      @include large_mode
+        grid-column: content / span 1
+        grid-row: 1 / span 1
+        width: $medium_content_width
+        padding: $medium_padding
+        margin-left: auto
+        margin-right: auto
+        margin-top: $medium_maximum_horizontal_margin
+        margin-bottom: $medium_maximum_horizontal_margin
+
+      @include print_mode
+        width: 15cm
+        margin-top: 0cm
+        margin-left: auto
+        margin-right: auto
+
+      p
+        @include default_font      
+        @include responsive_property(margin-bottom, $xs: 0.75 * $unit, $s: 0.875 * $unit, $m: 1 * $unit, $otherwise:1 * $unit)
+        @include print_mode
+          margin-bottom: 0.625 * $unit
+
+      
+      strong, b
+        font-weight: bold
+        color: var(--heading_foreground_color)
+
+      em, i
+        font-style: italic
+
+      small
+        @include responsive_property(font-size, $xs: 0.625 * $unit, $s: 0.75 * $unit, $m: 0.875 * $unit, $otherwise: 0.875 * $unit)
+        @include print_mode
+          font-size: 0.625 * $unit
+        color: var(--accent_color_1)
+        
+      a
+        color: var(--interactive_color)
+        background-color: var(--interactive_background_color)
+        text-decoration: none
+        padding-left: math.div($unit, 4)
+        padding-right: math.div($unit, 4)
+
+        @include print_mode
+          text-decoration: underline
+          word-wrap: break-word
+          &:after
+            content: " (" attr(href) ")"
+        
+      h1
+        @include title_font
+        @include responsive_property(font-size, $xs: 1.75 * $unit, $s: 2 * $unit, $m: 2.25 * $unit, $otherwise:2.25 * $unit)
+        @include responsive_property(margin-bottom, $xs: 1.5 * $unit, $s: 1.75 * $unit, $m: 2 * $unit, $otherwise: 2 * $unit)
+        @include print_mode
+          font-size: 1.75 * $unit
+          margin-bottom: 1.5 * $unit
+
+        
+      h2
+        @include heading_font
+        color: var(--heading_foreground_color)
+        @include responsive_property(font-size, $xs: 1.25 * $unit, $s: 1.5 * $unit, $m: 1.75 * $unit, $otherwise: 1.75 * $unit)
+        @include responsive_property(margin-top, $xs: 1.5 * $unit, $s: 1.75 * $unit, $m: 2 * $unit, $otherwise: 2 * $unit)
+        @include responsive_property(margin-bottom, $xs: 0.75 * $unit, $s: 0.875 * $unit, $m: 1 * $unit, $otherwise: 1 * $unit)
+        @include print_mode
+          font-size: 1.25 * $unit
+          margin-top: 1.5 * $unit
+          margin-bottom: 0.75 * $unit
+          page-break-after: avoid
+        
+      h3
+        @include heading_font
+        color: var(--heading_foreground_color)
+        
+        @include responsive_property(font-size, $xs: 1.125 * $unit, $s: 1.25 * $unit, $m: 1.5 * $unit, $otherwise: 1.5 * $unit)
+        @include responsive_property(margin-top, $xs: 0.75 * $unit, $s: 0.875 * $unit, $m: 1 * $unit, $otherwise: 1 * $unit)
+        @include responsive_property(margin-bottom, $xs: 0.75 * $unit, $s: 0.875 * $unit, $m: 1 * $unit, $otherwise: 1 * $unit)
+        @include print_mode
+          font-size: 1.125 * $unit
+          margin-top: 0.75 * $unit
+          margin-bottom: 0.75 * $unit
+          page-break-after: avoid
+        
+      h4
+        @include heading_font
+        color: var(--heading_foreground_color)
+        @include responsive_property(font-size, $xs: 1 * $unit, $s: 1.125 * $unit, $m: 1.25 * $unit, $otherwise: 1.25 * $unit)
+        @include responsive_property(margin-top, $xs: 0.75 * $unit, $s: 0.875 * $unit, $m: 1 * $unit, $otherwise: 1 * $unit)
+        @include responsive_property(margin-bottom, $xs: 0.75 * $unit, $s: 0.875 * $unit, $m: 1 * $unit, $otherwise: 1 * $unit)
+        @include print_mode
+          font-size: 1 * $unit
+          margin-top: 0.75 * $unit
+          margin-bottom: 0.75 * $unit
+          page-break-after: avoid
+        
+      h5
+        @include heading_font
+        color: var(--heading_foreground_color)
+        @include responsive_property(font-size, $xs: 0.75 * $unit, $s: 0.875 * $unit, $m: 1 * $unit, $otherwise: 1 * $unit)
+        @include responsive_property(margin-top, $xs: 0.75 * $unit, $s: 0.875 * $unit, $m: 1 * $unit, $otherwise: 1 * $unit)
+        @include responsive_property(margin-bottom, $xs: 0.75 * $unit, $s: 0.875 * $unit, $m: 1 * $unit, $otherwise: 1 * $unit)
+        @include print_mode
+          font-size: 0.75 * $unit
+          margin-top: 0.75 * $unit
+          margin-bottom: 0.75 * $unit
+          page-break-after: avoid
+
+      h6
+        @include heading_font
+        color: var(--primary_foreground_color)
+        @include responsive_property(font-size, $xs: 0.625 * $unit, $s: 0.75 * $unit, $m: 0.875 * $unit, $otherwise: 0.875 * $unit)
+        @include responsive_property(margin-top, $xs: 0.625 * $unit, $s: 0.75 * $unit, $m: 0.875 * $unit, $otherwise: 0.875 * $unit)
+        @include responsive_property(margin-bottom, $xs: 0.625 * $unit, $s: 0.75 * $unit, $m: 0.875 * $unit, $otherwise: 0.875 * $unit)
+        @include print_mode
+          font-size: 0.625 * $unit
+          margin-top: 0.625 * $unit
+          margin-bottom: 0.625 * $unit
+          page-break-after: avoid
+
+      hr
+        border: 0
+        border-top: 1px solid var(--accent_color_1)
+        border-bottom: 1px solid var(--accent_color_1)
+
+      // Ordered lists
+      ol
+        counter-reset: ol-counter 0
+        @include responsive_property(margin-bottom, $xs: 1.5 * $unit, $s: 1.75 * $unit, $m: 2 * $unit, $otherwise: 2 * $unit)
+
+      ol li
+        counter-increment: ol-counter
+        text-indent: -1 * $unit
+        margin-left: 2 * $unit
+
+      ol li::before
+        display: inline-block
+        width: 1 * $unit
+        color: var(--accent_color_1)
+        content: counter(ol-counter) "."
+        @include responsive_property(margin-right, $xs: 0.25 * $unit, $s: 0.25 * $unit, $otherwise: 0)
+
+      li ol
+        margin-top: 0.75 * $unit
+        @include responsive_property(margin-left, $xs: 0.25 * $unit, $s: 0.5 * $unit, $otherwise: 1 * $unit)
+        margin-bottom: 0.75 * $unit
+
+      // Unordered lists
+      ul
+        @include responsive_property(margin-bottom, $xs: 1.5 * $unit, $s: 1.75 * $unit, $m: 2 * $unit, $otherwise: 2 * $unit)
+
+      ul li
+        text-indent: -1 * $unit
+        margin-left: 2 * $unit
+
+      ul li::before
+        display: inline-block
+        width: 1 * $unit
+        color: var(--accent_color_1)
+        content: '–'
+        @include responsive_property(margin-right, $xs: 0.25 * $unit, $s: 0.25 * $unit, $otherwise: 0)
+
+      li ul
+        margin-top: 0.75 * $unit
+        @include responsive_property(margin-left, $xs: 0.25 * $unit, $s: 0.5 * $unit, $otherwise: 1 * $unit)
+        margin-bottom: 0.75 * $unit
+
+      // List items
+      li
+        @include responsive_property(margin-bottom, $xs: 0.25 * $unit, $s: 0.25 * $unit, $m: 0.5 * $unit, $otherwise: 0.5 * $unit)
+        @include print_mode
+          margin-bottom: 0.25 * $unit
+        
+      img
+        max-width: 100%
+        
+      blockquote
+        @include quote_font
+        @include responsive_property(margin-top, $xs: 0.75 * $unit, $s: 0.875 * $unit, $m: 1 * $unit, $otherwise: 1 * $unit)
+        @include responsive_property(margin-bottom, $xs: 0.75 * $unit, $s: 0.875 * $unit, $m: 1 * $unit, $otherwise: 1 * $unit)
+        background-color: var(--group_color_level_1)
+        padding: $unit
+
+        p
+          margin-bottom: 0
+        
+      table
+        @include responsive_property(margin-bottom, $xs: 1.5 * $unit, $s: 1.75 * $unit, $m: 2 * $unit, $otherwise: 2 * $unit)
+        @include responsive_property(font-size, $xs: 0.75 * $unit, $s: 0.875 * $unit, $m: 1 * $unit, $otherwise: 1 * $unit)
+        background-color: var(--group_color_level_1)
+        
+        @include extrasmall_table_mode
+          width: 100%
+          display: block
+          
+          thead, tbody, th, td, tr
+            display: block
+            
+          thead tr
+            position: absolute
+            top: -9999px
+            left: -9999px
+            
+          td::before
+            position: absolute
+            content: attr(data-responsive-td-heading)
+            top: math.div($unit, 4)
+            font-weight: bold
+            display: -webkit-box
+            -webkit-box-orient: vertical
+            -webkit-line-clamp: 2
+            overflow: hidden
+            
+          td
+            border: none
+            position: relative
+            padding-top: 2.5 * $unit
+            padding-right: math.div($unit, 4)
+            padding-bottom: 1.5 * $unit
+            text-align: left !important // !important needed to override styles in HTML
+        
+        @include small_table_mode
+          width: 100%
+          display: block
+          
+          thead, tbody, th, td, tr
+            display: block
+            
+          thead tr
+            position: absolute
+            top: -9999px
+            left: -9999px
+          
+          td::before
+            position: absolute
+            top: math.div($unit, 4)
+            left: math.div($unit, 4)
+            width: 45%
+            padding-right: $unit
+            content: attr(data-responsive-td-heading)
+            font-weight: bold
+            text-align: right !important // !important needed to override styles in HTML
+            display: -webkit-box
+            -webkit-box-orient: vertical
+            -webkit-line-clamp: 2
+            overflow: hidden
+            
+          td
+            border: none
+            position: relative
+            padding-left: 50%
+            padding-top: math.div($unit, 4)
+            padding-right: math.div($unit, 4)
+            padding-bottom: math.div($unit, 4)
+            text-align: left !important // !important needed to override styles in HTML
+            min-height: 2 * $small_line_height * $unit
+            
+          tbody
+            tr:nth-child(odd)
+              background-color: var(--group_color_level_2)
+        
+        @include medium_table_mode
+          margin-left: auto
+          margin-right: auto
+        
+          thead
+            th
+              font-weight: bold
+              text-align: left
+              background-color: var(--group_color_level_2)
+              @include responsive_property(padding, $xs: math.div($unit, 8), $s: math.div($unit, 4), $m: math.div($unit, 2), $otherwise: math.div($unit, 2))
+            
+          tbody
+            td
+              @include responsive_property(padding, $xs: math.div($unit, 8), $s: math.div($unit, 4), $m: math.div($unit, 2), $otherwise: math.div($unit, 2))
+
+        @include print_mode
+          margin-bottom: 2 * $unit
+          font-size: 0.875 * $unit
+          margin-left: auto
+          margin-right: auto
+
+          thead
+            th
+              font-weight: bold
+              text-align: left
+              background-color: var(--group_color_level_2)
+              padding: math.div($unit, 2)
+
+          tbody
+            td
+              padding: math.div($unit, 2)
+              
+    // Desktop Navigation
+    nav#navigation-desktop
+      background-color: var(--content-background-color)
+    
+      // Display only in large mode
+      @include large_mode
+        display: block
+        grid-column: left-navigation / span 1
+        @include linear_responsive_property("width", $large_breakpoint, $large_minimum_left_navigation_width, $large_breakpoint + 8 * $unit, $large_maximum_left_navigation_width)
+        padding-top: $medium_maximum_vertical_margin + $medium_border + $medium_padding
+      
+      // Hide if below large mode  
+      @include below_large_mode
+        display: none
+
+      // Hide when printing
+      @include print_mode
+        display: none
+    
+      // Left Navigation styles
+      @include linear_responsive_property("padding-left", $large_breakpoint, $unit, $large_breakpoint + 8 * $unit, 8 * $unit)
+      padding-right: $unit
+
+      li
+        margin-bottom: math.div($unit, 2)
+
+      p, li
+        font-size: 1.25 * $unit
+        
+        a
+          color: var(--heading_foreground_color)
+          text-decoration: none
+        
+        a.active
+          font-weight: bold
+
+      li ul
+        @include responsive_property(margin-left, $xs: 0.25 * $unit, $s: 0.5 * $unit, $otherwise: 1 * $unit)
+
+      li#site-title
+        @include title_font
+        @include responsive_property(font-size, $xs: 1.125 * $unit, $s: 1.25 * $unit, $m: 1.5 * $unit, $otherwise: 1.5 * $unit)
+        @include responsive_property(margin-bottom, $xs: 1.5 * $unit, $s: 1.75 * $unit, $m: 2 * $unit, $otherwise: 2 * $unit)
+
+
+    // Mobile navigation, both states
+    nav#navigation-mobile
+      // Display only below large mode
+      @include large_mode
+        display: none
+        
+      @include below_large_mode
+        bottom: 0px
+        left: 0px
+        display: grid
+        grid-template-columns: auto
+        grid-template-rows: [transparent-nav-close-area] 8 * $unit [navigation-items] 1fr [navigation-controls] min-content
+
+        #navigation-items
+          grid-row: navigation-items / span 1
+          background-color: var(--content_background_color)
+          overflow-y: scroll
+          @include responsive_property(padding-top, $m: math.div($unit, 2), $otherwise: math.div($unit, 4))
+          @include responsive_property(padding-left, $m: $unit, $otherwise: math.div($unit, 2))
+          @include responsive_property(padding-bottom, $m: math.div($unit, 2), $otherwise: math.div($unit, 4))
+          @include responsive_property(padding-right, $m: $unit, $otherwise: math.div($unit, 2))
+
+          li
+            margin-bottom: math.div($unit, 2)
+
+          p, li
+            font-size: 1.25 * $unit
+            
+            a
+              color: var(--heading_foreground_color)
+              text-decoration: none
+            
+            a.active
+              font-weight: bold
+              
+          li ul
+            @include responsive_property(margin-left, $xs: 0.25 * $unit, $s: 0.5 * $unit, $otherwise: 1 * $unit)
+
+        #transparent-nav-close-area
+          grid-row: transparent-nav-close-area  / span 1
+          cursor: pointer
+
+        #navigation-controls
+          grid-row: navigation-controls / span 1
+          background-color: var(--content_background_color)
+          display: flex
+          flex-direction: row
+          align-items: center
+          justify-content: space-between
+
+          li#site-title
+            @include title_font
+            @include responsive_property(font-size, $xs: 1.125 * $unit, $s: 1.25 * $unit, $m: 1.5 * $unit, $otherwise: 1.5 * $unit)
+            @include responsive_property(padding-left, $m: $unit, $otherwise: math.div($unit, 2))
+            @include responsive_property(padding-top, $m: math.div($unit, 2), $otherwise: math.div($unit, 4))
+            @include responsive_property(padding-bottom, $m: math.div($unit, 2), $otherwise: math.div($unit, 4))
+
+            a
+              color: var(--heading_foreground_color)
+              @include responsive_property(padding-top, $m: math.div($unit, 2), $otherwise: math.div($unit, 4))
+              @include responsive_property(padding-bottom, $m: math.div($unit, 2), $otherwise: math.div($unit, 4))
+
+
+          li
+            @include responsive_property(padding-right, $m: $unit, $otherwise: math.div($unit, 2))
+
+
+            button#mobile-navigation-toggle
+              @include responsive_property(font-size, $xs: 1.125 * $unit, $s: 1.25 * $unit, $m: 1.5 * $unit, $otherwise: 1.5 * $unit)
+              font-weight: bold
+              color: var(--heading_foreground_color)
+              cursor: pointer  
+              display: flex
+              align-items: center
+              @include responsive_property(padding-top, $m: math.div($unit, 2), $otherwise: math.div($unit, 4))
+              @include responsive_property(padding-bottom, $m: math.div($unit, 2), $otherwise: math.div($unit, 4))
+
+              &::before
+                content: ""
+                display: block
+                width: 24px
+                height: 24px
+                margin-right: math.div($unit, 2)
+                background-position: center center
+                background-repeat: no-repeat 
+                background-size: 24px
+                background-image: var(--icon-url)
+                svg path
+                  fill: #ff0000
+
+    // Mobile Navigation, start state
+    nav#navigation-mobile
+      position: sticky
+
+      @include print_mode
+        display: none
+
+    // Mobile Navigation, closed state
+    nav#navigation-mobile[data-state="closed"]
+      #transparent-nav-close-area
+        display: none
+
+      #navigation-items
+        display: none
+
+      #navigation-controls
+        box-shadow: 0 math.div($unit, 2) math.div($unit, 1) rgba(var(--heading_foreground_color), 0.4)
+
+        button#mobile-navigation-toggle
+          --icon-url: url("/assets/images/menu-outline.svg")
+          @include dark_mode
+            --icon-url: url("/assets/images/menu-outline-darkmode.svg")
+
+    // Mobile Navigation, open state
+    nav#navigation-mobile[data-state="open"]
+      #transparent-nav-close-area
+        display: block
+
+      #navigation-items
+        display: block
+        box-shadow: 0 math.div($unit, 2) math.div($unit, 1) rgba(var(--heading_foreground_color), 0.4)
+
+      #navigation-controls
+        button#mobile-navigation-toggle
+          --icon-url: url("/assets/images/close-outline.svg")
+          @include dark_mode
+            --icon-url: url("/assets/images/close-outline-darkmode.svg")

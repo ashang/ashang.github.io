@@ -1,0 +1,5 @@
+
+namespace my{
+	void foo();
+}
+

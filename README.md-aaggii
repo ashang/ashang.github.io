@@ -1,0 +1,2683 @@
+---
+title: ama
+permalink: /ashang/
+weight: 2
+date: 2010-10-18 07:48:03+00:00
+update: 2016-01-06
+update: 2016-11-11 11:00:00 CST
+update: Wed Dec 19 22:52:19 CST 2018
+update:   2021-12-12 22:15:21 +0800
+---
+
+DevTool 查了下网络请求，原来是 pending 在了 Google Fonts 上，页面渲染一直被阻塞到请求超时为止，难怪这么慢。
+忍痛割爱，只好把 Web Fonts 去了（反正超时看到的也只能是 fallback ），果然一下就正常了，而且 GitHub 和 GitCafe 对比并没有感受到明显的速度差异，虽然 github 的 ping 值明显要高一些，达到了 300ms，于是用 DNSPOD 优化了一下速度
+
+oTheme 的 CSS 是基于 Bootstrap 定制的，看得不爽的地方直接在 Less 里改就好了（平时更习惯 SCSS 些），不过其实我一直觉得 Bootstrap 在移动端的体验做得相当一般，比我在淘宝参与的团队 CSS 框架差多了……所以为了体验，也补了不少 CSS 进去
+
+
+
+
+fork 了 Type is Beautiful 的 font CSS，调整了字号，适配了 Win 的渣渲染，中英文混排效果好多了。
+
+
+[Hux Blog](https://huangxuan.me)
+================================
+
+> I never expect this becomes popular.
+
+![](http://huangxuan.me/img/blog-desktop.jpg)
+
+
+[User Manual 👉](_doc/Manual.md)
+--------------------------------------------------
+
+### Getting Started
+
+1. You will need [Ruby](https://www.ruby-lang.org/en/) and [Bundler](https://bundler.io/) to use [Jekyll](https://jekyllrb.com/). Following [Using Jekyll with Bundler](https://jekyllrb.com/tutorials/using-jekyll-with-bundler/) to fullfill the enviromental requirement.
+
+2. Installed dependencies in the `Gemfile`:
+
+```sh
+$ bundle install 
+```
+
+3. Serve the website (`localhost:4000` by default):
+
+```sh
+$ bundle exec jekyll serve  # alternatively, npm start
+```
+
+### Development (Build From Source)
+
+To modify the theme, you will need [Grunt](https://gruntjs.com/). There are numbers of tasks you can find in the `Gruntfile.js`, includes minifing JavaScript, compiling `.less` to `.css`, adding banners to keep the Apache 2.0 license intact, watching for changes, etc. 
+
+Yes, they were inherited and are extremely old-fashioned. There is no modularization and transpilation, etc.
+
+Critical Jekyll-related code are located in `_include/` and `_layouts/`. Most of them are [Liquid](https://github.com/Shopify/liquid/wiki) templates.
+
+This theme uses the default code syntax highlighter of jekyll, [Rouge](http://rouge.jneen.net/), which is compatible with Pygments theme so just pick any pygments theme css (e.g. from [here](http://jwarby.github.io/jekyll-pygments-themes/languages/javascript.html) and replace the content of `highlight.less`.
+
+
+### Interesting to know more? Checkout the [full user manual](_doc/Manual.md)!
+
+
+Other Resources
+---------------
+
+Ports
+- [**Hexo**](https://github.com/Kaijun/hexo-theme-huxblog) by @kaijun
+- [**React-SSR**](https://github.com/LucasIcarus/huxpro.github.io/tree/ssr) by @LucasIcarus
+
+[Starter/Boilerplate](https://github.com/huxpro/huxblog-boilerplate)
+- Out of date. Helps wanted for updating it on par with the main repo
+
+Translation
+- [🇨🇳  中文文档（有点过时）](https://github.com/Huxpro/huxpro.github.io/blob/master/_doc/README.zh.md)
+
+
+## {{ page.title }} by jekyll
+
+The site is hosted at [{{site.url}}]({{site.url}}) by [GitHub Pages](https://pages.github.com/).
+
+The pages were created using [Kramdown](https://kramdown.gettalong.org/quickref.html), a flavour of Markdown
+
+The site is &copy; {{ site.time | date: '%Y' }} {{ site.name }}, released in public domain.
+
+You can find the source code for the Jekyll new theme at:
+[jekyll-new](https://github.com/jglovier/jekyll-new)
+
+jekyll is a Ruby Gem that can be installed on most systems.
+
+```sh
+gem install jekyll
+```
+
+Bundler is a gem that installs all gems in your Gemfile.
+
+```sh
+gem install bundler
+```
+
+To install gems in your Gemfile using Bundler, run the following in the directory that has the Gemfile:
+
+```sh
+bundle init
+```
+
+```sh
+bundle add jekyll
+bundle add webrick
+bundle config set --local path 'vendor/bundle'
+```
+
+### Create A Jekyll Scaffold.
+
+Now that Jekyll is installed, we can use it to create the scaffolding for our site. We need the --force parameter because our folder isn’t empty - it already has some Bundler files in it. We run the bundle install separately because Jekyll gets confused if the Gemfile already exists.
+
+```
+$ bundle exec jekyll new --force --skip-bundle .
+$ bundle install
+$ bundle exec jekyll serve --incremental --drafts --future --livereload
+```
+
+All of the normal Jekyll commands are available to you, but you should prefix them with bundle exec so that Bundler runs the version of Jekyll that is installed in your project folder.
+
+To bypass Bundler if you aren’t using a Gemfile, run
+
+```
+$ jekyll serve # Launches web server and auto-regenerates when file updated.
+$ jekyll clean # Removes generated files: destination, metadata, caches.
+$ jekyll new-theme # Creates a new Jekyll theme scaffold.
+$ jekyll doctor # Outputs any deprecation or configuration issues.
+```
+
+## Jekyll `_config.yml`
+
+```
+defaults:
+  -
+    scope:
+      path: "projects"
+      type: "pages"
+    values:
+      layout: "project"
+      author: "Mr. Hyde"
+      category: "project"
+```
+
+To switch part of your config settings depending on the environment, use the build command option, for example
+
+```
+--config _config.yml,_config_development.yml
+```
+
+Settings in later files override settings in earlier files.
+
+## Bundle and Bundler
+
+[Bundler](http://bundler.io/) is a tool to install all the needed Gems (programs, modules).
+
+### update
+
+```
+jekyll command [argument] [option] [argument_to_option]
+```
+
+Examples:
+
+```
+jekyll new site/ --blank
+jekyll serve --config _alternative_config.yml
+```
+## collections
+
+    collections:
+      - staff_members
+
+>In this case collections is defined as a sequence (i.e., array) with no additional metadata defined for each collection. You can optionally specify metadata for your collection by defining collections as a mapping (i.e., hashmap) instead of sequence, and then defining additional fields in it:
+
+    collections:
+      staff_members:
+        people: true
+
+>When defining a collection as a sequence, its pages will not be rendered by default. To enable this, output: true must be specified on the collection, which requires defining the collection as a mapping.
+>
+> You can optionally specify a directory to store all your collections in the same place with collections_dir: my_collections.
+>
+>Then Jekyll will look in my_collections/_books for the books collection, and in my_collections/_recipes for the recipes collection.
+>
+>If you specify a directory to store all your collections in the same place with collections_dir: my_collections, then you will need to move your _drafts and _posts directory to my_collections/_drafts and my_collections/_posts. Note that, the name of your collections directory cannot start with an underscore (`_`).
+>
+
+Front matter is processed if the front matter exists, and everything after the front matter is pushed into the document’s content attribute. If no front matter is provided, Jekyll will consider it to be a static file and the contents will not undergo further processing.
+
+Regardless of whether front matter exists or not, Jekyll will write to the destination directory (e.g. _site) only if output: true has been set in the collection’s metadata.
+
+ Posts with a valid filename format will be marked for processing even if they do not contain front matter.
+
+Iterate over site.staff_members using the content variable:
+```
+{% for staff_member in site.staff_members %}
+  <h2>{{ staff_member.name }} - {{ staff_member.position }}</h2>
+  <p>{{ staff_member.content | markdownify }}</p>
+{% endfor %}
+```
+
+If you’d like Jekyll to create a rendered page for each document in your collection, you can set the output key to true in your collection metadata in _config.yml:
+
+```
+collections:
+  staff_members:
+    output: true
+```
+
+You can link to the generated page using the url attribute:
+
+```
+\{% for staff_member in site.staff_members %}
+  <h2>
+    <a href="\{{ staff_member.url }}">
+      \{{ staff_member.name }} - \{{ staff_member.position }}
+    </a>
+  </h2>
+  <p>\{{ staff_member.content | markdownify }}</p>
+\{% endfor %}
+```
+
+## Sort By Front Matter Key
+
+```
+collections:
+  tutorials:
+    sort_by: lesson
+```
+
+The documents are arranged in the increasing order of the key’s value. If a document does not have the front matter key defined then that document is placed immediately after sorted documents. When multiple documents do not have the front matter key defined, those documents are sorted by their dates or paths and then placed immediately after the sorted documents.
+
+## Manually Ordering Documents
+
+You can also manually order the documents by setting an order metadata with the filenames listed in the desired order. For example, a collection of tutorials would be configured as:
+
+```
+collections:
+  tutorials:
+    order:
+      - hello-world.md
+      - introduction.md
+      - basic-concepts.md
+      - advanced-concepts.md
+```
+
+Any documents with filenames that do not match the list entry simply gets placed after the rearranged documents. If a document is nested under subdirectories, include them in entries as well:
+
+```
+collections:
+  tutorials:
+    order:
+      - hello-world.md
+      - introduction.md
+      - concepts/basics.md
+      - concepts/advanced.md
+```
+
+If both metadata keys have been defined properly, order list takes precedence.
+
+## Static files
+
+This assumes that your Jekyll site has a folder path of assets/img where you have images (static files) stored. When Jekyll builds the site, it will treat each image as if it had the front matter value of image: true.
+
+Suppose you want to list all your image assets as contained in assets/img. You could use this for loop to look in the static_files object and get all static files that have this front matter property:
+
+```
+\{% assign image_files = site.static_files | where: "image", true %}
+\{% for myimage in image_files %}
+  \{{ myimage.path }}
+\{% endfor %}
+```
+
+
+## File structure
+
+```
+.
+├── _config.yml
+├── _data
+│   └── members.yml
+├── _drafts
+│   ├── begin-with-the-crazy-ideas.md
+│   └── on-simplicity-in-technology.md
+├── _includes
+│   ├── footer.html
+│   └── header.html
+├── _layouts
+│   ├── 404.html
+│   ├── default.html
+│   ├── page.html
+│   └── post.html
+├── _posts
+│   ├── 2007-10-29-why-every-programmer-should-play-nethack.md
+│   └── 2009-04-26-barcamp-boston-4-roundup.md
+├── _sass
+│   ├── _base.scss
+│   ├── _layout.scss
+|   └── _syntax-highlighting.scss
+├── _site
+├── .jekyll-cache
+│   └── Jekyll
+│       └── Cache
+│           └── [...]
+├── .jekyll-metadata
+├── about.md          # => <http://example.com/about>
+├── documentation     # folder containing pages
+│   └── doc1.md       # => <http://example.com/documentation/doc1>
+│   └── doc2.md
+├── notes
+│   └── draft.md      # => <http://example.com/notes/draft>
+├── css
+|   └── main.scss
+├── feed.xml
+└── index.html # can also be an 'index.md' with valid front matter
+```
+
+## Jekyll support for code snippets.
+
+Using built-in support.
+
+    ```ruby
+    def print_hi(name)
+      puts "Hi, #{name}"
+    end
+    print_hi('Tom')
+    #=> prints 'Hi, Tom' to STDOUT.
+    ```
+
+```ruby
+def print_hi(name)
+  puts "Hi, #{name}"
+end
+print_hi('Tom')
+#=> prints 'Hi, Tom' to STDOUT.
+```
+
+And using `highlight ruby`.
+
+    {% highlight ruby %}
+    def print_hi(name)
+      puts "Hi, #{name}"
+    end
+    print_hi('Tom')
+    #=> prints 'Hi, Tom' to STDOUT.
+    {% endhighlight %}
+
+{% highlight ruby %}
+def print_hi(name)
+  puts "Hi, #{name}"
+end
+print_hi('Tom')
+#=> prints 'Hi, Tom' to STDOUT.
+{% endhighlight %}
+
+## Trouble shooting
+
+```
+$ jekyll serve
+/usr/lib/ruby/gems/3.0.0/gems/bundler-2.2.33/lib/bundler/runtime.rb:309:in `check_for_activated_spec!': You have already activated i18n 1.8.11, but your Gemfile requires i18n 0.9.5. Prepending `bundle exec` to your command may solve this. (Gem::LoadError)
+        from /usr/lib/ruby/gems/3.0.0/gems/bundler-2.2.33/lib/bundler/runtime.rb:25:in `block in setup'
+        from /usr/lib/ruby/gems/3.0.0/gems/bundler-2.2.33/lib/bundler/spec_set.rb:136:in `each'
+        from /usr/lib/ruby/gems/3.0.0/gems/bundler-2.2.33/lib/bundler/spec_set.rb:136:in `each'
+        from /usr/lib/ruby/gems/3.0.0/gems/bundler-2.2.33/lib/bundler/runtime.rb:24:in `map'
+        from /usr/lib/ruby/gems/3.0.0/gems/bundler-2.2.33/lib/bundler/runtime.rb:24:in `setup'
+        from /usr/lib/ruby/gems/3.0.0/gems/bundler-2.2.33/lib/bundler.rb:150:in `setup'
+        from /usr/lib/ruby/gems/3.0.0/gems/jekyll-4.2.1/lib/jekyll/plugin_manager.rb:52:in `require_from_bundler'
+        from /usr/lib/ruby/gems/3.0.0/gems/jekyll-4.2.1/exe/jekyll:11:in `<top (required)>'
+        from /usr/bin/jekyll:25:in `load'
+        from /usr/bin/jekyll:25:in `<main>'
+```
+
+```
+$ bundle exec jekyll serve --trace
+Configuration file: /home/aaron/neo/_config.yml
+            Source: /home/aaron/neo
+       Destination: /home/aaron/neo/_site
+ Incremental build: disabled. Enable with --incremental
+      Generating...
+       Jekyll Feed: Generating feed for posts
+                    done in 0.172 seconds.
+ Auto-regeneration: enabled for '/home/aaron/neo'
+bundler: failed to load command: jekyll (/usr/bin/jekyll)
+/usr/lib/ruby/gems/3.0.0/gems/jekyll-4.2.1/lib/jekyll/commands/serve/servlet.rb:3:in `require': cannot load such file -- webrick (LoadError)
+        from /usr/lib/ruby/gems/3.0.0/gems/jekyll-4.2.1/lib/jekyll/commands/serve/servlet.rb:3:in `<top (required)>'
+        from /usr/lib/ruby/gems/3.0.0/gems/jekyll-4.2.1/lib/jekyll/commands/serve.rb:179:in `require_relative'
+        from /usr/lib/ruby/gems/3.0.0/gems/jekyll-4.2.1/lib/jekyll/commands/serve.rb:179:in `setup'
+        from /usr/lib/ruby/gems/3.0.0/gems/jekyll-4.2.1/lib/jekyll/commands/serve.rb:100:in `process'
+        from /usr/lib/ruby/gems/3.0.0/gems/jekyll-4.2.1/lib/jekyll/command.rb:91:in `block in process_with_graceful_fail'
+        from /usr/lib/ruby/gems/3.0.0/gems/jekyll-4.2.1/lib/jekyll/command.rb:91:in `each'
+        from /usr/lib/ruby/gems/3.0.0/gems/jekyll-4.2.1/lib/jekyll/command.rb:91:in `process_with_graceful_fail'
+        from /usr/lib/ruby/gems/3.0.0/gems/jekyll-4.2.1/lib/jekyll/commands/serve.rb:86:in `block (2 levels) in init_with_program'
+        from /usr/lib/ruby/gems/3.0.0/gems/mercenary-0.4.0/lib/mercenary/command.rb:221:in `block in execute'
+        from /usr/lib/ruby/gems/3.0.0/gems/mercenary-0.4.0/lib/mercenary/command.rb:221:in `each'
+        from /usr/lib/ruby/gems/3.0.0/gems/mercenary-0.4.0/lib/mercenary/command.rb:221:in `execute'
+        from /usr/lib/ruby/gems/3.0.0/gems/mercenary-0.4.0/lib/mercenary/program.rb:44:in `go'
+        from /usr/lib/ruby/gems/3.0.0/gems/mercenary-0.4.0/lib/mercenary.rb:21:in `program'
+        from /usr/lib/ruby/gems/3.0.0/gems/jekyll-4.2.1/exe/jekyll:15:in `<top (required)>'
+        from /usr/bin/jekyll:25:in `load'
+        from /usr/bin/jekyll:25:in `<top (required)>'
+        from /usr/lib/ruby/gems/3.0.0/gems/bundler-2.2.33/lib/bundler/cli/exec.rb:58:in `load'
+        from /usr/lib/ruby/gems/3.0.0/gems/bundler-2.2.33/lib/bundler/cli/exec.rb:58:in `kernel_load'
+        from /usr/lib/ruby/gems/3.0.0/gems/bundler-2.2.33/lib/bundler/cli/exec.rb:23:in `run'
+        from /usr/lib/ruby/gems/3.0.0/gems/bundler-2.2.33/lib/bundler/cli.rb:479:in `exec'
+        from /usr/lib/ruby/gems/3.0.0/gems/bundler-2.2.33/lib/bundler/vendor/thor/lib/thor/command.rb:27:in `run'
+        from /usr/lib/ruby/gems/3.0.0/gems/bundler-2.2.33/lib/bundler/vendor/thor/lib/thor/invocation.rb:127:in `invoke_command'
+        from /usr/lib/ruby/gems/3.0.0/gems/bundler-2.2.33/lib/bundler/vendor/thor/lib/thor.rb:392:in `dispatch'
+        from /usr/lib/ruby/gems/3.0.0/gems/bundler-2.2.33/lib/bundler/cli.rb:31:in `dispatch'
+        from /usr/lib/ruby/gems/3.0.0/gems/bundler-2.2.33/lib/bundler/vendor/thor/lib/thor/base.rb:485:in `start'
+        from /usr/lib/ruby/gems/3.0.0/gems/bundler-2.2.33/lib/bundler/cli.rb:25:in `start'
+        from /usr/lib/ruby/gems/3.0.0/gems/bundler-2.2.33/exe/bundle:49:in `block in <top (required)>'
+        from /usr/lib/ruby/gems/3.0.0/gems/bundler-2.2.33/lib/bundler/friendly_errors.rb:103:in `with_friendly_errors'
+        from /usr/lib/ruby/gems/3.0.0/gems/bundler-2.2.33/exe/bundle:37:in `<top (required)>'
+        from /usr/bin/bundle:23:in `load'
+        from /usr/bin/bundle:23:in `<main>'
+```
+
+Add gem webrick to Gemfile.
+
+```
+$ bundle exec jekyll serve --trace
+Could not find gem 'webrick' in locally installed gems.
+Run `bundle install` to install missing gems.
+$ bundle install
+```
+
+OK
+
+## Links
+
+- <https://jekyllrb.com/docs/step-by-step/01-setup/>
+- <https://jekyllrb.com/tutorials/convert-site-to-jekyll/>
+- <https://github.com/jekyll/jekyll/tree/master/docs>
+- <https://github.com/jekyll/jekyll/blob/master/docs/_docs/rendering-process.md>
+- <https://jekyllrb.com/docs/posts/>
+- <https://www.sonerezh.bzh/>
+- <https://sigpipe.macromates.com/2018/creating-a-faster-jekyll/>
+- <https://www.bridgetownrb.com/news/time-to-visit-bridgetown/>
+- <https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/about-custom-domains-and-github-pages>
+- <https://pages.github.com/>
+- <https://dev.twitch.tv/>
+- <https://github.com/DirtyF>
+- <https://github.com/jekyll/jekyll/issues/6437>
+- <https://github.com/jekyll/jekyll/issues/6438>
+- <https://github.com/apps/first-timers>
+- <https://byparker.com/blog/2021/the-power-of-bashrc-d/>
+- <https://en.wikipedia.org/wiki/Mantra>
+- <https://zh.wikipedia.org/wiki/%E6%8B%89%E5%AE%BE-%E5%8D%A1%E6%99%AE%E7%AE%97%E6%B3%95>
+
+## Contents in markdown
+
+### Blockquotes
+
+> This is a blockquote
+
+ > This is a blockquote even if the angle bracket is not at the beginning of the line
+
+> This is a single
+> blockquote even if it
+> spans a few lines
+
+> This is a single
+blockquote, you can put the angle bracket
+jnly at the first line of the paragraph and
+the all the paragraph is a blockquote
+
+<https://blog.gerv.net/category/death-and-dying/>
+
+### Nested blockquotes
+
+> First level blockquote
+>> Second level blockquote
+>>
+>> Second level blockquote
+>>> Third level blockquote
+>>>
+>>> This quote will *change* your life. It will reveal the <i>secrets</i> of the universe, and all the wonders of humanity. Don't <em>misuse</em> it.
+
+
+## The Practice
+
+> Do What Works, Not What's Fashionable: Don't adopt a development method or technique just because other companies are doing it. Adopt what works for your team, in your context.
+- The Pragmatic Programmer
+
+```
+<link rel="stylesheet" href="http://localhost:1313//css/style.css">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css" integrity="sha256-Zd1icfZ72UBmsId/mUcagrmN7IN5Qkrvh75ICHIQVTk=" crossorigin="anonymous" />
+```
+
+>> Paul Graham
+>
+>The greatest dangers to liberty lurk in insidious encroachment by men of zeal, well-meaning but without understanding.
+
+>> Arnold Toynbee, Experiences
+
+>Americans spend an average of four hours a day watching TV, an hour of that enduring ads. That adds up to an astounding 10% of total leisure time; at current rates, a typical viewer fritters away three years of his life getting bombarded with commercials.
+
+> Scott Woolley, Forbes
+
+>The best writing is rewriting.
+
+> E. B. White
+
+>Modern invention has been a great leveller. A machine may operate far more quickly than a political or economic measure to abolish privilege and wipe out the distinctions of class or finance.
+
+> Ivor Brown, The Heart of England
+
+>If our goal is to write poetry, the only way we are likely to be any good is to try to be as great as the best.
+
+> Donald Hall, Poetry and Ambition
+
+
+>Premature optimization is the root of all evil (or at least most of it) in programming.
+> Donald Knuth
+
+>In France those absurd perversions of the art of war which covered themselves under the name of chivalry were more omnipotent than in any other country of Europe. The strength of the armies of Philip and John of Valois was composed of a fiery and undisciplined aristocracy which imagined itself to be the most efficient military force in the world, but which was in reality little removed from an armed mob.
+
+> C. W. C. Oman, The Art of War in the Middle Ages
+
+
+>We act as though comfort and luxury were the chief requirements of life, when all that we need to make us happy is something to be enthusiastic about.
+
+> Einstein
+
+>The path from good to evil goes through bogus.
+
+> Tara Ploughman
+
+>Lisp has jokingly been called "the most intelligent way to misuse a computer". I think that description is a great compliment because it transmits the full flavor of liberation: it has assisted a number of our most gifted fellow humans in thinking previously impossible thoughts.
+
+> Edsger Dijkstra, CACM, 15:10
+
+>Many who burnt heretics in the ordinary way of their business were otherwise excellent people.
+
+> G. M. Trevelyan, "Bias in History
+
+>He became an object of ridicule in 1993 when a paper published an intercepted phone call in which he told his lover Camilla Parker Bowles he wanted to be reincarnated as her tampon.
+
+> Reuters story, on Prince Charles
+
+>We're even wrong about which mistakes we're making.
+
+> Carl Winfeld
+
+>From this place she sent into the world those novels, which by many have been placed on the same shelf as the works of a D'Arblay and an Edgeworth.
+
+> Henry Austen on his sister Jane, in a preface to Persuasion
+
+>The key to performance is elegance, not battalions of special cases.
+
+> Jon Bentley and Doug McIlroy
+
+>The economic depression that struck Europe in the fourteenth century was followed ultimately by economic and technological recovery. But the depression we have moved into will have no end. We can anticipate centuries of decline and exhaustion.
+
+> Jean Gimpel, The Medieval Machine, 1975
+
+>Politics is not the art of the possible. It consists in choosing between the disastrous and the unpalatable.
+
+> J. K. Galbraith, Letter to Kennedy, 1962
+
+>A typical dinner from the ape menu would be tofu bake with ratatouille of aubergine, onions and sweet peppers, with pearled barley and vegetable side dishes, says the team.
+
+> New Scientist
+
+>Guy Steele leads a small team of researchers in Burlington, Massachusetts, who are taking on an enormous challenge-- create a programming language better than Java.
+
+> Sun.Com (my italics)
+
+>I had my own reactions to Paul's essay-- on the whole I liked it but when I connected some dots I found some suggestions of things I strongly disliked-- not so much in the essay as suggested by it.
+
+> reaction to What You Can't Say in a blog
+
+>Your twenties are always an apprenticeship, but you don't always know what for.
+
+> Jan Houtema
+
+>In addition, the board rewrote the definition of science, so that it is no longer limited to the search for natural explanations of phenomena.
+
+> AP story on Kansas Board of Education
+
+>A danger sign that fellow-obsessionals will at once recognize is the tendency to regard the happiest moments of your life as those that occur when someone who has an appointment to see you is prevented from coming.
+
+> Peter Medawar, Memoirs of a Thinking Radish
+
+>Never offer what you'd hate someone for accepting.
+
+> Tara Ploughman
+
+>The pagans were incensed at the rashness of a recent and obscure sect, which presumed to accuse their countrymen of error, and to devote their ancestors to eternal misery.
+
+> Gibbon, The Decline and Fall of the Roman Empire
+
+>Simultaneously reifying and challenging hegemonic codes of race, class, gender and regional or national identity, his characters explore the complex and changing postmodern cultural landscape.
+
+> Robert Bennett, English professor at Montana State, announcing a panel discussion about Brad Pitt
+
+>In the councils of government, we must guard against the acquisition of unwarranted influence, whether sought or unsought, by the military-industrial complex. The potential for the disastrous rise of misplaced power exists and will persist.
+
+> Eisenhower, Farewell Address
+
+>Keep away from people who try to belittle your ambitions. Small people always do that, but the really great make you feel that you, too, can become great.
+
+> Mark Twain
+
+>However little television you watch, watch less.
+
+> David McCullough
+
+>Any word you have to hunt for in a thesaurus is the wrong word.
+
+> Stephen King
+
+>The people can always be brought to the bidding of the leaders. That is easy. All you have to do is tell them they are being attacked, and denounce the pacifists for lack of patriotism, and exposing the country to greater danger.
+
+> Goering at the Nuremberg Trials
+
+>As all these results were obtained, not by any heroic method, but by patient and detailed reasoning, I began to think it probable that philosophy had erred in adopting heroic remedies for intellectual difficulties, and that solutions were to be found merely by greater care and accuracy. This view I have come to hold more and more strongly as time went on, and it has led me to doubt whether philosophy, as a study distinct from science and possessed of a method of its own, is anything more than an unfortunate legacy from theology.
+
+> Bertrand Russell, "Logical Atomism
+
+>Get the important things right.
+
+> N. P. Collingwood
+
+>When schoolchildren start paying union dues, that's when I'll start representing the interests of schoolchildren.
+
+> Albert Shanker, president of the American Federation of Teachers, 1985
+
+>The power of instruction is seldom of much efficacy except in those happy dispositions where it is almost superfluous.
+
+> Gibbon
+
+>I do not know what the Lord's anointed, his Vicegerent upon earth, divinely appointed by him, and accountable to none but him for his actions, will either think or do, upon these symptoms of reason and good sense which seem to be breaking out all over France: but this I foresee, that, before the end of this century, the trade of both King and Priest will not be half so good a one as it has been.
+
+> Chesterfield, letter to his son, 13 Apr 1752
+
+>filter(P, S) is almost always written clearer as [x for x in S if P(x)]
+
+> Guido van Rossum on Python
+
+>I'm surrounded by postmodern idiots and blatherers. Your writings give me hope.
+
+> email from a reader
+
+>In the last analysis, productivity of labour is the most important, the principal thing for the victory of the new social system.
+
+> Lenin, quoted in First Five-Year Plan for the Development of the National Economy of the People's Republic of China in 1953-1957
+
+>Most interesting phenomena have multiple causes.
+
+> N. P. Collingwood
+
+>From 1911 to 1920, the mood of the city varied between utter dullness and tremendous excitement.
+
+> Arthur Coffman, An Illustrated History of Palo Alto
+
+>People don't change their minds. They die, and are replaced by people with different opinions.
+
+> Arturo Albergati
+
+>No man who ever held the office of President would congratulate a friend on obtaining it.
+
+> John Adams
+
+>PowerPoint makes us stupid.
+
+> General James N. Mattis, USMC
+
+>The best way to do something 'lean' is to gather a tight group of people, give them very little money, and very little time.
+
+> Bob Klein, chief engineer of the F-14 program
+
+>But camels, though odious to view and endowed with the offensive spirit, did not enjoy the blessing of pachydermaty.
+
+> F. E. Adcock, The Greek and Macedonian Art of War
+
+>As it turned out, the obvious clearly stated, and combined with new observations, was sometimes close to revolutionary.
+
+> Wallace Stegner on John Wesley Powell
+
+>Focusing is about saying no.
+
+> Steve Jobs
+
+
+>The condition of man is already close to satiety and arrogance, and there is danger of destruction of everything in existence.
+
+> a Brahmin to Onesicritus, 327 BC, reported in Strabo's Geography
+
+>Change breaks the brittle.
+
+> Jan Houtema
+
+>The sons of Hermes love to play,
+And only do their best when they
+Are told they oughtn't;
+Apollo's children never shrink
+From boring jobs but have to think
+Their work important.
+
+> W. H. Auden, Under Which Lyre
+
+>Programs must be written for people to read, and only incidentally for machines to execute.
+
+> Abelson & Sussman, SICP, preface to the first edition
+
+>That language is an instrument of human reason, and not merely a medium for the expression of thought, is a truth generally admitted.
+
+> George Boole, quoted in Iverson's Turing Award Lecture
+
+>Short words are best and the old words when short are best of all.
+
+> Winston Churchill
+
+>Many big people were chasing me. I didn't know what to do. So I thought I would surprise them and throw it.
+
+> Garo Yepremian, Miami placekicker, after a disastrous attempt to throw a pass in the Super Bowl.
+
+>That book is good in vain which the reader throws away. He only is the master who keeps the mind in pleasing captivity; whose pages are perused with eagerness, and in hope of new pleasure are perused again; and whose conclusion is perceived with an eye of sorrow, such as the traveller casts upon departing day.
+
+> Johnson, Lives of the Poets: Dryden
+
+>Don't worry about what anybody else is going to do. The best way to predict the future is to invent it.
+
+> Alan Kay
+
+>But the audience is right. They're always, always right. You hear directors complain that the advertising was lousy, the distribution is no good, the date was wrong to open the film. I don't believe that. The audience is never wrong. Never.
+
+> William Friedkin, in a NYT interview
+
+>Dealing with failure is easy: Work hard to improve. Success is also easy to handle: You've solved the wrong problem. Work hard to improve.
+
+> Alan Perlis
+
+>Frankly, I don't think you could have driven a needle up my sphincter using a sledgehammer.
+
+> Col. Barry Horne, F-117 pilot, on first mission over Baghdad
+
+>Two centuries later a most clear-sighted historian of the Second Crusade can find space in a short narrative to record on many occasions the flattery, perjury, perfidy, blasphemy, heresy, arrogance, servility, deceit, pride, cunning and infidelity of the Greeks.
+
+> R. W. Southern, The Making of the Middle Ages
+
+## Apps
+  - <http://opengapps.org>
+
+## Integrated
+  - https://www.algolia.com/
+
+## Switching
+  - https://github.com/p4lang
+
+
+## Networking Controller
+  - https://wiki.onosproject.org/
+
+## Networking Utilities
+  - https://stackshare.io/stackups
+  - https://stackshare.io/stackshare
+  - https://packagecloud.io
+
+## Startup
+  - https://angel.co/
+  - https://software.opensuse.org/download.html?project=home:vtrefny&package=blivet-gui
+
+https://github.com/storaged-project/blivet-gui/wiki
+https://camo.githubusercontent.com/d1f737120d879117d9f4cdd2f808a936b898621b/68747470733a2f2f6665646f726170656f706c652e6f72672f67726f7570732f73746f726167655f617069732f73746174757365732f626c697665742d6775692d6d61737465722e737667
+
+## Categories
+
+Unlike tags, categories for posts can also be defined by a post’s file path. Any directory above _post will be read-in as a category. For example, if a post is at path movies/horror/_posts/2019-05-21-bride-of-chucky.markdown, then movies and horror are automatically registered as categories for that post.
+
+## Post excerpts
+
+You can access a snippet of a posts’s content by using excerpt variable on a post. By default this is the first paragraph of content in the post, however it can be customized by setting a excerpt_separator variable in front matter or _config.yml.
+
+```
+---
+excerpt_separator: <!--more-->
+---
+
+Excerpt with multiple paragraphs
+
+Here's another paragraph in the excerpt.
+<!--more-->
+Out-of-excerpt
+```
+
+---
+
+## Netlify Jekyll website
+
+```
+$ git clone https://
+info: detecting host provider for 'https:///'...
+warning: auto-detection of host provider took too long (>2000ms)
+warning: see https://aka.ms/gcmcore-autodetect for more information.
+
+remote: Enumerating objects: 31, done.
+remote: Total 31 (delta 0), reused 0 (delta 0), pack-reused 31
+Receiving objects: 100% (31/31), 11.11 KiB | 1.39 MiB/s, done.
+Resolving deltas: 100% (1/1), done.
+```
+
+In order to build this site with Netlify, simply log in or register at
+https://app.netlify.com/, then select "New site from Git" from the top
+right. Select GitLab, authenticate if needed, and then select this
+project from the list. Netlify will handle the rest.
+
+In the meantime, you can take advantage of all the great GitLab features
+like merge requests, issue tracking, epics, and everything else GitLab has
+to offer.
+
+## Using Jekyll locally
+
+To work locally with this project, you'll have to follow the steps below:
+
+1. Fork, clone or download this project
+1. [Install][] Jekyll
+1. Download dependencies: `bundle`
+1. Build and preview: `bundle exec jekyll serve`
+1. Add content
+
+The above commands should be executed from the root directory of this project.
+
+Read more at Jekyll's [documentation][].
+
+## Did you fork this project?
+
+If you forked this project for your own use, please go to your project's
+**Settings** and remove the forking relationship, which won't be necessary
+unless you want to contribute back to the upstream project.
+
+## Troubleshooting
+
+1. CSS is missing! That means two things:
+    * Either that you have wrongly set up the CSS URL in your templates, or
+    * your static generator has a configuration option that needs to be explicitly
+    set in order to serve static assets under a relative URL.
+
+[Jekyll]: http://jekyllrb.com/
+[install]: https://jekyllrb.com/docs/installation/
+[documentation]: https://jekyllrb.com/docs/home/
+
+
+---
+
+## Netlify Jekyll website
+
+```
+$ git clone https://
+info: detecting host provider for 'https:///'...
+warning: auto-detection of host provider took too long (>2000ms)
+warning: see https://aka.ms/gcmcore-autodetect for more information.
+
+remote: Enumerating objects: 31, done.
+remote: Total 31 (delta 0), reused 0 (delta 0), pack-reused 31
+Receiving objects: 100% (31/31), 11.11 KiB | 1.39 MiB/s, done.
+Resolving deltas: 100% (1/1), done.
+```
+
+In order to build this site with Netlify, simply log in or register at
+https://app.netlify.com/, then select "New site from Git" from the top
+right. Select GitLab, authenticate if needed, and then select this
+project from the list. Netlify will handle the rest.
+
+In the meantime, you can take advantage of all the great GitLab features
+like merge requests, issue tracking, epics, and everything else GitLab has
+to offer.
+
+## Using Jekyll locally
+
+To work locally with this project, you'll have to follow the steps below:
+
+1. Fork, clone or download this project
+1. [Install][] Jekyll
+1. Download dependencies: `bundle`
+1. Build and preview: `bundle exec jekyll serve`
+1. Add content
+
+The above commands should be executed from the root directory of this project.
+
+{% comment %}
+
+Read more at Jekyll's [documentation][].
+
+Might you have an include in your theme? Why not try it here!
+{% include my-themes-great-include.html %}
+{% endcomment %}
+
+
+## Did you fork this project?
+
+If you forked this project for your own use, please go to your project's
+**Settings** and remove the forking relationship, which won't be necessary
+unless you want to contribute back to the upstream project.
+
+## Troubleshooting
+
+1. CSS is missing! That means two things:
+    * Either that you have wrongly set up the CSS URL in your templates, or
+    * your static generator has a configuration option that needs to be explicitly
+    set in order to serve static assets under a relative URL.
+
+## features
+
+**Settings (⚙)** > is capable to **"Remove fork relationship"** .
+
+## G P Je
+
+### Start from a local Jekyll project
+
+1. Shared runners.
+
+Pages are built by [GitLab CI][ci], following the steps
+defined in [`.gitlab-ci.yml`](.gitlab-ci.yml):
+
+```
+image: ruby:latest
+
+variables:
+  JEKYLL_ENV: production
+
+pages:
+  script:
+  - bundle install
+  - bundle exec jekyll build -d public
+  artifacts:
+    paths:
+    - public
+  only:
+  - master
+```
+
+## User or Group Pages
+
+Read more about [user/group Pages][userpages] and [project Pages][projpages].
+
+* [jekyll-branched](https://gitlab.com/pages/jekyll-branched) demonstrates how you can keep your GitLab Pages site in one branch and your project's source code in another.
+
+## Keep moving or trying something new
+
+- 📫 <:) Todo Destroyer.
+
+![github profile summary stats](https://github-profile-summary-cards.vercel.app/api/cards/stats?username=ashang&theme=nord_dark) ![github profile summary repos per language](https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=ashang&theme=nord_dark)
+
+
+[![GitHub Stats](https://github-readme-stats.vercel.app/api?username=ashang)](https://github.com/ashang)
+
+## Troubleshooting
+
+1. CSS is missing! That means two things:
+    * Either that you have wrongly set up the CSS URL in your templates, or
+    * your static generator has a configuration option that needs to be explicitly
+    set in order to serve static assets under a relative URL.
+
+[ci]: https://about.gitlab.com/gitlab-ci/
+[projpages]: https://docs.gitlab.com/ce/user/project/pages/introduction.html#project-pages
+[documentation]: https://jekyllrb.com/docs/home/
+
+
+Get $100 using my special Referral
+
+https://www.vultr.com/?ref=9028737-8H
+
+## Trouble shooting
+
+Starting Jekyll with bundler and overwrites some settings in `\_config.yml` with the second configuration file `\_config\_dev.yml`.
+
+```
+bundle exec jekyll serve --config _config.yml,_config_dev.yml
+```
+
+Start tracing.
+
+```
+bundle exec jekyll serve --trace --config _config.yml
+```
+
+### Preview
+
+```
+bundle config set --local without 'test _test legacy benchmark'
+bundle install
+bundle exec rake site:preview
+```
+
+### In case SSL warning is reported, build first before serving
+
+```
+/var/lib/gems/2.7.0/gems/jekyll-gist-1.5.0/lib/jekyll-gist/gist_tag.rb:98: warning: constant ::TimeoutError is deprecated
+Liquid Exception: Connection reset by peer - SSL_connect
+```
+
+```
+bundle exec jekyll clean && bundle exec jekyll build && bundle exec jekyll serve
+```
+
+## Inline HTML elements
+
+HTML defines a long list of available inline tags, a complete list of which can be found on the [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/Web/HTML/Element).
+
+- **To bold text**, use `<strong>`.
+- *To italicize text*, use `<em>`.
+- Abbreviations, like <abbr title="HyperText Markup Langage">HTML</abbr> should use `<abbr>`, with an optional `title` attribute for the full phrase.
+- Citations, like <cite>&mdash; Mark otto</cite>, should use `<cite>`.
+- <del>Deleted</del> text should use `<del>` and <ins>inserted</ins> text should use `<ins>`.
+- Superscript <sup>text</sup> uses `<sup>` and subscript <sub>text</sub> uses `<sub>`.
+
+## Code
+
+Cum sociis natoque penatibus et magnis dis `code element` montes, nascetur ridiculus mus.
+
+{% highlight js %}
+// Example can be run directly in your JavaScript console
+
+// Create a function that takes two arguments and returns the sum of those arguments
+var adder = new Function("a", "b", "return a + b");
+
+// Call the function
+adder(2, 6);
+// > 8
+{% endhighlight %}
+
+## Lists
+
+<dl>
+  <dt>HyperText Markup Language (HTML)</dt>
+  <dd>The language used to describe and define the content of a Web page</dd>
+
+  <dt>Cascading Style Sheets (CSS)</dt>
+  <dd>Used to describe the appearance of Web content</dd>
+
+  <dt>JavaScript (JS)</dt>
+  <dd>The programming language used to build advanced Web sites and applications</dd>
+</dl>
+
+kramdown
+: A Markdown-superset converter
+
+Maruku
+:     Another Markdown-superset converter
+
+## Links
+
+- http://www.lagom.nl/lcd-test/
+
+----
+
+
+- Master branch build status
+    - [![build status](http://code/repo/pica8/badges/master/build.svg)](http://code/repo/pica8/commits/master)
+
+- Master branch coverage report
+    - [![coverage report](http://code/repo/pica8/badges/master/coverage.svg)](http://code/repo/pica8/commits/master)
+
+# Docs
+- [Start from `docs`](http://code/repo/pica8/blob/master/docs) for production documentations.
+- [Start from `Knowledge Base`](http://code/pica8/kb) for internal design and Knowledge Base.
+
+## User accounts and groups, permission control
+TODO
+
+```
+$ more /etc/passwd
+root:x:0:0:root:/:/bin/sh
+admin:x:0:0:admin,,,:/:/bin/run_picash.sh
+pica8:x:100:100:pica8,,,:/:/bin/run_picash.sh
+sshd:x:501:255:sshd privsep:/var/empty:/bin/false
+
+$ more /etc/group
+root:x:0:root
+adm:x:1:admin,pica8
+users:x:100:pica8
+sshd:x:255:
+
+$ more /etc/shadow
+root:$1$n6Z4t3qg$jGPzgEuNs7M6oN92/3AEe.:12053:0:99999:7:::
+sshd:*:11880:0:99999:7:-1:-1:0
+admin:$1$n6Z4t3qg$jGPzgEuNs7M6oN92/3AEe.:12053:0:99999:7:::
+pica8:$1$n6Z4t3qg$jGPzgEuNs7M6oN92/3AEe.:12053:0:99999:7:::
+```
+
+# Install
+See user guides for details.
+
+The installation and upgrading instructions are contained in the Installation Guide at http://pica8.org/.
+
+# Known issues
+See RELEASE_NOTES.
+
+# Building
+- `PICA8=1` only needed for SDK
+
+## Tools essential for building
+- Install all of them in one command
+
+    sudo apt-get install git build-essential pkg-config libssl-dev libtool-bin libtool automake autoconf libxslt1-dev libxml2-dev libcurl4-gnutls-dev bc fakeroot zip libpcap-dev
+
+- Install all of them in one command, if for Debian 7 Wheezy
+
+    sudo apt-get install git build-essential pkg-config libssl-dev libtool automake autoconf libxslt1-dev libxml2-dev libcurl4-gnutls-dev bc fakeroot zip libpcap-dev
+    - libtool-bin is not a separate package in Wheezy
+
+## Components for building
+- libc6-i386
+  - Used for building ppc
+    Description: GNU C Library: 32-bit shared libraries for AMD64
+    This package includes shared versions of the standard C
+    ibrary and the standard math library, as well as many others.
+    This is the 32bit version of the library, meant for AMD64 systems.
+
+- bc --needed by KERNEL build
+- libcurl4-gnutls-dev
+- zip, needed for building `gcc`
+- build-essential, to compile C and C++
+- autoconf (aclocal, autoconf)
+- automake
+- libtool
+- libtool-bin (for netconf now, TODO: use maintained one if not available on build host.)
+- libssl
+    - TODO: Provide a choice to use build host libssl, or use a maintained fixed version.
+    - TODO: By default, check build host libssl, if not available, use the maintained one.
+    - TODO: Or, provide them in SDK / Tool chain
+- pkg-config
+  - Use this for lib/include detecting, please.
+- libpcap-dev
+    - To provide /usr/include/pcap.h /usr/include/pcap/pcap.h
+    - Needed now by sflow/sflowsocket.hh
+
+## Toolchain
+- Although eldk-5.3 contains PowerPC toolchain, we stayed at eldk4.2 to build all the BCM SDK on PPC platfom.
+- Only ARM toolchain from eldk-5.3 is used, only for as4610.
+    - eldk-5.3/armv7a/sysroots/armv7a-vfp-neon-linux-gnueabi, which is based on BCM arm cpu.
+- We had no MARVELL product active now.
+    - gnueabi/arm-none-linux-gnueabi_SDK-1.2.4-alpha/ might be used for MARVELL platform, which is no longer updated for several years.
+
+- /opt/eldk4.2
+    - For building SDK for arm, powerpc
+- /opt/eldk-5.3
+    - For building others for arm, powerpc
+- /opt/bitbake
+    - For `yocto` building
+- gnueabi/arm-none-linux-gnueabi_SDK-1.2.4-alpha
+    - Obsolete
+- x86 tool chain
+    - TODO
+
+> $PATH, had been added with profile
+
+> (each time you login, you get that from shell sourcing)
+
+>     /etc/profile.d/pica8.sh
+
+
+Fisrt time you run a container:
+
+    $./run.sh /path/to/picos/code_dir
+
+After starting finish, you will get a bash shell.
+
+When you check the `/build` directory, will find out that is `code_dir`.
+
+Docker will mount the host directory(as *code_dir*) onto the container /build.
+
+The login user is 'build', a 'virtual' user for container use only to simplify build management.
+
+The permission of all your files still the same as the host system.
+
+Press 'Enter' to get into it. Input your user password if asked for.
+
+Run `su build` to work as user `build` mapped to your own account.
+
+A file name of the container name will be generated for container check.
+
+You can check the latest Container ID from file `.docker.run`.
+
+    # su build
+```sh
+cd /build/
+./build.sh BOXNAME
+```
+
+Now you can use container as a build environment with tool-chains built in.
+
+When you finish the product building, just leave shell with exit. Then container will hibernate.
+The working directory holds the build result.
+
+When container is running, you can check the log and status of building.
+
+```sh
+docker ps -a|grep $USER
+```
+
+Display last 24 lines logs of specified container name.
+
+```sh
+docker logs -t --tail 24 CONTAINER
+```
+
+List container status and mount points.
+
+```sh
+{% raw %}
+$ docker ps --format "table {{.Names}}\\t{{.Status}}\\t{{.Mounts}}"
+{% endraw %}
+```
+
+List container CPU and memory usage.
+
+```sh
+{%- raw -%}
+docker stats --no-stream --format "table {{.Name}}\t{{.CPUPerc}}\t{{.MemUsage}}"
+{% endraw %}
+```
+
+After you left any container, you can restart and attach to it.
+
+```sh
+docker start CONTAINER
+docker attach CONTAINER
+```
+
+Then press 'Enter' to get into it.
+
+The docker administrators will clean containers regularly.
+
+When container is running, you can run docker 'exec' command to build.
+
+```sh
+sudo docker exec -it CONTAINER /bin/bash
+su build
+cd /build
+./build.sh prontoBOX
+```
+
+## Docker Web admin
+
+The shipyard is a light weigh web UI for manage docker multi-host, user can login with following accounts.
+- http://10.10.50.24:8080/
+
+
+| User | Pass     | permission                         |
+| ---    | ---      | ---                          |
+| admin  | shipyard | Administrator           |
+| view   | view     | Could check info |
+| build  | build    | Could manage Containers   |
+
+# Build tasks
+
+- [x] Env dependency
+  - [x] NO interfere with build server env
+      - Only export env during building process, to avoid break system env
+      - Done. By binding ENV with each BOX, in kernel/sdk/pica/xorp/ovs
+
+- [ ] Speed improvements
+  - [ ] Top level initiating using `make`
+      - [ ] Best for increamental buidling
+  - [ ] Separate build tree
+      - [ ] Use BUILD_DIR or such alike
+      - Now hard-coded by `top_srcdir`; Need to replace it
+  - [ ] SDK
+      - [x] ALMOST Done, by Richard, not well tested
+      - [ ] `.ko` abstraction
+    - [ ] Separate build tree for SDK
+      - [ ] Each tree for one combination of `ARCH+CHIPSET`
+
+- Other improvements, for easy maintenance, etc.
+  - [x] Unify ovs/pica/xorp build script
+      - [x] Unified naming
+        - [x] One sh file, with BOX name as parameters to call
+      - [ ] TODO: To init build from any location, using pushd/popd
+        - [x] Or using `OLDPWD=$PWD`
+  - [x] Remove PICA8=1 for builds except SDK
+  - [x] DONE. ~~BRANCH using name of current branch~~
+  - [x] Unify make all/fast
+      - DONE.
+  - [x] BOX=1, such as AS5712_54X=1, can be removed.
+      - `Makefile` had defined them all.
+  - [ ] SDK to be determined by BOX name
+      - BCM, 6.3.9, 6.4.7, 6.5.4, 6.5.11, etc.
+      - CVM
+      - MVL
+      - MTK
+      - Different version of one vender in respective branches
+        - Richard had split that, and managed using `repo` manifest.xml
+  - [x] Keep build dir for easy trouble shooting
+    - Cleaning should be with `make clean`, rather than `git clean`
+    - Keep build_image dev.tar.gz rootfs-debian
+        - [ ] build_deb ram_disk ramdisk_deb
+        - [ ] Partly done.
+
+  - [x] No `sudo`, anymore
+      - Done, use `fakeroot`
+        - To avoid using `sudo`, added before `make` when using `mknod` or explode tarballs with nodes, etc.
+        - Using "sudo" during build to get superuser privilege to make dev nodes, etc. was very dangerous. (imagine an bug like "rm -fr /  * " run by sudo...)
+        - That would generate tmp dirs/files owned by root hard to clean using normal "make clean" or "git clean" or "git checkout" or "git reset".
+        - Common practice is to use fakeroot, a tool for simulating superuser privileges.
+        - Or you can try other jail/chroot/fake/container env tools.
+        - From 2.7.1, using `fakeroot`, replacing `sudo`
+
+  - [ ] Enable DEBUG global switch option
+      - For `debug` build only, not in `release` build
+      - [ ] DEBUG builds will carry symbol tables, perf tools, etc.
+        - tecla
+          - http://www.astro.caltech.edu/~mcs/tecla/
+          - Currently not submodule; it's now copied as folders, hard to sync with upstream patches
+        - tcl
+          - For internal regression/automation
+  - [ ] `debug` build next step modules
+        - netconf
+          - Currently not submodule; it's now copied as folders, hard to sync with upstream patches
+        - libnetconf
+          - Currently not submodule; it's now copied as folders, hard to sync with upstream patches
+        - net-snmp
+          - Currently not submodule; it's now copied as folders, hard to sync with upstream patches
+        - pyang
+        - [iperf](iperf) for traffic performance benchmarking
+        - gperftool, profiling/benchmarking tools
+        - https://github.com/ocpnetworking-wip/oom
+          - A project for Optical module monitoring
+
+- http://vmiklos.hu/blog/sparse-checkout-example-in-git-1-7
+        - Other debug/trace/log tools
+      - [ ] DEBUG builds will automatically transfer core dumps to `dump server`
+        - To avoid losing them in case of re-flashing boxes
+      - [ ] For docker/VM/QEMU, enable DEBUG mode for internal usage
+        - Add ssh key pairs for easy debug
+        - debug options during build
+      - DO NOT include DEBUG mode into release builds
+        - Less build trime
+        - Remove unnecessary contents in final image
+
+- customization variants building
+    - Variants
+      - Verizon
+      - luxar
+      - vcmy
+      - etc.
+    - [ ] ALMOST done, by George
+      - build-dist
+      - dist, mapping, managed by TOML
+      - Feature definition, default behavior
+      - LOGO, Re-Branding, etc.
+    - Also for effecient QA
+
+- [ ] CI/Docker building
+    - Docker building enables server independence
+      - [x] Done
+      - Easy to deploy dev env
+    - TODO: docker registry into CI
+    - TODO: docker-compose
+      - Great improvements on speed
+
+- Possible issues
+    - [x] Hardware Model
+      - Possible issues with AS5812/AS4610
+    - [ ] Versioning
+      - Unify related output
+    - [ ] Copyright updating, year on year, in UI showing
+
+# Latest images
+Each box with CI enabled can have the latest image on pipeline page
+  - http://code/repo/pica8/pipelines
+
+Latest build for each branch:
+- http://code/repo/pica8/pipelines?scope=branches
+
+If you want to download a build image for certain commit/merge/branch,
+just look at the "Download" icon near the right side, and choose the
+result image to download there.
+- You can get the successful builds, even not all builds passed.
+
+Tag triggered builds:
+- http://code/repo/pica8/pipelines?scope=tags
+
+To search build for certain boxes, find the "NAME" such as "s4048" here:
+- http://code/repo/pica8/builds
+
+Build status:
+- http://code/repo/pica8/pipelines/charts
+
+Manually create a build, in selected branch:
+- http://code/repo/pica8/pipelines/new
+- Be default, only the defined branch would be built with trigger from
+  push/merge events
+
+To check your custom CI syntax:
+- http://code/ci/lint
+- Otherwise, you would get "yaml invalid" in case of syntax issue.
+  - http://code/repo/pica8/pipelines
+
+# License
+Add
+
+    --with-license
+
+# customization variants building
+Refer to [box-info](box-info.md)
+
+## Purpose
+
+- A single base that covers common features
+- In response to requests by different needs to implement various requirements
+
+## Guidelines
+- All commits go to baseline branch
+  - easy to sync, esp for major fixes
+  - less regression issue
+- Enable/Disable features through variant customization, i.e. OEM build
+  - collected variant requirement
+  - easy to build, test track
+
+## customization contents for requirements
+  - Base build by default shows the Pica8 DEFINDED values, logo and description, etc.
+    - Or to provide placeholders to be finalized at OEM build using our own default suite
+  - Working mode: OVS/XorPlus/CLi, etc.
+  - Interface
+    - IP configuration on management interface: DHCP/Static
+    - Ability to easily switch to alternate service or components
+      - Thus allows more partner and solutions to promote, upsale/prosale us
+    - etc.
+  - Branding / Wording / LOGO, etc.
+    - Welcome message
+    - Changing the login appearance, company identity, branded slogin
+    - etc.
+  - Misc customization configurations
+    - passwd modification
+    - URLs
+    - etc.
+
+## Example
+- `verizon_itnuc` image is generated based on normal common/base image, with OEM configurations, using `build-oem`.
+
+
+## Design
+- Base build + OEM customization build
+- Plugin style interface with flexibly of addition of other features in future
+
+## Where to define?
+
+```
+/* Brand name */
+#define BRAND_NAME "Pica8"     >  Luxar Tech
+/* Host name */
+#define HOST_NAME "XorPlus"    >  XorPlus
+/* Platform name */
+#define PLATFORM_NAME "PicOS"   >   LNOS
+/* company name */
+#define COMPANY_NAME "Pica8, Inc"   >  Luxar Tech, Inc.
+
+```
+
+## Adapter build layer/stage/step
+
+## Design and Configuration spec
+- http://code/pica8/kb/blob/master/docs/linux-system/oem-config-interface.md
+
+## Build variants list
+
+| Model                 | BRAND_NAME            | PLATFORM_NAME | pre-release branch | Remark              |
+| --------------------- | --------------------- | ------------- | ------------------ | ------------------- |
+| LTN2027               | Luxar Tech            | LNOS          | luxartech          | re-branding dcs7032 |
+| VERIZON_ITNUC-OR-XXXX | VERIZON_ITNUC-OR-YYYY | verizon_itnuc | verizon_itnuc      | re-branding as4610  |
+
+
+## why use BRANCH=xxxx
+
+## When to use BOX=1
+
+# installer_conf/machine.conf
+```
+installer_conf/machine.conf
+```
+
+Is that files generated?
+
+If so, move it out of git repo to avoid always changing in status.
+
+
+# Can templates be abstracted?
+
+Such as:
+
+    templates/as4610_54p/pica_default.boot.30p
+
+All these boot confs are different?
+
+### TODO: Unify show_version.sh into only one version.sh
+Changes:
+    No /pica/bin/show_version.sh, only one /pica/bin/version.sh
+        They are almost the same.
+
+    /pica/bin/version.sh would be copied also as /usr/bin/version.
+        To keep as less change in CLI, this copy is kept.
+
+All calls to /pica/bin/show_version.sh or /pica/bin/version.sh will now call version, which is in /usr/bin/version
+
+Result:
+
+        admin@XorPlus$/pica/bin/version.sh
+        Copyright (C) 2009-2016 Vcmy, Inc..
+        ===================================
+        Hardware Model                : VCMY-S6000-48X
+        Base ethernet MAC Address     : 70:72:cf:90:9a:31
+        Linux System Version/Revision : 2.6.5S1/c218006
+        Linux System Released Date    : 05/04/2016
+        L2/L3 Version/Revision        : 2.6.5S1/c218006
+        L2/L3 Released Date           : 05/04/2016
+        OVS/OF Version/Revision       : 2.6.5S1/c218006
+        OVS/OF Released Date          : 05/04/2016
+
+
+NOTE:
+
+        There is plan to change date format from
+        05/04/2016
+        to 2016-04-05
+
+        And change Version/Revision from "2.6.5S1/c218006" to "2.6.5S1+c218006"
+
+    If so, we should change "-F/" to "-F+"
+
+    Or, just leave the date format as so.
+
+
+Also changed /usr/bin/ovs_tech_support
+
+        /usr/bin/ovs_tech_support
+        Start......
+
+        Item 1: Display ovsdb log finished!
+        Item 2: Display ovs core files finished!
+        Item 3: Display err log finished!
+        Item 4: Display software flow table finished!
+        Item 5: Display hardware flow table finished!
+        Item 6: Display system version finished!
+
+Also changed
+
+        tail pica/shell/Makefile.am
+        ## to anybody else
+        ##
+
+        INCLUDES =    -I$(top_srcdir)
+
+        install-exec-hook:
+            cp -fr upgrade.sh "$(prefix)/../usr/sbin/upgrade"
+            cp -fr version.sh "$(prefix)/../usr/bin/version"
+            cp -fr ovs_tech_support.py  "$(prefix)/../usr/bin/ovs_tech_support"
+
+### TODO: collect names into structure/array/set/union/list/etc.
+
+    pica/lib/pica_sys_info.cc
+
+```
+void _sys_driver_init(struct sys_driver_ops* driver){
+    static bool inited = false;
+    if (inited) {
+        return;
+    }
+    _sys_driver_init_default(driver);
+
+    string platform;
+    pica_get_platform(platform);
+
+    if (platform == "niagara2632xl") {
+        sys_driver_init_2632(driver);
+    } else if (platform == "niagara2948-6xl") {
+        sys_driver_init_2948(driver);
+    } else if (platform == "3290") {
+        sys_driver_init_3290(driver);
+    } else if (platform == "3295") {
+        sys_driver_init_3295(driver);
+    } else if (platform == "3296") {
+        sys_driver_init_3296(driver);
+    } else if (platform == "3780") {
+        sys_driver_init_3780(driver);
+    } else if (platform == "3920") {
+        sys_driver_init_3920(driver);
+    } else if (platform == "3922") {
+        sys_driver_init_3922(driver);
+    } else if (platform == "3924") {
+        sys_driver_init_3924(driver);
+    } else if (platform == "3930") {
+        sys_driver_init_3930(driver);
+    } else if (platform == "as4610_54p" ||
+             platform == "as4610_54t" ||
+             platform == "as4610_30p" ||
+             platform == "as4610_30t") {
+        sys_driver_init_4610(driver);
+    } else if (platform == "es4654bf") {
+        sys_driver_init_4654(driver);
+    } else if (platform == "5101") {
+        sys_driver_init_5101(driver);
+    } else if (platform == "5401") {
+        sys_driver_init_5401(driver);
+    } else if (platform == "as5712_54x") {
+        sys_driver_init_5712(driver);
+    } else if (platform == "as6701_32x") {
+        sys_driver_init_6701(driver);
+    } else if (platform == "dcs7032q28") {
+        sys_driver_init_7032(driver);
+    } else if (platform == "as6712_32x") {
+        sys_driver_init_6712(driver);
+    }else if (platform == "as7712_32x") {
+        sys_driver_init_7712(driver);
+    } else if (platform == "s4048") {
+        sys_driver_init_4048(driver);
+    } else if (platform == "arctica4806xp") {
+        sys_driver_init_4806(driver);
+    } else {
+    } else if (platform == "as5812_54t") {
+        sys_driver_init_5812(driver);
+    }  else {
+        printf("Driver init failed,unknown platform %s!\n",
+            platform.c_str());
+        return;
+    }
+
+    if (platform != "5401" &&
+        platform != "as6701_32x" &&
+        platform != "niagara2632xl" &&
+        platform != "dcs7032q28" &&
+        platform != "as6712_32x" &&
+        platform != "as4610_54p" &&
+        platform != "as4610_54t" &&
+        platform != "as4610_30p" &&
+        platform != "as4610_30t" &&
+        platform != "as7712_32x") {
+
+        driver->index_to_port = _index_to_port;
+        driver->port_to_index = _port_to_index;
+    }
+
+    if (platform != "3290" &&
+        platform != "3295" &&
+        platform != "3296" &&
+        platform != "3780" &&
+        platform != "5401" &&
+        platform != "as6701_32x" &&
+        platform != "niagara2632xl" &&
+        platform != "as6712_32x"){
+        driver->check_interface_validity = _check_interface_validity;
+    }
+
+    if (platform != "3290" &&
+        platform != "3295" &&
+        platform != "3780" &&
+        platform != "3920" &&
+        platform != "dcs7032q28" &&
+        platform != "as7712_32x"){
+        driver->set_system_led= _set_system_led;
+    }
+
+    inited = true;
+}
+
+static struct sys_driver_ops *_pica_sys_driver(){
+    static struct sys_driver_ops _sys_driver;
+    static bool _initialised = false;
+
+    if (!_initialised){
+        _sys_driver_init(&_sys_driver);
+    }
+    return &_sys_driver;
+}
+
+bool pica_check_interface_validity(const string& ifname, QePortMode mode) {
+    return _pica_sys_driver()->check_interface_validity(ifname, mode);
+}
+
+static bool _check_interface_validity(const string& ifname, int mode) {
+    usp_t usp;
+
+    if (!ifname_to_usp(ifname, usp)) {
+        return false;
+    }
+
+    if (mode == QE_PORT_MODE_QE) {
+        string platform;
+        if (pica_get_platform(platform) &&
+            platform != "as4610_30p" &&
+            platform != "as4610_30t" &&
+            platform != "as4610_54p" &&
+            platform != "as4610_54t") {
+
+            if (ifname.find(TEPORTPREFIX) == 0 &&
+                usp.port() > (DEV_RJ45_COUNT+DEV_SFP_COUNT)) {
+                return false;
+            }
+        }
+    } else if (mode == QE_PORT_MODE_TE) {
+        if (ifname.find(QEPORTPREFIX) == 0 || ifname.find(HEPORTPREFIX) == 0)  {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+```
+
+## HW spec related
+
+How much is the differences?
+
+```
+pica/lib/vendor/as5812_54t/pica_hw_5812.cc
+pica/lib/vendor/as5812_54t/pica_hw_5712.cc
+```
+
+Need each file for each product?
+
+Can we abstract exact HW diffs into small conf/json/yaml file?
+
+TODO: Manage them using `yocto` bb files.
+
+## asm/types.h: No such file or directory
+```
+Compiling systems/linux/kernel/modules/shared/bcm-uk-rtrans.c
+/bin/mkdir -p /home/as/b/os-dev/../sdk/sdk-xgs-robo-6.3.9/build/linux-x86-generic_64-3_4/x86-generic_64-3_4/systems/linux/kernel/modules/shared/
+/bin/rm -rf -f /home/as/b/os-dev/../sdk/sdk-xgs-robo-6.3.9/build/linux-x86-generic_64-3_4/x86-generic_64-3_4/systems/linux/kernel/modules/shared/bcm-uk-rtrans.o
+gcc -MD -MF /home/as/b/os-dev/../sdk/sdk-xgs-robo-6.3.9/build/linux-x86-generic_64-3_4/x86-generic_64-3_4/systems/linux/kernel/modules/shared/bcm-uk-rtrans.d -nostdinc -isystem /usr/lib/gcc/x86_64-linux-gnu/4.6/in
+clude -I/home/as/b/os-dev/s4048/build_image/linux-source-3.16/include -I/home/as/b/os-dev/s4048/build_image/linux-source-3.16/arch/x86/include -include /home/as/b/os-dev/s4048/build_image/linux-source-3.16/include
+/generated/autoconf.h -D__KERNEL__ -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -Werror-implicit-function-declaration -Wno-format-security -fno-delete-null-pointer-checks -Os -
+m64 -mtune=generic -mno-red-zone -mcmodel=kernel -funit-at-a-time -maccumulate-outgoing-args -DCONFIG_AS_CFI=1 -DCONFIG_AS_CFI_SIGNAL_FRAME=1 -pipe -Wno-sign-compare -fno-asynchronous-unwind-tables -mno-sse -mno-m
+mx -mno-sse2 -mno-3dnow -fno-stack-protector -fomit-frame-pointer -g -Wdeclaration-after-statement -Wno-pointer-sign -DNO_BCM_5690_A0 -DNO_BCM_5670_A0 -DNO_BCM_5673_A0 -DNO_BCM_5674_A0 -DNO_BCM_5665_A0 -DNO_BCM_56
+65_B0 -DNO_BCM_5650_C0 -DNO_BCM_5695_A0 -DNO_BCM_56601_A0 -DNO_BCM_56601_B0 -DNO_BCM_56601_C0 -DNO_BCM_56602_A0 -DNO_BCM_56602_B0 -DNO_BCM_56602_C0 -DLONGS_ARE_64BITS -DPTRS_ARE_64BITS -DSYS_BE_PIO=0 -DSYS_BE_PACK
+ET=0 -DSYS_BE_OTHER=0 -DLE_HOST=1 -DBCM_PLATFORM_STRING=\"X86\" -I/home/as/b/os-dev/../sdk/sdk-xgs-robo-6.3.9/systems/linux/kernel/modules/include -I/home/as/b/os-dev/../sdk/sdk-xgs-robo-6.3.9/systems/bde/linux/in
+clude -I/home/as/b/os-dev/s4048/build_image/linux-source-3.16/include -I/home/as/b/os-dev/s4048/build_image/linux-source-3.16/include/asm/gcc -I/home/as/b/os-dev/s4048/build_image/linux-source-3.16/include/asm/mac
+h-generic -I/home/as/b/os-dev/s4048/build_image/linux-source-3.16/arch/x86_64 -DNO_FILEIO -DNO_CTRL_C -DNO_MEMTUNE -DLINUX -DNO_BCM_5675_A0 -DNO_BCM_56504_A0 -DNO_BCM_56504_B0 -DNO_BCM_56314_A0 -DNO_BCM_56112_A0 -
+DNO_BCM_56304_B0 -DNO_BCM_56102_A0 -DNO_BCM_56580_A0 -DNO_BCM_56700_A0 -DNO_BCM_56800_A0 -DNO_BCM_56218_A0 -DNO_BCM_56514_A0 -DNO_BCM_56624_A0 -DNO_BCM_56680_A0 -DNO_BCM_56224_A0 -DNO_BCM_56224_B0 -DNO_BCM_56820_A
+0 -DNO_BCM_53314_A0 -DNO_BCM_56725_A0 -DNO_BCM_56624_B0 -DNO_BCM_56680_B0 -DNO_BCM_56634_A0 -DNO_BCM_56634_B0 -DNO_BCM_56524_A0 -DNO_BCM_56524_B0 -DNO_BCM_56685_A0 -DNO_BCM_56685_B0 -DNO_BCM_56334_A0 -DNO_BCM_5633
+4_B0 -DNO_BCM_56840_A0 -DNO_BCM_56840_B0 -DNO_BCM_56142_A0 -DNO_BCM_53324_A0 -DNO_BCM_88732_A0 -DNO_BCM_56440_A0 -DNO_BCM_56440_B0 -DNO_BCM_56640_A0 -DNO_BCM_56450_A0 -DNO_BCM_56450_B0 -DNO_BCM_56450_B1 -DNO_BCM_5
+6340_A0 -DNO_BCM_56150_A0 -DPICA8_MOD -DBCM_ASYNC_SUPPORT -DBCM_PORT_DEFAULT_DISABLE -DS4048_X86_64 -DCF_TD2 -DALPM_ENABLE  -DINCLUDE_ACL  -DINCLUDE_BCMX  -DINCLUDE_BCMX_DIAG  -DINCLUDE_BFD  -DINCLUDE_I2C  -DINCLU
+DE_L3  -DBCM_ESW_SUPPORT -DINCLUDE_I2C  -DINCLUDE_PHY_522X  -DINCLUDE_PHY_54XX  -DINCLUDE_PHY_5464  -DINCLUDE_PHY_5421S  -DINCLUDE_PHY_5482  -DINCLUDE_PHY_54616  -DINCLUDE_PHY_54680  -DINCLUDE_PHY_54680E  -DINCLUD
+E_PHY_52681E  -DINCLUDE_PHY_54880E  -DINCLUDE_PHY_54682  -DINCLUDE_PHY_54684  -DINCLUDE_PHY_54640  -DINCLUDE_PHY_54640E  -DINCLUDE_PHY_54880  -DINCLUDE_PHY_SERDES  -DINCLUDE_PHY_SIMUL  -DINCLUDE_PHY_8703  -DINCLUD
+E_PHY_8705  -DINCLUDE_PHY_8706  -DINCLUDE_PHY_8072  -DINCLUDE_PHY_8040  -DINCLUDE_PHY_8481  -DINCLUDE_PHY_8750  -DINCLUDE_PHY_8729  -DINCLUDE_PHY_84740  -DINCLUDE_PHY_84756  -DINCLUDE_PHY_54380  -DINCLUDE_PHY_542X
+X  -DINCLUDE_PHY_84334  -DINCLUDE_PHY_84728  -DINCLUDE_PHY_84749  -DINCLUDE_PHY_84328  -DINCLUDE_PHY_84793  -DINCLUDE_PHY_82328 -DINCLUDE_LONGREACH -DNO_BCM_88732_A0   -Wall   -DLINUX_SAL_DMA_ALLOC_OVERRIDE -I/hom
+e/as/b/os-dev/../sdk/sdk-xgs-robo-6.3.9/systems/bde/linux/include -I/home/as/b/os-dev/../sdk/sdk-xgs-robo-6.3.9/include -I/home/as/b/os-dev/../sdk/sdk-xgs-robo-6.3.9/systems -DBROADCOM_DEBUG -g -D"KBUILD_STR(s)=#s
+" -D"KBUILD_BASENAME=KBUILD_STR(bcm_uk_rtrans)"  -D"KBUILD_MODNAME=KBUILD_STR(bcm_uk_rtrans)" -o /home/as/b/os-dev/../sdk/sdk-xgs-robo-6.3.9/build/linux-x86-generic_64-3_4/x86-generic_64-3_4/systems/linux/kernel/m
+odules/shared/bcm-uk-rtrans.o -c /home/as/b/sdk/sdk-xgs-robo-6.3.9/systems/linux/kernel/modules/shared/bcm-uk-rtrans.c  && (/bin/cp /home/as/b/os-dev/../sdk/sdk-xgs-robo-6.3.9/build/linux-x86-generic_64-3_4/x86-ge
+neric_64-3_4/systems/linux/kernel/modules/shared/bcm-uk-rtrans.d /home/as/b/os-dev/../sdk/sdk-xgs-robo-6.3.9/build/linux-x86-generic_64-3_4/x86-generic_64-3_4/systems/linux/kernel/modules/shared/bcm-uk-rtrans.tmp;
+ /bin/echo >> /home/as/b/os-dev/../sdk/sdk-xgs-robo-6.3.9/build/linux-x86-generic_64-3_4/x86-generic_64-3_4/systems/linux/kernel/modules/shared/bcm-uk-rtrans.tmp; /bin/sed -e 's/#.*//' -e 's/^[^:]*: *//' -e 's/ *\
+\$//' -e '/^$/ d' -e 's/$/ :/' -e '/^ .$/d' < /home/as/b/os-dev/../sdk/sdk-xgs-robo-6.3.9/build/linux-x86-generic_64-3_4/x86-generic_64-3_4/systems/linux/kernel/modules/shared/bcm-uk-rtrans.d >> /home/as/b/os-dev/
+../sdk/sdk-xgs-robo-6.3.9/build/linux-x86-generic_64-3_4/x86-generic_64-3_4/systems/linux/kernel/modules/shared/bcm-uk-rtrans.tmp; /bin/sed -e 's|^\([^\/ ].*\.o\):|'/home/as/b/os-dev/../sdk/sdk-xgs-robo-6.3.9/buil
+d/linux-x86-generic_64-3_4/x86-generic_64-3_4/systems/linux/kernel/modules/shared/'\1:|g' -e 's|.*?/\(.*\.o\):|'/home/as/b/os-dev/../sdk/sdk-xgs-robo-6.3.9/build/linux-x86-generic_64-3_4/x86-generic_64-3_4/systems
+/linux/kernel/modules/shared/'\1:|g' < /home/as/b/os-dev/../sdk/sdk-xgs-robo-6.3.9/build/linux-x86-generic_64-3_4/x86-generic_64-3_4/systems/linux/kernel/modules/shared/bcm-uk-rtrans.tmp > /home/as/b/os-dev/../sdk
+/sdk-xgs-robo-6.3.9/build/linux-x86-generic_64-3_4/x86-generic_64-3_4/systems/linux/kernel/modules/shared/bcm-uk-rtrans.P; /bin/rm -rf -f /home/as/b/os-dev/../sdk/sdk-xgs-robo-6.3.9/build/linux-x86-generic_64-3_4/
+x86-generic_64-3_4/systems/linux/kernel/modules/shared/bcm-uk-rtrans.d /home/as/b/os-dev/../sdk/sdk-xgs-robo-6.3.9/build/linux-x86-generic_64-3_4/x86-generic_64-3_4/systems/linux/kernel/modules/shared/bcm-uk-rtran
+s.tmp)
+In file included from /home/as/b/os-dev/s4048/build_image/linux-source-3.16/include/linux/types.h:5:0,
+                 from /home/as/b/os-dev/../sdk/sdk-xgs-robo-6.3.9/include/sal/core/libc.h:63,
+                 from /home/as/b/os-dev/../sdk/sdk-xgs-robo-6.3.9/include/soc/cmtypes.h:50,
+                 from /home/as/b/os-dev/../sdk/sdk-xgs-robo-6.3.9/include/soc/cm.h:51,
+                 from /home/as/b/sdk/sdk-xgs-robo-6.3.9/systems/linux/kernel/modules/shared/bcm-uk-rtrans.c:58:
+/home/as/b/os-dev/s4048/build_image/linux-source-3.16/include/uapi/linux/types.h:4:23: fatal error: asm/types.h: No such file or directory
+compilation terminated.
+make[5]: *** [/home/as/b/os-dev/../sdk/sdk-xgs-robo-6.3.9/build/linux-x86-generic_64-3_4/x86-generic_64-3_4/systems/linux/kernel/modules/shared/bcm-uk-rtrans.o] Error 1
+make[4]: *** [kernel_libs] Error 2
+make[3]: *** [kernel_modules] Error 2
+make[3]: Leaving directory `/home/as/b/sdk/sdk-xgs-robo-6.3.9/systems/linux/user/common'
+make[2]: *** [build] Error 2
+make[2]: Leaving directory `/home/as/b/sdk/sdk-xgs-robo-6.3.9/systems/linux/user/x86-generic_64-3_4'
+make[1]: *** [BCM_SDK] Error 2
+make[1]: Leaving directory `/home/as/b/os-dev/s4048'
+make: *** [S4048] Error 2
+```
+
+## KERN_VER -- Keep using it.
+
+```
+~/b/sdk/sdk-xgs-robo-6.3.9
+grep KERN_VER systems/linux/user/gto-3_4/Makefile systems/linux/kernel/gto-3_4/Makefile make/Makefile.linux-gto-3_4
+systems/linux/user/gto-3_4/Makefile:88:#KERN_VER = 2.6.21.7
+systems/linux/user/gto-3_4/Makefile:89:#KERN_VER = 2.6.24.4
+systems/linux/user/gto-3_4/Makefile:90:#KERN_VER = 2.6.25
+systems/linux/user/gto-3_4/Makefile:102:export KERN_VER
+systems/linux/kernel/gto-3_4/Makefile:86:#KERN_VER = 2.6.21.7
+systems/linux/kernel/gto-3_4/Makefile:87:#KERN_VER = 2.6.24.4
+systems/linux/kernel/gto-3_4/Makefile:88:#KERN_VER = 2.6.25
+systems/linux/kernel/gto-3_4/Makefile:99:export KERN_VER
+make/Makefile.linux-gto-3_4:58:ifeq (,$(KERN_VER))
+make/Makefile.linux-gto-3_4:60:KERN_VER=2.6.21.7
+make/Makefile.linux-gto-3_4:148:ifeq (2.6.21.7, $(KERN_VER))
+make/Makefile.linux-gto-3_4:164:ifeq (2.6.24.4, $(KERN_VER))
+make/Makefile.linux-gto-3_4:181:ifeq (2.6.25, $(KERN_VER))
+```
+
+## modules.builtin
+
+{- arctica4806xp/Makefile:37: -cp -f $(KERNDIR)/modules.builtin $(ROOTFS)/lib/modules/$(KERNEL_RELEASE_PICA8)/modules.builtin -}
+
+{- as5712_54x/Makefile:37:  -cp -f $(KERNDIR)/modules.builtin $(ROOTFS)/lib/modules/$(KERNEL_RELEASE_PICA8)/modules.builtin -}
+
+{- as5812_54t/Makefile:38:  -cp -f $(KERNDIR)/modules.builtin $(ROOTFS)/lib/modules/$(KERNEL_RELEASE_PICA8)/modules.builtin -}
+
+{- as6712_32x/Makefile:36:  -cp -f $(KERNDIR)/modules.builtin $(ROOTFS)/lib/modules/$(KERNEL_RELEASE_PICA8)/modules.builtin -}
+
+{- as7712_32x/Makefile:35:  -cp -f $(KERNDIR)/modules.builtin $(ROOTFS)/lib/modules/$(KERNEL_RELEASE_PICA8)/modules.builtin -}
+
+{- pronto5401/Makefile:40:  -cp -f $(KERNDIR)/modules.builtin $(ROOTFS)/lib/modules/$(KERNEL_RELEASE_PICA8)/modules.builtin -}
+
+
+```
+ 'mv ramdisk_deb/filelist'
+
+252:  mv ramdisk_deb/filelist ram_disk/var/lib/dpkg/info/picos-linux.list
+276:  mv ramdisk_deb/filelist ram_disk/var/lib/dpkg/info/picos-tools.list
+300:  mv ramdisk_deb/filelist ram_disk/var/lib/dpkg/info/picos-xorplus.list
+326:  mv ramdisk_deb/filelist ram_disk/var/lib/dpkg/info/picos-ovs.list
+```
+
+## DTB/ITB
+
+```
+$(KERNDIR)/scripts/dtc/dtc -O dtb -o $(DTB_FILE) -b 0 -p 1024 $(DTS_FILE)
+```
+
+## UBOOT
+
+```
+cp -f $(KERNDIR)/arch/powerpc/boot/uImage $(ROOTFS)/boot/
+```
+
+```
+cp -f $(KERNDIR)/arch/x86/boot/bzImage $(ROOTFS)/boot/vmlinuz
+```
+
+x86 uses vmlinuz, not uImage.
+
+## Conf files
+Some conf files contain large part of common content.
+
+Can we generate them at building time according to build OPTION strings?
+
+Such as as5712 pica dev info conf,
+
+## PLATFORM ??
+
+```
+egrep -v _PLATFORM os-dev/*/make.config | egrep PLATFORM
+os-dev/as7712_32x/make.config:PLATFORM=AS7712_32X
+os-dev/dcs7032q28/make.config:PLATFORM=DCS7032Q28
+os-dev/niagara2632xl/make.config:PLATFORM=Niagara2632XL
+os-dev/niagara2948-6xl/make.config:PLATFORM=Niagara2948_6XL
+```
+
+## netconf/libnetconf-0.10.x configure
+
+```
+git clean -dxf&& make -C os-dev P5101&& ./build-ppc-pronto5101-debian-new.sh&& make -C os-dev/pronto5101
+
+config.status: executing depfiles commands
+configuring in netconf/libnetconf-0.10.x (/home/as/a/pica/netconf/libnetconf-0.10.x)
+configure: running /bin/bash ./configure '--prefix=//home/as/a/os-dev/pronto5101/rootfs-debian/pica'  '--host=powerpc-linux-gnuspe' '--enable-static=yes' '--with-pronto5101' '--with-lcmgr=yes' '--with-chip_sdk_lib
+_path=/home/as/a/pica/exlib/bcm_6.3.9.p5101' '--with-chip_sdk_deprecated_version=no' '--with-sdk_6_3_9=yes' 'ovs_cv_use_linker_sections=yes' '--with-chip_sdk_root_path=/home/as/a/sdk/sdk-xgs-robo-6.3.9' 'host_alia
+s=powerpc-linux-gnuspe' --cache-file=/dev/null --srcdir=.
+configure: WARNING: If you wanted to set the --build type, don't use --host.
+    If a cross compiler is detected then cross compile mode will be used.
+checking build system type... x86_64-unknown-linux-gnu
+checking host system type... powerpc-unknown-linux-gnuspe
+sed: -e expression #1, char 0: no previous regular expression
+checking for pkg-config... /usr/bin/pkg-config
+checking for pyang... no
+checking for xsltproc... yes
+./configure: line 2860: syntax error near unexpected token `fi'
+./configure: line 2860: `fi'
+configure: error: ./configure failed for netconf/libnetconf-0.10.x
+configure: error: ./configure failed for pica
+```
+
+# Build result checking
+- Kernel
+
+    rootfs-debian/boot/vmlinuz
+
+- Drivers
+
+    rootfs-debian/lib/modules/
+
+- sdk
+
+    rootfs-debian/lib/modules/
+
+# ONIE
+
+    onie-nos-install tftp://TFTP-SERVER/build/as4610/picos_onie_installer-latest.bin
+
+- which product cannot use onie?
+- `[onie doc](onie)` needed .
+
+## ONIE install
+Enter onie resuce mode then install picos
+
+```
+ONIE:/ #
+ONIE:/ # onie-nos-install http://10.10.50.22/onie-installer-x86-HP6712-picos-2.6.5-24671.bin
+Stopping: discover... done.
+Info: Fetching ...
+build/daily/as6712_3 100% |*******************************|   204M  0:00:00 ETA
+ONIE: Executing installer:
+Verifying image checksum ... OK.
+Preparing image archive ... OK.
+./etc/installer_functions
+Installation start. If you use usb disk to install nos, please remeber to
+pull out the usb disk after installation success, and before machine restart.
+ONIE installation will overwrite the configuration file of existing system.
+It is recommended to follow the upgrade procedure to upgrade the system.
+Press any key to stop the installation...
+10 9 8 7 6 5 4 3 2 1 ...
+checking installer name...
+machine is : as6712_grub_gpt
+disk_format_tool is gdisk
+machine type is X86
+find storage device /dev/sda...
+onie partition storage_device is /dev/sda
+partition type is gpt
+rm -rf /mnt/*
+....................
+PicOS Upgrade process: updating partition 2 file system ...
+PicOS Upgrade process: partition 2 file system updated
+net.netfilter.nf_conntrack_acct = 1
+net.ipv6.conf.all.forwarding = 1
+[ ok ] Starting enhanced syslogd: rsyslogd.
+[ ok ] Starting periodic command scheduler: cron.
+[ ok ] Starting OpenBSD Secure Shell server: sshd.
+Pica8 Auto Provisioning Tool - checking updates ....
+No tftp server address found, exit now
+[ ok ] Starting: PicOS L2/L3............................
+
+XorPlus login: admin
+Password:
+
+step4:login on xorplus mode:
+XorPlus login: admin
+Password:
+Changing password for admin.
+(current) UNIX password:
+Enter new UNIX password:
+Retype new UNIX password:
+passwd: password updated successfully
+
+admin@XorPlus$cli
+Synchronizing configuration...OK.
+Pica8 PicOS Version 2.6.5
+
+Welcome to PicOS on XorPlus
+admin@XorPlus> configure
+Entering configuration mode.
+There are no other users in configuration mode.
+admin@XorPlus# run show spanning-tree mstp interface
+MSTP Spanning Tree Interface Status for instance 0
+Interface   Port ID    Designated  Designated Bridge        Ext Path   Int Path   State       Role
+                       Port ID     ID                       Cost       Cost
+----------  ---------  ----------  -----------------------  ---------  ---------  ----------  ---------------
+qe-1/1/1    128.97     128.97      32768.48:0f:cf:ad:70:9f  200        200        FORWARDING  DESIGNATED
+qe-1/1/3    128.99     128.99      32768.48:0f:cf:ad:70:9f  200        200        DISCARDING  BACKUP
+admin@XorPlus#
+```
+
+# Trouble shooting
+## Build essential
+### libtool
+
+```shell
+xrl/targets/Makefile.am:71: Libtool library used but `LIBTOOL' is undefined
+xrl/targets/Makefile.am:71:   The usual way to define `LIBTOOL' is to add `AC_PROG_LIBTOOL'
+xrl/targets/Makefile.am:71:   to `configure.in' and run `aclocal' and `autoconf' again.
+xrl/targets/Makefile.am:71:   If `AC_PROG_LIBTOOL' is in `configure.in', make sure
+xrl/targets/Makefile.am:71:   its definition is in aclocal's search path.
+Error running 'automake --add-missing --copy --foreign'
+```
+
+- Cause
+Cannot find libtool.
+
+- Solution
+Be sure to add libtool dir to PATH, or install libtool.
+
+    sudo apt-get install libtool
+
+## Missing libraries / tool chain tools
+### Missing libssl
+
+```
+make[1]: *** No rule to make target `all'.  Stop.
+```
+
+```
+checking OpenSSL installation prefix... Could not find part of OpenSSL or one
+it's components in /usr /usr/local /usr/local/ssl /mingw /gnuwin32 /opt /usr/sfw
+Use --with-openssl=DIR to specify OpenSSL installation root.
+configure: error: ./configure failed for xorp
+```
+
+- Cause
+
+Possible reason: missed lib.
+
+- Solution
+
+    apt install libssl-dev
+
+### Missing pkg-config
+
+```
+checking build system type... x86_64-unknown-linux-gnu
+checking host system type... x86_64-unknown-linux-gnu
+sed: -e expression #1, char 0: no previous regular expression
+checking for pkg-config... no
+configure: error: 'pkgconfig' not found.
+: error: ./configure failed for netconf/libnetconf-0.10.x
+configure: error: ./configure failed for pica
+```
+
+## SDK related error
+### No rule to make target libbcm_compat.a, needed by pica_lcmgr
+
+```
+make[4]: Entering directory 2.7.1/pica/lcmgr
+make[4]: *** No rule to make target 2.7.1/pica/exlib/bcm_6.3.9.p5101/libbcm_compat.a, needed by `pica_lcmgr'. Stop.
+```
+
+### touch: cannot touch ‘/tmp/unix-user’: Permission denied
+
+```
+    Makefile:60: recipe for target 'BCM_SDK' failed
+    make: *** [BCM_SDK] Error 1
+```
+
+This ```touch /tmp/unix-user``` had been run by **sudo make** from other guys.
+
+So you cannot touch except you use **sudo** too.
+
+Except build using fakeroot, usual practice is to change it to use a random value, such as
+
+    touch /tmp/unix-user.vVEm5HL
+
+What's the purpose of `touch /tmp/unix-user`?
+
+If really a touch is needed, please change that to use `mktemp`
+
+### cannot stat ...linux-kernel-bde.ko: No such file or directory
+
+```
+ld/linux/user/x86-generic_64-3_4/bcm.user
+ln -sf /home/aaron/6712/release/pica8/branches/2.6.5/sdk/sdk-xgs-robo-6.3.9/build/linux/user/x86-generic_64-3_4/bcm.user /home/aaron/6712/release/pica8/branches/2.6.5/sdk/sdk-xgs-robo-6.3.9/systems/linux/user/x86-generic_64-3_4/bcm.user
+make[2]: Leaving directory `/home/aaron/6712/release/pica8/branches/2.6.5/sdk/sdk-xgs-robo-6.3.9/systems/linux/user/common'
+make[1]: Leaving directory `/home/aaron/6712/release/pica8/branches/2.6.5/sdk/sdk-xgs-robo-6.3.9/systems/linux/user/x86-generic_64-3_4'
+cp -f /home/aaron/6712/release/pica8/branches/2.6.5/sdk/sdk-xgs-robo-6.3.9/rc/rc.soc /home/aaron/6712/release/pica8/branches/2.6.5/sdk/sdk-xgs-robo-6.3.9/rc/config.bcm /home/aaron/6712/release/pica8/branches/2.6.5/os-dev/as6712_32x/rootfs-debian/
+cp -f ../../pica/exlib/bcm_6.3.9.as6712_32x/linux-kernel-bde.ko /home/aaron/6712/release/pica8/branches/2.6.5/os-dev/as6712_32x/rootfs-debian/lib/modules
+cp: cannot stat `../../pica/exlib/bcm_6.3.9.as6712_32x/linux-kernel-bde.ko': No such file or directory
+make: *** [BCM_SDK] Error 1
+```
+
+- Cause
+No passing of BRANCH=xxxx, so the *-bde.ko as not touched.
+
+- Solution
+Add BRANCH=xxxx in buidling
+
+## python
+
+```
+Making all in libcomm
+make[3]: Entering directory `/home/build/pica8/xorp-1.6/libcomm'
+/bin/sh ../libtool --tag=CC --mode=compile powerpc-linux-gcc -DHAVE_CONFIG_H -I. -I.. -I.. -g -Werror -W -Wwrite-strings -Wbad-function-cast -Wmissing-prototypes -Wmissing-declarations -Wnested-externs -pipe -MT comm_sock.lo -MD -MP -MF .deps/comm_sock.Tpo -c -o comm_sock.lo comm_sock.c
+libtool: compile: powerpc-linux-gcc -DHAVE_CONFIG_H -I. -I.. -I.. -g -Werror -W -Wwrite-strings -Wbad-function-cast -Wmissing-prototypes -Wmissing-declarations -Wnested-externs -pipe -MT comm_sock.lo -MD -MP -MF .deps/comm_sock.Tpo -c comm_sock.c -fPIC -DPIC -o .libs/comm_sock.o
+mv -f .deps/comm_sock.Tpo .deps/comm_sock.Plo
+/bin/sh ../libtool --tag=CC --mode=compile powerpc-linux-gcc -DHAVE_CONFIG_H -I. -I.. -I.. -g -Werror -W -Wwrite-strings -Wbad-function-cast -Wmissing-prototypes -Wmissing-declarations -Wnested-externs -pipe -MT comm_user.lo -MD -MP -MF .deps/comm_user.Tpo -c -o comm_user.lo comm_user.c
+libtool: compile: powerpc-linux-gcc -DHAVE_CONFIG_H -I. -I.. -I.. -g -Werror -W -Wwrite-strings -Wbad-function-cast -Wmissing-prototypes -Wmissing-declarations -Wnested-externs -pipe -MT comm_user.lo -MD -MP -MF .deps/comm_user.Tpo -c comm_user.c -fPIC -DPIC -o .libs/comm_user.o
+mv -f .deps/comm_user.Tpo .deps/comm_user.Plo
+/bin/sh ../libtool --tag=CC --mode=link powerpc-linux-gcc -g -Werror -W -Wwrite-strings -Wbad-function-cast -Wmissing-prototypes -Wmissing-declarations -Wnested-externs -pipe -Wl,--start-group -o libcomm.la -rpath /home/build/pica8/pica_ppc_install/lib comm_sock.lo comm_user.lo -lcrypto -lrt
+libtool: link: powerpc-linux-gcc -shared .libs/comm_sock.o .libs/comm_user.o -lcrypto -lrt -Wl,--start-group -Wl,-soname -Wl,libcomm.so.0 -o .libs/libcomm.so.0.0.0
+libtool: link: (cd ".libs" && rm -f "libcomm.so.0" && ln -s "libcomm.so.0.0.0" "libcomm.so.0")
+libtool: link: (cd ".libs" && rm -f "libcomm.so" && ln -s "libcomm.so.0.0.0" "libcomm.so")
+libtool: link: ( cd ".libs" && rm -f "libcomm.la" && ln -s "../libcomm.la" "libcomm.la" )
+make[3]: Leaving directory `/home/build/pica8/xorp-1.6/libcomm'
+Making all in xrl
+make[3]: Entering directory `/home/build/pica8/xorp-1.6/xrl'
+Making all in interfaces
+make[4]: Entering directory `/home/build/pica8/xorp-1.6/xrl/interfaces'
+make[4]: *** No rule to make target `bgp_mib_traps_xif.lo', needed by `libxorpinterfaces.la'. Stop.
+make[4]: Leaving directory `/home/build/pica8/xorp-1.6/xrl/interfaces'
+make[3]: *** [all-recursive] Error
+```
+
+- Cause
+bgp_mib_traps_xif.lo is based on respective .cc file, which is generated using python script from templates.
+
+python is missed, so the final error message is as above.
+
+There are similar errors on this kind.
+
+- Solution
+Be sure to add python dir to PATH, or install python.
+
+
+## GCC error
+### asm error due to missing dir
+```
+/bin/sh: 1: cannot create include/asm/asm-offsets.h: Directory nonexistent
+```
+- Cause
+That happens for lower gcc version:
+```
+gcc --version
+gcc (Debian 4.7.2-5) 4.7.2
+```
+It can be OK using gcc 4.9.3
+
+- Solution
+```
+cd os-dev/linux-kernel/linux-2.6.27-lb9a
+cp .config config
+make distclean ARCH=powerpc
+cp config .config
+cd os-dev/pronto3295
+make KERNEL -j8
+```
+
+```c
+pica_as7512_driver.cc:137:1: error: missing braces around initializer for ‘swdrv_serdes_cfg_t’ [-Werror=missing-braces]
+pica_as7512_driver.cc:137:1: error: missing braces around initializer for ‘swdrv_serdes_cfg_t’ [-Werror=missing-braces]
+pica_as7512_driver.cc:137:1: error: missing braces around initializer for ‘swdrv_serdes_cfg_t’ [-Werror=missing-braces]
+cc1plus: all warnings being treated as errors
+make[7]: *** [libpica_port_map_la-pica_as7512_driver.lo] Error 1
+make[7]: Leaving directory `/home/as/build/pica/lcmgr/vendor/cvm/as7512_32x'
+make[6]: *** [all-recursive] Error 1
+make[6]: Leaving directory `/home/as/build/pica/lcmgr/vendor/cvm/as7512_32x'
+make[5]: *** [all-recursive] Error 1
+make[5]: Leaving directory `/home/as/build/pica/lcmgr/vendor/cvm'
+```
+
+### missing compiler-gcc5.h
+```
+sudo cp compiler-gcc5.h ../linux-kernel/linux-3.4.82-x86_64/include/linux/
+
+cp /home/aaron/2.6.5/os-dev/linux-kernel/linux-3.4.82-x86_64/include/linux/compiler-gcc5.h ../linux-kernel/linux-3.4.82-x86_64/include/linux/
+```
+but :
+
+```
+/home/aaron/6712/2.6.5/sdk/sdk-xgs-robo-6.3.9/src/soc/esw/tnl_term.c:1158: undefined reference to `_soc_tunnel_term_hash_compare_key'
+collect2: error: ld returned 1 exit status
+Makefile:340: recipe for target '/home/aaron/6712/2.6.5/sdk/sdk-xgs-robo-6.3.9/build/linux/user/x86-generic_64-3_4/bcm.user.dbg' failed
+make[2]: *** [/home/aaron/6712/2.6.5/sdk/sdk-xgs-robo-6.3.9/build/linux/user/x86-generic_64-3_4/bcm.user.dbg] Error 1
+make[2]: Leaving directory '/home/aaron/6712/2.6.5/sdk/sdk-xgs-robo-6.3.9/systems/linux/user/common'
+/home/aaron/6712/2.6.5/sdk/sdk-xgs-robo-6.3.9/make/Make.linux:110: recipe for target 'build' failed
+make[1]: *** [build] Error 2
+make[1]: Leaving directory '/home/aaron/6712/2.6.5/sdk/sdk-xgs-robo-6.3.9/systems/linux/user/x86-generic_64-3_4'
+Makefile:56: recipe for target 'BCM_SDK' failed
+make: *** [BCM_SDK] Error 2
+```
+
+### ppc_85xxDP-gcc: No such file or directory
+
+> /home/as/pica8/os-dev/pronto3922/build_image/linux-2.6.32.69/scripts/gccersion.sh: line 25: /tools/eldk4.2/usr/bin/ppc_85xxDP-gcc: No such file or directory
+
+- Cause
+    32 bit libc6 is needed to build 32bit, for PPC
+
+- Solution
+    Install libc6-i386
+
+### all warnings being treated as errors
+
+```
+In file included from objcopy.c:22:0:
+objcopy.c: In function ‘copy_object’:
+../bfd/bfd.h:302:108: warning: right-hand operand of comma expression has no effect [-Wunused-value]
+ #define bfd_set_section_vma(bfd, ptr, val) (((ptr)->vma = (ptr)->lma = (val)), ((ptr)->user_set_vma = TRUE), TRUE)
+```
+
+```
+objcopy.c:1893:8: note: in expansion of macro ‘bfd_set_section_vma’
+        bfd_set_section_vma (obfd, gnu_debuglink_section, debuglink_vma);
+        ^
+```
+
+```
+random.c: In function ‘xorp_srandomdev’:
+random.c:391:3: error: ‘junk_seed[1]’ may be used uninitialized in this function [-Werror=maybe-uninitialized]
+   xorp_srandom((getpid() << 16) ^ tv.tv_sec ^ tv.tv_usec ^ junk);
+   ^
+cc1: all warnings being treated as errors
+```
+
+- Cause
+Code has warnings.
+
+- Solution
+Change code to remove all warnings. [Recommended]
+
+- Solution
+ignore warnings being treated as errors
+
+If you know exact warnings to be ignored.
+
+    CFLAGS="-Wno-error=unused-but-set-variable -Wno-error=unused-but-set-parameter"
+
+Or You can also replace your -Werror compiler options with -Werror -Wno-error=cpp
+```
+-Wno-error=cpp
+-Wno-error=#warnings
+```
+
+Or globally in Makefile
+
+    -Werror
+
+Or globally in configure
+
+    --disable-werror
+
+### virtual memory exhausted: Cannot allocate memory
+```
+virtual memory exhausted: Cannot allocate memory
+make[4]: *** [area_router.lo] Error
+```
+
+Or
+```
+virtual memory exhaustedvirtual memory exhausted: virtual memory exhaustedCannot allocate memoryvirtual memory exhausted
+: : Cannot allocate memory
+Cannot allocate memory
+virtual memory exhausted: Cannot allocate memory
+```
+
+- Cause
+virtual memory exhausted
+
+- Solution
+Enable swap, or restrict the amount of virtual memory allowed
+
+To avoid this, create a small swap partition, or swap file.
+
+```
+           Device Boot      Start         End      Blocks   Id  System
+        /dev/sdd1   *        2048  1919080447   959539200   83  Linux
+        /dev/sdd2      1919082494  1952446463    16681985    5  Extended
+        /dev/sdd5      1919082496  1952446463    16681984   82  Linux swap / Solaris
+```
+
+Before:
+```
+        $ free
+                     total       used       free     shared    buffers     cached
+        Mem:       8147408    7373556     773852          0    1809988    1340136
+        -/+ buffers/cache:    4223432    3923976
+        Swap:            0          0          0
+```
+
+Enable swap.
+
+        $ sudo swapon  /dev/sdd5
+
+After:
+```
+        $ free
+                     total       used       free     shared    buffers     cached
+        Mem:       8147408    7789688     357720          0    1600700    2554016
+        -/+ buffers/cache:    3634972    4512436
+        Swap:     16681980          0   16681980
+```
+
+Although the performance won't improve too much, the error can be avoided.
+Thus the build can continue without breaking due to this "memory exhausted".
+
+- Solution
+restrict the amount of virtual memory allowed
+
+Use the ulimit command to restrict the amount of virtual memory allowed.
+
+```
+$ ulimit -a
+
+core file size          (blocks, -c) 0
+data seg size           (kbytes, -d) unlimited
+scheduling priority             (-e) 0
+file size               (blocks, -f) unlimited
+pending signals                 (-i) 31545
+max locked memory       (kbytes, -l) 64
+max memory size         (kbytes, -m) unlimited
+open files                      (-n) 65536
+pipe size            (512 bytes, -p) 8
+POSIX message queues     (bytes, -q) 819200
+real-time priority              (-r) 0
+stack size              (kbytes, -s) 8192
+cpu time               (seconds, -t) unlimited
+max user processes              (-u) 31545
+virtual memory          (kbytes, -v) unlimited
+file locks                      (-x) unlimited
+
+$ ulimit -m 60000
+
+$ ulimit -m
+60000
+```
+
+### source file '../dummy_main.cc' is in a subdirectory,
+```
+...
+bgp/harness/Makefile.am:85: warning: 'INCLUDES' is the old name for 'AM_CPPFLAGS' (or '*_CPPFLAGS')
+bgp/harness/Makefile.am:47: warning: source file '../dummy_main.cc' is in a subdirectory,
+bgp/harness/Makefile.am:47: but option 'subdir-objects' is disabled
+automake: warning: possible forward-incompatibility.
+automake: At least a source file is in a subdirectory, but the 'subdir-objects'
+```
+
+### \' is already registered with AC_CONFIG_FILES.
+
+CRLF problem.
+
+Make sure that configure.ac is LF-only.
+
+> autoconf/status.m4:848: AC_CONFIG_FILES is expanded from...
+> configure.ac:3814: the top level
+> Autom4te::FileUtils::xsystem(/usr/autotool/devel/share/autocon
+> f/Autom4te/FileUtils.pm:29
+>
+> Please note the single single-quote at the beginning of the
+> error message. I have included the command line after the
+> main body of this post.
+
+Bad EOL type problem.  That's not a single quote: it's a singly-quoted
+  string which ends with an LF (but no CR) causing the closing quote and
+  remainder of the error message to be output on the same line overwriting
+  whatever it actaully was that was 'already registered with....'
+
+
+## Autotools related
+### linking libtool libraries using a non-POSIX
+```
+ltlibrary.am: warning: 'libxx.la': linking libtool libraries using a non-POSIX
+```
+
+### ltlibrary.am: archiver requires 'AM_PROG_AR' in 'configure.ac'
+
+AM_PROG_AR was introduced in automake 1.11.2.  As per the docs for
+AM_PROG_AR, it is supposed to be included when the archiver ('ar') is
+used, but prior to automake 1.12 the warning was only shown iff
+-Wextra-portability was specified.  automake 1.12 introduced a change
+that includes -Wextra-portability when -Wall is specified.
+
+```diff
+ configure.ac | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/configure.ac b/configure.ac
+--- a/configure.ac
++++ b/configure.ac
+
+
+ AM_INIT_AUTOMAKE([1.11 foreign -Wall no-define no-dist-gzip dist-xz])
+ AM_SILENT_RULES([yes])
++m4_ifdef([AM_PROG_AR], [AM_PROG_AR]) dnl Workaround for Automake 1.12
+
+ # Initialize libtool
+ LT_PREREQ([2.2])
+```
+
+## Messed compile parameters
+
+```c
+/usr/lib/gcc/x86_64-linux-gnu/4.8/cc1plus -quiet -I . -I .. -I .. -imultiarch x86_64-linux-gnu -MD .libs/pim_nbr.d -MF .deps/pim_nbr.Tpo -MP -MT pim_nbr.lo -D_GNU_SOURCE -D HAVE_CONFIG_H -D PIC pim_nbr.cc -quiet -dumpbase pim_nbr.cc -mtune=generic -march=x86-64 -auxbase-strip .libs/pim_nbr.o -g -O -Wextra -Wwrite-strings -Wcast-qual -Wpointer-arith -Woverloaded-virtual -Wall -Werror -Wno-unused-result -ftemplate-depth=25 -fPIC -fstack-protector -Wformat-security -o -
+
+
+g++ -DHAVE_CONFIG_H -I. -I.. -I.. -g -W -O -Wwrite-strings -Wcast-qual -Wpointer-arith -Woverloaded-virtual -Wall -Werror -Wno-unused-result -ftemplate-depth-25 -pipe -MT pim_node.lo -MD -MP -MF .deps/pim_node.Tpo -c pim_node.cc -fPIC -DPIC -o .libs/pim_node.o
+```
+
+
+## PATH of toolchain
+
+```
+/usr/bin/ld: ../lib/libsdk/lb9alib/libdiag_flashLib.a(imageFile.o): Relocations in generic ELF (EM: 20)
+/usr/bin/ld: ../lib/libsdk/lb9alib/libdiag_flashLib.a(imageFile.o): Relocations in generic ELF (EM: 20)
+/usr/bin/ld: ../lib/libsdk/lb9alib/libdiag_flashLib.a(imageFile.o): Relocations in generic ELF (EM: 20)
+/usr/bin/ld: ../lib/libsdk/lb9alib/libdiag_flashLib.a(imageFile.o): Relocations in generic ELF (EM: 20)
+/usr/bin/ld: ../lib/libsdk/lb9alib/libdiag_flashLib.a(imageFile.o): Relocations in generic ELF (EM: 20)
+/usr/bin/ld: ../lib/libsdk/lb9alib/libdiag_flashLib.a(imageFile.o): Relocations in generic ELF (EM: 20)
+../lib/libsdk/lb9alib/libdiag_flashLib.a: could not read symbols: File in wrong format
+collect2: ld returned 1 exit status
+make[4]: *** [pica_sif] Error 1
+```
+
+- Cause
+Cannot find a linker for that target.
+
+- Solution
+Add the toolchain to your PATH, or install the toolchain if necessary.
+
+If it also can not work, then try "make clean" and "make distclean" and repeat compilation.
+
+```
+linux-kernel-bde.c:424: warning: implicit declaration of function 'va_end'
+make[2]: *** [kernel_modules] Error 2
+make[1]: *** [build] Error 2
+make: *** [DIAG] Error 2
+```
+
+Perhaps this helps:
+```
+$ export CROSS_COMPILE_PATH=/tools/eldk4.2/usr
+$ export PATH=$PATH:$CROSS_COMPILE_PATH/bin
+```
+
+## Ramdisk
+
+```
+cp -rfa rootfs/* ram_disk/
+cp: writing `ram_disk/pica/bin/snmp/pica_snmp': No space left on device
+cp: writing `ram_disk/pica/bin/stat/pica_stat': No space left on device
+cp: writing `ram_disk/pica/bin/pica_default.boot': No space left on device
+cp: cannot create directory `ram_disk/pica/etc': No space left on device
+cp: cannot create directory `ram_disk/pica/.svn': No space left on device
+cp: cannot create directory `ram_disk/pica/xrl': No space left on device
+cp: cannot create directory `ram_disk/pica/config': No space left on device
+cp: cannot create directory `ram_disk/proc': No space left on device
+cp: cannot create directory `ram_disk/sbin': No space left on device
+cp: cannot create directory `ram_disk/tmp': No space left on device
+cp: cannot create directory `ram_disk/usr': No space left on device
+cp: cannot create directory `ram_disk/var': No space left on device
+```
+
+You can expand the ramdisk size to a larger one:
+
+pica8/lb9a/Makefile:48:	dd if=/dev/zero of=initrd2m bs=1k count=120000
+
+Currently, size below 130000 is a safe number.
+
+135000 is not ok:
+
+```
+WDT Driver v0.1 (c) 2008 Quanta Computer Inc.
+Registered with major 245
+linux_kernel_bde: module license 'Proprietary' taints kernel.
+Waiting Switch Manager starting ... ...
+attempt to access beyond end of device
+ram0: rw=0, want=262656, limit=262144
+attempt to access beyond end of device
+ram0: rw=0, want=262658, limit=262144
+Buffer I/O error on device ram0, logical block 131328
+attempt to access beyond end of device
+ram0: rw=0, want=264994, limit=262144
+Buffer I/O error on device ram0, logical block 132496
+attempt to access beyond end of device
+ram0: rw=0, want=264996, limit=262144
+Buffer I/O error on device ram0, logical block 132497
+attempt to access beyond end of device
+ram0: rw=0, want=264998, limit=262144
+Buffer I/O error on device ram0, logical block 132498
+attempt to access beyond end of device
+ram0: rw=0, want=265006, limit=262144
+attempt to access beyond end of device
+ram0: rw=0, want=265008, limit=262144
+attempt to access beyond end of device
+ram0: rw=0, want=265008, limit=262144
+attempt to access beyond end of device
+ram0: rw=0, want=265008, limit=262144
+attempt to access beyond end of device
+ram0: rw=0, want=265008, limit=262144
+attempt to access beyond end of device
+ram0: rw=0, want=265008, limit=262144
+attempt to access beyond end of device
+ram0: rw=0, want=262656, limit=262144
+
+[ 1970/01/01 00:00:57  ERROR pica_sh:882 LIBXORP +739 asyncio.cc complete_transfer ] Write error 111
+[ 1970/01/01 00:00:58  ERROR pica_sh:882 LIBXORP +739 asyncio.cc complete_transfer ] Write error 111
+[ 1970/01/01 00:00:58  ERROR pica_sh:882 LIBXORP +739 asyncio.cc complete_transfer ] Write error 111
+[ 1970/01/01 00:00:58  ERROR pica_sh:882 LIBXORP +739 asyncio.cc complete_transfer ] Write error 111
+…
+Waiting for xorp_rtrmgr...
+[ 1970/01/01 00:01:00  ERROR pica_sh:882 LIBXORP +739 asyncio.cc complete_transfer ] Write error 111
+[ 1970/01/01 00:01:01  ERROR pica_sh:882 LIBXORP +739 asyncio.cc complete_transfer ] Write error 111
+[ 1970/01/01 00:01:07  ERROR pica_sh:882 LIBXORP +739 asyncio.cc complete_transfer ] Write error 111
+[ 1970/01/01 00:01:07  ERROR pica_sh:882 LIBXORP +739 asyncio.cc complete_transfer ] Write error 111
+…
+[ 1970/01/01 00:01:27  ERROR pica_sh:882 LIBXORP +739 asyncio.cc complete_transfer ] Write error 111
+[ 1970/01/01 00:01:27  ERROR pica_sh:882 LIBXORP +739 asyncio.cc complete_transfer ] Write error 111
+[ 1970/01/01 00:01:27  ERROR pica_sh:882 LIBXORP +739 asyncio.cc complete_transfer ] Write error 111
+[ 1970/01/01 00:01:27  ERROR pica_sh:882 LIBXORP +739 asyncio.cc complete_transfer ] Write error 111
+[ 1970/01/01 00:01:27  ERROR pica_sh:882 RTRMGR +102 picash_base.cc wait_for_xrl_router_ready ] XrlRouter failed.  No Finder?
+[ 1970/01/01 00:01:27  ERROR pica_sh:882 RTRMGR +989 picash_base.cc main_for_pica_shell ] xorpsh exiting due to an init error: Failed to connect to the router manager
+
+```
+
+also:
+
+```
+# ls -l
+attempt to access beyond end of device
+ram0: rw=0, want=262152, limit=262144
+EXT2-fs error (device ram0): ext2_get_inode: unable to read inode block - inode=31618, block=131075
+ls: ./pica: Input/output error
+
+attempt to access beyond end of device
+ram0: rw=0, want=262198, limit=262144
+EXT2-fs error (device ram0): ext2_get_inode: unable to read inode block - inode=31803, block=131098
+```
+
+## CVM
+
+For CVM:
+- sudo apt-get install liblzma-dev git build-essential pkg-config libssl-dev libtool-bin libtool automake autoconf libxslt1-dev libxml2-dev libcurl4-gnutls-dev bc fakeroot
+
+    - On old systems, use `libssl` instead of `libssl-dev`.
+    - On old systems, use `libtool` instead of `libtool-bin`.
+
+### liblzma-dev is needed
+
+```
+sudo apt-get install liblzma-dev
+```
+
+Without that, you would get:
+
+```python
+
+pica_lcapi_handler.cc: In function ‘void pica_lcapi_handler_init()’:
+pica_lcapi_handler.cc:11560:1: note: variable tracking size limit exceeded with -fvar-tracking-assignments, retrying without
+ pica_lcapi_handler_init(void)
+ ^
+make[4]: *** No rule to make target '/usr/lib/x86_64-linux-gnu/liblzma.a', needed by 'pica_lcmgr'.  Stop.
+make[4]: *** Waiting for unfinished jobs....
+```
+### Failed to build X86
+
+```c
+../../libxorp/utility.h:36:35: error: switch condition has type bool [-Werror=switch-bool]
+ #define static_assert(a) switch (a) case 0: case (a):
+                                   ^
+../../libxorp/ipv4.hh:528:2: note: in expansion of macro ‘static_assert’
+  static_assert(sizeof(IPv4) == sizeof(uint32_t));
+  ^
+In file included from ../../libxorp/xorp.h:129:0,
+                 from ../../libxorp/xlog.h:31,
+                 from coord_xif.hh:19,
+                 from coord_xif.cc:13:
+../../libxorp/ipv4.hh: In static member function ‘static size_t IPv4::addr_bytelen()’:
+../../libxorp/utility.h:36:35: error: switch condition has type bool [-Werror=switch-bool]
+ #define static_assert(a) switch (a) case 0: case (a):
+                                   ^
+../../libxorp/ipv4.hh:528:2: note: in expansion of macro ‘static_assert’
+  static_assert(sizeof(IPv4) == sizeof(uint32_t));
+  ^
+../../libxorp/ipv6.hh: In static member function ‘static size_t IPv6::addr_bytelen()’:
+../../libxorp/utility.h:36:35: error: switch condition has type bool [-Werror=switch-bool]
+ #define static_assert(a) switch (a) case 0: case (a):
+                                   ^
+../../libxorp/ipv6.hh:481:2: note: in expansion of macro ‘static_assert’
+  static_assert(sizeof(IPv6) == 4 * sizeof(uint32_t));
+  ^
+../../libxorp/ipv6.hh: In static member function ‘static size_t IPv6::addr_bytelen()’:
+../../libxorp/utility.h:36:35: error: switch condition has type bool [-Werror=switch-bool]
+ #define static_assert(a) switch (a) case 0: case (a):
+                                   ^
+../../libxorp/ipv6.hh:481:2: note: in expansion of macro ‘static_assert’
+  static_assert(sizeof(IPv6) == 4 * sizeof(uint32_t));
+  ^
+cc1plus: all warnings being treated as errors
+```
+
+# Repo
+## Shallow clone
+For build only purpose, you don't need the huge history data, and you won't commit changes.
+
+So you can save time by:
+
+    git clone --depth=1 git@code:repo/pica8 latest
+
+    git clone -b 3.1.0 --depth=1 git@code:repo/pica8.git build
+
+李阿玲
+首席水煮牛肉品鉴师
+
+个人简介
+看我写的东西，觉得好，不必点赞，也不必点感谢；觉得不好，折叠就罢了。不要相信所有，不用怀疑所有。
+
+
+
+在内分泌病房的时候，有个中年人在当地被诊断缺钾，吃了一段时间的钾片，但不怎么起作用，中间还被急救了两次。后来一项一项做检查，我跟他一起去做的CT。隔天，报告出来了，说是心脏瓣膜断裂了。等我出院的时候，他已经被转给心脏相关的科室了。人体是要定期检查和维护的，小问题要及时扼杀到摇篮里。
+发布于 2023-08-22 00:40
+
+
+马起园
+
+你觉得如何那都是你的事，你没必要说给别人听，哪怕你的理由合理或者不合理。无论如何，把自己的偏好强加给别人，而且冠以冠冕堂皇的理由，都是不应该的。论证这东西的合理性，从多年以前开始到现在，大多是个人偏好。
+
+
+
+可以确定的是任何会引起人感官不适的糖尿病足，都会有一大段极端放纵不控制血糖的生活史。糖尿病本身可防可控，坏就坏在不控制就会变成多米诺骨牌，引发各种各样的要命的并发症。没有糖尿病但是有一定程度的胰岛素抵抗，就有可能出现皮赘，也就是一种肉疙瘩或者肉刺，用手指能揪起来。我自己拔过一个，就很疼。去年我就去医院皮肤科烧掉了两个，但是当时医生没有跟我说要不要检查一下胰岛素抵抗的情况。今年被拉到医院抢救，进到ICU之后，我意识清醒了不少，腋下的一个比较长的皮赘消失了，有可能是透析了三次，皮肤脱水，干掉了。在急诊抢救的时候，我意识不太清楚，记不得了。出院之后，吃了一段时间的吡格列酮二甲双胍，腋下的一个小的皮赘也消失了，我也不知道怎么消失的。
+
+
+
+> 迈开腿容易，管住嘴太难了
+
+
+
+
+
+## Features
+- Compatible with GitHub Pages
+- Responsive design (looks just as good on mobile)
+- Syntax highlighting, with the help of Pygments
+- Sticky posts
+- [x] Tiny CSS & No Dependency
+- [x] Dark/Light Theme
+- [x] Custom 404 Page
+- [x] Tags Page
+- [x] Code Highlighter
+- [x] Social Share
+- [x] Atom & Json feeds
+- [x] Robots.txt
+- [x] Sitemap
+- [x] Next & Previous Post
+- [x] Disqus
+- [x] Mathjax Support
+- [x] Google Analytics
+
+4. Rename `index.md` to `index.html`. Without this, the `jekyll-paginate` gem will not work.
+
+5. In `about.md`, change the `layout:` field to `post`:
+
+```Markdown
+layout: post
+```
+
+2. Delete the unnecessary files/folders: `CODE_OF_CONDUCT.md`, `LICENSE`, `README.md`, `tale.gemspec`
+
+3. Delete the `baseurl` line in `_config.yml`:
+
+Comments are disabled by default. To enable them, look for the following line in `_config.yml` and change `jekyll-tale` to your site's Disqus id.
+
+```yml
+disqus: jekyll-tale
+```
+
+Next, add `comments: true` to the YAML front matter of the posts which you would like to enable comments for.
+## Features
+- Compatible with GitHub Pages
+- Responsive design (looks just as good on mobile)
+- Syntax highlighting, with the help of Pygments
+- Sticky posts
+- [x] Tiny CSS & No Dependency
+- [x] Dark/Light Theme
+- [x] Custom 404 Page
+- [x] Tags Page
+- [x] Code Highlighter
+- [x] Social Share
+- [x] Atom & Json feeds
+- [x] Robots.txt
+- [x] Sitemap
+- [x] Next & Previous Post
+- [x] Disqus
+- [x] Mathjax Support
+- [x] Google Analytics
+
+4. Rename `index.md` to `index.html`. Without this, the `jekyll-paginate` gem will not work.
+
+5. In `about.md`, change the `layout:` field to `post`:
+
+```Markdown
+layout: post
+```
+
+2. Delete the unnecessary files/folders: `CODE_OF_CONDUCT.md`, `LICENSE`, `README.md`, `tale.gemspec`
+
+3. Delete the `baseurl` line in `_config.yml`:
+
+Comments are disabled by default. To enable them, look for the following line in `_config.yml` and change `jekyll-tale` to your site's Disqus id.
+
+```yml
+disqus: jekyll-tale
+```
+
+Next, add `comments: true` to the YAML front matter of the posts which you would like to enable comments for.

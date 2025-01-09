@@ -1,0 +1,36 @@
+---
+date: 2018-07-16
+title: cargo
+---
+
+```
+cargo build --release --locked --all-features
+```
+
+## subsystemctl PKGBUILD
+
+```
+# Maintainer: Sorah Fukumori <her@sorah.jp>
+pkgname=subsystemctl
+pkgver=0.1.2
+pkgrel=1
+pkgdesc="Run systemd in WSL2"
+arch=('x86_64' 'aarch64')
+url="https://github.com/sorah/subsystemctl"
+license=('MIT')
+makedepends=('cargo')
+source=(
+  "https://github.com/sorah/subsystemctl/archive/v${pkgver}.tar.gz"
+)
+
+build() {
+  cd "subsystemctl-$pkgver"
+  cargo build --release --locked --all-features
+}
+
+package() {
+  cd "subsystemctl-$pkgver"
+  install -Dm6755 target/release/subsystemctl "${pkgdir}/usr/bin/subsystemctl"
+}
+sha512sums=('1c0772b4267fc3afaf41b3375a28df5ed08bb0753c1d95f7b2bd570d7c22bb8e16966845427ba6a27e6727841ce3ef577828e462dce791fc198c9dc3ae2f9b7e')
+```

@@ -1,0 +1,124 @@
+---
+layout: page
+#layout: default
+title: ' '
+#title: Page Not Found
+keywords: 404
+comments: false
+#permalink: /404.html
+#permalink: 404.html
+permalink: /404/
+---
+
+# 404: Page not found
+
+Sorry, we've misplaced that URL or it's pointing to something that doesn't exist.
+
+[Head back home]({{ site.url }}) to try finding it again.
+
+----
+
+> Dear visitor, Hello!
+>
+> Your browser is not compatible with our website. Please upgrade and enable Javascript, or visit our alternative page.
+
+> Chère cliente, Bonjour!
+>
+> Votre navigateur n'est pas compatible avec notre site web. Mettez à niveau et activez Javascript, ou visitez notre page alternative.
+
+> ご利用者様
+> 宜しくお願い致します。
+>
+> お使いのブラウザは当サイトとの互換性はありません。ブラウザを更新しJavaScriptを有効にするか、或いはこちらの代用ページをご利用ください。
+
+## Custom 404 page with Jekyll for broken links
+
+### On GitHub Pages
+
+Any `404.html` at the root of your `_site` directory will be served automatically by GitHub Pages and the local WEBrick development server.
+
+Simply add a `404.md` or `404.html` at the root of your site's source directory and include front matter data to use the theme's base layout.
+
+If you plan to organize your files under subdirectories, the error page should have the Front Matter Data `permalink: /404.html` set as starting with leading slash, to ensure that the compiled page resides at the root of your processed site, where it'll be picked by the server.
+
+### Hosting on Apache Web Servers
+
+Apache Web Servers load a configuration file named [`.htaccess`](http://www.htaccess-guide.com/) that modifies the functionality of these servers.
+
+Simply add the following to your `.htaccess` file.
+
+```apache
+ErrorDocument 404 /404.html
+```
+
+With an `.htaccess` file, you have the freedom to place your error page within a subdirectory.
+
+```apache
+ErrorDocument 404 /error_pages/404.html
+```
+
+Where the path is relative to your site's domain.
+
+More info on configuring Apache Error Pages can found in [official documentation](https://httpd.apache.org/docs/current/mod/core.html#errordocument).
+
+### Hosting on Nginx server
+
+The procedure is just as simple as configuring Apache servers, but slightly different.
+
+The nginx configuration file depends on the system in which it is installed. In most systems, it is the `nginx.conf` file, which is usually located inside `/etc/nginx/` or `/etc/nginx/conf/`. However, in other systems like Ubuntu, you would have to look for a `default` nginx configuration file, containing server related information, which is usually located inside `/etc/nginx/sites-available/` or `/etc/nginx/sites-enabled/`. Add the following to your nginx configuration file, _i.e._ either to `nginx.conf` file or to `default` file:
+
+```nginx
+server {
+  error_page 404 /404.html;
+  location = /404.html {
+    internal;
+  }
+}
+```
+
+If the `server` block already exists, only add the code inside the `server` block given above.
+The `location` directive prevents users from directly browsing the 404.html page.
+
+More info on nginx error page can be found on [nginx official documentation](http://nginx.org/en/docs/http/ngx_http_core_module.html#error_page).
+
+---
+
+<div class="notfound">
+  <h1 class="notfound-error">404: Page not found</h1>
+
+<p>
+    Oops!
+
+    The content you’re looking for isn’t here.
+
+    There may be a misspelling in your web address or you may have clicked a link for content that no longer exists.
+
+</p>
+<p>
+    Oops!
+    Let's
+
+      <a href="{{ site.baseurl }}/">head back home &raquo; </a>.
+</p>
+
+</div>
+
+         mm
+      /^(  )^\                     Ascii arts included in this page:
+      \,(..),/                     - R2D2, provided by: http://www.chris.com/
+        V~~V                       - Texts, generated from: http://www.network-science.de/ascii/  
+                                   http:// cnfeat.github.io
+
+  <style>
+    pre {
+          background: none;
+          border: none;
+    }
+  </style>
+
+  <pre>         
+---x-----mm--
+      /^(  )^\
+      \,(..),/        Oops...
+        V~~V                     
+    </pre>
