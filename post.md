@@ -10,11 +10,6 @@ layout: default
           <div class="entry-meta">
             <span class="post-meta small">
               <time class="post-date" datetime="{{ page.date | date: "%Y-%m-%d" }}">{{ page.date | date: site.date_format }}</time>
-<!--
-              <time class="post-date" datetime="{{ page.date | date: "%Y-%m-%d" }}">{{ page.date | date_to_xmlschema }}</time>
--->
-<!--
--->
               {% if page.update_date %}
                 <time class="post-date">{{ site.text.post.updated | default: "Updated" }}: {{ page.update_date | date: site.date_format }}</time>
               {% endif %}

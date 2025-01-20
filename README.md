@@ -134,6 +134,7 @@ This will ensure that the the correct relative path is constructed for your asse
 
 You will also need to tweak the header include `/{{ site.baseurl }}`:
 
+{% raw %}
 ```html
 <header class="site-header px2 px-responsive">
   <div class="mt2 wrap">
@@ -146,6 +147,7 @@ You will also need to tweak the header include `/{{ site.baseurl }}`:
   </div>
 </header>
 ```
+{% endraw %}
 
 A relevant Jekyll Github Issue: <https://github.com/jekyll/jekyll/issues/332>
 
@@ -1237,3 +1239,4 @@ Collecting stars...
 [![Star This Project](https://img.shields.io/github/stars/ashang/ashang.svg?label=Stars&style=social)](https://github.com/ashang/ashang/)
 
 https://www.reddit.com/r/gnome/comments/8sh7oa/a_nice_trick_to_create_a_mojavelike_time_shifting/
+

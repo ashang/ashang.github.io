@@ -1,18 +1,14 @@
 # frozen_string_literal: true
 
 source "https://rubygems.org"
-gemspec
 
-gem "jekyll", ENV["JEKYLL_VERSION"] if ENV["JEKYLL_VERSION"]
+gem "jekyll"
 #gem "jekyll", "~> 4.3.2"
-
-gem "base64"
-gem "csv"
-gem "logger"
 
 gem "faraday-retry"
 
 gem "webrick"
+gem 'csv'
 
 ####gem "minima", "~> 2.5"
 #gem "minima"
@@ -54,8 +50,7 @@ group :jekyll_plugins do
 
   # kramdown v2 ships without the gfm parser by default. If you're using
   # kramdown v1, comment out this line.
-  #gem 'kramdown-parser-gfm'
-  gem "kramdown-parser-gfm" if ENV["JEKYLL_VERSION"] == "~> 3.9"
+  gem 'kramdown-parser-gfm'
 
   # jekyll-paginate
   # gem 'jekyll-relative-links'
