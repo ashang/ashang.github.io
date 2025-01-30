@@ -34,34 +34,6 @@ ruby RUBY_VERSION
 # do not have a Java counterpart.
 # gem "http_parser.rb", "~> 0.6.0", :platforms => [:jruby]
 
-# Built-in
-# gem 'jekyll-sass-converter'
-
-# Feed had been built in; From 4.4??
-group :jekyll_plugins do
-  # gem 'jekyll-archives'
-  gem 'jekyll-babel'
-
-# Feed had been built in
-  # gem 'jekyll-feed'                 # automatically generate an Atom feed at /feed.xml
-# Feed had been built in
-
-  # jekyll-html-pipeline
-
-  # kramdown v2 ships without the gfm parser by default. If you're using
-  # kramdown v1, comment out this line.
-  gem 'kramdown-parser-gfm'
-
-  # jekyll-paginate
-  # gem 'jekyll-relative-links'
-  gem 'jekyll-redirect-from'
-  gem 'jekyll-seo-tag'
-  gem 'jekyll-sitemap'
-  gem 'jemoji'
-  # gem "just-the-docs"
-  gem 'jekyll-gist'
-end
-
 ## Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 ## and associated library.
 ##install_if -> { RUBY_PLATFORM =~ %r!mingw|mswin|java! } do
