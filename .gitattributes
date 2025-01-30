@@ -20,3 +20,13 @@
 *.PDF	 diff=astextplain
 *.rtf	 diff=astextplain
 *.RTF	 diff=astextplain
+
+# Set default behavior to automatically normalize line endings.
+*.sh text eol=lf
+*.txt eol=lf
+*.md eol=lf
+*.xml text
+*.yml text
+*.json text
+*.rst text
+*.png binary

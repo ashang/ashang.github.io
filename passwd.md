@@ -1,4 +1,5 @@
 ---
+layout: page
 title: "passwd"
 tags:
   - Post Formats

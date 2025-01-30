@@ -1,4 +1,5 @@
 ---
+layout: page
 title: domain
 date: 2016-10-14
 ---

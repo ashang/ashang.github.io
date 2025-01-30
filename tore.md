@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: post
 title: Rob Levin
 tags: about
 ---

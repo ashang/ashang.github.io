@@ -1,7 +1,8 @@
 ---
-layout: default
-title: "posts"
 #permalink: /posts/
+#layout: default
+layout: page
+title: "postsII"
 ---
 
 <main class="content fade-in-down delay-0_5s">

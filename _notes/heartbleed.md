@@ -1,4 +1,5 @@
 ---
+layout: page
 title: heartbleed
 date: 2018-06-27
 ---

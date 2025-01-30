@@ -1,5 +1,6 @@
 ---
 sticky: true
+layout: post
 title: Flask microframework notes
 #date:
 render_with_liquid: false

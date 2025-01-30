@@ -1,3 +1,7 @@
+---
+layout: post
+date: 2005-03-15
+---
 
 From [baibanbao](http://www.baibanbao.net/2016/i-hate-the-news-cn-translation.html)
 
