@@ -12,7 +12,7 @@ tags: information-theory foundation
 
 Recently I watched the talk ["Information Theory in Deep Learning"](https://youtu.be/bLqJHjXihK8) by Prof Naftali Tishby and found it very interesting. He presented how to apply the information theory to study the growth and transformation of deep neural networks during training. Using the [Information Bottleneck (IB)](https://arxiv.org/pdf/physics/0004057.pdf) method, he proposed a new learning bound for deep neural networks (DNN), as the traditional learning theory fails due to the exponentially large number of parameters. Another keen observation is that DNN training involves two distinct phases: First, the network is trained to fully represent the input data and minimize the generalization error; then, it learns to forget the irrelevant details by compressing the representation of the input.
 
-Most of the materials in this post are from Prof Tishby’s talk and [related papers]({{ site.baseurl }}{% post_url 2017-09-28-anatomize-deep-learning-with-information-theory %}#references).
+Most of the materials in this post are from Prof Tishby’s talk 
 
 {: class="table-of-content"}
 * TOC
@@ -67,13 +67,9 @@ For two invertible functions $$\phi$$, $$\psi$$, the mutual information still ho
 
 For example, if we shuffle the weights in one layer of DNN, it would not affect the mutual information between this layer and another.
 
-
-
 ## Deep Neural Networks as Markov Chains
 
 The training data contains sampled observations from the joint distribution of $$X$$ and $$Y$$. The input variable $$X$$ and weights of hidden layers are all high-dimensional random variable. The ground truth target $$Y$$ and the predicted value $$\hat{Y}$$ are random variables of smaller dimensions in the classification settings.
-
-
 
 ![DNN structure]({{ '/assets/images/ib-dnn-structure.png' | relative_url }})
 {: style="width: 460px;" class="center"}
@@ -214,7 +210,6 @@ Cited as:
 }
 ```
 
-
 ## References
 
 [1] Naftali Tishby. [Information Theory of Deep Learning](https://youtu.be/bLqJHjXihK8)
@@ -228,7 +223,3 @@ Cited as:
 [5] Naftali Tishby and Noga Zaslavsky. ["Deep learning and the information bottleneck principle."](https://arxiv.org/pdf/1503.02406.pdf) IEEE Information Theory Workshop (ITW), 2015.
 
 [6] Ravid Shwartz-Ziv and Naftali Tishby. ["Opening the Black Box of Deep Neural Networks via Information."](https://arxiv.org/pdf/1703.00810.pdf) arXiv preprint arXiv:1703.00810, 2017.
-
-
-
-

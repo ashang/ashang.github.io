@@ -200,9 +200,10 @@ permalink: /:title/
 # If you want to link only specific pages in your header, uncomment
 # this and add the path to the pages in order as they should show up
 # header_pages:
-#   - index.html
-#   - archive.html
-#   - about.md
+header_pages:
+   - index.html
+   - archive.html
+   - about.md
 
 # Banner default settings
 # These banner settings are for global banner default, but you can also

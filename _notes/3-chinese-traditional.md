@@ -1,7 +1,6 @@
 ---
 title: 繁體中文 (Traditional Chinese)
 key: lang-zh-hant
-permalink: /languages/chinese-traditional.html
 cover: /docs/assets/images/languages/lang-zh.jpg
 lang: zh-Hant
 header:

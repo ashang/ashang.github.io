@@ -9,6 +9,7 @@ title: "postsII"
   <div class="inner">
     <article class="post">
       <div class="entry-box">
+POSTS
         <header class="entry-header">
           <h1 class="entry-title">{{ page.title }}</h1>
           <div class="entry-meta">

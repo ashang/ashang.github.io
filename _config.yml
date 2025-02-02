@@ -159,8 +159,8 @@ rss: "/feed.xml"
 # If you want to link only specific pages in your header, uncomment
 # this and add the path to the pages in order as they should show up
 #header_pages:
-# - about.md
-# ########
+header_pages:
+ - about.md
 
 collections:
   docs:
@@ -177,6 +177,11 @@ collections:
     permalink: /drop/:path/
     ##output: true
 
+  todo:
+    ##output: true
+    directory: todo/
+    permalink: "/:collection/:path/"
+
 #permalink: /:slug/
 #permalink: /:path/
 permalink: /:title/
@@ -184,41 +189,65 @@ permalink: /:title/
 # and categories (for pages, the above :title is equivalent to :basename),
 # these aspects of the permalink style are ignored for the output.
 
-# types available are pages, posts, drafts or any collection
-defaults:
-  - scope:
-      path: _docs
-      type: docs
-    values:
-      #layout: docs
-      #layout: docs
-      #layout: docs
-      #layout: docs
-      layout: post
+# defaults:
+#  - scope:
+#      path:   "匹配的路径模式"
+#      path: "docs/**/guides"：嵌套在 docs 目录下的 guides 文件夹中的文件。
+#      type: types available are pages, posts, drafts or any collection
+#      type（可选）：
+#      指定文件类型，可选值包括：
+#        posts：Jekyll 内置的“文章”（位于 _posts 目录）。
+#        pages：普通页面（如 .html、.md 文件）。
+#        drafts：草稿（需启用 --drafts 参数）。
+#        自定义集合名：如在 collections 中定义的集合（如 books）。
+#    values:
+#      key1: value1  # 默认的 Front Matter 键值对
+#      layout: "default"
+#      category: "tutorial"
+#      author: "John Doe"
+#
+#  - scope:
+#      type: "posts"  # 匹配所有文章（_posts 目录下的文件）
+#    values:
+#      layout: "post"
+#      tags: "jekyll"
+#
+#  - scope:
+#      path: "tutorials/*"  # 匹配 tutorials 目录下的所有文件
+#      type: "pages"        # 类型为普通页面
+#    values:
+#      layout: "tutorial"
+#      category: "guide"
 
+defaults:
+  # 全局默认（所有页面）
   - scope:
       path: "" # an empty string here means all files in the project
     values:
       #layout: "default"
-      #layout: "default"
-      #layout: "default"
-      #layout: "default"
-      #layout: "default"
       layout: post
-
+  - scope:
+      path: "_kb/**/*.md"
+      type: "kb"
+    values:
+      layout: "wiki"
+  - scope:
+      path: _docs
+    values:
+      #layout: docs
+      layout: post
   - scope:
       path: "images"
     values:
       image: true
-  - scope:
-      path: "_notes"
-      type: "drops" # a collection in your site, in plural form
-    values:
-      layout: post
+#  - scope:
+#      path: "_notes"
+#      type: "drops" # a collection in your site, in plural form
+#    values:
+#      layout: post
   - scope:
       path: _posts
       # The 'post' type has become 'posts'.
-      type: posts
     values:
       layout: post
   #- scope:

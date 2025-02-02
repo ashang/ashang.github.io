@@ -1,7 +1,6 @@
 ---
 title: 한국어 (Korean)
 key: lang-ko
-permalink: /languages/korean.html
 cover: /docs/assets/images/languages/lang-ko.jpg
 lang: ko
 ---

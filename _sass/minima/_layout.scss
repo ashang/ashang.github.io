@@ -222,9 +222,11 @@
   }
 }
 
+.entry-time,
 .post-meta {
   font-size: $small-font-size;
   color: $brand-color;
+  white-space: nowrap;
 }
 
 .post-link {

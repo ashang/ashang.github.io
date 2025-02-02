@@ -1,7 +1,6 @@
 ---
 title: English
 key: lang-en
-permalink: /languages/english.html
 cover: /docs/assets/images/languages/lang-en.jpg
 lang: en
 ---

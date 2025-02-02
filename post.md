@@ -5,6 +5,7 @@ layout: default
   <div class="inner">
     <article class="post">
       <div class="entry-box">
+POST
         <header class="entry-header post-header mb2">
           <h1 class="entry-title">{{ page.title }}</h1>
           <div class="entry-meta">

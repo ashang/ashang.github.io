@@ -208,32 +208,6 @@ solarized-dark  | Dark variant of solarized color scheme.
 *:bulb: Adaptive skins switch between the "light" and "dark" variants based on the user's operating system setting or browser setting
 (via CSS Media Query [prefers-color-scheme](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme)).*
 
-### Customize navigation links
-
-This allows you to set which pages you want to appear in the navigation area and configure order of the links.
-
-For instance, to only link to the `about` and the `portfolio` page, add the following to your `_config.yml`:
-
-```yaml
-header_pages:
-  - about.md
-  - portfolio.md
-```
-
-
-### Change default date format
-
-You can change the default date format by specifying `site.minima.date_format`
-in `_config.yml`.
-
-```
-# Minima date format
-# refer to http://shopify.github.io/liquid/filters/date/ if you want to customize this
-minima:
-  date_format: "%b %-d, %Y"
-```
-
-
 ### Extending the `<head />`
 
 You can *add* custom metadata to the `<head />` of your layouts by creating a file `_includes/custom-head.html` in your source directory. For example, to add favicons:

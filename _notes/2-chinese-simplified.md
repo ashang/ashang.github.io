@@ -1,7 +1,6 @@
 ---
 title: 简体中文 (Simplified Chinese)
 key: lang-zh-hans
-permalink: /languages/chinese-simplified.html
 cover: /docs/assets/images/languages/lang-zh.jpg
 lang: zh-Hans
 header:
