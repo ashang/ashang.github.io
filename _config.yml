@@ -1,7 +1,3 @@
-author:
-  name: GitHub User
-  email: your-email@domain.com
-
 ---
 version: 4.2.2
 # This config file is meant for settings that affect your whole blog, values
@@ -29,14 +25,11 @@ description: >- # this means to ignore newlines until "baseurl:"
 #url: "/" # the base hostname & protocol for your site
 url:
 
-#permalink: /:slug/
-#permalink: /:path/
-permalink: /:title/
-# pages and collections (excluding posts and drafts) don’t have time
-# and categories (for pages, the above :title is equivalent to :basename),
-# these aspects of the permalink style are ignored for the output.
-
 lang: "en"
+
+author:
+  name: GitHub User
+  email: your-email@domain.com
 
 #source: DIR
 
@@ -173,16 +166,23 @@ collections:
   docs:
     permalink: "/:collection/:path/"
     ##output: true
-  posts:
-    permalink: "/:collection/:title/"
-    #permalink: "/posts/:title/"
-    #for posts, :title is part of path
-    ##output: true
+#  posts:
+#    permalink: "/:collection/:title/"
+#    #permalink: "/posts/:title/"
+#    #for posts, :title is part of path
+#    ##output: true
   notes:
     # Default is "/:path/"
     #permalink: "/:path/"
     permalink: /drop/:path/
     ##output: true
+
+#permalink: /:slug/
+#permalink: /:path/
+permalink: /:title/
+# pages and collections (excluding posts and drafts) don’t have time
+# and categories (for pages, the above :title is equivalent to :basename),
+# these aspects of the permalink style are ignored for the output.
 
 # types available are pages, posts, drafts or any collection
 defaults:
@@ -190,12 +190,21 @@ defaults:
       path: _docs
       type: docs
     values:
-      layout: docs
+      #layout: docs
+      #layout: docs
+      #layout: docs
+      #layout: docs
+      layout: post
 
   - scope:
       path: "" # an empty string here means all files in the project
     values:
-      layout: "default"
+      #layout: "default"
+      #layout: "default"
+      #layout: "default"
+      #layout: "default"
+      #layout: "default"
+      layout: post
 
   - scope:
       path: "images"
@@ -206,14 +215,12 @@ defaults:
       type: "drops" # a collection in your site, in plural form
     values:
       layout: post
-      category: "ramblings"
   - scope:
       path: _posts
       # The 'post' type has become 'posts'.
       type: posts
     values:
       layout: post
-      category: "journal"
   #- scope:
       #path: ''
     #values:
