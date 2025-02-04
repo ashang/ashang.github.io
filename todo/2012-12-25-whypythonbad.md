@@ -1,7 +1,35 @@
 ---
 layout: post
 title: python是个渣语言
+date: 2025-02-03
 ---
+
+
+$ python3.11-config
+Usage: /usr/bin/python3.11-config --prefix|--exec-prefix|--includes|--libs|--cflags|--ldflags|--extension-suffix|--help|--abiflags|--configdir|--embed
+#W06.2 0204 18:54:16 (main-mips-dev +)  jobs:0 aaron@codev:~/j/legacy
+$ python3.11-config --prefix
+/usr
+#W06.2 0204 18:54:22 (main-mips-dev +)  jobs:0 aaron@codev:~/j/legacy
+$ python3.11-config --libs
+ -ldl  -lm
+#W06.2 0204 18:54:28 (main-mips-dev +)  jobs:0 aaron@codev:~/j/legacy
+$ python3.11-config --ldflags
+-L/usr/lib/python3.11/config-3.11-x86_64-linux-gnu -L/usr/lib/x86_64-linux-gnu  -ldl  -lm
+#W06.2 0204 18:54:33 (main-mips-dev +)  jobs:0 aaron@codev:~/j/legacy
+$ python3.11-config --cflags
+-I/usr/include/python3.11 -I/usr/include/python3.11  -Wsign-compare -g   -fstack-protector-strong -Wformat -Werror=format-security  -DNDEBUG -g -fwrapv -O2 -Wall
+#W06.2 0204 18:54:44 (main-mips-dev +)  jobs:0 aaron@codev:~/j/legacy
+$ python3.11-config --extension-suffix
+.cpython-311-x86_64-linux-gnu.so
+#W06.2 0204 18:54:56 (main-mips-dev +)  jobs:0 aaron@codev:~/j/legacy
+$ python3.11-config --extension-includes
+Usage: /usr/bin/python3.11-config --prefix|--exec-prefix|--includes|--libs|--cflags|--ldflags|--extension-suffix|--help|--abiflags|--configdir|--embed
+#W06.2 0204 18:54:59 (main-mips-dev +)  jobs:0 aaron@codev:~/j/legacy
+$ python3.11-config --includes
+-I/usr/include/python3.11 -I/usr/include/python3.11
+
+
 
 一直以来我都表达 python 是个糟糕语言的观点，但是没有深入的解释。
 

@@ -14,6 +14,96 @@ tags:
 toc: true
 ---
 
+## Template
+
+{%- assign default_paths = site.pages | map: "path" -%}
+
+这行代码获取 所有 site.pages（即 Jekyll 站点中的所有页面）并提取它们的 path 属性，赋值给 default_paths。
+site.pages 包含所有未归入 _posts、_drafts、_collections 目录的独立页面（如 about.md、contact.md）。
+map: "path" 提取所有页面的路径。
+
+{%- assign page_paths = site.header_pages | default: default_paths -%}
+
+    site.header_pages 是 Jekyll 站点的 config.yml 里可选的一个数组，通常用于指定要显示在 导航栏 里的页面：
+
+    header_pages:
+      - about.md
+      - contact.md
+
+    如果 site.header_pages 未定义，则 page_paths 采用 default_paths（即所有页面）。
+
+{%- assign titles_size = site.pages | map: 'title' | join: '' | size -%}
+
+    获取 site.pages 中所有页面的 title，将它们连接成一个字符串，并计算该字符串的长度
+
+relative_url 确保 URL 兼容不同的 baseurl（如 /blog/）。
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger">
+  <span class="menu-icon">
+    <svg>...</svg>
+  </span>
+</label>
+
+    实现移动端导航栏的“汉堡菜单”：
+        <input type="checkbox"> 控制菜单的展开和收起。
+        <label> 绑定 <input>，点击 <label> 时 触发复选框。
+        <span class="menu-icon"> 里包含 SVG 图标，绘制三条横线，表示“菜单”按钮。
+
+
+  {%- for path in page_paths -%}
+    {%- assign my_page = site.pages | where: "path", path | first -%}
+    {%- if my_page.title -%}
+      <a class="page-link" href="{{ my_page.url | relative_url }}">{{ my_page.title | escape }}</a>
+    {%- endif -%}
+  {%- endfor -%}
+
+where: "path", path | first：
+
+    在 site.pages 里找到 path 匹配的页面，并获取第一个匹配项（通常应该只有一个）。
+
+if my_page.title：如果该页面有标题，则生成 <a> 链接：
+
+<a class="page-link" href="/about/">About</a>
+
+3. 为什么要用 <label> 而不是直接 <button>？
+
+    增强可点击区域：
+        直接点击隐藏的 <input> 很难操作，而 <label> 可以扩展点击范围，提高用户体验。
+
+    不需要 JavaScript：
+        通过 CSS 选择 input:checked 状态，可以 纯 CSS 控制菜单的展开和折叠，避免额外的 JavaScript 代码。
+
+4. 相关 CSS 示例
+
+如果结合 CSS，input[type="checkbox"] 可以控制菜单：
+
+.nav-trigger {
+    display: none; /* 默认隐藏 checkbox */
+}
+
+.nav-trigger:checked ~ .trigger {
+    display: block; /* 当 checkbox 选中时，显示菜单 */
+}
+
+.trigger {
+    display: none; /* 默认隐藏菜单 */
+}
+
+点击 <label> 时：
+
+    input[type="checkbox"] 变成 checked。
+    .trigger 菜单 变成可见（display: block;）。
+
+再点击一次 <label> 时：
+
+    input[type="checkbox"] 取消 checked。
+    .trigger 再次隐藏。
+
+
+
+
+
 ## sass
 
 _sass 目录存储 Sass/SCSS 的部分文件（partials）。
