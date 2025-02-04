@@ -1,24 +1,76 @@
-```
-$ cat /sys/class/thermal/thermal_zone*/temp
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thermal | </title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  
+
+<nav>
+  <ul role="list">
+    <li>
+      <a  href="/">Home</a>
+    </li>
+
+    
+    <li>
+      <a 
+         
+        href="/deepseek/">
+          DeepSeek
+      </a>
+    </li>
+    <li>
+      <a 
+         
+        href="/tore/">
+          Rob Levin
+      </a>
+    </li>
+    <li>
+      <a 
+         
+        href="/tor/">
+          Tor
+      </a>
+    </li>
+    <li>
+      <a 
+        aria-current="page" 
+        href="/temp/">
+          Thermal
+      </a>
+    </li>
+  </ul>
+</nav>
+  <header>
+    <h1>Thermal</h1>
+  </header>
+  <main>
+    
+<header>
+  <h1>Thermal</h1>
+</header>
+<main>
+  <article>
+    <pre><code>$ cat /sys/class/thermal/thermal_zone*/temp
 /sys/class/thermal/thermal_zone0/temp
 77000
 /sys/class/thermal/thermal_zone1/temp
 79000
-```
-
-```
-$ acpi -t
+</code></pre>
+<pre><code>$ acpi -t
 Thermal 0: ok, 76.0 degrees C
-```
-
-```
-$ paste <(cat /sys/class/thermal/thermal_zone*/type) <(cat /sys/class/thermal/thermal_zone*/temp) | column -s $'\t' -t | sed 's/\(.\)..$/.\1°C/'
+</code></pre>
+<pre><code>$ paste &lt;(cat /sys/class/thermal/thermal_zone*/type) &lt;(cat /sys/class/thermal/thermal_zone*/temp) | column -s $'\t' -t | sed 's/\(.\)..$/.\1°C/'
 acpitz        76.0°C
 x86_pkg_temp  78.0°C
-```
-
-```
-$ sensors
+</code></pre>
+<pre><code>$ sensors
 thinkpad-isa-0000
 Adapter: ISA adapter
 fan1:        4716 RPM
@@ -48,10 +100,8 @@ in0:          12.28 V
 acpitz-acpi-0
 Adapter: ACPI interface
 temp1:        +79.0°C  (crit = +200.0°C)
-```
-
-```
-$ sudo sensors-detect
+</code></pre>
+<pre><code>$ sudo sensors-detect
 # sensors-detect version 3.6.0
 # System: LENOVO 20AHS00000 [ThinkPad X230s] (laptop)
 # Kernel: 6.2.0-23-generic x86_64
@@ -189,4 +239,23 @@ loaded. You may want to run '/etc/init.d/kmod start'
 to load them.
 
 Unloading cpuid... OK
-```
+</code></pre>
+
+  </article>
+</main>
+
+
+  </main>
+
+  <footer>
+    <div>
+      <!--
+      -->
+      <!--
+      -->
+      <p>&copy; { % year %} </p>
+    </div>
+  </footer>
+
+</body>
+</html>
