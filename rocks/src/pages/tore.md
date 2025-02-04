@@ -1,4 +1,5 @@
 ---
+#layout: page
 title: Rob Levin
 tags: about
 ---

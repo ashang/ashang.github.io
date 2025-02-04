@@ -6,7 +6,7 @@ templateEngineOverride: njk,md
 
 {% include "postlist.njk" %}
 
-## Cat of the Day
+## posts
 
 <img src="{{ catpic }}" />
 
