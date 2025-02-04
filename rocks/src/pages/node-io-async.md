@@ -1,3 +1,7 @@
+---
+layout: page
+title: node io sync
+---
 
 一个 同步 文件读取：
 

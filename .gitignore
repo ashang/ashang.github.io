@@ -233,7 +233,7 @@ validation-report.json
 # Folders to ignore
 bower_components/
 node_modules/
-/public/
+public/
 
 _posts/_draft
 _posts/_archive
