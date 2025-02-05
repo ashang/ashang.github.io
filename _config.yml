@@ -139,7 +139,8 @@ exclude:
   - gulpfile.js
   - package-lock.json
   - package.json
-  - /docs
+  - 11ty-njk
+    #- /docs
   - /node_modules
   - /rock
   - /screenshots
