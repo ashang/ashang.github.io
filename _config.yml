@@ -141,6 +141,7 @@ exclude:
   - package.json
   - /docs
   - /node_modules
+  - /rock
   - /screenshots
   - /test
   - /vendor
