@@ -1,0 +1,204 @@
+---
+layout: default
+#layout: base.njk
+title: Hello World
+subtitle: 部落格
+pagination:
+  data: collections.posts
+  size: 10
+  reverse: true
+  alias: posts
+templateEngineOverride: njk,md
+---
+
+# 11ty blog njk Starter
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/c6f542b0-dce3-4631-8699-ada833a5f7ff/deploy-status)](https://app.netlify.com/sites/11ty-blog-njk-starter/deploys)
+
+View the live demo [here](https://11ty-blog-njk-starter.netlify.app), hosted on Netlify
+
+![homepage](blog-v2.png)
+![darkmode](blog-dark.png)
+
+## Aims
+A blog that still runs without javascript. Hence, no bundlers.
+
+This is forked from [Rong Ying's starter](https://github.com/kohrongying/11ty-blog-starter) and converted to use Nunjucks instead of Liquid.
+
+
+## Features
+- Static Site Gen - Eleventy
+
+- Tailwind CSS v2.0 / Tailwind Typography / Dark Mode
+
+- Create excerpts using the `<!-- excerpt -->`
+
+- Custom ReadTime filter
+
+- 404 page
+
+- Tags page to view posts related to tag,
+
+  - Use of a `tagList` collection defined in `.eleventy.js`
+  - `/tags` - show all available tags (excluding all and posts) as buttons (`tags.md`)
+  - `/tags/tag-name` - shows all posts related to that tag (`tagList.md`)
+
+- Sitemap and Robots.txt
+  - Change site url in `_data/site.json`
+
+- Shortcode to handle images
+  - Add image under `src/assets/img/posts` and use the asset_img short code
+  - `{% asset_img 'filename', 'alt_text' %}` eg. `{% asset_img 'mailbox.jpg', 'picture of a mailbox' %}`
+  - You can provide an optional third argument for the image folder path if your image isn't inside `src/assets/img/posts`
+  - eg. `{% asset_img 'mailbox.jpg', 'picture of a mailbox', '/images/' `
+  - the comma between argument's is __not__ optional
+
+- Draft posts using the `published` frontmatter
+
+- Posts pagination in `index.html`
+  - change the `size` frontmatter variable
+- ESLint
+
+- Bash script to create new post (based on YYYY and MM)
+
+```bash
+$ ./create new blog post
+Created new post at src/posts/2021/01/new-blog-post.md
+```
+
+## Running locally
+
+Create your blogpost under `src/posts`. I like to have mine sorted by YY/MM.
+
+## Deployment
+
+[<img src="https://www.netlify.com/img/deploy/button.svg" />](
+https://app.netlify.com/start/deploy?repository=https://github.com/httpsterio/11ty-blog-njk-starter)
+
+
+On Netlify / Surge / Firebase hosting / etc hosting providers
+
+Build Command: `npm run build`
+
+Output folder: `_site`
+
+<!--
+## Future Improvemeents
+
+- [ ] Minification of assets
+- [ ] Make next/prev posts
+-->
+
+- <https://app.netlify.com/sites/sunny-fudge-534491/deploys/6728e1967c40deb0ef814a1d>
+
+- <https://www.industrialempathy.com/posts/eleventy-high-performance-blog/>
+
+- <https://webextension.org/listing/useragent-switcher.html>
+-<https://github.com/11ty/eleventy-plugin-rss>
+-<https://github.com/11ty/eleventy-plugin-syntaxhighlight>
+
+- <https://www.11ty.dev/docs/config/#configuration-options>
+
+-<https://11ty.rocks/>
+- <https://learneleventyfromscratch.com/>
+
+# eleventy-high-performance-blog
+
+- <https://egghead.io/lessons/11ty-create-an-eleventy-11ty-site-from-scratch>
+
+<https://www.11ty.dev/docs/languages/>
+
+<https://11ty.rocks/posts/create-your-first-basic-11ty-website/>
+
+<https://www.tatianamac.com/posts/beginner-eleventy-tutorial-parti/>
+
+<https://blog.logrocket.com/going-serverless-eleventy/>
+
+{% include "postlist.njk" %}
+
+## posts
+
+<img src="{{ catpic }}" />
+
+{% for post in collections.pages -%}
+- [{{ post.data.title }}]({{ post.url }})
+{% endfor %}
+
+
+- <https://egghead.io/lessons/11ty-add-sass-compiling-and-watch-for-changes-in-eleventy-11ty>
+- <https://egghead.io/lessons/11ty-define-an-eleventy-11ty-collection-to-create-a-blog>
+- <https://egghead.io/lessons/11ty-apply-a-filter-to-an-eleventy-11ty-collection>
+- <https://egghead.io/lessons/11ty-generate-eleventy-11ty-pages-from-external-data>
+
+- <https://gcc.gnu.org/onlinedocs/cpp/>
+
+----
+
+{% for post in pagination.items %}
+{% if post.data.published %}
+<div class="py-4">
+  <p>
+    <span class="text-2xl sm:text-4xl font-bold hover:text-blue-700 leading-tight"><a href="{{ post.url }}">{{ post.data.title }}</a></span>
+    <span class="text-base sm:text-2xl font-normal"> &middot; {{ post.content | safe | readTime }} min read</span>
+  </p>
+  <em>{{ post.date | postDate }}</em>
+  <p class="mt-4">{{ post.data.post_excerpt }}...</p>
+
+  <div class="flex justify-between items-center mt-4">
+    <div class="flex-1 pr-4">
+      {% for tag in post.data.tags %}
+        {% if tag != "posts" %}
+          <a href="/tags/{{ tag }}" class="">
+            <div class="post-tag">{{ tag }}</div>
+          </a>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <a class="flex-none hover:underline font-semibold text-blue-700" href="{{ post.url }}">Read this post &rarr;</a>
+  </div>
+
+</div>
+
+{% endif %}
+{% endfor %}
+
+
+{% include "paginator.njk" %}
+
+
+
+----
+
+```sh
+$ npm start
+
+> my-blog@1.0.0 start
+> npx @11ty/eleventy --serve & npx tailwindcss -i ./tailwind.css -o _site/assets/styles/tailwind.css --watch
+
+Browserslist: caniuse-lite is outdated. Please run:
+  npx browserslist@latest --update-db
+  Why you should do it regularly: https://github.com/browserslist/browserslist#browsers-data-updating
+
+Rebuilding...
+[11ty] Problem writing Eleventy templates: (more in DEBUG output)
+[11ty] 1. Having trouble rendering njk template ./src/index.njk (via TemplateContentRenderError)
+[11ty] 2. (./src/index.njk) [Line 41, Column 73]
+[11ty]   parseSignature: expected comma after expression (via Template render error)
+[11ty]
+[11ty] Original error stack trace: Template render error: (./src/index.njk) [Line 41, Column 73]
+[11ty]   parseSignature: expected comma after expression
+[11ty]     at Object._prettifyError (/home/aaron/b/11ty-blog-njk-starter-master/node_modules/nunjucks/src/lib.js:36:11)
+[11ty]     at Template.init (/home/aaron/b/11ty-blog-njk-starter-master/node_modules/nunjucks/src/environment.js:511:19)
+[11ty]     at Template.Obj (/home/aaron/b/11ty-blog-njk-starter-master/node_modules/nunjucks/src/object.js:62:15)
+[11ty]     at new Template (/home/aaron/b/11ty-blog-njk-starter-master/node_modules/nunjucks/src/environment.js:478:18)
+[11ty]     at Nunjucks.compile (/home/aaron/b/11ty-blog-njk-starter-master/node_modules/@11ty/eleventy/src/Engines/Nunjucks.js:480:14)
+[11ty]     at Markdown.compile (/home/aaron/b/11ty-blog-njk-starter-master/node_modules/@11ty/eleventy/src/Engines/Markdown.js:63:28)
+[11ty]     at TemplateRender.getCompiledTemplate (/home/aaron/b/11ty-blog-njk-starter-master/node_modules/@11ty/eleventy/src/TemplateRender.js:232:26)
+[11ty]     at Template.compile (/home/aaron/b/11ty-blog-njk-starter-master/node_modules/@11ty/eleventy/src/TemplateContent.js:296:42)
+[11ty]     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+[11ty]     at async Template._render (/home/aaron/b/11ty-blog-njk-starter-master/node_modules/@11ty/eleventy/src/TemplateContent.js:390:16)
+[11ty] Copied 10 files / Wrote 0 files in 0.17 seconds (v1.0.2)
+Done in 383ms.
+```
+
