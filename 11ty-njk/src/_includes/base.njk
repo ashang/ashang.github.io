@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-  	<meta name='viewport' content='width=device-width'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>{{ site.title }}</title>
     <meta name='description' content={{ site.description }}>
@@ -29,17 +29,46 @@
 
   <body class="dark:text-white dark:bg-black">
     {{ content | safe }}
-    
+
   <script>
     document.getElementById("toggleDarkMode").addEventListener("click", function() {
       if (isDarkMode()) {
         localStorage.theme = 'light'
         document.documentElement.classList.remove('dark')
+        document.getElementById("toggleDarkMode").textContent="Dark mode";
       } else {
         localStorage.theme = 'dark'
         document.documentElement.classList.add('dark')
+        document.getElementById("toggleDarkMode").textContent="Light mode";
       }
     });
   </script>
+
+    <p>
+        点击这个词：<span id="word" style="color:blue; cursor:pointer;">点击我</span>
+    </p>
+
+    <script>
+        // 获取页面中的元素
+        const wordElement = document.getElementById('word');
+
+        // 初始的词
+        const originalText = "点击我";
+        const changedText = "你点击了我";
+
+        // 点击事件处理
+        wordElement.addEventListener('click', function() {
+            if (wordElement.textContent === originalText) {
+                wordElement.textContent = changedText;  // 改变文字
+            } else {
+                wordElement.textContent = originalText;  // 恢复原始文字
+            }
+        });
+    </script>
+
+
+
+
+
   </body>
 </html>

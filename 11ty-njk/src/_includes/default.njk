@@ -1,6 +1,9 @@
 ---
 layout: main
 ---
+
+{% include "nav.njk" %}
+
 {% if subtitle != "" %}
 <p class="text-5xl md:text-6xl font-black pt-10 md:pt-20 leading-tight">
  {{ title }}
@@ -15,7 +18,5 @@ layout: main
 </p>
 
 {% endif %}
-
-{% include "nav.njk" %}
 
 {{ content | safe}}
