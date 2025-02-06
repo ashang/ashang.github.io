@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "What is Rust?"
-date: 2013-10-08 20:50
+date: 2013-10-08
 comments: true
 categories: [rust, software, languages]
 ---

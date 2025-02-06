@@ -279,3 +279,4 @@ strategies or error-prone code, and eliminate even more problems.
 
 - Search for allocations using `new`
 - Remove calls to `delete`
+

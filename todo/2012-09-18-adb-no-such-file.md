@@ -1,4 +1,8 @@
---- layout: post title: adb no such file date: 2012-09-18 14:21:00.000000000 +08:00 type: post published: true status: publish categories: \[\] tags: \[\] meta: \_oembed\_17449c0ccd4c296396f7b80301328020: "{{unknown}}" blogger\_blog: www.ashang.org blogger\_author: Aaron Shang blogger\_d06f7f5bcdfeb296283c00dcf750b675\_permalink: '316852128156199786' \_oembed\_db40a44b94672de8384641f1bd691e6d: "{{unknown}}" \_oembed\_16fb653129e469f0e3999a201888362d: "{{unknown}}" \_oembed\_5a3a0ceafe762a086fae28f81cea744f: "{{unknown}}" \_oembed\_d23eafb2fd8c27df46affabafe0796f7: "{{unknown}}" \_oembed\_b6425fc5d8278204d9b056bf3ae721fd: "{{unknown}}" author: login: aaronshang email: aaronshang@gmail.com display\_name: Aaron first\_name: '' last\_name: '' ---
+---
+layout: post
+title: adb no such file
+date: 2012-09-18
+---
 
 **Common adb errors and solutions**
 -----------------------------------

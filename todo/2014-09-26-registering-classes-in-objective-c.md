@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Registering Classes in Objective-C"
-date: 2014-09-26 08:20
+date: 2014-09-26
 comments: true
 categories: [objective-c,mac,ios]
 published: false

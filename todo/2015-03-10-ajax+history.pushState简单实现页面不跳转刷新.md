@@ -1,6 +1,6 @@
 ---
 layout: post
-date: 2015-03-10 23:15:25 +0800
+date: 2025-01-10
 title: ajax+history.pushState简单实现页面不跳转刷新
 tags: javascript
 ---
