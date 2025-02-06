@@ -57,3 +57,34 @@ Disallow:
 
 - <https://gcc.gnu.org/onlinedocs/cpp/>
 
+## JSON vs YAML
+
+- JSON 使用大括号 {} 表示对象，YAML 通常使用 缩进和冒号 代替 {} 结构。
+- JSON 的键名和字符串值都必须用双引号 "" 包裹，而 YAML 可以不使用引号（除非特殊情况）。
+- JSON 的对象属性之间必须用逗号分隔，而 YAML 不使用逗号。
+- JSON 里true/false，而 YAML 用 true/false 或 yes/no。
+
+## JSON
+
+```json
+{
+  "application": {
+    "name": "Firefox",
+    "osVersion": "Darwin 24.3.0 ...",
+    "version": "135.0",
+    "buildID": "20250130195129",
+    "distributionID": ""
+  }
+}
+```
+
+### YAML
+
+```yaml
+application:
+  name: Firefox
+  osVersion: Darwin 24.3.0 ...
+  version: 135.0
+  buildID: "20250130195129"
+  distributionID: ""
+```
