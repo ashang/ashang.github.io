@@ -5,9 +5,7 @@ date:       2014-06-11
 summary:    Pixyll is a simple, beautiful theme for Jekyll that emphasizes content rather than aesthetic fluff.
 ---
 
-Hello.
-
-Pixyll is a simple, beautiful theme for Jekyll that emphasizes content rather than aesthetic fluff. It's mobile _first_, fluidly responsive, and delightfully lightweight.
+Pixyll is mobile _first_, fluidly responsive, and delightfully lightweight.
 
 It's pretty minimal, but leverages large type and drastic contrast to make a statement, on all devices.
 
@@ -21,5 +19,3 @@ It's pretty minimal, but leverages large type and drastic contrast to make a sta
 ## Where is it?
 
 Checkout the [GitHub repository](https://github.com/johno/pixyll) to download it, request a feature, or report a bug.
-
-It's free, and open source ([MIT](https://opensource.org/licenses/MIT)).

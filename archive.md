@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: page
 #layout: page
 #title: Archive
 titles:

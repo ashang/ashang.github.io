@@ -1,6 +1,5 @@
 ---
 #permalink: /posts/
-#layout: default
 layout: page
 title: "postsII"
 ---

@@ -1,6 +1,5 @@
 ---
-layout: default
-#layout: base
+layout: base
 ---
 
 <article class="page">
@@ -279,3 +278,101 @@ layout: default
     
   </div>
 </article>
+
+
+
+
+
+
+<main class="content fade-in-down delay-0_75s">
+  <div class="inner">
+    <article class="post">
+      <div class="entry-box">
+        <header class="entry-header">
+        PAGE
+          <h1 class="entry-title">{{ page.title }}</h1>
+        </header><!-- .entry-header -->
+        <div class="entry-content">
+          {{content}}
+        </div><!-- .entry-content -->
+      </div><!-- .entry-box -->
+    </article><!-- .post -->
+  </div><!-- .inner -->
+</main><!-- .content -->
+
+----
+
+{% include intro-header.html type='page' %}
+
+<!-- Main Content -->
+<div class="container">
+  <div class="row">
+    {% if site.sidebar == false %}
+    <!-- NO SIDEBAR -->
+    <!-- PostList Container -->
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1
+      postlist-container">
+      {{ content }}
+    </div>
+    <!-- Sidebar Container -->
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1
+      sidebar-container">
+      <!-- Featured Tags -->
+      {% include featured-tags.html %}
+
+      <!-- Friends Blog -->
+      here
+      <!--
+      {% include friends.html %}
+      -->
+    </div>
+    {% else %}
+
+    <!-- USE SIDEBAR -->
+    <!-- PostList Container -->
+    <div class="col-lg-8 col-lg-offset-1 col-md-8 col-md-offset-1 col-sm-12
+      col-xs-12 postlist-container">
+      {{ content }}
+    </div>
+    <!-- Sidebar Container -->
+    <div class="col-lg-3 col-lg-offset-0 col-md-3 col-md-offset-0 col-sm-12
+      col-xs-12 sidebar-container">
+      <!-- Featured Tags -->
+      {% include featured-tags.html %}
+
+      <!-- Short About -->
+      {% include short-about.html %}
+
+      <!-- Friends Blog -->
+      <!--
+      {% include friends.html %}
+      -->
+
+      <!-- Ads -->
+      {% include ads.html %}
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{% if site.page-mathjax %}
+<!-- Add support for Mathjax by Voleking-->
+<!-- If you want to see formulars well in post preview, Maybe you should add this.-->
+<!-- However, most of the time formulars may not appear in the post preview, you can delete it.-->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    TeX: {
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    },
+    tex2jax: {
+      inlineMath: [ ['$','$'] ],
+      displayMath: [ ['$$','$$'] ],
+      processEscapes: true,
+    }
+  });
+</script>
+<script type="text/javascript"
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+{% endif %}

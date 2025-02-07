@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: page
 #layout: base.njk
 title: 2025 Q1 / Jan
 date: 2020-07-01
