@@ -1,4 +1,30 @@
 
+$ ldd -v a.out
+        linux-vdso.so.1 =>  (0x00007fff8b575000)
+        libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f4e17151000)
+        /lib64/ld-linux-x86-64.so.2 (0x00007f4e174de000)
+
+        Version information:
+        ./a.out:
+                libc.so.6 (GLIBC_2.2.5) => /lib/x86_64-linux-gnu/libc.so.6
+        /lib/x86_64-linux-gnu/libc.so.6:
+                ld-linux-x86-64.so.2 (GLIBC_2.3) => /lib64/ld-linux-x86-64.so.2
+                ld-linux-x86-64.so.2 (GLIBC_PRIVATE) => /lib64/ld-linux-x86-64.so.2
+
+
+$ sudo pldd $$
+1337536:        /bin/bash
+linux-vdso.so.1
+/lib/x86_64-linux-gnu/libtinfo.so.6
+/lib/x86_64-linux-gnu/libdl.so.2
+/lib/x86_64-linux-gnu/libc.so.6
+/lib64/ld-linux-x86-64.so.2
+/lib/x86_64-linux-gnu/libnss_compat.so.2
+/lib/x86_64-linux-gnu/libnss_nis.so.2
+/lib/x86_64-linux-gnu/libnsl.so.1
+/lib/x86_64-linux-gnu/libnss_files.so.2
+
+
        In the usual case, ldd invokes the standard dynamic linker (see ld.so(8))  with  the  LD_TRACE_LOADED_OBJECTS
        environment variable set to 1.  This causes the dynamic linker to inspect the program's dynamic dependencies,
        and find (according to the rules described in ld.so(8)) and load the objects that satisfy those dependencies.
@@ -233,3 +259,4 @@ $ ldd bin/node
         libpthread.so.0 => /usr/lib/libpthread.so.0 (0x00007f25019ab000)
         libc.so.6 => /usr/lib/libc.so.6 (0x00007f250179f000)
         /lib64/ld-linux-x86-64.so.2 => /usr/lib64/ld-linux-x86-64.so.2 (0x00007f2501cef000)
+
