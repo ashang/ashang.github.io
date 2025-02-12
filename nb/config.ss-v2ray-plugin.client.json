@@ -1,0 +1,11 @@
+{
+    "server":"65.20.115.4",
+    "server_port":18388,
+    "local_address": "127.0.0.1",
+    "local_port":10080,
+    "password":"pica8org",
+    "timeout":60,
+    "method":"chacha20-ietf-poly1305",
+    "plugin":"/bin/v2ray-plugin",
+    "plugin_opts":"tls;host=thepro.xyz"
+}

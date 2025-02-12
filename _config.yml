@@ -92,7 +92,10 @@ date_format: "ordinal"
 
 # Gems
 plugins:
-  - jekyll-feed                 # automatically generate an Atom feed at /feed.xml
+  #- jekyll-feed                 # automatically generate an Atom feed at /feed.xml
+  #- jekyll-feed                 # automatically generate an Atom feed at /feed.xml
+  #- jekyll-feed                 # automatically generate an Atom feed at /feed.xml
+  #- jekyll-feed                 # automatically generate an Atom feed at /feed.xml
   - jekyll-seo-tag
   - jekyll-sitemap
   - jemoji
@@ -142,6 +145,7 @@ exclude:
   - jour
   #- 11ty-njk
     #- /docs
+  - /nb
   - /node_modules
   - /rock
   - /screenshots

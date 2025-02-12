@@ -1,0 +1,33 @@
+---
+title: ""
+permalink: "/about/"
+layout: page
+mathjax: true
+---
+
+The theme is called ["Contrast"][3] and it is by [Niklaus Buschmann][4]. It was
+simple and looked good. Also it comes with support for equations, which you can
+enable with just `mathjax: true` in the page.
+
+<script type="math/tex; mode=display">f^{(n)}(z) = \frac{n !}{2 \pi i} \int_{C}\! \frac{f(\zeta)}{(\zeta - z)^{n+1}} \mathrm{d}\zeta</script>
+
+*(Note: An update to the version of Jekyll/Kramdown used by github.io broke
+this feature a bit.  [I raised an issue on Contrast's GitHub.][5])*
+
+[3]: https://jekyllthemes.io/theme/contrast
+[4]: https://github.com/niklasbuschmann
+[5]: https://github.com/niklasbuschmann/contrast/issues/28
+
+The instructions suggest forking the repo, but I just cloned it and then pushed
+to an empty repository. That way I can search it in the web UI (since at time of
+writing GitHub does not search forks).
+
+I'll mention this uses the [Liquid][6] templating system so I can find the
+documentation later when I need it.
+
+[6]: https://shopify.dev/docs/themes/liquid/reference
+
+{% comment %}
+         1         2         3         4         5         6         7         8
+12345678901234567890123456789012345678901234567890123456789012345678901234567890
+{% endcomment %}

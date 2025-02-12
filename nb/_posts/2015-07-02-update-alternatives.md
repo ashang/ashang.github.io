@@ -1,0 +1,5 @@
+
+
+update-alternatives --query editor
+
+

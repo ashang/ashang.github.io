@@ -1,0 +1,19 @@
+.DS_Store
+
+site/
+build/
+env/
+dist/
+htmlcov/
+.tox/
+.coverage
+Thumbs.db
+
+*~
+
+# Hexo
+db.json
+*.log
+node_modules/
+public/
+.deploy*/
