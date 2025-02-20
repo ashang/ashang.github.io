@@ -1,0 +1,13 @@
+X-Repolib-Name: Gitlab Runner Sources
+Enabled: yes
+Types: deb deb-src
+#URIs: http://mirrors.ustc.edu.cn/debian/
+#URIs: https://mirrors.tuna.tsinghua.edu.cn/gitlab-ce/debian
+URIs: https://mirrors.tuna.tsinghua.edu.cn/gitlab-runner/debian
+#Suites: stable stable-updates stable-backports
+#Suites: bookworm bookworm-updates bookworm-backports
+Suites: bookworm
+#Components: main contrib non-free non-free-firmware
+Components: main
+#X-Repolib-Default-Mirror: http://deb.debian.org/debian/
+

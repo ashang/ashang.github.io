@@ -1,0 +1,10 @@
+X-Repolib-Name: Grafana Stable Sources
+Enabled: no
+#Enabled: yes
+#Types: deb deb-src
+Types: deb
+URIs: https://mirrors.tuna.tsinghua.edu.cn/grafana/apt/
+Suites: bookworm
+#Suites: bullseye
+Components: stable main
+X-Repolib-Default-Mirror: https://packages.grafana.com/enterprise/deb

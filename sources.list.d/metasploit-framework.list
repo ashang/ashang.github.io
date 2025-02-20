@@ -1,0 +1,2 @@
+#deb http://downloads.metasploit.com/data/releases/metasploit-framework/apt lucid main
+#deb http://downloads.metasploit.com/data/releases/metasploit-framework/apt jammy main

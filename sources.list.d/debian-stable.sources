@@ -1,0 +1,9 @@
+X-Repolib-Name: Debian Stable Sources
+Enabled: yes
+Types: deb deb-src
+URIs: http://mirrors.ustc.edu.cn/debian/
+Suites: stable stable-updates stable-backports
+#Suites: bookworm bookworm-updates bookworm-backports
+Components: main contrib non-free non-free-firmware
+X-Repolib-Default-Mirror: http://deb.debian.org/debian/
+Suites: bookworm bookworm-updates bookworm-backports bookworm-security

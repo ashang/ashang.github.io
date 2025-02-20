@@ -1,0 +1,9 @@
+X-Repolib-Name: Ubuntu noble Sources
+Enabled: yes
+Types: deb deb-src
+URIs: https://cn.archive.ubuntu.com/ubuntu/
+#Suites: stable stable-updates stable-backports
+Suites: noble noble-updates noble-backports noble-security
+#Components: main contrib non-free non-free-firmware
+Components: main restricted universe multiverse
+X-Repolib-Default-Mirror: https://archive.ubuntu.com/ubuntu/

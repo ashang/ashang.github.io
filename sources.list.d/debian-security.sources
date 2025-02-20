@@ -1,0 +1,11 @@
+X-Repolib-Name: Debian Security Sources
+Enabled: yes
+Types: deb deb-src
+#deb http://security.debian.org/debian-security bullseye-security main contrib non-free
+#URIs: https://security.debian.org/debian-security
+URIs: https://mirrors.ustc.edu.cn/debian-security
+#Suites: stable stable-updates stable-backports
+Suites: bullseye-security
+#Suites: bookworm-security
+#Components: main contrib non-free non-free-firmware
+Components: main contrib non-free
