@@ -3,59 +3,33 @@
 title: Tor
 tags: about
 ---
+## Package: tor
 
-## ABOUT TOR BROWSER
-
-Tor Browser uses the Tor network to protect your privacy and anonymity. Using the Tor network has two main properties:
-
-    Your internet service provider, and anyone watching your connection locally, will not be able to track your internet activity, including the names and addresses of the websites you visit.
-
-    The operators of the websites and services that you use, and anyone watching them, will see a connection coming from the Tor network instead of your real Internet (IP) address, and will not know who you are unless you explicitly identify yourself.
-
-In addition, Tor Browser is designed to prevent websites from "fingerprinting" or identifying you based on your browser configuration.
-
-By default, Tor Browser does not keep any browsing history. Cookies are only valid for a single session (until Tor Browser is exited or a New Identity is requested).
-HOW TOR WORKS
-
-Tor is a network of virtual tunnels that allows you to improve your privacy and security on the Internet. Tor works by sending your traffic through three random servers (also known as relays) in the Tor network. The last relay in the circuit (the "exit relay") then sends the traffic out onto the public Internet.
-
-How Tor works
-
-The image above illustrates a user browsing to different websites over Tor. The green middle computers represent relays in the Tor network, while the three keys represent the layers of encryption between the user and each relay.
-
-## TOR
-
-Tor 浏览器专为大陆等网络环境加入了流量混淆的选项。首次打开浏览器时会弹出 Tor 状态检查，点击设置配置 Tor 网桥，勾选互联网提供商（ISP）是否对 Tor 网络连接进行了封锁或审查中的是，把下一步中的网桥类型选择meek-amazon或meek-azure。这两者在大陆没被完全封锁，因此可以用来做跳板网桥。
-
-不过随着网络环境的恶化，Tor 提供的网桥类型都不可用时，就需要使用自己的 Shadowsocks 或 Lantern 代理了。
-
-首次打开 Tor 浏览器，在 Tor 设置中勾选互联网提供商（ISP）是否对 Tor 网络连接进行了封锁或审查中的否，在下一步是否需要本地代理访问互联网？中选择是，下一步中设置你的代理：
-
-    使用 Shadowsocks 则设置为 SOCKS5 类型的 127.0.0.1:1080；
-        使用 Lantern 则设置为 HTTP/HTTPS 类型的 127.0.0.1:8787；
-
-
-Package: tor
-Status: install ok installed
-Priority: optional
-Section: net
 Installed-Size: 4057
+
 Maintainer: Peter Palfrader <weasel@debian.org>
-Architecture: amd64
+
 Version: 0.2.9.14-1
+
 Depends: libc6 (>= 2.17), libevent-2.0-5 (>= 2.0.10-stable), libseccomp2 (>= 0.0.0~20120605), libssl1.1 (>= 1.1.0), libsystemd0, zlib1g (>= 1:1.1.4), adduser, init-system-helpers (>= 1.18~), lsb-base
+
 Recommends: logrotate, tor-geoipdb, torsocks
+
 Suggests: mixmaster, torbrowser-launcher, socat, tor-arm, apparmor-utils, obfsproxy, obfs4proxy
+
 Conflicts: libssl0.9.8 (<< 0.9.8g-9)
+
 Conffiles:
- /etc/apparmor.d/abstractions/tor bf88d45209243216901d7df09666f6aa
- /etc/apparmor.d/system_tor 2920c5c9e0dac3172176b998e4894767
- /etc/cron.weekly/tor 78214da84411cbfef01ed0c037514288
- /etc/default/tor 4eed467922fcd0eb49f8c2fa938d53c0
- /etc/init.d/tor fe0e4cf6bc15a6a7669ccc77cfcad6d1
- /etc/logrotate.d/tor 116b39ab9b06e24757a27fa47bc8c3ff
- /etc/tor/torrc 8bbeab709059e3cf743f029523baa661
+- /etc/apparmor.d/abstractions/tor
+- /etc/apparmor.d/system_tor
+- /etc/cron.weekly/tor
+- /etc/default/tor
+- /etc/init.d/tor
+- /etc/logrotate.d/tor
+- /etc/tor/torrc
+ 
 Description: anonymizing overlay network for TCP
+
  Tor is a connection-based low-latency anonymous communication system.
  .
  Clients choose a source-routed path through a set of relays, and
@@ -85,10 +59,45 @@ Description: anonymizing overlay network for TCP
  the Tor Browser Bundle, a standalone tarball that includes static
  builds of Tor, Torbutton, and a modified Firefox that is patched to fix
  a variety of privacy bugs.
+
 Homepage: https://www.torproject.org/
 
+## The Tor Browser
 
-# Whonix
+Tor Browser uses the Tor network.
+
+Using the Tor network has two main properties:
+
+- Your internet service provider, and anyone watching your connection locally, will not be able to track your internet activity, including the names and addresses of the websites you visit.
+
+- The operators of the websites and services that you use, and anyone watching them, will see a connection coming from the Tor network instead of your real Internet address.
+
+In addition, Tor Browser is designed to prevent websites from "fingerprinting" or identifying you based on your browser configuration.
+
+By default, Tor Browser does not keep any browsing history. Cookies are only valid for a single session (until Tor Browser is exited or a New Identity is requested).
+
+## HOW TOR WORKS
+
+Tor is a network of virtual tunnels that allows you to improve your privacy and security on the Internet.
+
+Tor works by sending your traffic through three random servers (also known as relays) in the Tor network.
+
+The last relay in the circuit (the "exit relay") then sends the traffic out onto the public Internet.
+
+Tor 流量混淆
+
+Tor 网桥
+
+网桥类型选择meek-amazon或meek-azure，做跳板网桥。
+
+Tor 提供的网桥类型都不可用时，就需要使用自己的代理了。
+
+> 是否需要本地代理访问互联网？中选择是，下一步中设置你的代理：
+
+    使用 Shadowsocks 则设置为 SOCKS5 类型的 127.0.0.1:1080；
+        使用 Lantern 则设置为 HTTP/HTTPS 类型的 127.0.0.1:8787；
+
+## Whonix
 
 ```
 Your Information
@@ -259,38 +268,11 @@ Source: dazzlepod.com
 ```
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+```
 debian-+     875  0.0  0.0  16944  3328 ?        Ss   Jul10   0:00 /usr/bin/tor --defaults-torrc /usr/share/tor/tor-service-defaults-torrc -f /etc/tor/torrc --RunAsDaemon 0
+```
 
-
-
-
+```
 root         741  0.0  0.0  15348  3840 ?        Ss   Jul10   0:00 sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups
 root      888990  0.0  0.1  18240 10880 ?        Ss   09:38   0:00  \_ sshd: aaron [priv]
 aaron     889038  0.0  0.0  18648  7368 ?        S    09:38   0:00      \_ sshd: aaron@pts/14
@@ -342,3 +324,7 @@ root      892430  0.0  0.0  10576  2432 pts/15   S+   09:46   0:00  |           
 root      892431  0.1  0.0  10576   384 pts/15   S+   09:46   0:00  |                       \_ dpkg-deb --fsys-tarfile /tmp/apt-dpkg-install-Wu5dzf/13-linux-headers-6.2.0-25_6.2.0-25.25_all.deb
 root      892432 10.2  0.1  19420 10624 pts/15   R+   09:46   0:01  |                       \_ dpkg-deb --fsys-tarfile /tmp/apt-dpkg-install-Wu5dzf/13-linux-headers-6.2.0-25_6.2.0-25.25_all.deb
 aaron      79283  0.0  0.1  18688 10960 pts/11   Ss+  Jul10   0:02  \_ -bash
+```
+## Other topics
+
+### Lantern 代理
