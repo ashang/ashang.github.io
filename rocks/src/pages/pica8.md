@@ -3,9 +3,146 @@
 layout: base
 title: pica8.com
 ---
+**Please verify that the D-Link branch up to 4.5.0.4 has all features of the GA 4.4.5.7.**
+
+## D-Link
+
+Recent releases to D-Link:
+
+- 4.5.1.2  DHCP server config parsing
+
+- Dec 5 - onie-installer-D-LinkOS-4.5.1.2-9bf1bdd40b-dlink-x86.bin
+
+- 4.5.0.3   SNMP fix for LLDP
+
+- Jan 3  - onie-installer-D-LinkOS-4.5.0.3-62c39c9c61-dlink-x86.bin
+
+- 4.5.0.4  planned for DHCP server (10,000)
+
+Technical Update: Compatibility Challenges with DNI OEM Framework on BusyBox-based System (Device 3410)
+
+Our team is currently addressing compatibility issues affecting DNI OEM components on device 3410 running BusyBox environment.
+
+- BusyBox implementation differs significantly from standard Linux distributions
+    
+- Critical component variations:
+    
+    - Lightweight syslogd implementation
+        
+    - Restricted bash functionality
+        
+    - Reduced system utilities availability
+        
+    - Original DNI OEM framework architecture assumes standard Linux toolchain
+        
+    - BusyBox limitations may require workaround implementations
+        
+- Prioritize essential functionality fixes for today's deployment
+
+---
+Basically, we have these variants. Later, the names and numbers would change according to new requirements.
+
+---
 
 
----------- Forwarded message ---------
+Contact the OONI team by sending an email to **contact@openobservatory.org**. Encrypted emails can be sent using the following PGP key:
+
+Key ID: 6B2943F00CB177B7  
+Fingerprint: 4C15 DDA9 96C6 C0CF 48BD 3309 6B29 43F0 0CB1 77B7
+
+![OONI Logo](https://ooni.github.io/images/logos/ooni-horizontal.svg)
+
+
+----
+
+https://macfuse.github.io/
+
+
+----
+
+https://docs.python.org/3/library/collections.abc.html
+
+----
+
+- CELESTICA SEASTONE DX010 32-PORT 100G QSFP28 ONIE SWITCH
+Latest activity focuses on ansible scripting in their production tower for provisioning the PicOS.
+
+We have a couple additional checklist items to complete:  the LDAP testing (our CLI) and SNMPv3 in their Zabbix environment.
+
+On Monday we learned of aggressive push by management to replace Cumulus by year end due to EOL for software from Cumulus.
+
+A plan is now underway to aggressively consume the 50 licenses purchased already, for the “Back End” (BE) leaf/spines.
+
+Goal to complete by end of April, deployment at 2 datacenters:  Perryman and Arlington.
+
+**Seastone request**
+
+We had paused the request for porting to Seastone (referred to by customer as Radisys, a vendor) until we had POC success.
+
+So now that specific request on that basis has been made by customer, for deployment in this push now.
+
+This will lead to more license purchases.
+
+Below email has the initial estimate of 4-6 weeks.
+
+Our current latest release is
+
+- onie-installer-picos-4.4.4.11-46c26b95d2-x86.bin
+
+·        Switch Models and Chipsets  
+--------------------------  
+S4048ON           trident2  
+S5248F-ON         trident3  
+HP Altoline 6712  trident2  
+HPE Altoline 6940 trident2  
+S6000-ON          trident2  
+Seastone          tomahawk 
+
+·        And these Qty:
+
+HP Altoline      99  
+Seastone        108  
+S4048F-ON        74  
+S5232F-ON        28  
+S5248F-ON       320
+
+
+
+They run he says with just 2 staff, total automation and ZTP.
+
+Using Ansible tower ([https://docs.ansible.com/ansible-tower/](https://docs.ansible.com/ansible-tower/)).
+
+They run Kubernetes.   He asked is we run in containers.  Did not sound required, needs checking.  I know Yachal did some effort on this.  Status?  
+
+Servers are typically 10G.   Spines are some 40G.
+
+They use Zabbix agent for monitoring  (see below in Features list)
+
+**Roles** -----  
+BE_Leaf (MLag)  
+BE_Spine  
+FE_Leaf (EVPN)  
+FE_Spine (EVPN)
+
+These are “BE - back end” and “FE - front end” Spine-leaf as in diagram.  Using MLAG and EVPN.  
+  
+**Features Common to All – Deepak list / my comments on supported**
+
+- BGP unnumbered using ipv6 / yes
+- EBGP / yes
+- Management VRF / yes
+- Breakout Ports to 10G / yes
+- Zabbix Agent /   yes ([https://pica8-fs.atlassian.net/wiki/spaces/PicOS440sp/pages/4786190/SNMP+Monitoring+and+Integration+with+Zabbix](https://pica8-fs.atlassian.net/wiki/spaces/PicOS440sp/pages/4786190/SNMP+Monitoring+and+Integration+with+Zabbix))
+- LDAP Authentication /  not sure if we have done this
+- DHCP relay / yes
+
+I would say all supported, but need checking on LDAP.  I need to find out if it is for AAA (instead of typical TACACS).
+
+---
+
+----
+
+
 From: "Sasikumar Puthiyaveedu" <Sasikumar.puthiyaveedu@pica8.com>
 Date: Wed, Feb 5, 2025, 06:18
 Subject: Re: Verizon IT - 4.2.3.10 - Seattle switch problems 11 phones, 18 POE total
@@ -3436,3 +3573,61 @@ You may need Teams login.
  
 
 Let us know if you can access.
+
+
+----
+
+如果你两年内没有使用你的账户进行任何操作，你将被收取闲置费。受影响的服务包括：
+
+- Gmail：您发送、接收和存储的电子邮件将被删除。
+- Google Drive：但它会删除您的所有文档、电子表格和其他文件。
+- Google 相册：他们会永久删除您保存的回忆。
+- YouTube：订阅、视频和评论将会消失。
+
+此策略保护用户免受垃圾邮件和安全风险等潜在威胁，因为不活动的帐户更容易受到攻击。
+
+#### 如果您的帐户处于非活动状态会发生什么情况？
+
+如果您的帐户被视为不活跃，后果将很严重：
+
+- 帐户删除  
+    您的帐户将被永久关闭。
+- 数据丢失  
+    如果无法恢复内容，所有相关内容（包括电子邮件、文件和照片）都将丢失。
+- 断开连接的服务  
+    与该帐户关联的应用程序订阅或任何第三方服务的登录都将被关闭。
+
+## 如何保持您的帐户活跃
+
+防止您的帐户被删除非常简单。每两年至少执行以下一项操作：
+
+- 从任何设备登录您的 Google 帐户。
+- 使用 Gmail 发送或阅读电子邮件。
+- 编辑或访问 Google Drive 中的文件。
+- 浏览 Google 相册中的照片或上传您自己的照片。
+- 在 YouTube 上发表评论或观看视频。
+- 从 Google Play 下载的应用或游戏。
+- 登录您的帐户后进行搜索。
+
+所有这些活动都告诉 Google 该帐户存在。
+
+## 此政策不适用于哪些组织？
+
+某些帐户不受不活动政策的约束：
+
+- 购买：Google 产品或服务购买帐户。
+- 订阅：YouTube Premium、Google One 或他们积极订阅的其他帐户。
+- 货币余额：礼品卡和付款贷记到有余额的账户。
+- Family Link：这包括使用 Family Link 管理孩子的 Google 帐户的帐户。
+- 已发布内容：发布过应用程序或游戏的任何人。
+
+如果您的帐户处于非活跃状态，且您符合以下任何条件，我们将不会删除您的帐户。
+
+- 自我保护的预防措施  
+    为确保您的帐户保持活跃和安全：
+- 设置提醒  
+    设置日历提醒以不断提醒您经常检查您的帐户。
+- 启用 2FA（双因素身份验证）  
+    还可以通过添加额外的安全层来防止未经授权的访问。
+- 更新恢复信息  
+    确保用于恢复的电子邮件和电话号码是最新的，以便您可以收到有关恢复的重要通知。

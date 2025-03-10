@@ -4,8 +4,7 @@ layout: base
 title: picos
 ---
 
-
-```
+```sh
 root@Xorplus:/home/admin# version 
 Copyright (C) 2009-2018 Pica8, Inc.
 ===================================
@@ -16,7 +15,6 @@ L2/L3 Version/Revision        : 3.1.0/3bdda77
 L2/L3 Released Date           : 12/25/2018
 OVS/OF Version/Revision       : 3.1.0/3bdda77
 OVS/OF Released Date          : 12/25/2018
-
 
 root@Xorplus:/home/admin# system-diag 
 ************ System Diagnosis Start ************
@@ -126,5 +124,4 @@ Memory size:
 	Total memory	: 2015156 KB
 	Free memory	: 967324 KB
 CPU utilization: 24.16%
-
 ```

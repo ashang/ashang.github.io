@@ -1,0 +1,200 @@
+{
+  "main": {
+    "id": "1150a0a388aaadfb",
+    "type": "split",
+    "children": [
+      {
+        "id": "f777fa237421d66e",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "68d3209bbdaf957c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Formatting/Math.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Math"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "5fa641238ca3531c",
+    "type": "split",
+    "children": [
+      {
+        "id": "d3d749fdb5bda029",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "1538a53286db4c4b",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": true
+              },
+              "icon": "lucide-folder-closed",
+              "title": "檔案瀏覽器"
+            }
+          },
+          {
+            "id": "e0409fc99af6a109",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜尋"
+            }
+          },
+          {
+            "id": "5563730701bc5d19",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "書籤"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "d9ae70e92ea61800",
+    "type": "split",
+    "children": [
+      {
+        "id": "bf96aea5aafb4849",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c46230e8f715cd53",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Formatting/Math.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Math 的反向連結"
+            }
+          },
+          {
+            "id": "7b0c256e5c0664c2",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Start Here.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Start Here 的對外連結"
+            }
+          },
+          {
+            "id": "0e0565460abd093f",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "標籤"
+            }
+          },
+          {
+            "id": "27309df8bdd2f6a6",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Start Here.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Start Here 的大綱"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:開啟快速切換": false,
+      "graph:查看關聯圖": false,
+      "canvas:建立新畫布": false,
+      "daily-notes:開啟今天的每日筆記": false,
+      "templates:插入模板": false,
+      "command-palette:開啟命令面板": false
+    }
+  },
+  "active": "68d3209bbdaf957c",
+  "lastOpenFiles": [
+    "Formatting/Table.md",
+    "Formatting/Task.md",
+    "Formatting/Heading.md",
+    "Formatting/Callout.md",
+    "Start Here.md",
+    "ooo",
+    "未命名.canvas",
+    "未命名 1.canvas",
+    "Guides/Create your first note.md",
+    "Guides/Create a vault.md",
+    "2025-03-03.md",
+    "Formatting/Footnote.md",
+    "Formatting/Images.md",
+    "Formatting/Format your notes.md",
+    "Formatting/Embeds.md",
+    "Formatting/Internal link.md",
+    "Formatting/Math.md",
+    "Formatting/Strikethrough.md",
+    "Plugins make Obsidian special for you.md",
+    "Guides/Get started with Obsidian.md",
+    "Adventurer/From plain-text note-taking.md",
+    "Vault is just a local folder.md",
+    "Formatting/Blockquote.md",
+    "Adventurer/From standard note-taking.md",
+    "Adventurer/No prior experience.md",
+    "Guides/Link notes.md"
+  ]
+}
