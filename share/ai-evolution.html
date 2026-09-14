@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  <title></title>
+  <meta charset="utf-8">
+  <style>
+    <!--
+    -->
+
+    @media screen and (orientation: portrait) {
+        body {
+            width: 100vh;
+            height: 100vw;
+            transform: rotate(90deg);
+            transform-origin: top left;
+            position: absolute;
+            top: 0;
+            left: 100vw;
+            overflow: hidden;
+            overflow-x: hidden;
+            overflow-y: auto;
+            
+            display: flex;
+            flex-direction: column; /* Stack items vertically */
+            align-items: center;    /* Center items horizontally */
+            justify-content: start; /* Start from the top */
+            padding: 20px;
+            box-sizing: border-box; /* Important: ensures padding doesn't break the width */
+        }
+    }
+
+    body {
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", "Helvetica Neue", Arial, "Droid Serif", "LXGW WenKai Screen", "Sarasa Gothic SC", sans-serif;
+      line-height: 1.6;
+      font-size: 16px;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: "Yanone Kaffeesatz", "LXGW WenKai Screen", "Sarasa Gothic SC", "PingFang SC", sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      /*
+      looks fine
+      */
+      /*
+      font-weight: normal;
+      */
+      text-transform: uppercase;
+    /*
+    Best for UPPERCASE
+    */
+    }
+    code,
+    pre {
+      font-family: "Iosevka", "Ubuntu Mono", "Sarasa Fixed SC", monospace;
+      font-size: 0.95em;
+    }
+    .remark-code,
+    .remark-inline-code {
+      font-family: 'Ubuntu Mono';
+    }
+  </style>
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+</head>
+<body>
+  <textarea id="source">
+
+name: AI coding
+class: center, middle
+
+## AI 与软件开发之浅见
+
+#### AI (极)简史、开发提效与开发者的未来
+
+Some demo for fun can be found at
+http://10.10.50.50/aaron/ai-work
+
+Updates of this topic will go to
+http://ashang.org/share/ai-dev.html
+
+---
+### 认知 refresh - like DRAM, always memory refreshing
+
+- AI 不再只做短期问答：“长期计划 + 任务推进 + 多轮协作”能力逐渐成熟
+- 长期记忆与状态管理: AI 不再缺少记忆
+- 提示词工程不再如以前重要, AI 已经进化到更少的指导 - 当然烂问题除外
+- 键盘将会几乎消失 - 只对失语者必须; 语音交互逐渐成熟
+  - Cool 公司吸引开发者的不再是机械键盘，而是拾音灵敏的降噪麦克风
+
+- 最好的开发语言？不是 Go / Rust / C / C++ / Python / PHP
+  - 而是 ENGLISH
+  - 很快是母语 - 将 `99.99%` = 英语 - 大概率你母语输出更好
+
+- World Models (世界模型)?
+  - 世界模型旨在让AI系统对空间和时间有持续的把握
+  - Gemini 等已发布雏形
+
+---
+### 这几个月 AI 的飞速进展
+
+- 大模型新版本、智能体、协议/标准、生态
+  - 比起 AI，没有哪个事物更确切适用“**日新月异**”这个成语来形容
+  - SOTA (state-of-the-art，榜一大哥) 模型/智能体能力评测 - 每~~周~~日更迭
+
+- Google Gemini 3, pro, flash
+  - 1M context，多模态原生，极低延迟，移动端执行复杂任务，经济/快
+- Anthropic Claude Opus 4.5/4.6
+  - 1M context, 解决上下文腐烂，Coding SOTA
+- OpenAI GPT-5.2/5.3 Codex
+- GLM-5, 744B - 长链路任务时表现极佳
+- DeepSeek V3.2 / V4
+- Kimi K2/2.5
+- Minimax M2
+- etc. a lot ...
+
+---
+### At the time being, Dec 2025
+
+| 任务类型       | 领先模型                  | 
+| ---------- | --------------------- | 
+| 推理 & 数学    | GPT-5.2 / GPT-5.3     | 
+| 代码生成 & 自动化 | Claude Opus（4.6）      | 
+| 超长上下文处理    | Gemini 系列             | 
+| 开源性价比      | GLM 系列 / Kimi K2.5    | 
+| 实时 speed   | Grok / Devstral Small | 
+
+- Source: ([Reddit][1])
+[1]: https://www.reddit.com/r/jenova_ai/comments/1pzcdkn/compare_ai_models_and_agents_in_2025_gpt52_claude
+
+---
+### 连接/接口协议标准化
+
+- Linux Foundation 下成立 Agentic AI Foundation - AAIF
+  - LF AAIF 初创三剑客: MCP + AGENTS.md + Goose
+- MCP - Model Context Protocol - 模型连接协议
+  - Anthropic 捐赠
+  - 智能体与外部工具、数据库、API 的整合规范协议
+  - 解决不同供应商之间互操作性；降低开发 agent 化 AI 的集成复杂度
+- AGENTS.md
+  - OpenAI 捐赠
+  - 定义工程中智能体的行为、技能及执行逻辑，方便共享标准 agent 模板。
+- Goose
+  - Block 捐赠
+  - MCP 的原生标杆
+  - Agent 平台，与任意模型结合，真实执行命令，本地独立完成任务循环
+  - 自主思考需求拆解成步骤，自动阅读报错信息，修改代码，直到测试通过
+  - 动态能力：在会话中途增加一个技能扩展，不需要重启或重新配置
+
+---
+### AI, Chat Bot to Agents Paradigm
+
+- 连接
+  - 封闭系统，难以读取私有数据 -> 通过 MCP 协议连接一切 API 和本地工具
+- 标准
+  - 碎片化，每个 Agent 单独配置 -> 依靠 agents.md 等标准实现通用化配置
+- 交互
+  - 你问，它答 -> 你给目标，它拆解步骤并执行
+  - LLM / Agent / Skills 架构
+
+---
+### Agents + Skills
+
+#### Agent 系统
+- LLM 任务结构理解能力成熟
+- ReAct / Plan-Act 框架实现规划机制
+- 调用工具系统（Tool Use）
+- 长期记忆（向量数据库保存用户偏好与知识片段）和短期记忆（执行历史）
+
+#### Skills
+- 轻量级、按需加载的方法，旨在保留上下文并改善响应时间
+- 结构化封装的智能体能力，比如“代码审查”、“自动化报告生成”
+- Skills 与 MCP 结合，能让 agent 重复使用技能并可被不同模型调用
+- 代表 agent 精细化任务分解的下一步，使智能体更模块化
+- 特别适合需要高效、上下文感知任务执行的场景
+
+---
+### Try, or refer to
+
+  - https://claude.ai/
+  - https://manus.im/
+  - https://z.ai/
+  - https://kimi.com/
+  - https://agent.minimax.io/
+
+  - https://modelcontextprotocol.io/
+  - https://block.github.io/goose/
+  - https://agents.md/
+  - https://aaif.io/
+
+---
+### Why AI - 无需讨论
+- AI 不再是研究部门/算法团队的专属
+- 业界已经大幅度进入开发工作流 - 我们太落伍了 - 要奋起直追
+- 问题绝不再是 “要不要用 AI”，而是 ”怎么用好，怎么好用”
+- 需求分析、设计、代码、文档、调试，所有环节都深入渗透
+
+---
+### Topics
+- 前菜 - 以上👆
+- AI 极简史
+- AI 如何提升开发质量和效率
+- 对工程师的影响
+
+部门的每月征集主题投票，排名前面的会征集讲者，周五的技术加油站进行分享。
+
+一月份的 AI研发 主题派给了我，可能是考虑到自己平时比较能折腾(刨坑、填坑、弃坑)，
+也在基础设施和研发效能方面有些实践。
+这个主题太大，也更新太快，主持人给出了几个方向：
+- 介绍到后续工作应该如何侧重
+- AI能够帮助做什么/行业内现在AI实践的进度
+- 对工程师的影响、职业生涯的思考、未来结合AI发展的方向
+
+---
+### AI 简史
+- 诞生：1943 - 1956
+第一个数学化的“人工神经元模型”
+1950：Alan Turing 提出“图灵测试”
+
+1956：John McCarthy 在达特茅斯会议提出 “Artificial Intelligence”
+
+核心范式：符号主义（Symbolic AI）
+
+逻辑推理
+
+专家系统
+
+规则驱动
+
+问题：规则爆炸，无法泛化。
+
+
+统计学习与神经网络复兴（1990s–2012）
+2. 机器学习时代
+
+SVM
+
+随机森林
+
+HMM
+
+2012：Geoffrey Hinton 团队用 CNN 赢下 ImageNet（AlexNet）
+三、Transformer 与大模型（2017–2022）
+4. 2017：结构革命
+
+论文：Attention Is All You Need
+
+提出 Transformer
+
+核心创新：
+
+自注意力机制
+
+可并行
+
+长距离建模
+
+预训练范式爆发
+
+2018：Google 发布 BERT
+
+2020：OpenAI 发布 GPT-3
+
+2022：ChatGPT
+
+核心范式：
+
+预训练 + 微调
+Scaling Law：参数越大 → 泛化越强
+
+
+Copilot 时代
+
+2021：GitHub Copilot
+
+变化：
+
+人写代码 → 人写意图
+
+Agent 时代
+
+LLM + 工具调用
+
+LLM + Memory
+
+LLM + 规划
+
+---
+### 软件开发的范式演进（极简脉络）
+
+汇编时代：控制机器
+
+结构化编程：控制流程
+
+面向对象：控制抽象
+
+函数式：控制副作用
+
+云原生：控制部署
+
+DevOps：控制交付
+
+AI-native：控制“意图”
+
+现在的软件：
+
+不再是“写逻辑”，而是“设计约束 + 设计提示 + 设计反馈回路”。
+
+大模型的能力来自“统计泛化”
+高维连续概率动力系统
+
+
+理解大模型更有意义的是：
+
+表达能力（Universal Approximation）
+
+优化动力学（Gradient Flow）
+
+表示学习
+
+Scaling Law
+
+信息压缩与泛化
+
+
+从符号主义到连接主义的长弧
+
+历史摆动：
+
+1943 连接主义萌芽
+
+1960–80 符号主义主导
+
+1986 连接主义复活
+
+2017 连接主义彻底胜出
+
+Transformer 是连接主义的成熟形态。
+
+符号主义立场：
+
+智能 = 符号操作
+推理 = 规则应用
+
+
+blackhole
+“推理感”从哪来？
+
+关键在这里：
+
+连续向量空间可以逼近离散结构。
+
+举例：
+
+语法规则 → 被编码为向量几何关系
+
+逻辑蕴含 → 被编码为方向变换
+
+因果关系 → 被编码为统计相关结构
+
+当模型规模足够大时，
+
+某些子空间会近似形成：
+
+“条件判断模式”
+
+“递归模式”
+
+“变量绑定模式”
+
+于是输出看起来像是在执行规则。
+
+但它并没有显式规则。
+
+
+
+Transformer 特别关键？
+
+注意力机制 + 并行性
+
+RNN 序列依赖导致训练无法并行
+
+Transformer 允许序列中每个位置同时计算 attention
+
+GPU 并行优势充分发挥
+
+堆叠深度可控
+
+LayerNorm + 残差连接允许训练 12–100 层
+
+解决梯度消失问题，比 1986 的简单多层 MLP 更稳健
+
+规模效应
+
+参数规模和数据规模达到涌现临界点
+
+一些能力（推理、抽象、代码生成）才显现出来
+
+统一最小算子 + 任务无关
+
+注意力 + 前馈 + 残差 = 单一算子
+
+可处理语言、图像、音频等多模态任务
+
+石破天惊
+
+
+有限状态机（Finite State Machine, FSM）
+1. 定义
+
+有限状态机是计算理论中最简单的一类计算模型，用于描述有限个状态之间的转移。
+
+它由以下部分组成：
+
+状态集合（States）：有限数量的状态，例如 S = {S1, S2, S3}
+
+输入符号集合（Alphabet）：机器能接收的输入符号，例如 Σ = {0,1}
+
+初始状态（Start State）：FSM 开始时所在的状态
+
+转移函数（Transition Function）：定义状态如何根据输入转移
+
+δ(Si, input) → Sj
+
+接受状态（Accept States）：标记最终的“成功/匹配”状态
+
+2. 特点
+
+有限状态：状态数量固定
+
+无额外存储：FSM 只有状态信息，没有栈或纸带
+
+适合模式识别：例如正则表达式匹配、简单协议控制
+
+3. 示例
+
+假设 FSM 识别二进制串中 是否包含偶数个 1：
+
+状态：Even（偶数个 1）、Odd（奇数个 1）
+
+初始状态：Even
+
+输入 1 → 状态翻转
+
+输入 0 → 状态不变
+
+接受状态：Even
+
+这就是一个典型的 FSM。
+
+
+
+
+
+
+感知机（1958）
+
+反向传播（1986）
+
+深度学习（2012）
+
+Transformer（2017）
+
+提出人工神经元模型。
+神经网络在表达能力上等价于逻辑电路。
+复杂认知可以由简单单元通过连接涌现。
+
+1958 感知机
+
+1986 反向传播
+用链式法则，把输出误差有效传回每一层。
+多层网络可以用梯度下降优化。
+
+神经网络不是在 1986 年“被发明”，
+而是在 1986 年重新变得可训练
+
+
+2012 深度学习
+
+2017 Transformer
+
+提出 Perceptron（感知机）。
+
+有效训练算法+算力支持+表达能力+范式压制
+
+
+1970s–1980s 主流变成：
+
+逻辑推理
+
+专家系统
+
+规则系统
+
+
+1986 年
+Geoffrey Hinton
+等人推广 Backpropagation。
+
+多层网络如何训练
+
+
+2012 年 ImageNet 突破（AlexNet）意味着：
+
+GPU 出现
+
+数据规模爆炸
+
+深层网络可训练
+
+泛化能力显著
+
+智能可能是统计涌现，而不是规则构造。
+
+
+
+  - 信息论，控制论与早期神经网络 - 符号推理
+  - 图灵测试
+  - 1956年达特茅斯会议：AI的诞生
+- 第一波浪潮 - 黄金年代：1956 - 1974
+   - 自然语言 - 乐观思潮
+- 第一次AI低谷：1974 - 1980
+- 第二波浪潮 - 繁荣：1980—1987
+   - 专家系统 知识革命
+- 第二次AI低谷：1987—1993
+- 第三波浪潮 - 大数据与机器学习：1993—2019
+   - 智能代理 - 深度学习，大数据和通用人工智能：2011至2019
+- 第四波浪潮 - 强化学习与大型语言模型: 2020至今
+
+---
+### 强化学习与大型语言模型
+- https://zh.wikipedia.org/wiki/Attention_Is_All_You_Need
+  - 2017
+- Transformer 大模型
+- https://en.wikipedia.org/wiki/Artificial_intelligence
+- https://en.wikipedia.org/wiki/History_of_artificial_intelligence
+- https://en.wikipedia.org/wiki/Outline_of_artificial_intelligence
+- https://en.wikipedia.org/wiki/Pattern_recognition
+
+---
+### AGI now? or WHEN?
+- https://en.wikipedia.org/wiki/AI_effect
+
+
+---
+### 模型到“AI 产品”
+
+- 模型 ≠ 产品
+- AI 嵌入工具链，而不是单独存在
+- 真正改变的是：
+  - Chat bot - 交互模式 - SO - copy & paste
+  - API即服务（OpenAI / Anthropic / DeepSeek / Qwen）
+  - IDE 深度集成 Copilot / Cursor / Code Agent
+
+---
+### 模型 - How to choose
+
+---
+## Benchmarking
+- Massive Multitask Language Understanding (MMLU)
+- HLE, Humanity's Last Exam
+  - https://lastexam.ai/
+  - https://huggingface.co/datasets/cais/hle
+  - https://github.com/centerforaisafety/hle
+
+>Hummingbirds within Apodiformes uniquely have a bilaterally paired oval bone, a sesamoid embedded in
+>the caudolateral portion of the expanded, cruciate aponeurosis of insertion of m. depressor caudae.
+> How many paired tendons are supported by this sesamoid bone? Answer with a number.
+
+> 蜂鸟属于雨燕目，其独特的特征是两侧成对的卵圆形骨，即籽骨，它嵌入在尾部下压肌附着点扩张的十字形腱膜的尾外侧部分。这块籽骨支撑着多少对肌腱？请用数字回答。
+
+- https://chatgpt.com/c/695c7413-8ab4-8321-ac45-191063b735ad
+- https://gemini.google.com/u/1/app/c9bf8264a9f242da
+
+---
+## Benchmarking
+
+- https://github.com/SWE-bench/SWE-bench
+- https://en.wikipedia.org/wiki/Language_model_benchmark
+- https://lmarena.ai/
+- https://lmarena.ai/leaderboard/webdev
+
+---
+## Models
+
+- https://huggingface.co/models
+- https://github.com/QwenLM/Qwen3-Omni
+- https://ai.google.dev/gemma/docs/core
+- https://huggingface.co/models?search=google/gemma
+- https://deepmind.google/models/gemma/
+- https://www.kaggle.com/models?query=gemma
+- https://github.com/meta-llama/llama-models
+
+---
+### Non-Open Models
+
+- OpenAI
+  - GPT-4.1 / GPT-4o / GPT-4o-mini/ o1 ...
+
+- Anthropic
+  - Claude Haiku / Sonnet / Opus
+   - https://console.anthropic.com/
+   - https://claude.ai/
+
+- Google
+  - Gemini Pro / Flash
+
+---
+### Open Models
+
+- Meta
+  - Llama 3.x /4.x
+- Google
+  - gemma
+- DeepSeek
+- Qwen
+- Kimi K2
+- Minimax M2
+  - https://agent.minimax.io/
+
+---
+## Agentic
+- Agent Skill
+
+>Less structure,
+>
+>more intelligence.
+
+- https://cline.bot/
+- https://roocode.com/
+- https://kilo.ai/
+
+---
+## IDE
+
+- https://cursor.com/changelog
+- https://cursor.com/2025
+
+---
+## CLI
+- Gemini CLI
+  - lots of forks - Qwen Qoder CLI
+- Claude code
+- aider
+- https://cursor.com/docs/cli/headless
+- https://cursor.com/docs/cli/overview
+
+---
+## App
+
+- https://linear.app/
+- https://jazz.tools/
+
+---
+## Code review
+
+- https://www.qodo.ai/
+  - /compliance for comprehensive compliance checks for security, ticket requirements, and custom organizational rules
+  - /improve to scan code changes and provide meaningful feedback to improve PR code
+  - /describe to automatically generate a PR description, diagram walkthrough, and summary
+  - /create-ticket to generate a ticket in your integrated ticket tracking system (Jira, Linear, monday.dev)
+
+### Tickets / Issues / Bugs / Features
+
+- https://monday.com/w/dev
+
+---
+### AI 的能力边界
+
+- 能做什么
+  - 代码生成 / 重构 / 注释
+  - 文档理解
+  - Pattern matching（模式复用）
+
+- 不能做什么
+  - 对真实业务负责
+  - 理解隐含上下文
+  - 替你判断“是否该这么做”
+
+- AI 是放大器，不是替代品
+
+---
+### AI 示例
+
+- RFC
+  - 篇幅长
+  - 文字密集
+  - 行为分散在多个章节
+
+- 实现难点：
+  - 状态机复杂
+  - Corner case 多
+  - 不同厂商实现差异大
+
+- Debug 困难：
+  - 抓包 → 人工分析
+  - 状态与报文难以对应
+
+---
+### 高价值场景
+- 样板代码生成 - Boilerplate / Scaffolding
+  - CRUD、YANG /JSON /API schema
+  - Config → internal struct 映射
+  - 配置校验逻辑：冲突规则 - 默认值策略
+- 代码解释与快速上手
+  - 读老代码、读陌生语言
+- 重构与迁移
+  - 同步/异步
+  - Python → Go / Rust
+- Debug 辅助
+  - 日志分析
+  - 错误模式识别 - 可能原因枚举
+- 文档
+  - 设计说明、注释
+  - 文档生成、更新
+
+---
+### 范式改变
+
+- 过去：
+  - 查文档 → StackOverflow → 试错
+
+- 现在：
+  - 对话式理解
+  - 即时上下文反馈
+  - 新技术的冷启动成本显著下降
+
+---
+## 工程工具链/ 开发流演进
+
+- IDE：Copilot / Cursor
+      - 即时解释
+- CLI：AI 辅助生成
+- CI/CD：
+  - 生成测试
+  - 分析失败原因
+- Code Review：
+  - 辅助 reviewer
+
+---
+## 潜在风险
+
+- 代码能跑 ≠ 代码正确
+
+- AI 垃圾
+- 效率陷阱：AI 不是“免费午餐”
+  - 直接 copy 不理解
+  - 代码“看起来对”
+  - 长期依赖导致基础能力退化
+- 依赖过度导致：
+  - 理解能力下降
+  - Debug 能力退化
+
+---
+### 技术债不可见，但在积累
+
+- AI 写的、但没有被工程化吸收的代码
+  - 代码可运行
+  - CI 通过
+  - 测试覆盖看起来正常
+
+- MR 中必须回答：
+  - “我们为什么在当时做了这个技术/架构决策”
+  - 为什么这样设计？
+  - 替代方案是什么？- 为什么不用它们？
+
+- 鼓励工程判断而非盲目速度
+- AI 是 工具革命/思维革命/范式革命
+  - 真正决定你价值的不是“会不会用 AI”
+  - 而是是否理解你在构建什么系统
+
+---
+## 正确姿势
+
+- 永远要求：
+  - Explain why
+  - 给出替代方案
+
+- 所有关键逻辑：
+  - AI 负责生成
+  - 永远由工程师最终 review & 决策
+
+---
+## AI 不会“淘汰程序员”，但会重排价值
+
+- 被压缩的：
+  - 纯语法型工作
+  - 重复型实现
+
+- 被放大的：
+  - 架构设计
+  - 系统理解
+  - 性能/可靠性/安全
+  - 复杂业务建模
+  - Debug 与问题定位
+
+---
+## 开发者
+
+- 价值迁移方向
+  - 写代码 → 定义问题
+  - 实现功能 → 设计系统
+  - 记 API → 组合能力
+  - 单点技能 → 工程判断
+- 未来开发者的分化趋势
+  - AI 放大型工程师（强）
+  - AI 依赖型执行者（风险）
+  - 拒绝 AI 的传统开发者（远远抛下!）
+- 应对: 个人强化
+  - 基础 CS/ 系统设计/ 思考
+  - Prompting（结构化提问）
+  - Review AI 输出 - AI 辅助而非替代 Code Review
+
+---
+### 组织应对
+
+- 建立 AI 使用规范
+- 防止“影子代码”
+  - 已经在运行或影响行为，但没有被团队真正理解、拥有、维护的代码。
+  - AI 生成 → 看起来对 → 能跑 → 合并 → 上线
+- AI 重构了某个模块
+  - 改动范围看起来很小
+  - 但：行为边界悄然变化 / 假设发生漂移
+- Debug 从“分析系统”退化成“碰运气”
+  - 没人知道怎么修，但设计意图不清，错误路径不透明
+  - 只能反复“再生成一版”
+
+
+
+---
+## MoE
+
+每个Expert（专家）网络负责处理特定类型的输入或任务，例如语言理解、逻辑推理、数学计算等。模型根据输入动态选择最合适的Expert组合，提高效率和准确性。
+
+
+通过Gating Network（门控网络）动态选择和组合Expert，实现资源的高效利用，避免所有专家同时运行。
+
+通过增加Expert数量来扩展模型能力，而不必重新训练整个模型。
+
+单个Expert失效不会导致整个系统崩溃，其他Expert可以接管或补偿。
+
+用户无需关心后台如何选择Expert，只需享受更快、更准确的响应。
+
+
+提示词引导
+用户可以通过精心设计的提示词（Prompt Engineering），引导模型激活更相关的Expert。例如，明确提到“请用数学专家回答”这个问题，可能会影响门控网络的选择（但并非直接控制）。
+
+定制化MoE模型
+在特定应用场景下，开发者可以通过微调或设计特定的门控逻辑，让模型倾向于选择某些Expert，但这需要模型训练阶段的干预，用户无法实时控制。
+
+你是什么角色
+
+---
+## Pre-training
+
+---
+## Fine Tuning
+
+SFT
+
+---
+### IDE
+
+- 语法高亮, Syntax highlighting
+- 自动缩进, Folding
+- 自动完成
+- 自动补全
+- Refactoring
+
+- AI
+
+
+---
+### Related topics
+
+---
+### Q&A
+
+---
+###
+
+---
+### References
+- https://platform.moonshot.cn/docs/guide/start-using-kimi-api
+- https://herbsutter.com/
+- https://en.wikipedia.org/wiki/The_Elements_of_Programming_Style
+- https://clang-analyzer.llvm.org/
+- https://clang.llvm.org/extra/clang-tidy/
+- https://youtu.be/QrrH2lcl9ew?t=474
+- https://survey.stackoverflow.co/2024/technology#admired-and-desired
+- https://survey.stackoverflow.co/2023/#technology
+- https://www.techug.com/post/97-things-every-programmer-should-know/
+- https://www.tiobe.com/tiobe-index/
+- https://cplusplus.com/reference/
+- https://cplusplus.com/reference/stl/
+- https://cplusplus.com/doc/tutorial/
+
+---
+### In Search Of Excellence
+
+> Your employer can’t force you to be a good programmer;
+
+> a lot of times your employer
+isn’t even in a position to judge whether you’re good.
+
+> If you want to be great, you’re
+responsible for making yourself great.
+
+---
+### Questions
+
+❤️
+
+---
+### Refactoring
+
+- 不改变代码的外部行为情况下而修改源代码
+- 轮流增加新的测试和功能
+- 增进代码间的清晰性和一致性
+- 自动化的单元测试保证了重构后的代码仍然能够正常运作。
+
+- 重构既不修正错误，也不增加新的功能
+  - 目的是用于提高代码的可读性或者改变代码内部结构与设计或者删除死码，使其在将来更容易进行维护和开发。
+  - 重构可以存在于结构层面或是语意层面，但前提是不影响代码在转换前后的功能
+
+- 在重构中最关键的是去有意地“清理”代码，把不同的功能分开，然后对重构后的代码进行测试(任何对代码的编辑都有可能引发错误)。
+- 新的实现方法需要切合实际地改善现有设计，并且不改变原软件的功能或行为。
+
+---
+### Refactoring - 案例
+
+- 现有的逻辑结构下难以加入新的功能，因此对代码进行重构，以便后续开发。
+- 修改变量的名称使其具有更明确的含义
+  - 例如从单个字母的`i`重构为`interestRate`
+- 把一段if区块中的代码变为一个子程序。
+- 更复杂一点的重构是用多态性来替换if 条件式。
+- 进一步还可重新设计程序的算法，例如重新设计数据结构。
+
+---
+### Refactoring scenarios
+
+- 封装成员变量(Encapsulate Field)
+  - 将仅限于本类使用的变量重写成私有(private)成员变量，并提供访问方法(accessor method)。这种重构方式可以将与外部调用者无关的变量隐藏起来，减少代码的耦合性，并减少意外出错的概率。
+- 提取方法(Extract Method)
+  - 将大段代码中的一部分提取后，构成一个新方法。这种重构可以使整段程序的结构变得更清晰，从而增加可读性。这也对函数(Function)通用。
+- 类一般化(Generalize Type)
+  - 将多个类/函数共享的类型抽象出可以公用的基类(base class)，然后利用多态性追加每个类/函数需要的特殊函数。这种重构可以让结构更加清晰，同时可以增加代码的可维护性。
+- 函数归父(Pull Up)—或译函数上移，指的是方法从子类移动到父类。
+- 函数归子(Push Down)—或译函数下移，指的是方法从父类移动到子类。
+- 方法更名(Rename Method)—将方法名称以更好的表达它的用途。
+
+---
+### Refactoring
+
+```cpp
+class SomeClass {
+  public:
+      int memberA;
+      //...
+};
+```
+
+```c++
+class SomeClass {
+  private:
+      int memberA;
+  public:
+      int getMemberA();
+      void setMemberA(int a);
+      //...
+};
+```
+
+---
+
+---
+
+### Questions
+
+❤.  ❤️
+
+---
+
+    </textarea>
+  <!--
+    -->
+  <!--
+    <script src="remark-latest.min.js">
+    -->
+  <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+  </script>
+  <script>
+    var slideshow = remark.create();
+  </script>
+
+<script>
+  window.addEventListener('load', () => {
+    const link = document.createElement('link')
+    link.rel = 'stylesheet'
+    link.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap'
+    document.head.appendChild(link)
+  })
+</script>
+
+</body>
+
+</html>
+
+AI参与生产代码必须 Human-in-the-loop
+
+英文字母表中第18个字母，在草莓这个词的英文里面出现了多少次？
+
+AI 系统学习路线指导 - 这个不容易，可组织形成专门的有针对性的课件，目前还是大量优质的blog讲的较好，会促进大家分享。
+
+不能让纠正AI生成代码的时间和精力比自己写还多，绝不接受即使能跑的不被理解的ai输出；
+
+目标绝不会为了赶风潮或完成kpi或政治任务，而是真正提高整个组织同时也是个人的效率和质量；
+
+AI 系统学习路线指导 - 这个还没现成，可组织大家协作贡献专门的有针对性的课件，有优质的blog讲得较好，会促进大家分享。
+另外，不记得哪位有位提到了用 Claude Opus 4.5 
+和 Codex GPT-5.2-xhigh 搭配不同agent 来做 各自擅长的领域 如review，找BUG等部分的实践，这是可确定的大方向，请联系我一起推进 ，这种auto routing也是不久又刷榜的 NVIDIA ToolOrchestra 的路线，
+https://developer.nvidia.com/blog/train-small-orchestration-agents-to-solve-big-problems/
+
+有本地部署、数据处理和不同应用的或者感兴趣的同事也请联系我，探讨更多的可能性
+如编码助手：
+V1只是给出补全和样板代码；V2是生成测试或重构建议供人审查；V3才是自动应用修改并提交 PR
+
+hello，arm中的sif编译不过，应该找谁呢
+不知道
+
+不迭代恶化
+
+最后一页
+
+慎重
+能否由 AI 替代
+如果有一个已经能达到70分以上并迅速迭代能力的助理，是否还需要从60分培养且不能保证达到理想预期的岗位。
+
+判断、决策
+
+行动、执行
+
+各种名目的阻碍，打破藩篱，勇气
+关键窗口期，不进则退，
+
+思维的惰性，
+
+组织庞大的臃肿缓慢、无论是决策，还是行动
+
+sycophancy - 谄媚
+hallucination - 幻觉
+
+
+图灵机（Turing Machine, TM）
+1. 定义
+
+图灵机是理论上最强大的计算模型，可以模拟任何算法。
+
+它由以下部分组成：
+
+无限纸带（Tape）：存储符号，每个格子可读写
+
+读写头（Head）：可读写并左右移动
+
+状态集合（States）：包括初始状态和终止状态
+
+输入符号集合（Alphabet）：包括空白符
+
+转移函数（Transition Function）：
+δ(current_state, read_symbol) → (next_state, write_symbol, move_direction)
+
+2. 特点
+
+无限存储：理论上可用无限纸带保存数据
+
+可读写：不仅能读取，还能修改符号
+
+可模拟算法：任何可计算函数都可以用图灵机实现
+
+离散步骤：每一步是确定性操作
+
+3. 示例
+
+假设图灵机实现二进制加法：
+
+纸带存放两串二进制数，例如 110 + 101
+
+状态机控制读写头
+
+读一个位 → 根据进位决定写入结果 → 移动头
+
+循环直到完成
+
+图灵机能做的远比 FSM 多得多，因为它有可扩展存储
+
+
+| 特性   | FSM      | 图灵机           |
+| ---- | -------- | ------------- |
+| 存储   | 只有有限状态   | 无限纸带          |
+| 表达能力 | 正则语言     | 可计算函数（图灵完备）   |
+| 控制   | 状态转换     | 状态 + 读写 + 移动  |
+| 适用场景 | 协议、正则匹配  | 任意算法、计算理论     |
+| 例子   | 偶数个 1 检测 | 二进制加法、排序、程序模拟 |
+
+
+
+## 图灵完备 Turing Complete
+
+描述一个系统是否理论上能够执行任何可计算的算法
+
+定义
+
+如果一个计算系统能够模拟图灵机（Turing Machine），那么它就是图灵完备的。
+
+换句话说：
+
+只要能实现任意算法，不受输入大小限制
+
+系统不必高效，只要能表达所有可计算函数即可
+
+有限状态机（FSM）不是图灵完备的
+
+它状态有限，没有无限存储
+
+只能处理正则语言，不能做任意计算
+
+图灵机是图灵完备的
+
+它有无限纸带（理论上无限存储）
+
+能模拟任何算法
+
+任何现代编程语言（C、Python、JavaScript 等）都是图灵完备的
+
+判断条件
+
+一个系统通常需要具备以下能力才能是图灵完备：
+
+条件分支
+
+可以执行 if/else 或分支判断
+
+无限存储
+
+可扩展变量、栈或内存
+
+循环/递归
+
+可以重复执行指令直到某条件满足
+
+有了这三样，就可以构造任何算法，达到图灵完备。
+
+非图灵完备：
+
+HTML（静态页面）
+
+CSS（样式表，虽然有选择器和计数器，但有限）
+
+图灵完备：
+
+C、Python、JavaScript
+
+Lambda 演算
+
+Brainfuck（极简指令集，也图灵完备）
+
+
+## 计算能力/涌现能力 →
+┌───────────────────────────────────────────────┐
+│                                               │
+│  FSM (有限状态机)                              │
+│  特征: 有限状态, 无存储, 正则模式              │
+│       ○                                       │
+│        │ 进阶: 增加参数/非线性                 │
+│        ▼                                       │
+│  神经网络 (NN)                                 │
+│  特征: 连续函数逼近, 可训练, 有限参数          │
+│       ●                                       │
+│        │ 进阶: 无限存储 + 循环/条件分支        │
+│        ▼                                       │
+│  图灵机 (TM)                                   │
+│  特征: 无限存储, 条件分支, 循环, 图灵完备      │
+│       ◉                                       │
+│        │ 进阶: 高维表示 + 大规模训练           │
+│        ▼                                       │
+│  大模型 (LLM)                                  │
+│  特征: 高维表示, 统计泛化, 涌现推理能力, 理论上图灵完备 │
+│       ◎                                       │
+└───────────────────────────────────────────────┘
+
+
+一个系统是图灵完备，意味着它理论上能实现任何可计算函数，只要有：
+
+条件分支（if/else）
+
+循环或递归
+
+足够的存储空间（理论上无限）
+
+不要求高效或实际运行。
+
+## 为什么说 LLM（大语言模型）是图灵完备
+
+神经网络可以模拟逻辑与循环
+
+理论上，**前馈+循环网络（RNN）**可以逼近任何函数
+
+通过堆叠和足够精度，可以近似：
+
+条件分支（if/else）
+
+循环/递归结构
+
+这被证明：有限精度 RNN + 无限时间/状态可以模拟图灵机（参见 Siegelmann & Sontag, 1995）
+
+Transformer 也是可模拟图灵机的
+
+虽然 Transformer 没有显式循环，但：
+
+可以通过自回归生成（每次生成一个 token 并将它输入下一步）实现循环
+
+注意力机制允许在高维空间表示任意状态
+
+理论上可以模拟无限纸带（通过无限 token 序列或内存扩展）
+
+理论 vs 实践
+
+理论上：LLM + 无限参数 + 无限生成长度 → 图灵完备
+
+实际上：参数有限、生成长度有限 → 近似图灵完备
+
+所以 LLM 在工程上不是完全无限的图灵机，但在理论上是图灵完备的
+
+LLM：通过概率和高维表示逼近任何算法
+
+它没有显式指令或栈，但通过状态向量可以模拟任意计算逻辑
+
+当你给 LLM 一条无限长度的上下文，并无限参数，它理论上能执行任意算法
+
+LLM 不是显式执行离散算法，它是连续高维概率系统
+
+但连续系统可以逼近离散逻辑，所以理论上可以模拟图灵机
+
+## TM
+1936
+
+图灵的基本思想是用机器来模拟人们用纸笔进行数学运算的过程，他把这样的过程看作下列两种简单的动作：
+
+在纸上写上或擦除某个符号；
+把注意力从纸的一处移动到另一处；
+而在每个阶段，人要决定下一步的动作，依赖于（a）此人当前所关注的纸上某个位置的符号和（b）此人当前思维的状态。
+
+
+在某些模型中，纸带移动，而未用到的纸带真正是“空白”的。要进行的指令（q4）展示在扫描到方格之上（由Kleene（1952）p.375绘制）。
+
+在某些模型中，读写头沿着固定的纸带移动。要进行的指令（q1）展示在读写头内。在这种模型中“空白”的纸带是全部为0的。有阴影的方格，包括读写头扫描到的空白，标记了1,1,B的那些方格，和读写头符号，构成了系统状态。（由Minsky（1967）p.121绘制）
+
+
+
+为了模拟人的这种运算过程，图灵构造出一台假想的机器，该机器由以下几个部分组成：
+
+
+1. 一条无限长的纸带TAPE。纸带被划分为一个接一个的小格子，每个格子上包含一个来自有限字母表的符号，字母表中有一个特殊的符号
+◻
+{\displaystyle \square }表示空白。纸带上的格子从左到右依次被编号为0, 1, 2, ...，纸带的右端可以无限伸展。
+2. 一个读写头HEAD。它可以在纸带上左右移动，能读出当前所指的格子上的符号，并能改变它。
+3. 一套控制规则数量有限的TABLE（A finite table of instructions）。它根据当前机器所处的状态以及当前读写头所指的格子上的符号来确定读写头下一步的动作，并改变状态寄存器的值，令机器进入一个新的状态。
+按照以下顺序告知图灵机命令：
+  1. 写入（替换）或擦除当前符号；
+  2. 移动 HEAD， 'L'向左， 'R'向右或者'N'不移动；
+  3. 保持当前状态或者转到另一状态。
+
+4. 一个状态寄存器。
+
+它用来保存图灵机当前所处的状态。图灵机的所有可能状态的数目是有限的，并且有一个特殊的状态，称为停机状态。参见停机问题。
+注意这个机器的每一部分都是有限的，但它有一个潜在的无限长的纸带，因此这种机器只是一个理想的装置。图灵认为这样的一台机器就能模拟人类所能进行的任何计算过程。
+
+
+
+
+
+回路一直无法被神经网络处理，直到保罗·韦伯斯(1975)创造了反向传播算法。
+
+
+
+
+2014年出现了残差神经网络，该网络极大解放了神经网络的深度限制，出现了深度学习的概念。
+
+
+
+
+典型的人工神经网络具有以下三个部分：
+
+结构（Architecture）结构指定了网络中的变量和它们的拓扑关系。例如，神经网络中的变量可以是神经元连接的权重（weights）和神经元的激励值（activities of the neurons）。
+激励函数（Activation Rule）大部分神经网络模型具有一个短时间尺度的动力学规则，来定义神经元如何根据其他神经元的活动来改变自己的激励值。一般激励函数依赖于网络中的权重（即该网络的参数）。
+学习规则（Learning Rule）学习规则指定了网络中的权重如何随着时间推进而调整。这一般被看做是一种长时间尺度的动力学规则。一般情况下，学习规则依赖于神经元的激励值。它也可能依赖于监督者提供的目标值和当前权重的值。例如，用于手写识别的一个神经网络，有一组输入神经元。输入神经元会被输入图像的数据所激发。在激励值被加权并通过一个函数（由网络的设计者确定）后，这些神经元的激励值被传递到其他神经元。这个过程不断重复，直到输出神经元被激发。最后，输出神经元的激励值决定了识别出来的是哪个字母。
+
+
+
+人工神经网络的实用性
+人工神经网络是一个能够学习，能够总结归纳的系统，也就是说它能够通过已知数据的实验运用来学习和归纳总结。人工神经网络通过对局部情况的对照比较（而这些比较是基于不同情况下的自动学习和要实际解决问题的复杂性所决定的），它能够推理产生一个可以自动识别的系统。与之不同的基于符号系统下的学习方法，它们也具有推理功能，只是它们是建立在逻辑算法的基础上，也就是说它们之所以能够推理，基础是需要有一个推理算法则的集合。
+
+人工神经元网络模型
+通常来说，一个人工神经元网络是由一个多层神经元结构组成，每一层神经元拥有输入（它的输入是前一层神经元的输出）和输出，每一层（我们用符号记做）Layer(i)是由Ni(Ni代表在第i层上的N)个网络神经元组成，每个Ni上的网络神经元把对应在Ni-1上的神经元输出做为它的输入，我们把神经元和与之对应的神经元之间的连线用生物学的名称，叫做突触（英语：Synapse），在数学模型中每个突触有一个加权数值，我们称做权重，那么要计算第i层上的某个神经元所得到的势能等于每一个权重乘以第i-1层上对应的神经元的输出，然后全体求和得到了第i层上的某个神经元所得到的势能，然后势能数值通过该神经元上的激活函数（activation function，常是∑函数（英语：Sigmoid function）以控制输出大小，因为其可微分且连续，方便差量规则（英语：Delta rule）处理。），求出该神经元的输出，注意的是该输出是一个非线性的数值，也就是说通过激励函数求的数值根据极限值来判断是否要激活该神经元，换句话说我们对一个神经元网络的输出是否线性不感兴趣。
+
+基本结构
+一种常见的多层结构的前馈网络（Multilayer Feedforward Network）由三部分组成，
+
+输入层（Input layer），众多神经元（Neuron）接受大量非线形输入消息。输入的消息称为输入向量。
+输出层（Output layer），消息在神经元链接中传输、分析、权衡，形成输出结果。输出的消息称为输出向量。
+隐藏层（Hidden layer），简称“隐层”，是输入层和输出层之间众多神经元和链接组成的各个层面。隐层可以有一层或多层。隐层的节点（神经元）数目不定，但数目越多神经网络的非线性越显著，从而神经网络的强健性（控制系统在一定结构、大小等的参数摄动下，维持某些性能的特性）更显著。习惯上会选输入节点1.2至1.5倍的节点。
+这种网络一般称为感知器（对单隐藏层）或多层感知器（对多隐藏层），神经网络的类型已经演变出很多种，这种分层的结构也并不是对所有的神经网络都适用。
+
+学习过程
+通过训练样本的校正，对各个层的权重进行校正（learning）而建立模型的过程，称为自动学习过程（training algorithm）。具体的学习方法则因网络结构和模型不同而不同，常用反向传播算法（Backpropagation/倒传递/逆传播，以output利用一次微分Delta rule来修正weight）来验证。
+
+种类
+人工神经网络分类为以下两种：
+
+1.依学习策略（Algorithm）分类主要有：
+
+监督式学习网络（Supervised Learning Network）为主
+无监督式学习网络（Unsupervised Learning Network）
+混合式学习网络（Hybrid Learning Network）
+联想式学习网络（Associate Learning Network）
+最适化学习网络（Optimization Application Network）
+2.依网络架构（Connectionism）分类主要有：
+
+前馈神经网络（Feed Forward Network）
+循环神经网络（Recurrent Network）
+强化式架构（Reinforcement Network）
+
+后来出现的一个关键的进展是保罗·韦伯斯发明的反向传播算法（Werbos 1975）。这个算法有效地解决了异或的问题，还有更普遍的训练多层神经网络的问题。
+
+
+
+## 反向传播（英语：Backpropagation，意为误差反向传播，缩写为BP）是对多层人工神经网络进行梯度下降的算法，也就是用链式法则以网络每层的权重为变量计算损失函数的梯度，以更新权重来最小化损失函数。
+

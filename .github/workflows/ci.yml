@@ -1,0 +1,43 @@
+name: CI
+on:
+  push:
+    branches:
+      - src
+  schedule:
+    # Every day, to pick up the latest rust-analyzer repo changes.
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+env:
+  CARGO_INCREMENTAL: 0
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "2.7"
+
+      - run: bundle install && bundle exec jekyll build
+
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: mdbook@0.5
+
+      - name: Clone the repository
+        run: git clone --depth 1 https://github.com/ashang/ashang.github.io/"
+
+      - name: Update Rust toolchain
+        run: rustup update stable
+
+      - name: Build generated.md files
+        run: cd rust-analyzer && cargo xtask codegen
+
+      - name: Run mdbook
+        run: cd rust-analyzer/docs/book && mdbook build
+
+      - name: Include mdbook output
+        run: mv rust-analyzer/docs/book/book _site

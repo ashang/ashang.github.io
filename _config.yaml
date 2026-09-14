@@ -1,0 +1,26 @@
+title: aaron shang notes
+description: "the pro building dumps"
+baseurl: ""
+url: "https://ashang.github.io/"
+
+github_username: ashang
+exclude:
+  - vendor
+
+plugins:
+- jekyll-redirect-from
+
+collections:
+  notes:
+    output: true
+    permalink: "/notes/:title/"
+
+permalink: "/:collection/:path/"
+
+defaults:
+  -
+    scope:
+      path: ""
+      type: "notes"
+    values:
+      layout: "post"

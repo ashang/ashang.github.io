@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  <title></title>
+  <meta charset="utf-8">
+  <style>
+    <!--
+    -->
+
+    @media screen and (orientation: portrait) {
+        body {
+            width: 100vh;
+            height: 100vw;
+            transform: rotate(90deg);
+            transform-origin: top left;
+            position: absolute;
+            top: 0;
+            left: 100vw;
+            overflow: hidden;
+            overflow-x: hidden;
+            overflow-y: auto;
+            
+            display: flex;
+            flex-direction: column; /* Stack items vertically */
+            align-items: center;    /* Center items horizontally */
+            justify-content: start; /* Start from the top */
+            padding: 20px;
+            box-sizing: border-box; /* Important: ensures padding doesn't break the width */
+        }
+    }
+
+    body {
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", "Helvetica Neue", Arial, "Droid Serif", "LXGW WenKai Screen", "Sarasa Gothic SC", sans-serif;
+      line-height: 1.6;
+      font-size: 16px;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: "Yanone Kaffeesatz", "LXGW WenKai Screen", "Sarasa Gothic SC", "PingFang SC", sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      /*
+      looks fine
+      */
+      /*
+      font-weight: normal;
+      */
+      text-transform: uppercase;
+    /*
+    Best for UPPERCASE
+    */
+    }
+    code,
+    pre {
+      font-family: "Iosevka", "Ubuntu Mono", "Sarasa Fixed SC", monospace;
+      font-size: 0.95em;
+    }
+    .remark-code,
+    .remark-inline-code {
+      font-family: 'Ubuntu Mono';
+    }
+  </style>
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+</head>
+<body>
+  <textarea id="source">
+
+name: AI coding
+class: center, middle
+
+## AI 与软件开发之浅见
+
+#### AI (极)简史、开发提效与开发者的未来
+
+Some demo for fun can be found at
+http://10.10.50.50/aaron/ai-work
+
+Updates of this topic will go to
+http://ashang.org/share/ai-dev.html
+
+---
+### 认知 refresh - like DRAM, always memory refreshing
+
+- AI 不再只做短期问答：“长期计划 + 任务推进 + 多轮协作”能力逐渐成熟
+- 长期记忆与状态管理: AI 不再缺少记忆
+- 提示词工程不再如以前重要, AI 已经进化到更少的指导 - 当然烂问题除外
+- 键盘将会几乎消失 - 只对失语者必须; 语音交互逐渐成熟
+  - Cool 公司吸引开发者的不再是机械键盘，而是拾音灵敏的降噪麦克风
+
+- 最好的开发语言？不是 Go / Rust / C / C++ / Python / PHP
+  - 而是 ENGLISH
+  - 很快是母语 - 将 `99.99%` = 英语 - 大概率你母语输出更好
+
+- World Models (世界模型)?
+  - 世界模型旨在让AI系统对空间和时间有持续的把握
+  - Gemini 等已发布雏形
+
+---
+### 这几个月 AI 的飞速进展
+
+- 大模型新版本、智能体、协议/标准、生态
+  - 比起 AI，没有哪个事物更确切适用“**日新月异**”这个成语来形容
+  - SOTA (state-of-the-art，榜一大哥) 模型/智能体能力评测 - 每~~周~~日更迭
+
+- Google Gemini 3, pro, flash
+  - 1M context，多模态原生，极低延迟，移动端执行复杂任务，经济/快
+- Anthropic Claude Opus 4.5/4.6
+  - 1M context, 解决上下文腐烂，Coding SOTA
+- OpenAI GPT-5.2/5.3 Codex
+- GLM-5, 744B - 长链路任务时表现极佳
+- DeepSeek V3.2 / V4
+- Kimi K2/2.5
+- Minimax M2
+- etc. a lot ...
+
+---
+### At the time being, Dec 2025
+
+| 任务类型       | 领先模型                  | 
+| ---------- | --------------------- | 
+| 推理 & 数学    | GPT-5.2 / GPT-5.3     | 
+| 代码生成 & 自动化 | Claude Opus（4.6）      | 
+| 超长上下文处理    | Gemini 系列             | 
+| 开源性价比      | GLM 系列 / Kimi K2.5    | 
+| 实时 speed   | Grok / Devstral Small | 
+
+- Source: ([Reddit][1])
+[1]: https://www.reddit.com/r/jenova_ai/comments/1pzcdkn/compare_ai_models_and_agents_in_2025_gpt52_claude
+
+---
+### 连接/接口协议标准化
+
+- Linux Foundation 下成立 Agentic AI Foundation - AAIF
+  - LF AAIF 初创三剑客: MCP + AGENTS.md + Goose
+- MCP - Model Context Protocol - 模型连接协议
+  - Anthropic 捐赠
+  - 智能体与外部工具、数据库、API 的整合规范协议
+  - 解决不同供应商之间互操作性；降低开发 agent 化 AI 的集成复杂度
+- AGENTS.md
+  - OpenAI 捐赠
+  - 定义工程中智能体的行为、技能及执行逻辑，方便共享标准 agent 模板。
+- Goose
+  - Block 捐赠
+  - MCP 的原生标杆
+  - Agent 平台，与任意模型结合，真实执行命令，本地独立完成任务循环
+  - 自主思考需求拆解成步骤，自动阅读报错信息，修改代码，直到测试通过
+  - 动态能力：在会话中途增加一个技能扩展，不需要重启或重新配置
+
+---
+### AI, Chat Bot to Agents Paradigm
+
+- 连接
+  - 封闭系统，难以读取私有数据 -> 通过 MCP 协议连接一切 API 和本地工具
+- 标准
+  - 碎片化，每个 Agent 单独配置 -> 依靠 agents.md 等标准实现通用化配置
+- 交互
+  - 你问，它答 -> 你给目标，它拆解步骤并执行
+  - LLM / Agent / Skills 架构
+
+---
+### Agents + Skills
+
+#### Agent 系统
+- LLM 任务结构理解能力成熟
+- ReAct / Plan-Act 框架实现规划机制
+- 调用工具系统（Tool Use）
+- 长期记忆（向量数据库保存用户偏好与知识片段）和短期记忆（执行历史）
+
+#### Skills
+- 轻量级、按需加载的方法，旨在保留上下文并改善响应时间
+- 结构化封装的智能体能力，比如“代码审查”、“自动化报告生成”
+- Skills 与 MCP 结合，能让 agent 重复使用技能并可被不同模型调用
+- 代表 agent 精细化任务分解的下一步，使智能体更模块化
+- 特别适合需要高效、上下文感知任务执行的场景
+
+---
+### Try, or refer to
+
+  - https://claude.ai/
+  - https://manus.im/
+  - https://z.ai/
+  - https://kimi.com/
+  - https://agent.minimax.io/
+
+  - https://modelcontextprotocol.io/
+  - https://block.github.io/goose/
+  - https://agents.md/
+  - https://aaif.io/
+
+---
+### Why AI - 无需讨论
+- AI 不再是研究部门/算法团队的专属
+- 业界已经大幅度进入开发工作流 - 我们太落伍了 - 要奋起直追
+- 问题绝不再是 “要不要用 AI”，而是 ”怎么用好，怎么好用”
+- 需求分析、设计、代码、文档、调试，所有环节都深入渗透
+
+---
+### Topics
+- 前菜 - 以上👆
+- AI 极简史
+- AI 如何提升开发质量和效率
+- 对工程师的影响 - 别让 AI 废掉自己 🧨
+
+部门的每月征集主题投票，排名前面的会征集讲者，周五的技术加油站进行分享。
+
+一月份的 AI研发 主题派给了我，可能是考虑到自己平时比较能折腾(刨坑、填坑、弃坑)，
+也在基础设施和研发效能方面有些实践。
+这个主题太大，也更新太快，主持人给出了几个方向：
+- 介绍到后续工作应该如何侧重
+- AI能够帮助做什么/行业内现在AI实践的进度
+- 对工程师的影响、职业生涯的思考、未来结合AI发展的方向
+前沿
+实践
+介绍
+后续工作 如何侧重
+职业生涯的思考
+- https://www.youtube.com/watch?v=eIoohUmYpGI
+
+---
+### AI 简史
+- 诞生：1943 - 1956
+第一个数学化的“人工神经元模型”
+1950：Alan Turing 提出“图灵测试”
+
+1956：John McCarthy 在达特茅斯会议提出 “Artificial Intelligence”
+
+核心范式：符号主义（Symbolic AI）
+
+逻辑推理
+
+专家系统
+
+规则驱动
+
+问题：规则爆炸，无法泛化。
+
+
+统计学习与神经网络复兴（1990s–2012）
+2. 机器学习时代
+
+SVM
+
+随机森林
+
+HMM
+
+2012：Geoffrey Hinton 团队用 CNN 赢下 ImageNet（AlexNet）
+三、Transformer 与大模型（2017–2022）
+4. 2017：结构革命
+
+论文：Attention Is All You Need
+
+提出 Transformer
+
+核心创新：
+
+自注意力机制
+
+可并行
+
+长距离建模
+
+预训练范式爆发
+
+2018：Google 发布 BERT
+
+2020：OpenAI 发布 GPT-3
+
+2022：ChatGPT
+
+核心范式：
+
+预训练 + 微调
+Scaling Law：参数越大 → 泛化越强
+
+
+Copilot 时代
+
+2021：GitHub Copilot
+
+变化：
+
+人写代码 → 人写意图
+
+Agent 时代
+
+LLM + 工具调用
+
+LLM + Memory
+
+LLM + 规划
+
+---
+### 软件开发的范式演进（极简脉络）
+
+汇编时代：控制机器
+
+结构化编程：控制流程
+
+面向对象：控制抽象
+
+函数式：控制副作用
+
+云原生：控制部署
+
+DevOps：控制交付
+
+AI-native：控制“意图”
+
+现在的软件：
+
+不再是“写逻辑”，而是“设计约束 + 设计提示 + 设计反馈回路”。
+
+大模型的能力来自“统计泛化”
+高维连续概率动力系统
+
+
+理解大模型更有意义的是：
+
+表达能力（Universal Approximation）
+
+优化动力学（Gradient Flow）
+
+表示学习
+
+Scaling Law
+
+信息压缩与泛化
+
+
+从符号主义到连接主义的长弧
+
+历史摆动：
+
+1943 连接主义萌芽
+
+1960–80 符号主义主导
+
+1986 连接主义复活
+
+2017 连接主义彻底胜出
+
+Transformer 是连接主义的成熟形态。
+
+符号主义立场：
+
+智能 = 符号操作
+推理 = 规则应用
+
+
+blackhole
+“推理感”从哪来？
+
+关键在这里：
+
+连续向量空间可以逼近离散结构。
+
+举例：
+
+语法规则 → 被编码为向量几何关系
+
+逻辑蕴含 → 被编码为方向变换
+
+因果关系 → 被编码为统计相关结构
+
+当模型规模足够大时，
+
+某些子空间会近似形成：
+
+“条件判断模式”
+
+“递归模式”
+
+“变量绑定模式”
+
+于是输出看起来像是在执行规则。
+
+但它并没有显式规则。
+
+
+
+Transformer 特别关键？
+
+注意力机制 + 并行性
+
+RNN 序列依赖导致训练无法并行
+
+Transformer 允许序列中每个位置同时计算 attention
+
+GPU 并行优势充分发挥
+
+堆叠深度可控
+
+LayerNorm + 残差连接允许训练 12–100 层
+
+解决梯度消失问题，比 1986 的简单多层 MLP 更稳健
+
+规模效应
+
+参数规模和数据规模达到涌现临界点
+
+一些能力（推理、抽象、代码生成）才显现出来
+
+统一最小算子 + 任务无关
+
+注意力 + 前馈 + 残差 = 单一算子
+
+可处理语言、图像、音频等多模态任务
+
+石破天惊
+
+
+有限状态机（Finite State Machine, FSM）
+1. 定义
+
+有限状态机是计算理论中最简单的一类计算模型，用于描述有限个状态之间的转移。
+
+它由以下部分组成：
+
+状态集合（States）：有限数量的状态，例如 S = {S1, S2, S3}
+
+输入符号集合（Alphabet）：机器能接收的输入符号，例如 Σ = {0,1}
+
+初始状态（Start State）：FSM 开始时所在的状态
+
+转移函数（Transition Function）：定义状态如何根据输入转移
+
+δ(Si, input) → Sj
+
+接受状态（Accept States）：标记最终的“成功/匹配”状态
+
+2. 特点
+
+有限状态：状态数量固定
+
+无额外存储：FSM 只有状态信息，没有栈或纸带
+
+适合模式识别：例如正则表达式匹配、简单协议控制
+
+3. 示例
+
+假设 FSM 识别二进制串中 是否包含偶数个 1：
+
+状态：Even（偶数个 1）、Odd（奇数个 1）
+
+初始状态：Even
+
+输入 1 → 状态翻转
+
+输入 0 → 状态不变
+
+接受状态：Even
+
+这就是一个典型的 FSM。
+
+
+
+
+
+
+感知机（1958）
+
+反向传播（1986）
+
+深度学习（2012）
+
+Transformer（2017）
+
+提出人工神经元模型。
+神经网络在表达能力上等价于逻辑电路。
+复杂认知可以由简单单元通过连接涌现。
+
+1958 感知机
+
+1986 反向传播
+用链式法则，把输出误差有效传回每一层。
+多层网络可以用梯度下降优化。
+
+神经网络不是在 1986 年“被发明”，
+而是在 1986 年重新变得可训练
+
+
+2012 深度学习
+
+2017 Transformer
+
+提出 Perceptron（感知机）。
+
+有效训练算法+算力支持+表达能力+范式压制
+
+
+1970s–1980s 主流变成：
+
+逻辑推理
+
+专家系统
+
+规则系统
+
+
+1986 年
+Geoffrey Hinton
+等人推广 Backpropagation。
+
+多层网络如何训练
+
+
+2012 年 ImageNet 突破（AlexNet）意味着：
+
+GPU 出现
+
+数据规模爆炸
+
+深层网络可训练
+
+泛化能力显著
+
+智能可能是统计涌现，而不是规则构造。
+
+
+
+  - 信息论，控制论与早期神经网络 - 符号推理
+  - 图灵测试
+  - 1956年达特茅斯会议：AI的诞生
+- 第一波浪潮 - 黄金年代：1956 - 1974
+   - 自然语言 - 乐观思潮
+- 第一次AI低谷：1974 - 1980
+- 第二波浪潮 - 繁荣：1980—1987
+   - 专家系统 知识革命
+- 第二次AI低谷：1987—1993
+- 第三波浪潮 - 大数据与机器学习：1993—2019
+   - 智能代理 - 深度学习，大数据和通用人工智能：2011至2019
+- 第四波浪潮 - 强化学习与大型语言模型: 2020至今
+
+---
+### 强化学习与大型语言模型
+- https://zh.wikipedia.org/wiki/Attention_Is_All_You_Need
+  - 2017
+- Transformer 大模型
+- https://en.wikipedia.org/wiki/Artificial_intelligence
+- https://en.wikipedia.org/wiki/History_of_artificial_intelligence
+- https://en.wikipedia.org/wiki/Outline_of_artificial_intelligence
+- https://en.wikipedia.org/wiki/Pattern_recognition
+
+---
+### AGI now? or WHEN?
+- https://en.wikipedia.org/wiki/AI_effect
+
+
+---
+### 模型到“AI 产品”
+
+- 模型 ≠ 产品
+- AI 嵌入工具链，而不是单独存在
+- 真正改变的是：
+  - Chat bot - 交互模式 - SO - copy & paste
+  - API即服务（OpenAI / Anthropic / DeepSeek / Qwen）
+  - IDE 深度集成 Copilot / Cursor / Code Agent
+
+---
+### 模型 - How to choose
+
+---
+## Benchmarking
+- Massive Multitask Language Understanding (MMLU)
+- HLE, Humanity's Last Exam
+  - https://lastexam.ai/
+  - https://huggingface.co/datasets/cais/hle
+  - https://github.com/centerforaisafety/hle
+
+>Hummingbirds within Apodiformes uniquely have a bilaterally paired oval bone, a sesamoid embedded in
+>the caudolateral portion of the expanded, cruciate aponeurosis of insertion of m. depressor caudae.
+> How many paired tendons are supported by this sesamoid bone? Answer with a number.
+
+> 蜂鸟属于雨燕目，其独特的特征是两侧成对的卵圆形骨，即籽骨，它嵌入在尾部下压肌附着点扩张的十字形腱膜的尾外侧部分。这块籽骨支撑着多少对肌腱？请用数字回答。
+
+- https://chatgpt.com/c/695c7413-8ab4-8321-ac45-191063b735ad
+- https://gemini.google.com/u/1/app/c9bf8264a9f242da
+
+---
+## Benchmarking
+
+- https://github.com/SWE-bench/SWE-bench
+- https://en.wikipedia.org/wiki/Language_model_benchmark
+- https://lmarena.ai/
+- https://lmarena.ai/leaderboard/webdev
+
+---
+## Models
+
+- https://huggingface.co/models
+- https://github.com/QwenLM/Qwen3-Omni
+- https://ai.google.dev/gemma/docs/core
+- https://huggingface.co/models?search=google/gemma
+- https://deepmind.google/models/gemma/
+- https://www.kaggle.com/models?query=gemma
+- https://github.com/meta-llama/llama-models
+
+---
+### Non-Open Models
+
+- OpenAI
+  - GPT-4.1 / GPT-4o / GPT-4o-mini/ o1 ...
+
+- Anthropic
+  - Claude Haiku / Sonnet / Opus
+   - https://console.anthropic.com/
+   - https://claude.ai/
+
+- Google
+  - Gemini Pro / Flash
+
+---
+### Open Models
+
+- Meta
+  - Llama 3.x /4.x
+- Google
+  - gemma
+- DeepSeek
+- Qwen
+- Kimi K2
+- Minimax M2
+  - https://agent.minimax.io/
+
+---
+## Agentic
+- Agent Skill
+
+>Less structure,
+>
+>more intelligence.
+
+- https://cline.bot/
+- https://roocode.com/
+- https://kilo.ai/
+
+---
+## IDE
+
+- https://cursor.com/changelog
+- https://cursor.com/2025
+
+---
+## CLI
+- Gemini CLI
+  - lots of forks - Qwen Qoder CLI
+- Claude code
+- aider
+- https://cursor.com/docs/cli/headless
+- https://cursor.com/docs/cli/overview
+
+---
+## App
+
+- https://linear.app/
+- https://jazz.tools/
+
+---
+## Code review
+
+- https://www.qodo.ai/
+  - /compliance for comprehensive compliance checks for security, ticket requirements, and custom organizational rules
+  - /improve to scan code changes and provide meaningful feedback to improve PR code
+  - /describe to automatically generate a PR description, diagram walkthrough, and summary
+  - /create-ticket to generate a ticket in your integrated ticket tracking system (Jira, Linear, monday.dev)
+
+### Tickets / Issues / Bugs / Features
+
+- https://monday.com/w/dev
+
+---
+### AI 的能力边界
+
+- 能做什么
+  - 代码生成 / 重构 / 注释
+  - 文档理解
+  - Pattern matching（模式复用）
+
+- 不能做什么
+  - 对真实业务负责
+  - 理解隐含上下文
+  - 替你判断“是否该这么做”
+
+- AI 是放大器，不是替代品
+
+---
+### AI 示例
+
+- RFC
+  - 篇幅长
+  - 文字密集
+  - 行为分散在多个章节
+
+- 实现难点：
+  - 状态机复杂
+  - Corner case 多
+  - 不同厂商实现差异大
+
+- Debug 困难：
+  - 抓包 → 人工分析
+  - 状态与报文难以对应
+
+---
+### 高价值场景
+- 样板代码生成 - Boilerplate / Scaffolding
+  - CRUD、YANG /JSON /API schema
+  - Config → internal struct 映射
+  - 配置校验逻辑：冲突规则 - 默认值策略
+- 代码解释与快速上手
+  - 读老代码、读陌生语言
+- 重构与迁移
+  - 同步/异步
+  - Python → Go / Rust
+- Debug 辅助
+  - 日志分析
+  - 错误模式识别 - 可能原因枚举
+- 文档
+  - 设计说明、注释
+  - 文档生成、更新
+
+---
+### 范式改变
+
+- 过去：
+  - 查文档 → StackOverflow → 试错
+
+- 现在：
+  - 对话式理解
+  - 即时上下文反馈
+  - 新技术的冷启动成本显著下降
+
+---
+## 工程工具链/ 开发流演进
+
+- IDE：Copilot / Cursor
+      - 即时解释
+- CLI：AI 辅助生成
+- CI/CD：
+  - 生成测试
+  - 分析失败原因
+- Code Review：
+  - 辅助 reviewer
+
+---
+## 潜在风险
+
+- 代码能跑 ≠ 代码正确
+
+- AI 垃圾
+- 效率陷阱：AI 不是“免费午餐”
+  - 直接 copy 不理解
+  - 代码“看起来对”
+  - 长期依赖导致基础能力退化
+- 依赖过度导致：
+  - 理解能力下降
+  - Debug 能力退化
+
+---
+### 技术债不可见，但在积累
+
+- AI 写的、但没有被工程化吸收的代码
+  - 代码可运行
+  - CI 通过
+  - 测试覆盖看起来正常
+
+- MR 中必须回答：
+  - “我们为什么在当时做了这个技术/架构决策”
+  - 为什么这样设计？
+  - 替代方案是什么？- 为什么不用它们？
+
+- 鼓励工程判断而非盲目速度
+- AI 是 工具革命/思维革命/范式革命
+  - 真正决定你价值的不是“会不会用 AI”
+  - 而是是否理解你在构建什么系统
+
+---
+## 正确姿势
+
+- 永远要求：
+  - Explain why
+  - 给出替代方案
+
+- 所有关键逻辑：
+  - AI 负责生成
+  - 永远由工程师最终 review & 决策
+
+---
+## AI 不会“淘汰程序员”，但会重排价值
+
+- 被压缩的：
+  - 纯语法型工作
+  - 重复型实现
+
+- 被放大的：
+  - 架构设计
+  - 系统理解
+  - 性能/可靠性/安全
+  - 复杂业务建模
+  - Debug 与问题定位
+
+---
+## 开发者
+
+- 价值迁移方向
+  - 写代码 → 定义问题
+  - 实现功能 → 设计系统
+  - 记 API → 组合能力
+  - 单点技能 → 工程判断
+- 未来开发者的分化趋势
+  - AI 放大型工程师（强）
+  - AI 依赖型执行者（风险）
+  - 拒绝 AI 的传统开发者（远远抛下!）
+- 应对: 个人强化
+  - 基础 CS/ 系统设计/ 思考
+  - Prompting（结构化提问）
+  - Review AI 输出 - AI 辅助而非替代 Code Review
+
+---
+### 组织应对
+
+- 建立 AI 使用规范
+- 防止“影子代码”
+  - 已经在运行或影响行为，但没有被团队真正理解、拥有、维护的代码。
+  - AI 生成 → 看起来对 → 能跑 → 合并 → 上线
+- AI 重构了某个模块
+  - 改动范围看起来很小
+  - 但：行为边界悄然变化 / 假设发生漂移
+- Debug 从“分析系统”退化成“碰运气”
+  - 没人知道怎么修，但设计意图不清，错误路径不透明
+  - 只能反复“再生成一版”
+
+
+
+---
+## MoE
+
+每个Expert（专家）网络负责处理特定类型的输入或任务，例如语言理解、逻辑推理、数学计算等。模型根据输入动态选择最合适的Expert组合，提高效率和准确性。
+
+
+通过Gating Network（门控网络）动态选择和组合Expert，实现资源的高效利用，避免所有专家同时运行。
+
+通过增加Expert数量来扩展模型能力，而不必重新训练整个模型。
+
+单个Expert失效不会导致整个系统崩溃，其他Expert可以接管或补偿。
+
+用户无需关心后台如何选择Expert，只需享受更快、更准确的响应。
+
+
+提示词引导
+用户可以通过精心设计的提示词（Prompt Engineering），引导模型激活更相关的Expert。例如，明确提到“请用数学专家回答”这个问题，可能会影响门控网络的选择（但并非直接控制）。
+
+定制化MoE模型
+在特定应用场景下，开发者可以通过微调或设计特定的门控逻辑，让模型倾向于选择某些Expert，但这需要模型训练阶段的干预，用户无法实时控制。
+
+你是什么角色
+
+---
+## Pre-training
+
+---
+## Fine Tuning
+
+SFT
+
+---
+### IDE
+
+- 语法高亮, Syntax highlighting
+- 自动缩进, Folding
+- 自动完成
+- 自动补全
+- Refactoring
+
+- AI
+
+
+---
+### Related topics
+
+---
+### Q&A
+
+---
+###
+
+---
+### References
+- https://platform.moonshot.cn/docs/guide/start-using-kimi-api
+- https://herbsutter.com/
+- https://en.wikipedia.org/wiki/The_Elements_of_Programming_Style
+- https://clang-analyzer.llvm.org/
+- https://clang.llvm.org/extra/clang-tidy/
+- https://youtu.be/QrrH2lcl9ew?t=474
+- https://survey.stackoverflow.co/2024/technology#admired-and-desired
+- https://survey.stackoverflow.co/2023/#technology
+- https://www.techug.com/post/97-things-every-programmer-should-know/
+- https://www.tiobe.com/tiobe-index/
+- https://cplusplus.com/reference/
+- https://cplusplus.com/reference/stl/
+- https://cplusplus.com/doc/tutorial/
+
+---
+### In Search Of Excellence
+
+> Your employer can’t force you to be a good programmer;
+
+> a lot of times your employer
+isn’t even in a position to judge whether you’re good.
+
+> If you want to be great, you’re
+responsible for making yourself great.
+
+---
+### Questions
+
+❤️
+
+---
+### Refactoring
+
+- 不改变代码的外部行为情况下而修改源代码
+- 轮流增加新的测试和功能
+- 增进代码间的清晰性和一致性
+- 自动化的单元测试保证了重构后的代码仍然能够正常运作。
+
+- 重构既不修正错误，也不增加新的功能
+  - 目的是用于提高代码的可读性或者改变代码内部结构与设计或者删除死码，使其在将来更容易进行维护和开发。
+  - 重构可以存在于结构层面或是语意层面，但前提是不影响代码在转换前后的功能
+
+- 在重构中最关键的是去有意地“清理”代码，把不同的功能分开，然后对重构后的代码进行测试(任何对代码的编辑都有可能引发错误)。
+- 新的实现方法需要切合实际地改善现有设计，并且不改变原软件的功能或行为。
+
+---
+### Refactoring - 案例
+
+- 现有的逻辑结构下难以加入新的功能，因此对代码进行重构，以便后续开发。
+- 修改变量的名称使其具有更明确的含义
+  - 例如从单个字母的`i`重构为`interestRate`
+- 把一段if区块中的代码变为一个子程序。
+- 更复杂一点的重构是用多态性来替换if 条件式。
+- 进一步还可重新设计程序的算法，例如重新设计数据结构。
+
+---
+### Refactoring scenarios
+
+- 封装成员变量(Encapsulate Field)
+  - 将仅限于本类使用的变量重写成私有(private)成员变量，并提供访问方法(accessor method)。这种重构方式可以将与外部调用者无关的变量隐藏起来，减少代码的耦合性，并减少意外出错的概率。
+- 提取方法(Extract Method)
+  - 将大段代码中的一部分提取后，构成一个新方法。这种重构可以使整段程序的结构变得更清晰，从而增加可读性。这也对函数(Function)通用。
+- 类一般化(Generalize Type)
+  - 将多个类/函数共享的类型抽象出可以公用的基类(base class)，然后利用多态性追加每个类/函数需要的特殊函数。这种重构可以让结构更加清晰，同时可以增加代码的可维护性。
+- 函数归父(Pull Up)—或译函数上移，指的是方法从子类移动到父类。
+- 函数归子(Push Down)—或译函数下移，指的是方法从父类移动到子类。
+- 方法更名(Rename Method)—将方法名称以更好的表达它的用途。
+
+---
+### Refactoring
+
+```cpp
+class SomeClass {
+  public:
+      int memberA;
+      //...
+};
+```
+
+```c++
+class SomeClass {
+  private:
+      int memberA;
+  public:
+      int getMemberA();
+      void setMemberA(int a);
+      //...
+};
+```
+
+---
+
+---
+
+### Questions
+
+❤.  ❤️
+
+---
+
+    </textarea>
+  <!--
+    -->
+  <!--
+    <script src="remark-latest.min.js">
+    -->
+  <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+  </script>
+  <script>
+    var slideshow = remark.create();
+  </script>
+
+<script>
+  window.addEventListener('load', () => {
+    const link = document.createElement('link')
+    link.rel = 'stylesheet'
+    link.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap'
+    document.head.appendChild(link)
+  })
+</script>
+
+</body>
+
+</html>
+
+AI参与生产代码必须 Human-in-the-loop
+
+英文字母表中第18个字母，在草莓这个词的英文里面出现了多少次？
+
+AI 系统学习路线指导 - 这个不容易，可组织形成专门的有针对性的课件，目前还是大量优质的blog讲的较好，会促进大家分享。
+
+不能让纠正AI生成代码的时间和精力比自己写还多，绝不接受即使能跑的不被理解的ai输出；
+
+目标绝不会为了赶风潮或完成kpi或政治任务，而是真正提高整个组织同时也是个人的效率和质量；
+
+AI 系统学习路线指导 - 这个还没现成，可组织大家协作贡献专门的有针对性的课件，有优质的blog讲得较好，会促进大家分享。
+另外，不记得哪位有位提到了用 Claude Opus 4.5 
+和 Codex GPT-5.2-xhigh 搭配不同agent 来做 各自擅长的领域 如review，找BUG等部分的实践，这是可确定的大方向，请联系我一起推进 ，这种auto routing也是不久又刷榜的 NVIDIA ToolOrchestra 的路线，
+https://developer.nvidia.com/blog/train-small-orchestration-agents-to-solve-big-problems/
+
+有本地部署、数据处理和不同应用的或者感兴趣的同事也请联系我，探讨更多的可能性
+如编码助手：
+V1只是给出补全和样板代码；V2是生成测试或重构建议供人审查；V3才是自动应用修改并提交 PR
+
+hello，arm中的sif编译不过，应该找谁呢
+不知道
+
+不迭代恶化
+
+最后一页
+
+慎重
+能否由 AI 替代
+如果有一个已经能达到70分以上并迅速迭代能力的助理，是否还需要从60分培养且不能保证达到理想预期的岗位。
+
+判断、决策
+
+行动、执行
+
+各种名目的阻碍，打破藩篱，勇气
+关键窗口期，不进则退，
+
+思维的惰性，
+
+组织庞大的臃肿缓慢、无论是决策，还是行动
+
+sycophancy - 谄媚
+hallucination - 幻觉
+
+每一步的逻辑
+
+在「偷懒」的惰性面前，主动选择了缴械投降。
+
+认知卸载（Cognitive Offloading）。
+
+即当工具足够强大时，我们会下意识地把原本需要大脑处理的计算、记忆、逻辑推演任务，「卸载」给工具，就像自动驾驶一样。
+
+副驾驶 Copilot
+
+遭遇并独立解决错误，是技能形成的关键一环。
+
+消除了 Debug 的痛苦，让你误以为自己掌控了系统；在创作里，它消除了构思的枯燥，让你误以为自己拥有了创意；在人际关系里，它甚至也在消除「摩擦」。
+
+就像很多 AI 成瘾的问题，都源自于 AI 永远情绪稳定，永远秒回，永远顺着你
+
+部署后出错，无从修复。
+
+AI 是公平的，它会平等地「废掉」每一个试图偷懒的大脑，无论这个大脑曾经多么睿智。
+
+多问「为什么」，少说「帮我做」
+
+AI 生成的代码，也要像审视同事的代码一样，逐行阅读，理解代码逻辑；珍视 Debug 的机会，下次遇到 Bug，试着先自己分析 5 分钟，而不是 5 秒钟后就截图发给 ChatGPT。
+
+
+Vibe Coding (Martin Fowler's definition) (0:27-0:42, 33:37):
+
+Good for explorations and disposable code but not for long-term use (34:06).
+Removes the learning loop (35:48), as developers don't learn from the AI's output if they don't examine it.
+Working with LLMs (40:50):
+
+It is crucial to understand the LLM's output (40:56) and refactor it (41:23) for clarity and maintainability.
+Rigorous testing (43:25) is essential for any code generated by LLMs, as they are non-deterministic.
+Thoughtworks Technology Radar (10:07):
+
+Martin Fowler explains the process behind the Technology Radar, which identifies emerging technologies and their potential impact (11:11).
+It is a bottom-up exercise (14:06) where practitioners submit "blips" (13:26) for consideration.
+The radar encourages other companies to create their own radars (14:56) rather than blindly adopting Thoughtworks' recommendations.
+Refactoring (56:37):
+
+Martin Fowler discusses the origins of his book "Refactoring" (57:09), emphasizing its importance in improving code quality through small, behavior-preserving changes (1:00:25).
+Refactoring is more relevant than ever (1:02:15) due to the complexity introduced by AI-generated code.
+Agile Manifesto (1:18:26):
+
+Martin Fowler recounts his involvement in the creation of the Agile Manifesto in 2001 (1:18:50).
+He initially believed the manifesto would be "useless and ignored" (1:21:05), but was surprised by its impact.
+Learning about AI (1:28:35):
+
+Martin Fowler primarily learns about AI through conversations with colleagues, reading academic papers, and following social media discussions (1:
+
+
+The fundamental skills of a great engineer remain unchanged, emphasizing communication and collaboration (1:41:53).
+
+
+
+胶原蛋白肽
+
+成分： 通常提取自鱼皮、鱼鳞或牛皮、猪皮。
+
+分子量： 相比普通食物中的大分子胶原蛋白（如猪蹄），“肽”的分子量更小，溶解性更好，更容易被人体吸收。
+
+状态： 白色或浅黄色粉末，本身通常没有味道，或者带有极淡的腥味（取决于提取来源）。
+
+虽然肽比普通蛋白质耐热，但长时间的高温炖煮（如高压锅压1小时）可能会破坏部分活性结构。
+
+
+$$\text{氨基酸} \rightarrow \text{肽（包括肽粉）} \rightarrow \text{蛋白质}$$氨基酸（一颗珍珠）： 蛋白质合成的最小基石。肽（一小段项链）： 由 2 到 50 个氨基酸通过肽键连接而成的短链。你手里的“胶原蛋白肽”通常就是由 2-3 个氨基酸组成的寡肽。蛋白质（整串项链）： 成千上万个氨基酸组成的复杂大分子（比如你啃猪蹄时里面的胶原蛋白）。
+
+吸收效率更高： 人体肠道有专门的“短肽通道”。研究发现，人体吸收小分子肽的速度有时比吸收单个氨基酸还要快，且更完整。
+
+功能针对性： 氨基酸只是原料，而某些特定序列的“肽”进入人体后，像是一个**“信号兵”**，能告诉身体：“嘿，这里缺胶原蛋白了，快开始合成！”
+
+胶原蛋白肽里含量最高的三种氨基酸分别是：
+
+甘氨酸 (Glycine)
+
+脯氨酸 (Proline)
+
+羟脯氨酸 (Hydroxyproline) —— 这是胶原蛋白特有的，普通大豆或瘦肉中含量很少。
+
+
+胶原蛋白（Collagen）这种物质只存在于动物（包括人类）的结缔组织中。目前市面上所有的“胶原蛋白肽”只有两种主流来源：
+
+鱼类： 提取自鱼皮或鱼鳞（最常见，吸收率相对高）。
+
+陆生动物： 提取自牛皮、猪皮或鸡骨架。
+
+冷知识： 所谓的“植物胶原蛋白”（比如银耳、桃胶里的黏稠物）其实是多糖（一种碳水化合物），在化学本质上和胶原蛋白（蛋白质）完全是两码事。
+
+谷物通常缺乏一种叫赖氨酸的必需氨基酸。
+
+胶原蛋白肽（动物蛋白）： 虽然它也不是“全能选手”（缺乏色氨酸），但它含有极高比例的甘氨酸和脯氨酸。
+
+低热量： 肽粉几乎不含脂肪和糖，热量极低。
+
+
+肽粉冷热皆溶
+
+人体合成自身的胶原蛋白时，维生素 C 是必不可少的“催化剂”。
+
+
+“肽”（Peptide），我们可以把蛋白质的构造想象成一串长长的珍珠项链。
+
+氨基酸（蛋白质的最小砖块）
+
+一小段项链 = 肽（由2个到50个氨基酸串联而成）
+
+整串项链 = 蛋白质（成千上万个氨基酸折叠成的巨大分子）
+
+简单来说： 肽就是**“断成小截的蛋白质”，或者说是“抱成团的氨基酸”**。
+
+蛋白质太大： 像一整头大象，进不去肠道的小门，必须靠胃液、胰液辛苦地“切碎”才能吸收。
+
+氨基酸太散： 像散落的沙子，吸收通道有限，有时会互相排队“堵车”。
+
+肽（尤其是小分子肽）： 像顺丰快递。人体肠道有专门的“小分子肽快运通道”，它不需要彻底消化，能以完整的结构直接钻进血管。研究发现，它的吸收速度比散装氨基酸还要快。
+
+胶原蛋白肽： 会告诉皮肤细胞“赶紧干活，合成新的胶原蛋白”。
+
+大豆肽： 可能会告诉代谢系统“快点分解脂肪”。
+
+降压肽： 会告诉血管“放松一点，别那么紧绷”。
+
+通过酶解技术（相当于在工厂里先用“化学剪刀”帮你剪好了），把这根“钢缆”剪成了成千上万个小段（肽）。
+
+
+核心指标：分子量（道尔顿）
+这是判断肽粉等级的金标准。
+
+大分子（明胶）： 分子量在 10,000 以上，很难吸收，吃多了还容易胀气。
+
+普通肽： 3,000 - 5,000 道尔顿，吸收还可以。
+
+黄金标准： 1,000 - 3,000 道尔顿。这个区间的肽被称为“小分子活性肽”，不需要消化就能被肠道直接“秒吸”。
+
+怎么看： 找包装上的执行标准或营养成分表，好产品会直接标注“平均分子量 < 2000Da”。
+
+2. 物理实验：溶解性与颜色
+你可以拿一个透明玻璃杯做个简单的实验：
+
+溶解度： 把粉末撒入温水中。高品质的肽粉会迅速下沉并自动溶解，不需要拼命搅拌。
+
+澄明度： 溶解后水应该非常清澈，略带淡淡的黄色（像极稀的茶水）。如果水浑浊、有沉淀，说明纯度不够或者添加了淀粉充数。
+
+不结块： 好的肽粉吸湿性强，但不应该在温水里结成死疙瘩。
+
+如果包装上提到了 “羟脯氨酸” (Hydroxyproline) 的含量，那这绝对是高端货。这是胶原蛋白的“指纹氨基酸”，含量越高（通常在 3% - 10% 左右），说明胶原蛋白的纯度越正宗。
+
+1. 大豆肽 (Soy Peptide)
+身份：植物界的“全能补给包”
+
+它是将大豆蛋白通过酶解技术切碎后的产物。相比于直接喝豆浆或吃豆腐，大豆肽有几个开挂的功能：
+
+吸收速度极快： 就像前面提到的“顺丰快递”，它不需要经过胃部的漫长消化，直接进入肠道吸收，非常适合消化能力弱的老人或术后恢复人群。
+
+低过敏性： 很多人对大豆蛋白过敏，但当蛋白质被切成“肽”的小片段后，人体的免疫系统往往就认不出它了，从而大大降低过敏风险。
+
+辅助减脂与抗疲劳： 研究发现大豆肽能激活交感神经，促进脂肪代谢（虽然效果不是立竿见影，但比吃大豆强）。
+
+应用： 常出现在运动饮料、代餐粉和针对老年人的营养品中。
+
+2. 降压肽 (Antihypertensive Peptides)
+身份：血管里的“天然减压阀”
+
+这是一个功能性概念。它不是一种特定的原材料（它可以从牛奶、鱼肉、甚至大豆中提取），而是一类能降低血压的短肽序列。
+
+它的核心逻辑是模仿药物的原理，但更温和：
+
+原理（抑制ACE酶）： 身体里有一种叫 ACE（血管紧张素转化酶） 的坏家伙，它会让血管收缩，导致血压升高。降压肽进入血液后，会像胶水一样粘住这个 ACE 酶，让它无法发挥作用。
+
+天然与人工的区别： 著名的降压药（如卡托普利）也是这个原理，但药物力量猛、副作用多（如干咳）。降压肽力量温和，属于“食疗”级别的辅助，通常没有副作用。
+
+出处： 最著名的来源是牛奶蛋白（某些发酵乳中含有）和沙丁鱼肽。
+
+特性,大豆肽,降压肽
+侧重点,营养补充,功能调节
+主要功能,快速补充蛋白质、抗疲劳,辅助降低/稳定血压
+适合人群,健身者、消化不良者、素食者,轻度高血压、想预防高血压的人
+味道,略带豆腥味，有时会有明显的苦味,通常根据来源而定，鱼源的有腥味
+
+如果你尝过纯的大豆肽或降压肽，可能会觉得发苦。这可不是坏了，而是因为蛋白质被切开后，一些原本藏在里面的疏水性氨基酸露出来了。在肽的世界里，“苦”往往意味着“纯”（分子量越小，有时反而越苦）。
+
+1. 甘氨酸 (Glycine) —— 极简的“连接件”它是所有氨基酸中个头最小、结构最简单的一个。它的角色： 它是胶原蛋白长链里的“润滑剂”和“粘合剂”。因为胶原蛋白是一种三股螺旋结构（像麻花一样拧在一起），必须每隔两个位置就放一个极小的甘氨酸，这根“麻花”才能拧得紧、不散架。对你的好处：助眠： 它是一种抑制性神经递质，能让大脑安静下来，提高睡眠质量。解毒： 它是合成谷胱甘肽（人体最强抗氧化剂）的原料，帮肝脏排毒。2. 脯氨酸 (Proline) —— 坚韧的“转角石”如果说甘氨酸负责“紧”，脯氨酸就负责“型”。它的角色： 它的结构很特殊，像个坚硬的环。它在肽链中负责制造“转折”，让蛋白质链能折叠成复杂的空间形状。没有它，你的皮肤和血管就没有弹性，会像纸一样一捅就破。对你的好处：修复： 当你受了伤或手术后，身体会大量调用脯氨酸去合成新皮肤和结缔组织。血管健康： 它可以防止动脉粥样硬化，保持血管壁的柔韧。3. 羟脯氨酸 (Hydroxyproline) —— 胶原蛋白的“防伪标志”这是最特殊的一个，也是判断你那包肽粉是不是真·胶原蛋白的关键。它的角色： 它其实是脯氨酸的“升级版”。在人体合成胶原蛋白的过程中，需要在维生素 C 的帮助下，给脯氨酸加上一个“羟基”（$-OH$），它就变成了羟脯氨酸。它的魔力： 这个额外的“钩子”能让三股螺旋之间产生氢键。简单说，它就像是强力胶，没有它，胶原蛋白受热就会化成水，无法在体温下保持结构。重要提示： 植物蛋白（豆类、谷物）里几乎完全不含羟脯氨酸。这就是为什么吃银耳不能补胶原蛋白，而吃这包肽粉可以的原因。💡 为什么要把它们放在一起说？在胶原蛋白肽中，它们通常以 “甘-脯-羟脯” (Gly-Pro-Hyp) 这种固定的三联体形式存在。当你喝下这碗加了肽粉的八宝粥时：这种“三联体”能直接进入血液。它们会像**“预制件”**一样，直接被送往皮肤、关节软骨或血管壁。身体不需要从头开始合成，直接“拼装”即可，效率极高。
