@@ -1,9 +1,8 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    addressable (2.9.0)
+    addressable (2.9.1)
       public_suffix (>= 2.0.2, < 8.0)
-    asciidoctor (2.0.26)
     base64 (0.3.0)
     bigdecimal (4.1.2)
     colorator (1.1.0)
@@ -40,9 +39,6 @@ GEM
       safe_yaml (~> 1.0)
       terminal-table (>= 1.8, < 4.0)
       webrick (~> 1.7)
-    jekyll-asciidoc (3.0.1)
-      asciidoctor (>= 1.5.0, < 3.0.0)
-      jekyll (>= 3.0.0)
     jekyll-redirect-from (0.16.0)
       jekyll (>= 3.3, < 5.0)
     jekyll-sass-converter (3.1.0)
@@ -85,7 +81,6 @@ DEPENDENCIES
   base64
   bigdecimal
   jekyll
-  jekyll-asciidoc
   jekyll-redirect-from
   kramdown-parser-gfm
 
